@@ -12,8 +12,7 @@ public class ScoreBoard {
     BitmapFont bitmapFont;
 
     public void create(){
-        score = new Font();
-        score.create(fontSize);
+        score = new Font(fontSize);
         bitmapFont = score.getBitmapFont();
     }
 

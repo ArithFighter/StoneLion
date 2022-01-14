@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Hand {
     TemplateCard whiteCard, greenCard;
     TemplateCard[] cards;
-    float gridX = WindowSetting.GRID_X;
     float initX = WindowSetting.CENTER_X;
     float initY = 0;
-    float cardSize = gridX*3.5f;
-    float padding = cardSize*1.2f;
+    float padding;
+    float scale = 4;
 
-    public void initHand(Texture texture){
-        whiteCard = new TemplateCard(initX,initY,cardSize, Color.WHITE, texture);
-        greenCard = new TemplateCard(initX+padding,initY,cardSize,Color.GREEN, texture);
+    public Hand(Texture texture){
+        whiteCard = new TemplateCard(initX,initY,scale, Color.WHITE, texture);
+        padding =  whiteCard.getWidth()+WindowSetting.GRID_X;
+        greenCard = new TemplateCard(initX+padding,initY,scale,Color.GREEN, texture);
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }

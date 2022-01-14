@@ -18,12 +18,12 @@ public class TemplateCard {
     CardState state = CardState.INACTIVE;
     Sprite card;
 
-    public TemplateCard(float initX, float initY, float cardSize, Color color, Texture texture) {
+    public TemplateCard(float initX, float initY, float scale, Color color, Texture texture) {
         this.initX = initX;
         this.initY = initY;
         this.color = color;
-        cardWidth = cardSize;
-        cardHeight = cardSize*1.5f;
+        cardWidth = texture.getWidth()*scale;
+        cardHeight = texture.getHeight()*scale;
         cardX = initX;
         cardY = initY;
 
@@ -31,6 +31,10 @@ public class TemplateCard {
         card.setColor(color);
         card.setPosition(initX,initY);
         card.setSize(cardWidth,cardHeight);
+    }
+
+    public float getWidth(){
+        return cardWidth;
     }
 
     public void draw(SpriteBatch batch, float x, float y) {

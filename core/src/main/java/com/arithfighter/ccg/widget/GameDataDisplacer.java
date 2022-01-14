@@ -1,7 +1,6 @@
 package com.arithfighter.ccg.widget;
 
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.widget.Font;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,8 +10,7 @@ public class GameDataDisplacer {
     BitmapFont bitmapFont;
 
     public void create(){
-        mousePos = new Font();
-        mousePos.create(16);
+        mousePos = new Font(16);
         bitmapFont = mousePos.getBitmapFont();
     }
 

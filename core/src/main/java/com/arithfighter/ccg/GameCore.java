@@ -59,8 +59,7 @@ public class GameCore {
         scoreBoard = new ScoreBoard();
         scoreBoard.create();
 
-        hand = new Hand();
-        hand.initHand(assetManager.get(fileLibrary.getTextureFile()[0]));
+        hand = new Hand(assetManager.get(fileLibrary.getTextureFile()[0]));
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -81,7 +80,7 @@ public class GameCore {
         updateMousePosition();
 
         batch.begin();
-        drawSprite();
+        drawComponent();
         batch.end();
     }
 
@@ -90,7 +89,7 @@ public class GameCore {
         mouseY = Gdx.graphics.getHeight()-Gdx.input.getY();
     }
 
-    private void drawSprite() {
+    private void drawComponent() {
         desk.draw(batch);
         hand.draw(batch,mouseX,mouseY);
         dataDisplacer.draw(mouseX, mouseY, batch);

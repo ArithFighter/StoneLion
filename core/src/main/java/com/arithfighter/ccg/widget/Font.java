@@ -9,7 +9,7 @@ public class Font {
 	FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	BitmapFont font;
 
-    public void create(int size){
+    public Font(int size){
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fontstyle/pcsenior.ttf"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = size;
