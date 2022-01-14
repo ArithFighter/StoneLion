@@ -1,7 +1,6 @@
 package com.arithfighter.ccg.widget;
 
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.widget.TemplateCard;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,14 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Hand {
     TemplateCard whiteCard, greenCard;
     TemplateCard[] cards;
-    float centerX = WindowSetting.CENTER_X;
     float gridX = WindowSetting.GRID_X;
-    float gridY = WindowSetting.GRID_Y;
-    float cardSize = gridX*4;
+    float initX = WindowSetting.CENTER_X;
+    float initY = 0;
+    float cardSize = gridX*3.5f;
+    float padding = cardSize*1.2f;
 
     public void initHand(Texture texture){
-        whiteCard = new TemplateCard(centerX+gridX,gridY*1,cardSize, Color.WHITE, texture);
-        greenCard = new TemplateCard(centerX+gridX*6,gridY*1,cardSize,Color.GREEN, texture);
+        whiteCard = new TemplateCard(initX,initY,cardSize, Color.WHITE, texture);
+        greenCard = new TemplateCard(initX+padding,initY,cardSize,Color.GREEN, texture);
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }

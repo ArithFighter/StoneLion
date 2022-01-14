@@ -24,7 +24,6 @@ public class TemplateCard {
         this.color = color;
         cardWidth = cardSize;
         cardHeight = cardSize*1.5f;
-
         cardX = initX;
         cardY = initY;
 
@@ -64,13 +63,6 @@ public class TemplateCard {
         if (cardY < 0) {
             cardY = 0;
         }
-    }
-
-    private void checkTouchedDown(SpriteBatch batch) {
-        if (isActive())
-            batch.setColor(Color.FIREBRICK);
-        else
-            batch.setColor(color);
     }
 
     public void updateWhenDrag(float x, float y) {
