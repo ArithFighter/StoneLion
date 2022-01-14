@@ -4,9 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CounterAssetsManager {
-    public void loadCard(AssetManager assetManager, String[] cardFiles){
-        for (String cardFile : cardFiles) {
-            assetManager.load(cardFile, Texture.class);
+    public void loadTexture(AssetManager assetManager, String[] textureFiles){
+        for (String textureFile : textureFiles) {
+            assetManager.load(textureFile, Texture.class);
         }
     }
 }

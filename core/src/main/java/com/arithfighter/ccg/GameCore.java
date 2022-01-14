@@ -1,6 +1,5 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.listener.MouseListener;
 import com.arithfighter.ccg.widget.Desk;
 import com.arithfighter.ccg.widget.GameDataDisplacer;
 import com.arithfighter.ccg.widget.Hand;
@@ -19,7 +18,6 @@ public class GameCore {
     ScoreBoard scoreBoard;
     Hand hand;
     Desk desk;
-    MouseListener mouseListener = new MouseListener();
     int mouseX;
     int mouseY;
     SpriteBatch batch;
@@ -52,7 +50,7 @@ public class GameCore {
     };
 
     public void create() {
-        myAssetManager.loadCard(assetManager, fileLibrary.getTextureFile());
+        myAssetManager.loadTexture(assetManager, fileLibrary.getTextureFile());
         assetManager.finishLoading();
 
         dataDisplacer = new GameDataDisplacer();
@@ -88,8 +86,8 @@ public class GameCore {
     }
 
     private void updateMousePosition() {
-        mouseX = mouseListener.getMouseX();
-        mouseY = mouseListener.getMouseY();
+        mouseX = Gdx.input.getX();
+        mouseY = Gdx.graphics.getHeight()-Gdx.input.getY();
     }
 
     private void drawSprite() {
