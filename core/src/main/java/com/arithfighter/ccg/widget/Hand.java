@@ -14,9 +14,9 @@ public class Hand {
     float scale = 4;
 
     public Hand(Texture texture){
-        whiteCard = new TemplateCard(initX,initY,scale, Color.WHITE, texture);
+        whiteCard = new TemplateCard(initX,initY,scale, Color.WHITE, texture,"2");
         padding =  whiteCard.getWidth()+WindowSetting.GRID_X;
-        greenCard = new TemplateCard(initX+padding,initY,scale,Color.GREEN, texture);
+        greenCard = new TemplateCard(initX+padding,initY,scale,Color.GREEN, texture,"3");
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }
