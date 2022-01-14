@@ -2,10 +2,13 @@ package com.arithfighter.ccg;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameCore {
+    AssetManager assetManager = new AssetManager();
     GameDataDisplacer dataDisplacer;
     ScoreBoard scoreBoard;
     Hand hand;
@@ -43,6 +46,11 @@ public class GameCore {
     };
 
     public void create() {
+        assetManager.load("Card_template.png", Texture.class);
+        assetManager.finishLoading();
+
+        assetManager.get("Card_template.png");
+
         dataDisplacer = new GameDataDisplacer();
         dataDisplacer.create();
 
@@ -50,7 +58,7 @@ public class GameCore {
         scoreBoard.create();
 
         hand = new Hand();
-        hand.initHand();
+        hand.initHand(assetManager);
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -62,6 +70,8 @@ public class GameCore {
     }
 
     public void render() {
+        assetManager.update(17);
+
         updateMousePosition();
 
         shapeRenderer.begin();

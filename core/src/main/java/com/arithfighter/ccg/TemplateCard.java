@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,7 +19,7 @@ public class TemplateCard {
     CardState state = CardState.INACTIVE;
     Sprite card;
 
-    public TemplateCard(float initX, float initY, float cardSize, Color color) {
+    public TemplateCard(float initX, float initY, float cardSize, Color color, AssetManager assetManager) {
         this.initX = initX;
         this.initY = initY;
         this.color = color;
@@ -28,7 +29,7 @@ public class TemplateCard {
         cardX = initX;
         cardY = initY;
 
-        card = new Sprite(new Texture(Gdx.files.internal("Card_template.png")));
+        card = new Sprite(assetManager.get("Card_template.png", Texture.class));
         card.setPosition(initX,initY);
         card.setSize(cardWidth,cardHeight);
     }
