@@ -1,5 +1,7 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.WindowSetting;
+import com.arithfighter.ccg.widget.TemplateCard;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

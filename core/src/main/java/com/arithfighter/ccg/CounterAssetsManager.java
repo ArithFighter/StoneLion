@@ -9,10 +9,4 @@ public class CounterAssetsManager {
             assetManager.load(cardFile, Texture.class);
         }
     }
-
-    public void getCard(AssetManager assetManager, String[] cardFiles, Texture[] cards){
-        for (int i = 0; i< cardFiles.length;i++){
-            cards[i] = assetManager.get(cardFiles[i], Texture.class);
-        }
-    }
 }

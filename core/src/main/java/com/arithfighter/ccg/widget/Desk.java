@@ -1,5 +1,6 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 

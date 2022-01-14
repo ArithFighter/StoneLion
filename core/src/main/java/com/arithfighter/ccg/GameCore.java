@@ -1,5 +1,10 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.listener.MouseListener;
+import com.arithfighter.ccg.widget.Desk;
+import com.arithfighter.ccg.widget.GameDataDisplacer;
+import com.arithfighter.ccg.widget.Hand;
+import com.arithfighter.ccg.widget.ScoreBoard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;

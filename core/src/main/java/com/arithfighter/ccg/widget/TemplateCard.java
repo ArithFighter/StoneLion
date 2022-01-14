@@ -1,10 +1,12 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.widget;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class VectorCard {
+public class TemplateCard {
     float initX;
     float initY;
     float cardX;
@@ -14,8 +16,9 @@ public class VectorCard {
     Color color;
     enum CardState{ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
+    Sprite card;
 
-    public VectorCard(float initX, float initY, float cardSize, Color color) {
+    public TemplateCard(float initX, float initY, float cardSize, Color color, Texture texture) {
         this.initX = initX;
         this.initY = initY;
         this.color = color;
@@ -24,21 +27,25 @@ public class VectorCard {
 
         cardX = initX;
         cardY = initY;
+
+        card = new Sprite(texture);
+        card.setPosition(initX,initY);
+        card.setSize(cardWidth,cardHeight);
     }
 
-    public void draw(ShapeRenderer shapeRenderer, float x, float y) {
-        checkTouchedDown(shapeRenderer);
-        shapeRenderer.setColor(color);
-        checkTouchOn(shapeRenderer, x, y);
+    public void draw(SpriteBatch batch, float x, float y) {
+        checkTouchedDown(batch);
+        checkTouchOn(batch, x, y);
         checkOutOfWindow();
     }
 
-    private void checkTouchOn(ShapeRenderer shapeRenderer, float x, float y) {
+    private void checkTouchOn(SpriteBatch batch, float x, float y) {
         float movingDis = 15;
         if (isOnCard(x,y))
-            shapeRenderer.rect(cardX, cardY+movingDis, cardWidth, cardHeight);
+            card.setPosition(cardX,cardY+movingDis);
         else
-            shapeRenderer.rect(cardX, cardY, cardWidth, cardHeight);
+            card.setPosition(cardX,cardY);
+        card.draw(batch);
     }
 
     private void checkOutOfWindow(){
@@ -59,11 +66,11 @@ public class VectorCard {
         }
     }
 
-    private void checkTouchedDown(ShapeRenderer shapeRenderer) {
+    private void checkTouchedDown(SpriteBatch batch) {
         if (isActive())
-            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+            batch.setColor(Color.FIREBRICK);
         else
-            shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+            batch.setColor(color);
     }
 
     public void updateWhenDrag(float x, float y) {
