@@ -23,18 +23,18 @@ public class TemplateCard {
         this.initY = initY;
         this.color = color;
         cardWidth = cardSize;
-        cardHeight = cardSize*1.4f;
+        cardHeight = cardSize*1.5f;
 
         cardX = initX;
         cardY = initY;
 
         card = new Sprite(texture);
+        card.setColor(color);
         card.setPosition(initX,initY);
         card.setSize(cardWidth,cardHeight);
     }
 
     public void draw(SpriteBatch batch, float x, float y) {
-        checkTouchedDown(batch);
         checkTouchOn(batch, x, y);
         checkOutOfWindow();
     }

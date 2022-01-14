@@ -12,10 +12,11 @@ public class Hand {
     float centerX = WindowSetting.CENTER_X;
     float gridX = WindowSetting.GRID_X;
     float gridY = WindowSetting.GRID_Y;
+    float cardSize = gridX*4;
 
     public void initHand(Texture texture){
-        whiteCard = new TemplateCard(centerX+gridX*4,gridY*1,gridX*3, Color.WHITE, texture);
-        greenCard = new TemplateCard(centerX+gridX*8,gridY*1,gridX*3,Color.GREEN, texture);
+        whiteCard = new TemplateCard(centerX+gridX,gridY*1,cardSize, Color.WHITE, texture);
+        greenCard = new TemplateCard(centerX+gridX*6,gridY*1,cardSize,Color.GREEN, texture);
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }
