@@ -7,8 +7,8 @@ import com.arithfighter.ccg.widget.ScoreBoard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameCore {
     AssetManager assetManager = new AssetManager();
@@ -21,7 +21,7 @@ public class GameCore {
     int mouseX;
     int mouseY;
     SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
+    Texture[] textures;
 
     int score = 0;
 
@@ -53,25 +53,21 @@ public class GameCore {
         myAssetManager.loadTexture(assetManager, fileLibrary.getTextureFile());
         assetManager.finishLoading();
 
+        textures = new Texture[fileLibrary.getTextureFile().length];
+        for (int i = 0; i<fileLibrary.getTextureFile().length;i++)
+            textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
+
         dataDisplacer = new GameDataDisplacer();
-        dataDisplacer.create();
 
         scoreBoard = new ScoreBoard();
-        scoreBoard.create();
 
-        hand = new Hand(assetManager.get(fileLibrary.getTextureFile()[0]));
+        hand = new Hand(textures[0]);
 
         batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        desk = new Desk(
-                WindowSetting.GRID_X*4,
-                WindowSetting.GRID_Y*6,
-                assetManager.get(fileLibrary.getTextureFile()[1]),
-                18);
+        desk = new Desk(textures[1], 18);
     }
 
     public void render() {

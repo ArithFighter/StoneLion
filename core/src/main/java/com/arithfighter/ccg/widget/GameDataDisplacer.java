@@ -9,7 +9,7 @@ public class GameDataDisplacer {
     Font mousePos;
     BitmapFont bitmapFont;
 
-    public void create(){
+    public GameDataDisplacer(){
         mousePos = new Font(16);
         bitmapFont = mousePos.getBitmapFont();
     }
