@@ -1,7 +1,7 @@
 package com.arithfighter.ccg;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
@@ -11,9 +11,9 @@ public class Hand {
     float gridX = WindowSetting.GRID_X;
     float gridY = WindowSetting.GRID_Y;
 
-    public void initHand(AssetManager assetManager){
-        whiteCard = new TemplateCard(centerX+gridX*4,gridY*1,gridX*3, Color.WHITE, assetManager);
-        greenCard = new TemplateCard(centerX+gridX*8,gridY*1,gridX*3,Color.GREEN, assetManager);
+    public void initHand(Texture texture){
+        whiteCard = new TemplateCard(centerX+gridX*4,gridY*1,gridX*3, Color.WHITE, texture);
+        greenCard = new TemplateCard(centerX+gridX*8,gridY*1,gridX*3,Color.GREEN, texture);
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }
