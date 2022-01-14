@@ -1,11 +1,12 @@
 package com.arithfighter.ccg;
 
 public class FileLibrary {
-    String[] cards = {
-            "Card_template.png"
+    String[] textures = {
+            "Card_template.png",
+            "desk.png"
     };
 
-    public String[] getCardFile(){
-        return cards;
+    public String[] getTextureFile(){
+        return textures;
     }
 }

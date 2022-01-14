@@ -52,7 +52,7 @@ public class GameCore {
     };
 
     public void create() {
-        myAssetManager.loadCard(assetManager, fileLibrary.getCardFile());
+        myAssetManager.loadCard(assetManager, fileLibrary.getTextureFile());
         assetManager.finishLoading();
 
         dataDisplacer = new GameDataDisplacer();
@@ -62,7 +62,7 @@ public class GameCore {
         scoreBoard.create();
 
         hand = new Hand();
-        hand.initHand(assetManager.get(fileLibrary.getCardFile()[0]));
+        hand.initHand(assetManager.get(fileLibrary.getTextureFile()[0]));
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -70,17 +70,17 @@ public class GameCore {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        desk = new Desk(WindowSetting.GRID_X*4, WindowSetting.GRID_Y*9);
+        desk = new Desk(
+                WindowSetting.GRID_X*4,
+                WindowSetting.GRID_Y*6,
+                assetManager.get(fileLibrary.getTextureFile()[1]),
+                18);
     }
 
     public void render() {
         assetManager.update(17);
 
         updateMousePosition();
-
-        shapeRenderer.begin();
-        drawShape();
-        shapeRenderer.end();
 
         batch.begin();
         drawSprite();
@@ -92,11 +92,8 @@ public class GameCore {
         mouseY = mouseListener.getMouseY();
     }
 
-    private void drawShape() {
-        desk.draw(shapeRenderer);
-    }
-
     private void drawSprite() {
+        desk.draw(batch);
         hand.draw(batch,mouseX,mouseY);
         dataDisplacer.draw(mouseX, mouseY, batch);
         scoreBoard.draw("ScoreBoard: "+score, batch);

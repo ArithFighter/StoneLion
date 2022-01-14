@@ -1,30 +1,34 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.WindowSetting;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Desk {
     int deskX;
     int deskY;
-    int deskWidth = WindowSetting.GRID_X*9;
-    int deskHeight = WindowSetting.GRID_Y*5;
+    Sprite desk;
+    float deskWidth;
+    float deskHeight;
     
-    public Desk(int x, int y){
+    public Desk(int x, int y, Texture texture, float scale){
         deskX = x;
         deskY = y;
+
+        desk = new Sprite(texture);
+        desk.setPosition(deskX,deskY);
+        desk.setSize(texture.getWidth()*scale, texture.getHeight()*scale);
+
+        deskWidth = texture.getWidth()*scale;
+        deskHeight = texture.getHeight()*scale;
     }
     
-    public void draw(ShapeRenderer shapeRenderer){
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.BROWN);
-        shapeRenderer.rect(deskX, deskY, deskWidth, deskHeight);
+    public void draw(SpriteBatch batch){
+        desk.draw(batch);
     }
     
     public boolean isOnDesk(float x, float y){
-        return x > deskX &&
-                x < deskX + deskWidth &&
-                y > deskY &&
-                y < deskY + deskHeight;
+        return x > deskX && x < deskX + deskWidth &&
+                y > deskY && y < deskY + deskHeight;
     }
 }
