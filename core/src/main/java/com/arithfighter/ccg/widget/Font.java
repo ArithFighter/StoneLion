@@ -1,7 +1,9 @@
 package com.arithfighter.ccg.widget;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Font {
@@ -16,8 +18,12 @@ public class Font {
         font = fontGenerator.generateFont(fontParameter);
     }
 
-    public BitmapFont getBitmapFont(){
-        return font;
+    public void setColor(Color color){
+        font.setColor(color);
+    }
+
+    public void draw(SpriteBatch batch, String content, float numberX, float numberY){
+        font.draw(batch, content, numberX,numberY);
     }
 
     public void dispose(){

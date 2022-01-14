@@ -13,7 +13,6 @@ public class TemplateCard {
     float cardY;
     float cardWidth;
     float cardHeight;
-    Color color;
     enum CardState{ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
     Sprite card;
@@ -24,7 +23,6 @@ public class TemplateCard {
                         Color color, Texture texture, String number) {
         this.initX = initX;
         this.initY = initY;
-        this.color = color;
         cardWidth = texture.getWidth()*scale;
         cardHeight = texture.getHeight()*scale;
         cardX = initX;
@@ -49,8 +47,8 @@ public class TemplateCard {
 
         checkTouchOn(batch, x, y);
         checkOutOfWindow();
-        text.getBitmapFont().setColor(Color.YELLOW);
-        text.getBitmapFont().draw(batch, number, numberX,numberY);
+        text.setColor(Color.YELLOW);
+        text.draw(batch, number, numberX,numberY);
     }
 
     private void checkTouchOn(SpriteBatch batch, float x, float y) {
