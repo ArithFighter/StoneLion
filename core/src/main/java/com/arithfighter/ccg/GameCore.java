@@ -1,9 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.widget.Desk;
-import com.arithfighter.ccg.widget.GameDataDisplacer;
 import com.arithfighter.ccg.widget.Hand;
-import com.arithfighter.ccg.widget.ScoreBoard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -14,8 +12,7 @@ public class GameCore {
     AssetManager assetManager = new AssetManager();
     CounterAssetsManager myAssetManager = new CounterAssetsManager();
     FileLibrary fileLibrary = new FileLibrary();
-    GameDataDisplacer dataDisplacer;
-    ScoreBoard scoreBoard;
+    AUD aud;
     Hand hand;
     Desk desk;
     int mouseX;
@@ -53,13 +50,9 @@ public class GameCore {
         myAssetManager.loadTexture(assetManager, fileLibrary.getTextureFile());
         assetManager.finishLoading();
 
-        textures = new Texture[fileLibrary.getTextureFile().length];
-        for (int i = 0; i<fileLibrary.getTextureFile().length;i++)
-            textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
+        aud = new AUD();
 
-        dataDisplacer = new GameDataDisplacer();
-
-        scoreBoard = new ScoreBoard();
+        storeTextures();
 
         hand = new Hand(textures[0]);
 
@@ -68,6 +61,12 @@ public class GameCore {
         Gdx.input.setInputProcessor(mouseAdapter);
 
         desk = new Desk(textures[1], 18);
+    }
+
+    private void storeTextures(){
+        textures = new Texture[fileLibrary.getTextureFile().length];
+        for (int i = 0; i<fileLibrary.getTextureFile().length;i++)
+            textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
     }
 
     public void render() {
@@ -88,13 +87,13 @@ public class GameCore {
     private void drawComponent() {
         desk.draw(batch);
         hand.draw(batch,mouseX,mouseY);
-        dataDisplacer.draw(mouseX, mouseY, batch);
-        scoreBoard.draw("ScoreBoard: "+score, batch);
+        aud.showData(mouseX,mouseY, batch);
+        aud.showScore(String.valueOf(score), batch);
     }
 
     public void dispose() {
-        dataDisplacer.dispose();
-        scoreBoard.dispose();
+        hand.dispose();
+        aud.dispose();
         batch.dispose();
     }
 }

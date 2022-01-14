@@ -51,6 +51,10 @@ public class TemplateCard {
         text.draw(batch, number, numberX,numberY);
     }
 
+    public void dispose(){
+        text.dispose();
+    }
+
     private void checkTouchOn(SpriteBatch batch, float x, float y) {
         float movingDis = 15;
         if (isOnCard(x,y))

@@ -49,4 +49,9 @@ public class Hand {
 
         return cards[condition].isActive();
     }
+
+    public void dispose(){
+        for (TemplateCard card:cards)
+            card.dispose();
+    }
 }
