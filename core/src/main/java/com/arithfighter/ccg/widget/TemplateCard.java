@@ -43,24 +43,27 @@ public class TemplateCard {
         return cardWidth;
     }
 
-    public void draw(SpriteBatch batch, float x, float y) {
+    public void draw(SpriteBatch batch) {
         checkOutOfWindow();
-        if (isOnCard(x, y))
-            updateWhenTouched();
-        else
-            resetCard();
         card.setPosition(cardX, cardY);
         card.draw(batch);
         drawNumber(batch);
     }
 
-    public void dispose() {
-        text.dispose();
+    public void checkTouchingCard(float x, float y){
+        if (isOnCard(x, y))
+            updateWhenTouched();
+        else
+        resetCard();
     }
 
     private void updateWhenTouched() {
         if (cardY < initY + 15)
             cardY++;
+    }
+
+    public void dispose() {
+        text.dispose();
     }
 
     private void drawNumber(SpriteBatch batch) {
@@ -74,18 +77,14 @@ public class TemplateCard {
         float limitX = Gdx.graphics.getWidth() - cardWidth;
         float limitY = Gdx.graphics.getHeight() - cardHeight;
 
-        if (cardX > limitX) {
-            cardX = limitX;
-        }
-        if (cardX < 0) {
-            cardX = 0;
-        }
-        if (cardY > limitY) {
-            cardY = limitY;
-        }
-        if (cardY < 0) {
-            cardY = 0;
-        }
+        cardX = updateWhenOutOfWindow(cardX, limitX);
+        cardY = updateWhenOutOfWindow(cardY, limitY);
+    }
+
+    private float updateWhenOutOfWindow(float current, float limit) {
+        if (current > limit) current = limit;
+        if (current < 0) current = 0;
+        return current;
     }
 
     public void updateWhenDrag(float x, float y) {
@@ -114,7 +113,7 @@ public class TemplateCard {
 
     private boolean isOnCard(float x, float y) {
         int tolerance = 25;
-        return x > cardX-tolerance && x < cardX + cardWidth+tolerance &&
-                y > cardY-tolerance && y < cardY + cardHeight+tolerance;
+        return x > cardX - tolerance && x < cardX + cardWidth + tolerance &&
+                y > cardY - tolerance && y < cardY + cardHeight + tolerance;
     }
 }

@@ -86,7 +86,8 @@ public class GameCore {
 
     private void drawComponent() {
         desk.draw(batch);
-        hand.draw(batch,mouseX,mouseY);
+        hand.draw(batch);
+        hand.checkTouchingCard(mouseX,mouseY);
         aud.showData(mouseX,mouseY, batch);
         aud.showScore(String.valueOf(score), batch);
     }
