@@ -11,12 +11,11 @@ public class Hand {
     float initX = WindowSetting.CENTER_X;
     float initY = 0;
     float padding;
-    float scale = 4;
 
     public Hand(Texture texture) {
-        whiteCard = new TemplateCard(initX, initY, scale, Color.WHITE, texture, "2");
+        whiteCard = new TemplateCard(initX, initY, Color.WHITE, texture, "2");
         padding = whiteCard.getWidth() + WindowSetting.GRID_X;
-        greenCard = new TemplateCard(initX + padding, initY, scale, Color.GREEN, texture, "3");
+        greenCard = new TemplateCard(initX + padding, initY, Color.GREEN, texture, "3");
 
         cards = new TemplateCard[]{whiteCard, greenCard};
     }

@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class TemplateCard {
     float initX, initY;
     float cardX, cardY, cardWidth, cardHeight;
+    float scale = 4;
     enum CardState {ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
     Sprite card;
     Font text;
     String number;
 
-    public TemplateCard(float initX, float initY, float scale,
-                        Color color, Texture texture, String number) {
+    public TemplateCard(float initX, float initY, Color color, Texture texture, String number) {
         this.initX = initX;
         this.initY = initY;
         cardWidth = texture.getWidth() * scale;
@@ -48,11 +48,12 @@ public class TemplateCard {
         int movingDistance = 15;
         float speed = 2;
 
-        if (isOnCard(x, y))
+        if (isOnCard(x, y)){
             if (cardY < initY + movingDistance)
                 cardY += speed;
-            else
-                resetCard();
+        }
+        else
+            resetCard();
     }
 
     public void dispose() {
