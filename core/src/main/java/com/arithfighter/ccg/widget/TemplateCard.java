@@ -7,15 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TemplateCard {
-    float initX;
-    float initY;
-    float cardX;
-    float cardY;
-    float cardWidth;
-    float cardHeight;
-
+    float initX, initY;
+    float cardX, cardY, cardWidth, cardHeight;
     enum CardState {ACTIVE, INACTIVE}
-
     CardState state = CardState.INACTIVE;
     Sprite card;
     Font text;
@@ -50,16 +44,15 @@ public class TemplateCard {
         drawNumber(batch);
     }
 
-    public void checkTouchingCard(float x, float y){
-        if (isOnCard(x, y))
-            updateWhenTouched();
-        else
-        resetCard();
-    }
+    public void checkTouchingCard(float x, float y) {
+        int movingDistance = 15;
+        float speed = 2;
 
-    private void updateWhenTouched() {
-        if (cardY < initY + 15)
-            cardY++;
+        if (isOnCard(x, y))
+            if (cardY < initY + movingDistance)
+                cardY += speed;
+            else
+                resetCard();
     }
 
     public void dispose() {
@@ -113,7 +106,9 @@ public class TemplateCard {
 
     private boolean isOnCard(float x, float y) {
         int tolerance = 25;
-        return x > cardX - tolerance && x < cardX + cardWidth + tolerance &&
-                y > cardY - tolerance && y < cardY + cardHeight + tolerance;
+        return x > cardX - tolerance &&
+                x < cardX + cardWidth + tolerance &&
+                y > cardY - tolerance &&
+                y < cardY + cardHeight + tolerance;
     }
 }

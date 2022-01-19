@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import javax.smartcardio.Card;
-
 public class Hand {
     TemplateCard whiteCard, greenCard;
     TemplateCard[] cards;
@@ -24,15 +22,13 @@ public class Hand {
     }
 
     public void draw(SpriteBatch batch) {
-        for (TemplateCard card : cards){
+        for (TemplateCard card : cards)
             card.draw(batch);
-        }
     }
 
     public void checkTouchingCard(float x, float y){
-        for (TemplateCard card : cards){
+        for (TemplateCard card : cards)
             card.checkTouchingCard(x,y);
-        }
     }
 
     public void checkActive(float x, float y) {

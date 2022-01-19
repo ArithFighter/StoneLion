@@ -10,16 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameCore {
     AssetManager assetManager = new AssetManager();
-    CounterAssetsManager myAssetManager = new CounterAssetsManager();
     FileLibrary fileLibrary = new FileLibrary();
     AUD aud;
     Hand hand;
     Desk desk;
-    int mouseX;
-    int mouseY;
+    int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
-
     int score = 0;
 
     InputAdapter mouseAdapter = new InputAdapter() {
@@ -47,7 +44,9 @@ public class GameCore {
     };
 
     public void create() {
-        myAssetManager.loadTexture(assetManager, fileLibrary.getTextureFile());
+        for (String textureFile : fileLibrary.getTextureFile())
+            assetManager.load(textureFile, Texture.class);
+
         assetManager.finishLoading();
 
         aud = new AUD();
@@ -86,8 +85,10 @@ public class GameCore {
 
     private void drawComponent() {
         desk.draw(batch);
+
         hand.draw(batch);
         hand.checkTouchingCard(mouseX,mouseY);
+
         aud.showData(mouseX,mouseY, batch);
         aud.showScore(String.valueOf(score), batch);
     }
