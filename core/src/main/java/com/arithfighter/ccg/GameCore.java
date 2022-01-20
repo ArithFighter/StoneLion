@@ -3,6 +3,7 @@ package com.arithfighter.ccg;
 import com.arithfighter.ccg.widget.Desk;
 import com.arithfighter.ccg.widget.GameDataDisplacer;
 import com.arithfighter.ccg.widget.Hand;
+import com.arithfighter.ccg.widget.SumDisplacer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,10 +16,12 @@ public class GameCore {
     Hand hand;
     Desk desk;
     GameDataDisplacer dataDisplacer;
+    SumDisplacer sumDisplacer;
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
     int cardOnDesk = 0;
+    int sum = 0;
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -61,6 +64,8 @@ public class GameCore {
         desk = new Desk(textures[1], 18);
 
         dataDisplacer = new GameDataDisplacer();
+
+        sumDisplacer = new SumDisplacer(textures[2], 450,400);
     }
 
     private void storeTextures(){
@@ -92,10 +97,13 @@ public class GameCore {
 
         dataDisplacer.drawMousePos(mouseX,mouseY,batch);
         dataDisplacer.drawRecord(cardOnDesk, batch);
+
+        sumDisplacer.draw(String.valueOf(sum), batch);
     }
 
     public void dispose() {
         hand.dispose();
         batch.dispose();
+        dataDisplacer.dispose();
     }
 }

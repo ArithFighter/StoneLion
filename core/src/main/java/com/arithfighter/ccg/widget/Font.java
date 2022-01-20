@@ -22,8 +22,8 @@ public class Font {
         font.setColor(color);
     }
 
-    public void draw(SpriteBatch batch, String content, float numberX, float numberY){
-        font.draw(batch, content, numberX,numberY);
+    public void draw(SpriteBatch batch, String content, float x, float y){
+        font.draw(batch, content, x,y);
     }
 
     public void dispose(){

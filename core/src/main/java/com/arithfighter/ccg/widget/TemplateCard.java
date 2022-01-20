@@ -27,7 +27,7 @@ public class TemplateCard {
 
         card = new Sprite(texture);
         card.setColor(color);
-        card.setPosition(initX, initY);
+        card.setPosition(cardX, cardY);
         card.setSize(cardWidth, cardHeight);
 
         text = new Font(30);
