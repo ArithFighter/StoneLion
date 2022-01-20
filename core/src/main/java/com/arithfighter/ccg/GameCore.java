@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.widget.Desk;
+import com.arithfighter.ccg.widget.GameDataDisplacer;
 import com.arithfighter.ccg.widget.Hand;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -11,13 +12,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameCore {
     AssetManager assetManager = new AssetManager();
     FileLibrary fileLibrary = new FileLibrary();
-    AUD aud;
     Hand hand;
     Desk desk;
+    GameDataDisplacer dataDisplacer;
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
-    int score = 0;
+    int cardOnDesk = 0;
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -36,7 +37,7 @@ public class GameCore {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (desk.isOnDesk(mouseX,mouseY)){
                 if (hand.isCardActive())
-                    score++;
+                    cardOnDesk++;
             }
             hand.resetHand();
             return true;
@@ -49,8 +50,6 @@ public class GameCore {
 
         assetManager.finishLoading();
 
-        aud = new AUD();
-
         storeTextures();
 
         hand = new Hand(textures[0]);
@@ -60,6 +59,8 @@ public class GameCore {
         Gdx.input.setInputProcessor(mouseAdapter);
 
         desk = new Desk(textures[1], 18);
+
+        dataDisplacer = new GameDataDisplacer();
     }
 
     private void storeTextures(){
@@ -89,13 +90,12 @@ public class GameCore {
         hand.draw(batch);
         hand.checkTouchingCard(mouseX,mouseY);
 
-        aud.showData(mouseX,mouseY, batch);
-        aud.showScore(String.valueOf(score), batch);
+        dataDisplacer.drawMousePos(mouseX,mouseY,batch);
+        dataDisplacer.drawRecord(cardOnDesk, batch);
     }
 
     public void dispose() {
         hand.dispose();
-        aud.dispose();
         batch.dispose();
     }
 }
