@@ -39,8 +39,10 @@ public class GameCore {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (desk.isOnDesk(mouseX, mouseY)) {
-                if (hand.isCardActive())
+                if (hand.isCardActive()){
                     cardOnDesk++;
+                    sum+=hand.getCardNumber();
+                }
             }
             hand.resetHand();
             return true;

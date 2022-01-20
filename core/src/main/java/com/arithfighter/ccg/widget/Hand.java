@@ -11,7 +11,7 @@ public class Hand {
     float initX = WindowSetting.CENTER_X;
     float initY = 0;
     float padding;
-    int[] numberSet = {2, 3, 9, 0};
+    int[] numberSet = {2, 3, 9, -15};
 
     public Hand(Texture texture) {
         whiteCard = new TemplateCard(initX, initY, Color.WHITE, texture, String.valueOf(numberSet[0]));
@@ -27,6 +27,10 @@ public class Hand {
     public void draw(SpriteBatch batch) {
         for (TemplateCard card : cards)
             card.draw(batch);
+    }
+
+    public int getCardNumber(){
+        return numberSet[getActiveCardIndex()];
     }
 
     public void checkTouchingCard(float x, float y) {
@@ -50,12 +54,16 @@ public class Hand {
     }
 
     public boolean isCardActive() {
+        return cards[getActiveCardIndex()].isActive();
+    }
+
+    private int getActiveCardIndex(){
         int condition = 0;
-        for (int i = 0; i < cards.length; i++)
+        for (int i = 0; i < cards.length; i++){
             if (cards[i].isActive())
                 condition = i;
-
-        return cards[condition].isActive();
+        }
+        return condition;
     }
 
     public void dispose() {
