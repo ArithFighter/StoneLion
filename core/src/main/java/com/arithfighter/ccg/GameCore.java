@@ -26,19 +26,19 @@ public class GameCore {
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            hand.checkActive(mouseX,mouseY);
+            hand.checkActive(mouseX, mouseY);
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            hand.updateWhenDrag(mouseX,mouseY);
+            hand.updateWhenDrag(mouseX, mouseY);
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (desk.isOnDesk(mouseX,mouseY)){
+            if (desk.isOnDesk(mouseX, mouseY)) {
                 if (hand.isCardActive())
                     cardOnDesk++;
             }
@@ -65,12 +65,12 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        sumDisplacer = new SumDisplacer(textures[2], 450,400);
+        sumDisplacer = new SumDisplacer(textures[2], 450, 400);
     }
 
-    private void storeTextures(){
+    private void storeTextures() {
         textures = new Texture[fileLibrary.getTextureFile().length];
-        for (int i = 0; i<fileLibrary.getTextureFile().length;i++)
+        for (int i = 0; i < fileLibrary.getTextureFile().length; i++)
             textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
     }
 
@@ -86,19 +86,19 @@ public class GameCore {
 
     private void updateMousePosition() {
         mouseX = Gdx.input.getX();
-        mouseY = Gdx.graphics.getHeight()-Gdx.input.getY();
+        mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
     }
 
     private void drawComponent() {
         desk.draw(batch);
 
-        hand.draw(batch);
-        hand.checkTouchingCard(mouseX,mouseY);
-
-        dataDisplacer.drawMousePos(mouseX,mouseY,batch);
-        dataDisplacer.drawRecord(cardOnDesk, batch);
-
         sumDisplacer.draw(String.valueOf(sum), batch);
+
+        hand.draw(batch);
+        hand.checkTouchingCard(mouseX, mouseY);
+
+        dataDisplacer.drawMousePos(mouseX, mouseY, batch);
+        dataDisplacer.drawRecord(cardOnDesk, batch);
     }
 
     public void dispose() {
