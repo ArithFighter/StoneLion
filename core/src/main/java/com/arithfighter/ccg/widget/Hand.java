@@ -11,7 +11,7 @@ public class Hand {
     float initX = WindowSetting.CENTER_X;
     float initY = 0;
     float padding;
-    int[] numberSet = {2, 3, 9, -15};
+    int[] numberSet = {2, 3, 9, 0};
 
     public Hand(Texture texture) {
         whiteCard = new TemplateCard(initX, initY, Color.WHITE, texture, String.valueOf(numberSet[0]));
@@ -19,7 +19,7 @@ public class Hand {
 
         greenCard = new TemplateCard(initX + padding, initY, Color.GREEN, texture, String.valueOf(numberSet[1]));
         yellowCard = new TemplateCard(initX + padding * 2, initY, Color.YELLOW, texture, String.valueOf(numberSet[2]));
-        purpleCard = new TemplateCard(initX + padding * 3, initY, Color.PURPLE, texture, String.valueOf(numberSet[3]));
+        purpleCard = new TemplateCard(initX + padding * 3, initY, Color.PURPLE, texture, "RE");
 
         cards = new TemplateCard[]{whiteCard, greenCard, yellowCard, purpleCard};
     }
@@ -31,6 +31,10 @@ public class Hand {
 
     public int getCardNumber(){
         return numberSet[getActiveCardIndex()];
+    }
+
+    public boolean isResetCard(){
+        return getActiveCardIndex() == 3;
     }
 
     public void checkTouchingCard(float x, float y) {

@@ -38,16 +38,26 @@ public class GameCore {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (desk.isOnDesk(mouseX, mouseY)) {
-                if (hand.isCardActive()){
-                    cardOnDesk++;
-                    sum+=hand.getCardNumber();
-                }
-            }
+            if (desk.isOnDesk(mouseX, mouseY))
+                if (hand.isCardActive())
+                    doWhenCardPlayed();
+
             hand.resetHand();
             return true;
         }
     };
+
+    private void doWhenCardPlayed(){
+        cardOnDesk++;
+        sum+=hand.getCardNumber();
+
+        checkResetCardIsPlayed();
+    }
+
+    private void checkResetCardIsPlayed(){
+        if (hand.isResetCard())
+            sum-=sum;
+    }
 
     public void create() {
         for (String textureFile : fileLibrary.getTextureFile())
