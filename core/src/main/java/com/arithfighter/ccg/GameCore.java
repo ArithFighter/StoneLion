@@ -1,9 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.widget.Desk;
-import com.arithfighter.ccg.widget.GameDataDisplacer;
-import com.arithfighter.ccg.widget.Hand;
-import com.arithfighter.ccg.widget.SumDisplacer;
+import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,6 +14,7 @@ public class GameCore {
     Desk desk;
     GameDataDisplacer dataDisplacer;
     SumDisplacer sumDisplacer;
+    NumberBox numberBox;
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
@@ -78,6 +76,8 @@ public class GameCore {
         dataDisplacer = new GameDataDisplacer();
 
         sumDisplacer = new SumDisplacer(textures[2], 450, 400);
+
+        numberBox = new NumberBox(textures[3], 300, 350);
     }
 
     private void storeTextures() {
@@ -111,6 +111,8 @@ public class GameCore {
 
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
         dataDisplacer.drawRecord(cardOnDesk, batch);
+
+        numberBox.draw(16, batch);
     }
 
     public void dispose() {
@@ -118,5 +120,6 @@ public class GameCore {
         batch.dispose();
         dataDisplacer.dispose();
         sumDisplacer.dispose();
+        numberBox.dispose();
     }
 }

@@ -9,7 +9,7 @@ public class NumberBox {
     Font text;
     Sprite box;
     float x, y, width, height;
-    int scale = 6;
+    int scale = 4;
     int fontSize = 32;
 
     public NumberBox(Texture texture, float initX, float initY){
@@ -35,5 +35,9 @@ public class NumberBox {
         
         text.setColor(Color.WHITE);
         text.draw(batch, content, textX, textY);
+    }
+
+    public void dispose(){
+        text.dispose();
     }
 }
