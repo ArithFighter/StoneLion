@@ -76,8 +76,9 @@ public class TemplateCard {
     }
 
     private float updateWhenOutOfWindow(float current, float limit) {
+        int minimum = -45;
         if (current > limit) current = limit;
-        if (current < 0) current = 0;
+        if (current < minimum) current = minimum;
         return current;
     }
 

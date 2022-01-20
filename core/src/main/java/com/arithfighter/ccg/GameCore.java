@@ -117,5 +117,6 @@ public class GameCore {
         hand.dispose();
         batch.dispose();
         dataDisplacer.dispose();
+        sumDisplacer.dispose();
     }
 }

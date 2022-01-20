@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
-    TemplateCard whiteCard, greenCard, yellowCard, purpleCard;
+    TemplateCard whiteCard, greenCard, goldenCard, purpleCard;
     TemplateCard[] cards;
     float initX = WindowSetting.CENTER_X;
     float initY = 0;
@@ -18,10 +18,10 @@ public class Hand {
         padding = whiteCard.getWidth() + WindowSetting.GRID_X;
 
         greenCard = new TemplateCard(initX + padding, initY, Color.GREEN, texture, String.valueOf(numberSet[1]));
-        yellowCard = new TemplateCard(initX + padding * 2, initY, Color.YELLOW, texture, String.valueOf(numberSet[2]));
+        goldenCard = new TemplateCard(initX + padding * 2, initY, Color.GOLD, texture, String.valueOf(numberSet[2]));
         purpleCard = new TemplateCard(initX + padding * 3, initY, Color.PURPLE, texture, "RE");
 
-        cards = new TemplateCard[]{whiteCard, greenCard, yellowCard, purpleCard};
+        cards = new TemplateCard[]{whiteCard, greenCard, goldenCard, purpleCard};
     }
 
     public void draw(SpriteBatch batch) {
