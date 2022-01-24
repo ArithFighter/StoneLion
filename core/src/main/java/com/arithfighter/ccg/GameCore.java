@@ -75,7 +75,8 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        sumDisplacer = new SumDisplacer(textures[2], 450, 400);
+        sumDisplacer = new SumDisplacer(textures[2],
+                WindowSetting.CENTER_X+WindowSetting.GRID_X*6, WindowSetting.CENTER_Y);
 
         numberBox = new NumberBox(textures[3], 300, 350);
     }

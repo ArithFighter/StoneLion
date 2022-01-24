@@ -13,7 +13,7 @@ public class Desk {
     float deskHeight;
     
     public Desk(Texture texture, float scale){
-        deskX = WindowSetting.GRID_X*4;
+        deskX = WindowSetting.GRID_X*6;
         deskY = WindowSetting.GRID_Y*6;
 
         desk = new Sprite(texture);

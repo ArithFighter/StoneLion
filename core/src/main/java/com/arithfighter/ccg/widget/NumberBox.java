@@ -9,8 +9,8 @@ public class NumberBox {
     Font text;
     Sprite box;
     float x, y, width, height;
-    int scale = 4;
-    int fontSize = 32;
+    int scale = 3;
+    int fontSize = 28;
 
     public NumberBox(Texture texture, float initX, float initY){
         text = new Font(fontSize);
@@ -26,7 +26,7 @@ public class NumberBox {
     }
 
     public void draw(int number, SpriteBatch batch){
-        box.setColor(Color.TEAL);
+        box.setColor(0,0.9f,0.9f,1);
         box.draw(batch);
 
         String content = String.valueOf(number);

@@ -21,7 +21,7 @@ public class SumDisplacer {
         height = texture.getHeight()*scale;
 
         sumDisplayBlock = new Sprite(texture);
-        sumDisplayBlock.setColor(Color.TEAL);
+        sumDisplayBlock.setColor(Color.GOLDENROD);
         sumDisplayBlock.setPosition(x,y);
         sumDisplayBlock.setSize(width, height);
     }
