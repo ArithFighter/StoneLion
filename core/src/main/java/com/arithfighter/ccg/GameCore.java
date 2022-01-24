@@ -71,9 +71,9 @@ public class GameCore {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        table = new Table(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
-
         dataDisplacer = new GameDataDisplacer();
+
+        table = new Table(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
 
         sumDisplacer = new SumDisplacer(textures[2],
                 WindowSetting.CENTER_X+WindowSetting.GRID_X*6, WindowSetting.CENTER_Y);
