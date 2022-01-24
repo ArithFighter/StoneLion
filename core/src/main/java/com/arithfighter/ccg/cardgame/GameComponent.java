@@ -1,5 +1,7 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.cardgame;
 
+import com.arithfighter.ccg.Layout;
+import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.widget.Hand;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.arithfighter.ccg.widget.SumDisplacer;
@@ -7,7 +9,7 @@ import com.arithfighter.ccg.widget.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameComponent implements WindowSetting{
+public class GameComponent implements WindowSetting {
     Hand hand;
     Table table;
     SumDisplacer sumDisplacer;
@@ -50,14 +52,16 @@ public class GameComponent implements WindowSetting{
 
     public void doWhenCardPlayed() {}
 
-    public void draw(SpriteBatch batch, int sum, int number, int mouseX, int mouseY) {
+    public void drawTableAndNumbers(SpriteBatch batch, int sum, int[] number) {
         table.draw(batch);
 
-        for (NumberBox numberBox:numberBoxes)
-            numberBox.draw(number, batch);
+        for (int i = 0; i<numberBoxes.length;i++)
+            numberBoxes[i].draw(number[i], batch);
 
         sumDisplacer.draw(sum, batch);
+    }
 
+    public void drawHand(SpriteBatch batch, int mouseX, int mouseY){
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
     }

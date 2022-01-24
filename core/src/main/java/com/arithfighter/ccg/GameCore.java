@@ -1,5 +1,6 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.cardgame.GameComponent;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -17,7 +18,7 @@ public class GameCore {
     Texture[] textures;
     int cardOnDesk = 0;
     int sum = 0;
-    int number = 16;
+    int[] numbers = {6,9,17,22,26,11,13,18,19};
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -57,7 +58,7 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 cardOnDesk++;
-                sum += hand.getCardNumber();
+                sum += gameComponent.getHand().getCardNumber();
 
                 if (gameComponent.getHand().isResetCard())
                     sum -= sum;
@@ -91,7 +92,8 @@ public class GameCore {
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
         dataDisplacer.drawRecord(cardOnDesk, batch);
 
-        gameComponent.draw(batch, sum, number, mouseX, mouseY);
+        gameComponent.drawTableAndNumbers(batch, sum, numbers);
+        gameComponent.drawHand(batch, mouseX, mouseY);
     }
 
     public void dispose() {
