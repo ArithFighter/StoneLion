@@ -11,7 +11,7 @@ public class GameCore {
     AssetManager assetManager = new AssetManager();
     FileLibrary fileLibrary = new FileLibrary();
     Hand hand;
-    Desk desk;
+    Table table;
     GameDataDisplacer dataDisplacer;
     SumDisplacer sumDisplacer;
     NumberBox numberBox;
@@ -36,7 +36,7 @@ public class GameCore {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (desk.isOnDesk(mouseX, mouseY))
+            if (table.isOnDesk(mouseX, mouseY))
                 if (hand.isCardActive())
                     doWhenCardPlayed();
 
@@ -71,7 +71,7 @@ public class GameCore {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        desk = new Desk(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
+        table = new Table(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
 
         dataDisplacer = new GameDataDisplacer();
 
@@ -103,7 +103,7 @@ public class GameCore {
     }
 
     private void drawComponent() {
-        desk.draw(batch);
+        table.draw(batch);
 
         sumDisplacer.draw(String.valueOf(sum), batch);
 

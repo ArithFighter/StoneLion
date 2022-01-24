@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Desk {
+public class Table {
     int deskX;
     int deskY;
     float deskWidth;
@@ -12,7 +12,7 @@ public class Desk {
     float scale = 20;
     Sprite desk;
 
-    public Desk(Texture texture, int x, int y){
+    public Table(Texture texture, int x, int y){
         deskX = x;
         deskY = y;
         deskWidth = texture.getWidth()*scale;
