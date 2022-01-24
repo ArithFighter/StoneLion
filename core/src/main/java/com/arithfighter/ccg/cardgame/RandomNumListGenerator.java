@@ -8,17 +8,17 @@ public class RandomNumListGenerator {
     private static final double MIN_NUMBER = 5;
     private static final int MAX_QUANTITY = 9;
 
-    public void generateNumbers(LinkedList<Integer> problemList,
+    public void generateNumbers(LinkedList<Integer> numberList,
                                 HashSet<Integer> numberSet) {
-        if (problemList.size() < MAX_QUANTITY) {
-            addNumbersToList(problemList, numberSet);
+        if (numberList.size() < MAX_QUANTITY) {
+            addNumbersToList(numberList, numberSet);
         }
     }
 
-    private void addNumbersToList(LinkedList<Integer> problemList,
+    private void addNumbersToList(LinkedList<Integer> numberList,
                                   HashSet<Integer> numberSet) {
         addNumberUntilEqualToQuantity(MAX_QUANTITY, numberSet);
-        problemList.addAll(numberSet);
+        numberList.addAll(numberSet);
     }
 
     private void addNumberUntilEqualToQuantity(

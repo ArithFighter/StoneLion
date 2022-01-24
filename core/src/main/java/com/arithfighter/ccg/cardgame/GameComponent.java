@@ -9,12 +9,15 @@ import com.arithfighter.ccg.widget.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.LinkedList;
+
 public class GameComponent implements WindowSetting {
     Hand hand;
     Table table;
     SumDisplacer sumDisplacer;
     NumberBox numberBox;
     NumberBox[] numberBoxes;
+    int[] numbers;
     Layout layout = new Layout(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
     public GameComponent(Texture[] textures) {
@@ -36,6 +39,18 @@ public class GameComponent implements WindowSetting {
                     layout.getNumberBoxX(i, numberBox.getWidth()),
                     layout.getNumberBoxY(i, numberBox.getHeight()));
         }
+
+        numbers = new int[numberBoxQuantity];
+    }
+
+    public void getNumbers(int[] numbers){
+        for (int i = 0; i<this.numbers.length; i++)
+            this.numbers[i] = numbers[i];
+    }
+
+    public void getNumbers(LinkedList<Integer> numberList){
+        for (int i = 0; i<this.numbers.length; i++)
+            this.numbers[i] = numberList.get(i);
     }
 
     public Hand getHand() {
@@ -52,11 +67,11 @@ public class GameComponent implements WindowSetting {
 
     public void doWhenCardPlayed() {}
 
-    public void drawTableAndNumbers(SpriteBatch batch, int sum, int[] number) {
+    public void drawTableAndNumbers(SpriteBatch batch, int sum) {
         table.draw(batch);
 
         for (int i = 0; i<numberBoxes.length;i++)
-            numberBoxes[i].draw(number[i], batch);
+            numberBoxes[i].draw(numbers[i], batch);
 
         sumDisplacer.draw(sum, batch);
     }

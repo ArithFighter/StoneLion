@@ -1,12 +1,17 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.cardgame.GameComponent;
+import com.arithfighter.ccg.cardgame.RandomNumListGenerator;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.HashSet;
+import java.util.LinkedList;
 
 public class GameCore {
     AssetManager assetManager = new AssetManager();
@@ -19,6 +24,9 @@ public class GameCore {
     int cardOnDesk = 0;
     int sum = 0;
     int[] numbers = {6,9,17,22,26,11,13,18,19};
+    LinkedList<Integer> numberList = new LinkedList<>();
+    HashSet<Integer> numberSet = new HashSet<>();
+    RandomNumListGenerator rng = new RandomNumListGenerator();
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -74,9 +82,18 @@ public class GameCore {
     }
 
     public void render() {
+        rng.generateNumbers(numberList,numberSet);
+
         assetManager.update(17);
 
         updateMousePosition();
+
+        gameComponent.getNumbers(numberList);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            numberSet.clear();
+            numberList.clear();
+        }
 
         batch.begin();
         drawComponent();
@@ -92,7 +109,7 @@ public class GameCore {
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
         dataDisplacer.drawRecord(cardOnDesk, batch);
 
-        gameComponent.drawTableAndNumbers(batch, sum, numbers);
+        gameComponent.drawTableAndNumbers(batch, sum);
         gameComponent.drawHand(batch, mouseX, mouseY);
     }
 
