@@ -108,6 +108,9 @@ public class Card {
 
     private boolean isOnCard(float x, float y) {
         int tolerance = 20;
+        if(isActive()){
+            tolerance*=4;
+        }
         return x > cardX - tolerance &&
                 x < cardX + cardWidth + tolerance &&
                 y > cardY - tolerance &&
