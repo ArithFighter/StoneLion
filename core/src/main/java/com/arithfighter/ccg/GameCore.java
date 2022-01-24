@@ -34,7 +34,7 @@ public class GameCore {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            gameComponent.whenDropCardOnTable(mouseX, mouseY);
+            gameComponent.whenPlayCardOnTable(mouseX, mouseY);
             return true;
         }
     };
@@ -46,7 +46,6 @@ public class GameCore {
         assetManager.finishLoading();
 
         storeTextures();
-
 
         batch = new SpriteBatch();
 

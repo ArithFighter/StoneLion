@@ -28,12 +28,12 @@ public class GameComponent {
         return hand;
     }
 
-    public final void whenDropCardOnTable(int mouseX, int mouseY){
-        if (table.isOnDesk(mouseX, mouseY))
-                if (hand.isCardActive())
-                    doWhenCardPlayed();
-
-            hand.resetHand();
+    public final void whenPlayCardOnTable(int mouseX, int mouseY){
+        if (table.isOnDesk(mouseX, mouseY)){
+            if (hand.isCardActive())
+                doWhenCardPlayed();
+        }
+        hand.resetHand();
     }
 
     public void doWhenCardPlayed() {}

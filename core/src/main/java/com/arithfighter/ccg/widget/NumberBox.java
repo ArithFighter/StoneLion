@@ -25,6 +25,14 @@ public class NumberBox {
         box.setSize(width, height);
     }
 
+    public float getWidth(){
+        return width;
+    }
+
+    public float getHeight(){
+        return height;
+    }
+
     public void draw(int number, SpriteBatch batch){
         box.setColor(0,0.9f,0.9f,1);
         box.draw(batch);
