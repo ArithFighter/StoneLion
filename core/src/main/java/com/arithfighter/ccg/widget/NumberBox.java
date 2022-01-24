@@ -9,7 +9,7 @@ public class NumberBox {
     Font text;
     Sprite box;
     float x, y, width, height;
-    int scale = 4;
+    float scale = 3.5f;
     int fontSize = 32;
 
     public NumberBox(Texture texture, float initX, float initY){

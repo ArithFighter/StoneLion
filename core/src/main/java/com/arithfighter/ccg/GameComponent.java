@@ -13,15 +13,15 @@ public class GameComponent implements WindowSetting{
     SumDisplacer sumDisplacer;
     NumberBox numberBox;
     NumberBox[] numberBoxes;
-    Layout layout = new Layout(GRID_X*6,GRID_Y*6,GRID_X);
+    Layout layout = new Layout(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
     public GameComponent(Texture[] textures) {
         hand = new Hand(textures[0]);
 
-        table = new Table(textures[1], GRID_X * 6, GRID_Y * 6);
+        table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
         sumDisplacer = new SumDisplacer(textures[2],
-                CENTER_X + GRID_X * 6, CENTER_Y);
+                CENTER_X + GRID_X * 8, GRID_Y*7);
 
         numberBox = new NumberBox(textures[3], 300, 350);
 
@@ -53,13 +53,13 @@ public class GameComponent implements WindowSetting{
     public void draw(SpriteBatch batch, int sum, int number, int mouseX, int mouseY) {
         table.draw(batch);
 
+        for (NumberBox numberBox:numberBoxes)
+            numberBox.draw(number, batch);
+
         sumDisplacer.draw(sum, batch);
 
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
-
-        for (NumberBox numberBox:numberBoxes)
-            numberBox.draw(number, batch);
     }
 
     public void dispose() {

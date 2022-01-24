@@ -9,8 +9,8 @@ public class SumDisplacer {
     Font text;
     Sprite sumDisplayBlock;
     float x, y, width, height;
-    int scale = 6;
-    int fontSize = 32;
+    int scale = 10;
+    int fontSize = 36;
     
     public SumDisplacer(Texture texture, float initX, float initY){
         text = new Font(fontSize);

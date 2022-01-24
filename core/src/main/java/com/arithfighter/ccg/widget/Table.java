@@ -9,7 +9,7 @@ public class Table {
     int deskY;
     float deskWidth;
     float deskHeight;
-    float scale = 20;
+    float scale = 14;
     Sprite desk;
 
     public Table(Texture texture, int x, int y){
