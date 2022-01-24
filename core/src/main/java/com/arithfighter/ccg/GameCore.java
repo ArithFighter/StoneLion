@@ -10,52 +10,34 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameCore {
     AssetManager assetManager = new AssetManager();
     FileLibrary fileLibrary = new FileLibrary();
-    Hand hand;
-    Table table;
     GameDataDisplacer dataDisplacer;
-    SumDisplacer sumDisplacer;
-    NumberBox numberBox;
+    GameComponent gameComponent;
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
     int cardOnDesk = 0;
     int sum = 0;
+    int number = 16;
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            hand.checkActive(mouseX, mouseY);
+            gameComponent.getHand().checkActive(mouseX, mouseY);
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            hand.updateWhenDrag(mouseX, mouseY);
+            gameComponent.getHand().updateWhenDrag(mouseX, mouseY);
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (table.isOnDesk(mouseX, mouseY))
-                if (hand.isCardActive())
-                    doWhenCardPlayed();
-
-            hand.resetHand();
+            gameComponent.whenDropCardOnTable(mouseX, mouseY);
             return true;
         }
     };
-
-    private void doWhenCardPlayed(){
-        cardOnDesk++;
-        sum+=hand.getCardNumber();
-
-        checkResetCardIsPlayed();
-    }
-
-    private void checkResetCardIsPlayed(){
-        if (hand.isResetCard())
-            sum-=sum;
-    }
 
     public void create() {
         for (String textureFile : fileLibrary.getTextureFile())
@@ -65,7 +47,6 @@ public class GameCore {
 
         storeTextures();
 
-        hand = new Hand(textures[0]);
 
         batch = new SpriteBatch();
 
@@ -73,12 +54,17 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        table = new Table(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
+        gameComponent = new GameComponent(textures) {
+            @Override
+            public void doWhenCardPlayed() {
+                cardOnDesk++;
+                sum += hand.getCardNumber();
 
-        sumDisplacer = new SumDisplacer(textures[2],
-                WindowSetting.CENTER_X+WindowSetting.GRID_X*6, WindowSetting.CENTER_Y);
+                if (gameComponent.getHand().isResetCard())
+                    sum -= sum;
+            }
+        };
 
-        numberBox = new NumberBox(textures[3], 300, 350);
     }
 
     private void storeTextures() {
@@ -103,24 +89,15 @@ public class GameCore {
     }
 
     private void drawComponent() {
-        table.draw(batch);
-
-        sumDisplacer.draw(String.valueOf(sum), batch);
-
-        hand.draw(batch);
-        hand.checkTouchingCard(mouseX, mouseY);
-
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
         dataDisplacer.drawRecord(cardOnDesk, batch);
 
-        numberBox.draw(16, batch);
+        gameComponent.draw(batch, sum, number, mouseX, mouseY);
     }
 
     public void dispose() {
-        hand.dispose();
         batch.dispose();
         dataDisplacer.dispose();
-        sumDisplacer.dispose();
-        numberBox.dispose();
+        gameComponent.dispose();
     }
 }

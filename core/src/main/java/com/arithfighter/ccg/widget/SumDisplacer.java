@@ -26,9 +26,10 @@ public class SumDisplacer {
         sumDisplayBlock.setSize(width, height);
     }
 
-    public void draw(String sum, SpriteBatch batch){
+    public void draw(int number, SpriteBatch batch){
         sumDisplayBlock.draw(batch);
 
+        String sum = String.valueOf(number);
         float textX = x+width/2-sum.length()*fontSize/2f;
         float textY = y+(height+fontSize)/2;
 

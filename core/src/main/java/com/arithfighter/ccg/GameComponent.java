@@ -13,7 +13,7 @@ public class GameComponent {
     SumDisplacer sumDisplacer;
     NumberBox numberBox;
 
-    public void create(Texture[] textures) {
+    public GameComponent(Texture[] textures) {
         hand = new Hand(textures[0]);
 
         table = new Table(textures[1], WindowSetting.GRID_X * 6, WindowSetting.GRID_Y * 6);
@@ -24,11 +24,21 @@ public class GameComponent {
         numberBox = new NumberBox(textures[3], 300, 350);
     }
 
-    public Hand getHand(){
+    public Hand getHand() {
         return hand;
     }
 
-    public void draw(SpriteBatch batch, String sum, int mouseX, int mouseY) {
+    public final void whenDropCardOnTable(int mouseX, int mouseY){
+        if (table.isOnDesk(mouseX, mouseY))
+                if (hand.isCardActive())
+                    doWhenCardPlayed();
+
+            hand.resetHand();
+    }
+
+    public void doWhenCardPlayed() {}
+
+    public void draw(SpriteBatch batch, int sum, int number, int mouseX, int mouseY) {
         table.draw(batch);
 
         sumDisplacer.draw(sum, batch);
@@ -36,7 +46,7 @@ public class GameComponent {
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
 
-        numberBox.draw(16, batch);
+        numberBox.draw(number, batch);
     }
 
     public void dispose() {
