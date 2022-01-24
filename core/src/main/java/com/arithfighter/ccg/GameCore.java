@@ -23,7 +23,6 @@ public class GameCore {
     Texture[] textures;
     int cardOnDesk = 0;
     int sum = 0;
-    int[] numbers = {6,9,17,22,26,11,13,18,19};
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator rng = new RandomNumListGenerator();
@@ -72,7 +71,6 @@ public class GameCore {
                     sum -= sum;
             }
         };
-
     }
 
     private void storeTextures() {
@@ -82,11 +80,11 @@ public class GameCore {
     }
 
     public void render() {
-        rng.generateNumbers(numberList,numberSet);
-
         assetManager.update(17);
 
         updateMousePosition();
+
+        rng.generateNumbers(numberList,numberSet);
 
         gameComponent.getNumbers(numberList);
 
