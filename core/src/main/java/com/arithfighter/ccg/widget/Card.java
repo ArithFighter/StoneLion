@@ -6,17 +6,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TemplateCard {
+public class Card {
     float initX, initY;
     float cardX, cardY, cardWidth, cardHeight;
-    float scale = 4;
+    float scale = 3f;
     enum CardState {ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
     Sprite card;
     Font text;
     String number;
 
-    public TemplateCard(float initX, float initY, Color color, Texture texture, String number) {
+    public Card(float initX, float initY, Color color, Texture texture, String number) {
         this.initX = initX;
         this.initY = initY;
         cardWidth = texture.getWidth() * scale;
@@ -107,7 +107,7 @@ public class TemplateCard {
     }
 
     private boolean isOnCard(float x, float y) {
-        int tolerance = 25;
+        int tolerance = 20;
         return x > cardX - tolerance &&
                 x < cardX + cardWidth + tolerance &&
                 y > cardY - tolerance &&

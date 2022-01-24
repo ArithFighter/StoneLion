@@ -26,7 +26,9 @@ public class GameComponent implements WindowSetting{
         numberBox = new NumberBox(textures[3], 300, 350);
 
         int numberBoxQuantity = 9;
+
         numberBoxes = new NumberBox[numberBoxQuantity];
+
         for (int i = 0; i< numberBoxQuantity; i++){
             numberBoxes[i] = new NumberBox(textures[3],
                     layout.getNumberBoxX(i, numberBox.getWidth()),
@@ -56,8 +58,6 @@ public class GameComponent implements WindowSetting{
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
 
-        numberBox.draw(number, batch);
-
         for (NumberBox numberBox:numberBoxes)
             numberBox.draw(number, batch);
     }
@@ -66,5 +66,7 @@ public class GameComponent implements WindowSetting{
         hand.dispose();
         sumDisplacer.dispose();
         numberBox.dispose();
+        for (NumberBox numberBox:numberBoxes)
+            numberBox.dispose();
     }
 }
