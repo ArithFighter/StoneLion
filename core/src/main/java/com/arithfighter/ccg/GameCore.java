@@ -71,7 +71,7 @@ public class GameCore {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        desk = new Desk(textures[1], 18);
+        desk = new Desk(textures[1], WindowSetting.GRID_X*6, WindowSetting.GRID_Y*6);
 
         dataDisplacer = new GameDataDisplacer();
 

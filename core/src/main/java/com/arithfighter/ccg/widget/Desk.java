@@ -1,6 +1,5 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,20 +7,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Desk {
     int deskX;
     int deskY;
-    Sprite desk;
     float deskWidth;
     float deskHeight;
-    
-    public Desk(Texture texture, float scale){
-        deskX = WindowSetting.GRID_X*6;
-        deskY = WindowSetting.GRID_Y*6;
+    float scale = 20;
+    Sprite desk;
+
+    public Desk(Texture texture, int x, int y){
+        deskX = x;
+        deskY = y;
+        deskWidth = texture.getWidth()*scale;
+        deskHeight = texture.getHeight()*scale;
 
         desk = new Sprite(texture);
         desk.setPosition(deskX,deskY);
-        desk.setSize(texture.getWidth()*scale, texture.getHeight()*scale);
-
-        deskWidth = texture.getWidth()*scale;
-        deskHeight = texture.getHeight()*scale;
+        desk.setSize(deskWidth, deskHeight);
     }
     
     public void draw(SpriteBatch batch){
