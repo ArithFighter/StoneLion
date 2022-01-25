@@ -85,7 +85,7 @@ public class GameCore {
 
         updateMousePosition();
 
-        randomNumListGenerator.generateNumbers(numberList,numberSet);
+        randomNumListGenerator.generateNumbers(numberList, numberSet);
 
         gameComponent.getNumbers(numberList);
 
@@ -101,28 +101,32 @@ public class GameCore {
         mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
     }
 
-    private void setNumToZeroWhenMatchedSum(){
-        for (int i = 0; i< numberSet.size();i++){
-            if (sum == numberList.get(i)){
-                if (numberList.get(i)>0){
+    private void setNumToZeroWhenMatchedSum() {
+        for (int i = 0; i < numberSet.size(); i++) {
+            if (sum == numberList.get(i)) {
+                if (numberList.get(i) > 0) {
                     score++;
-                    numberList.set(i,0);
+                    numberList.set(i, 0);
                 }
             }
         }
     }
 
-    private void checkClearNumbers(){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
+    private void checkClearNumbers() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             numberSet.clear();
             numberList.clear();
-            record-=record;
-            sum-=sum;
-            score-=score;
+            resetVariable();
         }
     }
 
-    private void workSpriteBatch(){
+    private void resetVariable() {
+        record -= record;
+        sum -= sum;
+        score -= score;
+    }
+
+    private void workSpriteBatch() {
         batch.begin();
         drawComponent();
         batch.end();
