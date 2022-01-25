@@ -18,7 +18,7 @@ public class GameCore {
     FileLibrary fileLibrary = new FileLibrary();
     GameDataDisplacer dataDisplacer;
     GameComponent gameComponent;
-    int mouseX, mouseY;
+    CursorPositionAccessor cursorPos = new CursorPositionAccessor();
     SpriteBatch batch;
     Texture[] textures;
     SumAccessor sumAccessor = new SumAccessor();
@@ -31,19 +31,19 @@ public class GameCore {
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            gameComponent.getHand().checkActive(mouseX, mouseY);
+            gameComponent.getHand().checkActive(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            gameComponent.getHand().updateWhenDrag(mouseX, mouseY);
+            gameComponent.getHand().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            gameComponent.whenPlayCardOnTable(mouseX, mouseY);
+            gameComponent.whenPlayCardOnTable(cursorPos.getX(), cursorPos.getY());
             return true;
         }
     };
@@ -83,7 +83,7 @@ public class GameCore {
     public void render() {
         assetManager.update(17);
 
-        updateMousePosition();
+        cursorPos.updateCursorPosition();
 
         randomNumListGenerator.generateNumbers(numberList, numberSet);
 
@@ -100,11 +100,6 @@ public class GameCore {
         resetAnyThingsManually();
 
         workSpriteBatch();
-    }
-
-    private void updateMousePosition() {
-        mouseX = Gdx.input.getX();
-        mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
     }
 
     private void setNumToZeroWhenMatchedSum() {
@@ -142,12 +137,12 @@ public class GameCore {
     }
 
     private void drawComponent() {
-        dataDisplacer.drawMousePos(mouseX, mouseY, batch);
+        dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
         dataDisplacer.drawRecord(dataAccessor.getRecord(), batch);
         dataDisplacer.drawScoreBoard(dataAccessor.getScore(), batch);
 
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
-        gameComponent.drawHand(batch, mouseX, mouseY);
+        gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
     }
 
     public void dispose() {
