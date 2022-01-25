@@ -22,7 +22,8 @@ public class GameCore {
     SpriteBatch batch;
     Texture[] textures;
     SumAccessor sumAccessor = new SumAccessor();
-    DataAccessor dataAccessor = new DataAccessor();
+    Recorder playRecorder = new Recorder();
+    Recorder scoreRecorder = new Recorder();
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
@@ -65,7 +66,7 @@ public class GameCore {
         gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
-                dataAccessor.updateRecord();
+                playRecorder.update();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
 
                 if (gameComponent.getHand().isResetCard())
@@ -89,7 +90,7 @@ public class GameCore {
 
         gameComponent.getNumbers(numberList);
 
-        setNumToZeroWhenMatchedSum();
+        handleWhenNumMatchedSum();
 
         numberListInspector.inspectNumberList(numberList);
 
@@ -102,11 +103,11 @@ public class GameCore {
         workSpriteBatch();
     }
 
-    private void setNumToZeroWhenMatchedSum() {
+    private void handleWhenNumMatchedSum() {
         for (int i = 0; i < numberSet.size(); i++) {
             if (sumAccessor.getSum() == numberList.get(i)) {
                 if (numberList.get(i) > 0) {
-                    dataAccessor.updateScore();
+                    scoreRecorder.update();
                     numberList.set(i, 0);
                 }
             }
@@ -126,7 +127,8 @@ public class GameCore {
     }
 
     private void resetVariable() {
-        dataAccessor.resetData();
+        playRecorder.reset();
+        scoreRecorder.reset();
         sumAccessor.resetSum();
     }
 
@@ -138,8 +140,8 @@ public class GameCore {
 
     private void drawComponent() {
         dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
-        dataDisplacer.drawRecord(dataAccessor.getRecord(), batch);
-        dataDisplacer.drawScoreBoard(dataAccessor.getScore(), batch);
+        dataDisplacer.drawRecord(playRecorder.getRecord(), batch);
+        dataDisplacer.drawScoreBoard(scoreRecorder.getRecord(), batch);
 
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
         gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
