@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public class RandomNumListGenerator {
-    private static final double MAX_NUMBER = 30;
-    private static final double MIN_NUMBER = 5;
     private static final int MAX_QUANTITY = 9;
 
     public void generateNumbers(LinkedList<Integer> numberList, HashSet<Integer> numberSet) {
@@ -15,11 +13,16 @@ public class RandomNumListGenerator {
     }
 
     private void addNumbersToList(LinkedList<Integer> numberList, HashSet<Integer> numberSet) {
-        addNumberUntilEqualToQuantity(MAX_QUANTITY, numberSet);
+        NumSetGenerator nsg = new NumSetGenerator();
+
+        nsg.addNumberUntilEqualToQuantity(MAX_QUANTITY, numberSet);
+
         numberList.addAll(numberSet);
     }
+}
 
-    private void addNumberUntilEqualToQuantity(int quantity, HashSet<Integer> numberSet) {
+class NumSetGenerator{
+    public void addNumberUntilEqualToQuantity(int quantity, HashSet<Integer> numberSet) {
         addRandomNumberToSet(quantity, numberSet);
 
         while (numberSet.size() < quantity)
@@ -27,12 +30,18 @@ public class RandomNumListGenerator {
     }
 
     private void addRandomNumberToSet(int quantity, HashSet<Integer> numberSet) {
-        for (int i = 0; i < quantity; i++)
-            generateRandomNumber(numberSet);
-    }
+        RandomNumProducer rnp = new RandomNumProducer();
 
-    private void generateRandomNumber(HashSet<Integer> numberSet) {
-        numberSet.add((int)
-                (Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER + 1));
+        for (int i = 0; i < quantity; i++)
+            numberSet.add(rnp.getRandomNum());
+    }
+}
+
+class RandomNumProducer{
+    private static final double MAX_NUMBER = 30;
+    private static final double MIN_NUMBER = 5;
+
+    public int getRandomNum(){
+        return (int)(Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER + 1);
     }
 }
