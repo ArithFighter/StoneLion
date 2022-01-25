@@ -17,12 +17,15 @@ public class RandomNumArrayGenerator {
         numberSet.clear();
     }
 
+    public void setNumberInListToZero(int index){
+        numberList.set(index,0);
+    }
+
     public int[] generateNumbers() {
         int[] numArray = new int[MAX_QUANTITY];
 
-        if (numberList.size() < MAX_QUANTITY) {
-            addNumbersToList();
-        }
+        addNumbersToList();
+
         for (int i = 0; i<numberList.size();i++)
             numArray[i] = numberList.get(i);
 
@@ -30,9 +33,11 @@ public class RandomNumArrayGenerator {
     }
 
     private void addNumbersToList() {
-        addNumberUntilEqualToQuantity(MAX_QUANTITY);
+        if (numberList.size() < MAX_QUANTITY) {
+            addNumberUntilEqualToQuantity(MAX_QUANTITY);
 
-        numberList.addAll(numberSet);
+            numberList.addAll(numberSet);
+        }
     }
 
     private void addNumberUntilEqualToQuantity(int quantity) {

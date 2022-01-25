@@ -88,7 +88,7 @@ public class GameCore {
 
         handleWhenNumMatchedSum();
 
-//        numberListInspector.inspectNumberList(numberList);
+        numberListInspector.inspectNumberList(numberList);
 
         if (numberListInspector.isAllNumberAreZero()){
             randomNumArrayGenerator.clear();
@@ -100,14 +100,14 @@ public class GameCore {
     }
 
     private void handleWhenNumMatchedSum() {
-//        for (int i = 0; i < numberSet.size(); i++) {
-//            if (sumAccessor.getSum() == numberList.get(i)) {
-//                if (numberList.get(i) > 0) {
-//                    scoreRecorder.update();
-//                    numberList.set(i, 0);
-//                }
-//            }
-//        }
+        for (int i = 0; i < randomNumArrayGenerator.getMaxQuantity(); i++) {
+            if (sumAccessor.getSum() == numberList[i]) {
+                if (numberList[i] > 0) {
+                    scoreRecorder.update();
+                    randomNumArrayGenerator.setNumberInListToZero(i);
+                }
+            }
+        }
     }
 
     private void resetAnyThingsManually() {

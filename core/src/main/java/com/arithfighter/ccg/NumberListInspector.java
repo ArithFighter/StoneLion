@@ -1,12 +1,10 @@
 package com.arithfighter.ccg;
 
-import java.util.LinkedList;
-
 public class NumberListInspector {
     int sumOfNumInspector = -1;
     boolean allNumAreZero = false;
 
-    public final void inspectNumberList(LinkedList<Integer> numberList) {
+    public final void inspectNumberList(int[] numberList) {
         checkEveryNumInListAreZero(numberList);
         resetInspector();
     }
@@ -15,7 +13,7 @@ public class NumberListInspector {
         sumOfNumInspector -= sumOfNumInspector + 1;
     }
 
-    private void checkEveryNumInListAreZero(LinkedList<Integer> numberList) {
+    private void checkEveryNumInListAreZero(int[] numberList) {
         for (int number : numberList)
             sumOfNumInspector += number;
 

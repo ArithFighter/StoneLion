@@ -43,11 +43,6 @@ public class GameComponent implements WindowSetting {
         numbers = new int[numberBoxQuantity];
     }
 
-    public void getNumbers(LinkedList<Integer> numberList){
-        for (int i = 0; i<this.numbers.length; i++)
-            this.numbers[i] = numberList.get(i);
-    }
-
     public void getNumbers(int[] numbers){
         System.arraycopy(numbers, 0, this.numbers, 0, this.numbers.length);
     }
