@@ -73,6 +73,7 @@ public class GameCore {
 
     private void storeTextures() {
         textures = new Texture[fileLibrary.getTextureFile().length];
+
         for (int i = 0; i < fileLibrary.getTextureFile().length; i++)
             textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
     }
@@ -88,26 +89,34 @@ public class GameCore {
 
         handleWhenNumMatchedSum();
 
-        numberListInspector.inspectNumberList(numberList);
-
-        if (numberListInspector.isAllNumberAreZero()){
-            randomNumArrayGenerator.clear();
-        }
+        checkEveryNumMatched();
 
         resetAnyThingsManually();
 
         workSpriteBatch();
     }
 
+    private void checkEveryNumMatched(){
+        numberListInspector.inspectNumberList(numberList);
+
+        if (numberListInspector.isAllNumberAreZero()){
+            randomNumArrayGenerator.clear();
+        }
+    }
+
     private void handleWhenNumMatchedSum() {
         for (int i = 0; i < randomNumArrayGenerator.getMaxQuantity(); i++) {
-            if (sumAccessor.getSum() == numberList[i]) {
+            if (isNumMatched(i)) {
                 if (numberList[i] > 0) {
                     scoreRecorder.update();
                     randomNumArrayGenerator.setNumberInListToZero(i);
                 }
             }
         }
+    }
+
+    private boolean isNumMatched(int index){
+        return sumAccessor.getSum() == numberList[index];
     }
 
     private void resetAnyThingsManually() {

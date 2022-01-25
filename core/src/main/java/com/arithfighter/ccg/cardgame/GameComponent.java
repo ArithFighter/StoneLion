@@ -9,8 +9,6 @@ import com.arithfighter.ccg.widget.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.LinkedList;
-
 public class GameComponent implements WindowSetting {
     Hand hand;
     Table table;
