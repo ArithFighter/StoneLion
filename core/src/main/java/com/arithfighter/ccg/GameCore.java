@@ -1,7 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.cardgame.GameComponent;
-import com.arithfighter.ccg.cardgame.RandomNumListGenerator;
+import com.arithfighter.ccg.cardgame.RandomNumArrayGenerator;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,8 +21,8 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
-    int[] numberList = new int[randomNumListGenerator.getMaxQuantity()];
+    RandomNumArrayGenerator randomNumArrayGenerator = new RandomNumArrayGenerator();
+    int[] numberList = new int[randomNumArrayGenerator.getMaxQuantity()];
     NumberListInspector numberListInspector = new NumberListInspector();
 
     InputAdapter mouseAdapter = new InputAdapter() {
@@ -82,7 +82,7 @@ public class GameCore {
 
         cursorPos.updateCursorPosition();
 
-        numberList = randomNumListGenerator.generateNumbers();
+        numberList = randomNumArrayGenerator.generateNumbers();
 
         gameComponent.getNumbers(numberList);
 
@@ -91,7 +91,7 @@ public class GameCore {
 //        numberListInspector.inspectNumberList(numberList);
 
         if (numberListInspector.isAllNumberAreZero()){
-            randomNumListGenerator.clear();
+            randomNumArrayGenerator.clear();
         }
 
         resetAnyThingsManually();
@@ -112,7 +112,7 @@ public class GameCore {
 
     private void resetAnyThingsManually() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            randomNumListGenerator.clear();
+            randomNumArrayGenerator.clear();
             resetVariable();
         }
     }

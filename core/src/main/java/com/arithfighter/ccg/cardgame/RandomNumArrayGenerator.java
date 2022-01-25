@@ -3,7 +3,7 @@ package com.arithfighter.ccg.cardgame;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class RandomNumListGenerator {
+public class RandomNumArrayGenerator {
     private static final int MAX_QUANTITY = 9;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final HashSet<Integer> numberSet = new HashSet<>();
