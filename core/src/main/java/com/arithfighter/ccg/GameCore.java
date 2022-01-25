@@ -21,9 +21,8 @@ public class GameCore {
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
-    int record = 0;
     SumAccessor sumAccessor = new SumAccessor();
-    int score = 0;
+    DataAccessor dataAccessor = new DataAccessor();
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
@@ -66,7 +65,7 @@ public class GameCore {
         gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
-                record++;
+                dataAccessor.updateRecord();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
 
                 if (gameComponent.getHand().isResetCard())
@@ -112,7 +111,7 @@ public class GameCore {
         for (int i = 0; i < numberSet.size(); i++) {
             if (sumAccessor.getSum() == numberList.get(i)) {
                 if (numberList.get(i) > 0) {
-                    score++;
+                    dataAccessor.updateScore();
                     numberList.set(i, 0);
                 }
             }
@@ -132,9 +131,8 @@ public class GameCore {
     }
 
     private void resetVariable() {
-        record -= record;
+        dataAccessor.resetData();
         sumAccessor.resetSum();
-        score -= score;
     }
 
     private void workSpriteBatch() {
@@ -145,8 +143,8 @@ public class GameCore {
 
     private void drawComponent() {
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
-        dataDisplacer.drawRecord(record, batch);
-        dataDisplacer.drawScoreBoard(score, batch);
+        dataDisplacer.drawRecord(dataAccessor.getRecord(), batch);
+        dataDisplacer.drawScoreBoard(dataAccessor.getScore(), batch);
 
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
         gameComponent.drawHand(batch, mouseX, mouseY);
