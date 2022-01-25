@@ -23,6 +23,7 @@ public class GameCore {
     Texture[] textures;
     int record = 0;
     int sum = 0;
+    int score = 0;
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
@@ -102,8 +103,12 @@ public class GameCore {
 
     private void setNumToZeroWhenMatchedSum(){
         for (int i = 0; i< numberSet.size();i++){
-            if (sum == numberList.get(i))
-                numberList.set(i,0);
+            if (sum == numberList.get(i)){
+                if (numberList.get(i)>0){
+                    score++;
+                    numberList.set(i,0);
+                }
+            }
         }
     }
 
@@ -112,6 +117,8 @@ public class GameCore {
             numberSet.clear();
             numberList.clear();
             record-=record;
+            sum-=sum;
+            score-=score;
         }
     }
 
@@ -124,6 +131,7 @@ public class GameCore {
     private void drawComponent() {
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
         dataDisplacer.drawRecord(record, batch);
+        dataDisplacer.drawScoreBoard(score, batch);
 
         gameComponent.drawTableAndNumbers(batch, sum);
         gameComponent.drawHand(batch, mouseX, mouseY);

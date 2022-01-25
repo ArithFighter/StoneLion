@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameDataDisplacer {
     Font mousePos;
     Font recorder;
+    Font scoreBoard;
     int fontSize = 16;
 
     public GameDataDisplacer(){
         mousePos = new Font(fontSize);
         recorder = new Font(fontSize);
+        scoreBoard = new Font(fontSize);
     }
 
     public void drawMousePos(int x, int y, SpriteBatch batch){
@@ -28,8 +30,15 @@ public class GameDataDisplacer {
                 WindowSetting.MAX_WINDOW_HEIGHT-fontSize*1.1f);
     }
 
+    public void drawScoreBoard(int score, SpriteBatch batch){
+        recorder.setColor(Color.WHITE);
+        recorder.draw(batch, "Score: "+score,0,
+                WindowSetting.MAX_WINDOW_HEIGHT-fontSize*2.1f);
+    }
+
     public void dispose(){
         mousePos.dispose();
         recorder.dispose();
+        scoreBoard.dispose();
     }
 }
