@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.cardgame;
 
-import com.arithfighter.ccg.Layout;
+import com.arithfighter.ccg.NumberBoxPlacer;
 import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.widget.Hand;
 import com.arithfighter.ccg.widget.NumberBox;
@@ -18,7 +18,7 @@ public class GameComponent implements WindowSetting {
     NumberBox numberBox;
     NumberBox[] numberBoxes;
     int[] numbers;
-    Layout layout = new Layout(GRID_X*9.5f,GRID_Y*5, GRID_X);
+    NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
     public GameComponent(Texture[] textures) {
         hand = new Hand(textures[0]);
@@ -36,8 +36,8 @@ public class GameComponent implements WindowSetting {
 
         for (int i = 0; i< numberBoxQuantity; i++){
             numberBoxes[i] = new NumberBox(textures[3],
-                    layout.getNumberBoxX(i, numberBox.getWidth()),
-                    layout.getNumberBoxY(i, numberBox.getHeight()));
+                    numberBoxPlacer.getNumberBoxX(i, numberBox.getWidth()),
+                    numberBoxPlacer.getNumberBoxY(i, numberBox.getHeight()));
         }
 
         numbers = new int[numberBoxQuantity];

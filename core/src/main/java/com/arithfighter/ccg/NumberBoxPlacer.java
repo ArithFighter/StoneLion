@@ -1,11 +1,11 @@
 package com.arithfighter.ccg;
 
-public class Layout{
+public class NumberBoxPlacer{
     float initX;
     float initY;
     float margin;
 
-    public Layout(float initX, float initY, float margin){
+    public NumberBoxPlacer(float initX, float initY, float margin){
         this.initX = initX;
         this.initY = initY;
         this.margin = margin;
