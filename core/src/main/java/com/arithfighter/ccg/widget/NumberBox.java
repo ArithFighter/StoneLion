@@ -34,9 +34,17 @@ public class NumberBox {
     }
 
     public void draw(int number, SpriteBatch batch){
+        addBoxSprite(batch);
+
+        addText(number, batch);
+    }
+
+    private void addBoxSprite(SpriteBatch batch){
         box.setColor(0,0.9f,0.9f,1);
         box.draw(batch);
+    }
 
+    private void addText(int number, SpriteBatch batch){
         String content = String.valueOf(number);
         float textX = x+width/2-content.length()*fontSize/2f;
         float textY = y+(height+fontSize)/2;
@@ -53,10 +61,8 @@ public class NumberBox {
 
         if (number<whiteNum){
             text.setColor(Color.WHITE);
-
         } else if (number<=blueNum){
             text.setColor(Color.BLUE);
-
         } else if (number<yellowNum){
             text.setColor(Color.YELLOW);
         }
