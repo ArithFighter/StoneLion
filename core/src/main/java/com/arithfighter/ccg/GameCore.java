@@ -21,7 +21,7 @@ public class GameCore {
     int mouseX, mouseY;
     SpriteBatch batch;
     Texture[] textures;
-    int cardOnDesk = 0;
+    int record = 0;
     int sum = 0;
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
@@ -64,7 +64,7 @@ public class GameCore {
         gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
-                cardOnDesk++;
+                record++;
                 sum += gameComponent.getHand().getCardNumber();
 
                 if (gameComponent.getHand().isResetCard())
@@ -88,6 +88,8 @@ public class GameCore {
 
         gameComponent.getNumbers(numberList);
 
+        setNumToZeroWhenMatchedSum();
+
         checkClearNumbers();
 
         workSpriteBatch();
@@ -98,10 +100,18 @@ public class GameCore {
         mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
     }
 
+    private void setNumToZeroWhenMatchedSum(){
+        for (int i = 0; i< numberSet.size();i++){
+            if (sum == numberList.get(i))
+                numberList.set(i,0);
+        }
+    }
+
     private void checkClearNumbers(){
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
             numberSet.clear();
             numberList.clear();
+            record-=record;
         }
     }
 
@@ -113,7 +123,7 @@ public class GameCore {
 
     private void drawComponent() {
         dataDisplacer.drawMousePos(mouseX, mouseY, batch);
-        dataDisplacer.drawRecord(cardOnDesk, batch);
+        dataDisplacer.drawRecord(record, batch);
 
         gameComponent.drawTableAndNumbers(batch, sum);
         gameComponent.drawHand(batch, mouseX, mouseY);
