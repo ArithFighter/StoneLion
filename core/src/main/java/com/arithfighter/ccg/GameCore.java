@@ -27,6 +27,7 @@ public class GameCore {
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
+    NumberListInspector numberListInspector = new NumberListInspector();
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -91,7 +92,13 @@ public class GameCore {
 
         setNumToZeroWhenMatchedSum();
 
-        checkClearNumbers();
+        numberListInspector.inspectNumberList(numberList);
+
+        if (numberListInspector.isAllNumberAreZero()){
+            clearNumListAndSet();
+        }
+
+        resetAnyThingsManually();
 
         workSpriteBatch();
     }
@@ -112,12 +119,16 @@ public class GameCore {
         }
     }
 
-    private void checkClearNumbers() {
+    private void resetAnyThingsManually() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            numberSet.clear();
-            numberList.clear();
+            clearNumListAndSet();
             resetVariable();
         }
+    }
+
+    private void clearNumListAndSet(){
+        numberSet.clear();
+        numberList.clear();
     }
 
     private void resetVariable() {

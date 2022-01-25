@@ -11,7 +11,7 @@ public class NumberListInspector {
         resetInspector();
     }
 
-    public final void resetInspector() {
+    private void resetInspector() {
         sumOfNumInspector -= sumOfNumInspector + 1;
     }
 
