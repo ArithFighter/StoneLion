@@ -24,8 +24,9 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    LinkedList<Integer> numberList = new LinkedList<>();
-    HashSet<Integer> numberSet = new HashSet<>();
+    int[] numberList = {6,7,9,16,17,22,26,27,11};
+//    LinkedList<Integer> numberList = new LinkedList<>();
+//    HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
     NumberListInspector numberListInspector = new NumberListInspector();
 
@@ -86,13 +87,13 @@ public class GameCore {
 
         cursorPos.updateCursorPosition();
 
-        randomNumListGenerator.generateNumbers(numberList, numberSet);
-
+//        randomNumListGenerator.generateNumbers(numberList, numberSet);
+//
         gameComponent.getNumbers(numberList);
 
         handleWhenNumMatchedSum();
 
-        numberListInspector.inspectNumberList(numberList);
+//        numberListInspector.inspectNumberList(numberList);
 
         if (numberListInspector.isAllNumberAreZero()){
             clearNumListAndSet();
@@ -104,14 +105,14 @@ public class GameCore {
     }
 
     private void handleWhenNumMatchedSum() {
-        for (int i = 0; i < numberSet.size(); i++) {
-            if (sumAccessor.getSum() == numberList.get(i)) {
-                if (numberList.get(i) > 0) {
-                    scoreRecorder.update();
-                    numberList.set(i, 0);
-                }
-            }
-        }
+//        for (int i = 0; i < numberSet.size(); i++) {
+//            if (sumAccessor.getSum() == numberList.get(i)) {
+//                if (numberList.get(i) > 0) {
+//                    scoreRecorder.update();
+//                    numberList.set(i, 0);
+//                }
+//            }
+//        }
     }
 
     private void resetAnyThingsManually() {
@@ -122,8 +123,8 @@ public class GameCore {
     }
 
     private void clearNumListAndSet(){
-        numberSet.clear();
-        numberList.clear();
+//        numberSet.clear();
+//        numberList.clear();
     }
 
     private void resetVariable() {

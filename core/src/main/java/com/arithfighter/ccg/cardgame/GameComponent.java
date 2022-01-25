@@ -48,6 +48,10 @@ public class GameComponent implements WindowSetting {
             this.numbers[i] = numberList.get(i);
     }
 
+    public void getNumbers(int[] numbers){
+        System.arraycopy(numbers, 0, this.numbers, 0, this.numbers.length);
+    }
+
     public Hand getHand() {
         return hand;
     }
