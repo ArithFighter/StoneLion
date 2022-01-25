@@ -40,9 +40,26 @@ public class NumberBox {
         String content = String.valueOf(number);
         float textX = x+width/2-content.length()*fontSize/2f;
         float textY = y+(height+fontSize)/2;
-        
-        text.setColor(Color.WHITE);
+
+        changeNumColor(number);
+
         text.draw(batch, content, textX, textY);
+    }
+
+    private void changeNumColor(int number){
+        int whiteNum = 15;
+        int blueNum = 21;
+        int yellowNum = 99;
+
+        if (number<whiteNum){
+            text.setColor(Color.WHITE);
+
+        } else if (number<=blueNum){
+            text.setColor(Color.BLUE);
+
+        } else if (number<yellowNum){
+            text.setColor(Color.YELLOW);
+        }
     }
 
     public void dispose(){

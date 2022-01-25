@@ -25,7 +25,7 @@ public class GameCore {
     int sum = 0;
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
-    RandomNumListGenerator rng = new RandomNumListGenerator();
+    RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
 
     InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -84,23 +84,31 @@ public class GameCore {
 
         updateMousePosition();
 
-        rng.generateNumbers(numberList,numberSet);
+        randomNumListGenerator.generateNumbers(numberList,numberSet);
 
         gameComponent.getNumbers(numberList);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
-            numberSet.clear();
-            numberList.clear();
-        }
+        checkClearNumbers();
 
-        batch.begin();
-        drawComponent();
-        batch.end();
+        workSpriteBatch();
     }
 
     private void updateMousePosition() {
         mouseX = Gdx.input.getX();
         mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+    }
+
+    private void checkClearNumbers(){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            numberSet.clear();
+            numberList.clear();
+        }
+    }
+
+    private void workSpriteBatch(){
+        batch.begin();
+        drawComponent();
+        batch.end();
     }
 
     private void drawComponent() {
