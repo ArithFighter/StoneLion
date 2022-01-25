@@ -22,7 +22,7 @@ public class GameCore {
     SpriteBatch batch;
     Texture[] textures;
     int record = 0;
-    int sum = 0;
+    SumAccessor sumAccessor = new SumAccessor();
     int score = 0;
     LinkedList<Integer> numberList = new LinkedList<>();
     HashSet<Integer> numberSet = new HashSet<>();
@@ -67,10 +67,10 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 record++;
-                sum += gameComponent.getHand().getCardNumber();
+                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
 
                 if (gameComponent.getHand().isResetCard())
-                    sum -= sum;
+                    sumAccessor.resetSum();
             }
         };
     }
@@ -110,7 +110,7 @@ public class GameCore {
 
     private void setNumToZeroWhenMatchedSum() {
         for (int i = 0; i < numberSet.size(); i++) {
-            if (sum == numberList.get(i)) {
+            if (sumAccessor.getSum() == numberList.get(i)) {
                 if (numberList.get(i) > 0) {
                     score++;
                     numberList.set(i, 0);
@@ -133,7 +133,7 @@ public class GameCore {
 
     private void resetVariable() {
         record -= record;
-        sum -= sum;
+        sumAccessor.resetSum();
         score -= score;
     }
 
@@ -148,7 +148,7 @@ public class GameCore {
         dataDisplacer.drawRecord(record, batch);
         dataDisplacer.drawScoreBoard(score, batch);
 
-        gameComponent.drawTableAndNumbers(batch, sum);
+        gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
         gameComponent.drawHand(batch, mouseX, mouseY);
     }
 
