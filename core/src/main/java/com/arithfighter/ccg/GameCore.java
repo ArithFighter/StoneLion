@@ -10,9 +10,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-
 public class GameCore {
     AssetManager assetManager = new AssetManager();
     FileLibrary fileLibrary = new FileLibrary();
@@ -24,10 +21,8 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    int[] numberList = {6,7,9,16,17,22,26,27,11};
-//    LinkedList<Integer> numberList = new LinkedList<>();
-//    HashSet<Integer> numberSet = new HashSet<>();
     RandomNumListGenerator randomNumListGenerator = new RandomNumListGenerator();
+    int[] numberList = new int[randomNumListGenerator.getMaxQuantity()];
     NumberListInspector numberListInspector = new NumberListInspector();
 
     InputAdapter mouseAdapter = new InputAdapter() {
@@ -87,8 +82,8 @@ public class GameCore {
 
         cursorPos.updateCursorPosition();
 
-//        randomNumListGenerator.generateNumbers(numberList, numberSet);
-//
+        numberList = randomNumListGenerator.generateNumbers();
+
         gameComponent.getNumbers(numberList);
 
         handleWhenNumMatchedSum();
@@ -96,7 +91,7 @@ public class GameCore {
 //        numberListInspector.inspectNumberList(numberList);
 
         if (numberListInspector.isAllNumberAreZero()){
-            clearNumListAndSet();
+            randomNumListGenerator.clear();
         }
 
         resetAnyThingsManually();
@@ -117,14 +112,9 @@ public class GameCore {
 
     private void resetAnyThingsManually() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            clearNumListAndSet();
+            randomNumListGenerator.clear();
             resetVariable();
         }
-    }
-
-    private void clearNumListAndSet(){
-//        numberSet.clear();
-//        numberList.clear();
     }
 
     private void resetVariable() {
