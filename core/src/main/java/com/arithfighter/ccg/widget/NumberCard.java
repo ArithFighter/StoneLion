@@ -33,6 +33,10 @@ public class NumberCard {
         text = new Font(30);
     }
 
+    public int getNumber(){
+        return number;
+    }
+
     public float getWidth() {
         return cardWidth;
     }
@@ -61,15 +65,16 @@ public class NumberCard {
     }
 
     private void drawNumber(SpriteBatch batch) {
-        float numberX = cardX + 10;
-        float numberY = cardY + cardHeight;
         text.setColor(Color.YELLOW);
 
-        String content = "";
+        float numberX = cardX + 10;
+        float numberY = cardY + cardHeight;
+        String content;
         if (number>0)
             content = String.valueOf(number);
         else
             content = "RE0";
+
         text.draw(batch, content, numberX, numberY);
     }
 
@@ -114,6 +119,7 @@ public class NumberCard {
 
     private boolean isOnCard(float x, float y) {
         int tolerance = 20;
+
         if(isActive()){
             tolerance*=4;
         }

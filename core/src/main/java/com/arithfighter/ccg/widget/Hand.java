@@ -1,27 +1,20 @@
 package com.arithfighter.ccg.widget;
 
 import com.arithfighter.ccg.WindowSetting;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
-    NumberCard whiteCard, greenCard, goldenCard, purpleCard;
     NumberCard[] cards;
+    NumTwoCard num2Card;
     float initX = WindowSetting.CENTER_X+WindowSetting.GRID_X*3;
     float initY = 0;
     float padding;
-    int[] numberSet = {2, 3, 9, 0};
 
     public Hand(Texture texture) {
-        whiteCard = new NumberCard(initX, initY, Color.WHITE, texture, numberSet[0]);
-        padding = whiteCard.getWidth() + WindowSetting.GRID_X/1.2f;
+        num2Card = new NumTwoCard(initX, initY, texture);
 
-        greenCard = new NumberCard(initX + padding, initY, Color.GREEN, texture, numberSet[1]);
-        goldenCard = new NumberCard(initX + padding * 2, initY, Color.GOLD, texture, numberSet[2]);
-        purpleCard = new NumberCard(initX + padding * 3, initY, Color.PURPLE, texture, numberSet[3]);
-
-        cards = new NumberCard[]{whiteCard, greenCard, goldenCard, purpleCard};
+        cards = new NumberCard[]{num2Card.getCard()};
     }
 
     public void draw(SpriteBatch batch) {
@@ -30,7 +23,7 @@ public class Hand {
     }
 
     public int getCardNumber(){
-        return numberSet[getActiveCardIndex()];
+        return cards[getActiveCardIndex()].getNumber();
     }
 
     public boolean isResetCard(){
