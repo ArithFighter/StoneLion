@@ -21,7 +21,7 @@ public class RandomNumArrayGenerator {
         numberList.set(index,0);
     }
 
-    public int[] generateNumbers() {
+    public int[] getNumbers() {
         int[] numArray = new int[MAX_QUANTITY];
 
         addNumbersToList();

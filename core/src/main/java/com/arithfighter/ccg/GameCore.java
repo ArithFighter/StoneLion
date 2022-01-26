@@ -12,14 +12,13 @@ public class GameCore {
     Texture[] textures;
     GameDataDisplacer dataDisplacer;
     GameComponent gameComponent;
-    CursorPositionAccessor cursorPos = new CursorPositionAccessor();
+    CursorPositionAccessor cursorPos;
     SpriteBatch batch;
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    RandomNumArrayGenerator randomNumArrayGenerator = new RandomNumArrayGenerator();
-    int[] numberList = new int[randomNumArrayGenerator.getMaxQuantity()];
-    NumberListInspector numberListInspector = new NumberListInspector();
+    RandomNumArrayGenerator randomNumArrayGenerator;
+    NumberListInspector numberListInspector;
     MouseAdapter mouseAdapter;
 
     public void create() {
@@ -35,6 +34,8 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
+        randomNumArrayGenerator = new RandomNumArrayGenerator();
+
         gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
@@ -45,9 +46,14 @@ public class GameCore {
                     sumAccessor.resetSum();
             }
         };
+        cursorPos = new CursorPositionAccessor();
+
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+
+        numberListInspector = new NumberListInspector();
+
     }
 
     public void render() {
@@ -57,9 +63,7 @@ public class GameCore {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        numberList = randomNumArrayGenerator.generateNumbers();
-
-        gameComponent.getNumbers(numberList);
+        gameComponent.getNumbers(randomNumArrayGenerator.getNumbers());
 
         handleWhenNumMatchedSum();
 
@@ -71,7 +75,7 @@ public class GameCore {
     }
 
     private void checkEveryNumMatched(){
-        numberListInspector.inspectNumberList(numberList);
+        numberListInspector.inspectNumberList(randomNumArrayGenerator.getNumbers());
 
         if (numberListInspector.isAllNumberAreZero()){
             randomNumArrayGenerator.clear();
@@ -80,8 +84,8 @@ public class GameCore {
 
     private void handleWhenNumMatchedSum() {
         for (int i = 0; i < randomNumArrayGenerator.getMaxQuantity(); i++) {
-            if (isNumMatched(i)) {
-                if (numberList[i] > 0) {
+            if (isNumAndSumMatched(i)) {
+                if (randomNumArrayGenerator.getNumbers()[i] > 0) {
                     scoreRecorder.update();
                     randomNumArrayGenerator.setNumberInListToZero(i);
                 }
@@ -89,8 +93,8 @@ public class GameCore {
         }
     }
 
-    private boolean isNumMatched(int index){
-        return sumAccessor.getSum() == numberList[index];
+    private boolean isNumAndSumMatched(int index){
+        return sumAccessor.getSum() == randomNumArrayGenerator.getNumbers()[index];
     }
 
     private void resetAnyThingsManually() {
@@ -113,10 +117,18 @@ public class GameCore {
     }
 
     private void drawComponent() {
+        drawData();
+
+        drawGame();
+    }
+
+    private void drawData(){
         dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
         dataDisplacer.drawRecord(playRecorder.getRecord(), batch);
         dataDisplacer.drawScoreBoard(scoreRecorder.getRecord(), batch);
+    }
 
+    private void drawGame(){
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
         gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
     }
