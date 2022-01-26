@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     NumberCard[] cards;
-    NumTwoCard num2Card;
+    NumberCard num2Card;
     float initX = WindowSetting.CENTER_X+WindowSetting.GRID_X*3;
     float initY = 0;
     float padding;
 
     public Hand(Texture texture) {
-        num2Card = new NumTwoCard(initX, initY, texture);
+        num2Card = new NumberCard(initX, initY, texture, 2);
 
-        cards = new NumberCard[]{num2Card.getCard()};
+        cards = new NumberCard[]{num2Card};
     }
 
     public void draw(SpriteBatch batch) {
@@ -27,7 +27,7 @@ public class Hand {
     }
 
     public boolean isResetCard(){
-        return getActiveCardIndex() == 3;
+        return getCardNumber() == 0;
     }
 
     public void checkTouchingCard(float x, float y) {

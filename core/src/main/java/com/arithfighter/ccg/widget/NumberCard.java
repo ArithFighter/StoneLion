@@ -16,7 +16,7 @@ public class NumberCard {
     Font text;
     int number;
 
-    public NumberCard(float initX, float initY, Color color, Texture texture, int number) {
+    public NumberCard(float initX, float initY, Texture texture, int number) {
         this.initX = initX;
         this.initY = initY;
         cardWidth = texture.getWidth() * scale;
@@ -26,7 +26,7 @@ public class NumberCard {
         this.number = number;
 
         card = new Sprite(texture);
-        card.setColor(color);
+        card.setColor(Color.WHITE);
         card.setPosition(cardX, cardY);
         card.setSize(cardWidth, cardHeight);
 
