@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     NumberCard[] cards;
-    NumberCard num2Card;
+    NumberCard num2Card, num3Card, num9Card, resetCard;
     float initX = WindowSetting.CENTER_X+WindowSetting.GRID_X*3;
     float initY = 0;
     float padding;
@@ -14,7 +14,13 @@ public class Hand {
     public Hand(Texture texture) {
         num2Card = new NumberCard(initX, initY, texture, 2);
 
-        cards = new NumberCard[]{num2Card};
+        padding = num2Card.getWidth()+WindowSetting.GRID_X;
+
+        num3Card = new NumberCard(initX+padding, initY, texture, 3);
+        num9Card = new NumberCard(initX+padding*2, initY, texture, 9);
+        resetCard = new NumberCard(initX+padding*3, initY, texture, 0);
+
+        cards = new NumberCard[]{num2Card, num3Card, num9Card, resetCard};
     }
 
     public void draw(SpriteBatch batch) {

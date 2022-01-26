@@ -26,11 +26,12 @@ public class NumberCard {
         this.number = number;
 
         card = new Sprite(texture);
-        card.setColor(Color.WHITE);
+        card.setColor(Color.GOLDENROD);
         card.setPosition(cardX, cardY);
         card.setSize(cardWidth, cardHeight);
 
         text = new Font(30);
+        text.setColor(Color.WHITE);
     }
 
     public int getNumber(){
@@ -65,8 +66,6 @@ public class NumberCard {
     }
 
     private void drawNumber(SpriteBatch batch) {
-        text.setColor(Color.YELLOW);
-
         float numberX = cardX + 10;
         float numberY = cardY + cardHeight;
         String content;
