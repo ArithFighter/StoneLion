@@ -5,7 +5,6 @@ import com.arithfighter.ccg.cardgame.RandomNumArrayGenerator;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,26 +23,7 @@ public class GameCore {
     RandomNumArrayGenerator randomNumArrayGenerator = new RandomNumArrayGenerator();
     int[] numberList = new int[randomNumArrayGenerator.getMaxQuantity()];
     NumberListInspector numberListInspector = new NumberListInspector();
-
-    InputAdapter mouseAdapter = new InputAdapter() {
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            gameComponent.getHand().checkActive(cursorPos.getX(), cursorPos.getY());
-            return true;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            gameComponent.getHand().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
-            return true;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            gameComponent.whenPlayCardOnTable(cursorPos.getX(), cursorPos.getY());
-            return true;
-        }
-    };
+    MouseAdapter mouseAdapter;
 
     public void create() {
         for (String textureFile : fileLibrary.getTextureFile())
@@ -54,8 +34,6 @@ public class GameCore {
         storeTextures();
 
         batch = new SpriteBatch();
-
-        Gdx.input.setInputProcessor(mouseAdapter);
 
         dataDisplacer = new GameDataDisplacer();
 
@@ -69,6 +47,9 @@ public class GameCore {
                     sumAccessor.resetSum();
             }
         };
+        mouseAdapter = new MouseAdapter(gameComponent);
+
+        Gdx.input.setInputProcessor(mouseAdapter);
     }
 
     private void storeTextures() {
@@ -82,6 +63,8 @@ public class GameCore {
         assetManager.update(17);
 
         cursorPos.updateCursorPosition();
+
+        mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
         numberList = randomNumArrayGenerator.generateNumbers();
 

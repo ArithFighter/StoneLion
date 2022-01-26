@@ -8,8 +8,11 @@ public class MouseAdapter extends InputAdapter {
     int mouseX;
     int mouseY;
 
-    public MouseAdapter(GameComponent gameComponent, int mouseX, int mouseY) {
+    public MouseAdapter(GameComponent gameComponent) {
         this.gameComponent = gameComponent;
+    }
+
+    public void updateMousePos(int mouseX, int mouseY){
         this.mouseX = mouseX;
         this.mouseY = mouseY;
     }
