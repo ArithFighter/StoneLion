@@ -1,26 +1,16 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     NumberCard[] cards;
-    NumberCard num2Card, num3Card, num9Card, resetCard;
-    float initX = WindowSetting.CENTER_X+WindowSetting.GRID_X*3;
-    float initY = 0;
-    float padding;
+    NumberCardCollection numberCardCollection;
 
     public Hand(Texture texture) {
-        num2Card = new NumberCard(initX, initY, texture, 2);
+        numberCardCollection = new NumberCardCollection(2,3,9,texture);
 
-        padding = num2Card.getWidth()+WindowSetting.GRID_X;
-
-        num3Card = new NumberCard(initX+padding, initY, texture, 3);
-        num9Card = new NumberCard(initX+padding*2, initY, texture, 9);
-        resetCard = new NumberCard(initX+padding*3, initY, texture, 0);
-
-        cards = new NumberCard[]{num2Card, num3Card, num9Card, resetCard};
+        cards = numberCardCollection.getCards();
     }
 
     public void draw(SpriteBatch batch) {
