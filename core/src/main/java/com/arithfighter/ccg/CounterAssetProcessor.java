@@ -4,8 +4,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CounterAssetProcessor {
-    AssetManager assetManager;
-    FileLibrary fileLibrary;
+    private final AssetManager assetManager;
+    private final FileLibrary fileLibrary;
 
     public CounterAssetProcessor(){
         assetManager = new AssetManager();

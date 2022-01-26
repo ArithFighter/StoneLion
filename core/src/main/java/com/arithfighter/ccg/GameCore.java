@@ -4,18 +4,16 @@ import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameCore {
-    AssetManager assetManager = new AssetManager();
-    FileLibrary fileLibrary = new FileLibrary();
+    CounterAssetProcessor assetProcessor;
+    Texture[] textures;
     GameDataDisplacer dataDisplacer;
     GameComponent gameComponent;
     CursorPositionAccessor cursorPos = new CursorPositionAccessor();
     SpriteBatch batch;
-    Texture[] textures;
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
@@ -25,9 +23,13 @@ public class GameCore {
     MouseAdapter mouseAdapter;
 
     public void create() {
-        loadAssets();
+        assetProcessor = new CounterAssetProcessor();
 
-        storeTextures();
+        assetProcessor.loadAssets();
+
+        assetProcessor.finishLoading();
+
+        textures = assetProcessor.getTextures();
 
         batch = new SpriteBatch();
 
@@ -48,22 +50,8 @@ public class GameCore {
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
-    private void loadAssets(){
-        for (String textureFile : fileLibrary.getTextureFile())
-            assetManager.load(textureFile, Texture.class);
-
-        assetManager.finishLoading();
-    }
-
-    private void storeTextures() {
-        textures = new Texture[fileLibrary.getTextureFile().length];
-
-        for (int i = 0; i < fileLibrary.getTextureFile().length; i++)
-            textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
-    }
-
     public void render() {
-        assetManager.update(17);
+        assetProcessor.update(17);
 
         cursorPos.updateCursorPosition();
 
