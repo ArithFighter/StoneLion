@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.system;
 
 import com.arithfighter.ccg.cardgame.GameComponent;
 import com.badlogic.gdx.InputAdapter;

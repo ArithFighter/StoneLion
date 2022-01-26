@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.cardgame;
 
-import com.arithfighter.ccg.NumberBoxPlacer;
+import com.arithfighter.ccg.widget.NumberBoxPlacer;
 import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.widget.Hand;
 import com.arithfighter.ccg.widget.NumberBox;

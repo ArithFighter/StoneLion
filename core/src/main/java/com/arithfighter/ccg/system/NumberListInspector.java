@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.system;
 
 public class NumberListInspector {
     int sumOfNumInspector = -1;

@@ -2,6 +2,7 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.cardgame.GameComponent;
 import com.arithfighter.ccg.cardgame.RandomNumArrayGenerator;
+import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.widget.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -26,10 +27,7 @@ public class GameCore {
     MouseAdapter mouseAdapter;
 
     public void create() {
-        for (String textureFile : fileLibrary.getTextureFile())
-            assetManager.load(textureFile, Texture.class);
-
-        assetManager.finishLoading();
+        loadAssets();
 
         storeTextures();
 
@@ -50,6 +48,13 @@ public class GameCore {
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void loadAssets(){
+        for (String textureFile : fileLibrary.getTextureFile())
+            assetManager.load(textureFile, Texture.class);
+
+        assetManager.finishLoading();
     }
 
     private void storeTextures() {

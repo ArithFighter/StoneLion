@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.system;
 
 public class SumAccessor {
     private int sum = 0;
