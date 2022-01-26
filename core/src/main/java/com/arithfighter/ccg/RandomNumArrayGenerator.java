@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.cardgame;
+package com.arithfighter.ccg;
 
 import java.util.HashSet;
 import java.util.LinkedList;

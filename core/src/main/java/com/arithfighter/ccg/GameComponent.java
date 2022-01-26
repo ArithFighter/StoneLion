@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.cardgame;
+package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.widget.NumberBoxPlacer;
 import com.arithfighter.ccg.WindowSetting;
