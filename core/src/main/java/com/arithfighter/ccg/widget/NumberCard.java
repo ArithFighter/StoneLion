@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Card {
+public class NumberCard {
     float initX, initY;
     float cardX, cardY, cardWidth, cardHeight;
     float scale = 3f;
@@ -14,9 +14,9 @@ public class Card {
     CardState state = CardState.INACTIVE;
     Sprite card;
     Font text;
-    String number;
+    int number;
 
-    public Card(float initX, float initY, Color color, Texture texture, String number) {
+    public NumberCard(float initX, float initY, Color color, Texture texture, int number) {
         this.initX = initX;
         this.initY = initY;
         cardWidth = texture.getWidth() * scale;
@@ -64,7 +64,13 @@ public class Card {
         float numberX = cardX + 10;
         float numberY = cardY + cardHeight;
         text.setColor(Color.YELLOW);
-        text.draw(batch, number, numberX, numberY);
+
+        String content = "";
+        if (number>0)
+            content = String.valueOf(number);
+        else
+            content = "RE0";
+        text.draw(batch, content, numberX, numberY);
     }
 
     private void checkOutOfWindow() {

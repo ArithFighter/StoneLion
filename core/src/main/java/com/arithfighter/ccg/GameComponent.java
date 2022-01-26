@@ -1,7 +1,6 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.widget.NumberBoxPlacer;
-import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.widget.Hand;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.arithfighter.ccg.widget.SumDisplacer;
