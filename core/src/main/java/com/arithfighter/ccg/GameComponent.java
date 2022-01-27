@@ -1,10 +1,9 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.widget.NumberBoxPlacer;
-import com.arithfighter.ccg.widget.Hand;
-import com.arithfighter.ccg.widget.NumberBox;
-import com.arithfighter.ccg.widget.SumDisplacer;
-import com.arithfighter.ccg.widget.Table;
+import com.arithfighter.ccg.component.NumberBoxPlacer;
+import com.arithfighter.ccg.component.NumberBox;
+import com.arithfighter.ccg.component.SumDisplacer;
+import com.arithfighter.ccg.component.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -22,8 +21,7 @@ public class GameComponent implements WindowSetting {
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
-        sumDisplacer = new SumDisplacer(textures[2],
-                CENTER_X + GRID_X * 8, GRID_Y*7);
+        sumDisplacer = new SumDisplacer(textures[2], CENTER_X + GRID_X * 8, GRID_Y*7);
 
         numberBox = new NumberBox(textures[3], 300, 350);
 

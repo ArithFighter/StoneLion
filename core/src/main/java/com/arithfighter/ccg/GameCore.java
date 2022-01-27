@@ -1,7 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.system.*;
-import com.arithfighter.ccg.widget.*;
+import com.arithfighter.ccg.component.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;

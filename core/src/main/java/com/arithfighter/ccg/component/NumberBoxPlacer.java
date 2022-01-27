@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.widget;
+package com.arithfighter.ccg.component;
 
 public class NumberBoxPlacer{
     float initX;

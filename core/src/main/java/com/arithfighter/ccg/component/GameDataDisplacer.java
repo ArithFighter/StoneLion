@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.widget;
+package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Color;
