@@ -1,38 +1,22 @@
 package com.arithfighter.ccg.widget;
 
 import com.arithfighter.ccg.CharacterList;
+import com.arithfighter.ccg.CharacterSetCollection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     NumberCard[] cards;
     NumberCardCollection numberCardCollection;
-    int[] knightSet = {2,3,9};
-    int[] rogueSet = {-1,3,8};
-    int[] hunterSet = {1,2,7};
 
     public Hand(Texture texture, CharacterList character) {
-        int[] numberSet = getCharacterSet(character);
+        CharacterSetCollection csc = new CharacterSetCollection();
+
+        int[] numberSet = csc.getCharacterSet(character);
 
         numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2],texture);
 
         cards = numberCardCollection.getCards();
-    }
-
-    private int[] getCharacterSet(CharacterList character){
-        int[] numberSet = new int[]{3};
-        switch (character){
-            case KNIGHT:
-                numberSet = knightSet;
-                break;
-            case ROGUE:
-                numberSet = rogueSet;
-                break;
-            case HUNTER:
-                numberSet = hunterSet;
-                break;
-        }
-        return numberSet;
     }
 
     public void draw(SpriteBatch batch) {
