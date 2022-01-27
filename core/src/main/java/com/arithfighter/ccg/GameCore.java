@@ -20,6 +20,8 @@ public class GameCore {
     RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
     MouseAdapter mouseAdapter;
+    int initResetCondition = 6;
+    int autoResetCondition = initResetCondition;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -41,9 +43,12 @@ public class GameCore {
             public void doWhenCardPlayed() {
                 playRecorder.update();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+                autoResetCondition--;
 
-                if (gameComponent.getHand().isResetCard())
+                if (gameComponent.getHand().isResetCard()){
                     sumAccessor.resetSum();
+                    autoResetCondition = initResetCondition;
+                }
             }
         };
         cursorPos = new CursorPositionAccessor();
@@ -77,9 +82,9 @@ public class GameCore {
     }
 
     private void checkAutoResetCondition(){
-        int condition = 6;
-        if(playRecorder.getRecord() % condition == 0)
+        if(autoResetCondition == 0){
             sumAccessor.resetSum();
+        }
     }
 
     private void checkEveryNumMatched(){

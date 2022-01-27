@@ -57,12 +57,12 @@ public class Hand {
     }
 
     private int getActiveCardIndex(){
-        int condition = 0;
+        int index = 0;
         for (int i = 0; i < cards.length; i++){
             if (cards[i].isActive())
-                condition = i;
+                index = i;
         }
-        return condition;
+        return index;
     }
 
     public void dispose() {
