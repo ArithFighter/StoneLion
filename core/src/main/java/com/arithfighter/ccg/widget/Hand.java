@@ -9,19 +9,30 @@ public class Hand {
     NumberCardCollection numberCardCollection;
     int[] knightSet = {2,3,9};
     int[] rogueSet = {-1,3,8};
+    int[] hunterSet = {1,2,7};
 
     public Hand(Texture texture, CharacterList character) {
-        int[] numberSet = new int[]{3};
+        int[] numberSet = getCharacterSet(character);
 
-        if(character == CharacterList.KNIGHT){
-            numberSet = knightSet;
-        }
-        if(character == CharacterList.ROGUE){
-            numberSet = rogueSet;
-        }
         numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2],texture);
 
         cards = numberCardCollection.getCards();
+    }
+
+    private int[] getCharacterSet(CharacterList character){
+        int[] numberSet = new int[]{3};
+        switch (character){
+            case KNIGHT:
+                numberSet = knightSet;
+                break;
+            case ROGUE:
+                numberSet = rogueSet;
+                break;
+            case HUNTER:
+                numberSet = hunterSet;
+                break;
+        }
+        return numberSet;
     }
 
     public void draw(SpriteBatch batch) {
