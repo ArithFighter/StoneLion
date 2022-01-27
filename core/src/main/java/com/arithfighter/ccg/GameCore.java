@@ -72,6 +72,14 @@ public class GameCore {
         resetAnyThingsManually();
 
         workSpriteBatch();
+
+        checkAutoResetCondition();
+    }
+
+    private void checkAutoResetCondition(){
+        int condition = 6;
+        if(playRecorder.getRecord() % condition == 0)
+            sumAccessor.resetSum();
     }
 
     private void checkEveryNumMatched(){
