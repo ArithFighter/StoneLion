@@ -69,7 +69,7 @@ public class NumberCard {
         float numberX = cardX + 10;
         float numberY = cardY + cardHeight;
         String content;
-        if (number>0)
+        if (number!=0)
             content = String.valueOf(number);
         else
             content = "RE0";

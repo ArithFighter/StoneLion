@@ -62,7 +62,9 @@ public class GameComponent implements WindowSetting {
         table.draw(batch);
 
         for (int i = 0; i<numberBoxes.length;i++)
-            numberBoxes[i].draw(numbers[i], batch);
+            if (numbers[i]>0){
+                numberBoxes[i].draw(numbers[i], batch);
+            }
 
         sumDisplacer.draw(sum, batch);
     }

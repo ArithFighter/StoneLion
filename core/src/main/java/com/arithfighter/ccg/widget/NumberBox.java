@@ -55,12 +55,12 @@ public class NumberBox {
     }
 
     private void changeNumColor(int number){
-        int whiteNum = 15;
+        int purpleNum = 15;
         int blueNum = 21;
         int yellowNum = 99;
 
-        if (number<whiteNum){
-            text.setColor(Color.WHITE);
+        if (number<purpleNum){
+            text.setColor(Color.PURPLE);
         } else if (number<=blueNum){
             text.setColor(Color.BLUE);
         } else if (number<yellowNum){
