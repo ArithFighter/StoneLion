@@ -94,7 +94,7 @@ public class GameComponent implements WindowSetting {
 
     public void doWhenCardPlayed() {}
 
-    public void drawTableAndNumbers(SpriteBatch batch, int sum) {
+    public void drawTableAndNumbers(SpriteBatch batch, int sum, int condition) {
         table.draw(batch);
 
         for (int i = 0; i<numberBoxes.length;i++){
@@ -102,7 +102,7 @@ public class GameComponent implements WindowSetting {
                 numberBoxes[i].draw(numbers[i], batch);
         }
 
-        sumDisplacer.draw(sum, batch);
+        sumDisplacer.draw(sum, condition, batch);
     }
 
     public void drawHand(SpriteBatch batch, int mouseX, int mouseY){

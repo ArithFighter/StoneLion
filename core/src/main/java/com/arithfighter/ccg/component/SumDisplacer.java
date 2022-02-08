@@ -17,12 +17,14 @@ public class SumDisplacer extends RawWidget{
         text = new Font(fontSize);
 
         sumDisplayBlock = new Sprite(texture);
-        sumDisplayBlock.setColor(Color.GOLDENROD);
+        sumDisplayBlock.setColor(Color.TEAL);
         sumDisplayBlock.setPosition(widgetX,widgetY);
         sumDisplayBlock.setSize(widgetWidth, widgetHeight);
     }
 
-    public void draw(int number, SpriteBatch batch){
+    public void draw(int number, int condition, SpriteBatch batch){
+        changeColor(condition);
+
         sumDisplayBlock.draw(batch);
 
         String sum = String.valueOf(number);
@@ -31,6 +33,13 @@ public class SumDisplacer extends RawWidget{
 
         text.setColor(Color.WHITE);
         text.draw(batch, sum, textX, textY);
+    }
+
+    private void changeColor(int condition){
+        if (condition<3)
+            sumDisplayBlock.setColor(Color.RED);
+        else
+            sumDisplayBlock.setColor(Color.TEAL);
     }
 
     public void dispose(){
