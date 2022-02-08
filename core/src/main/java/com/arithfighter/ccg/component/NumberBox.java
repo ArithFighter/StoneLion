@@ -5,70 +5,67 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class NumberBox {
+public class NumberBox extends BasicWidget {
     Font text;
     Sprite box;
-    float x, y, width, height;
-    float scale = 3.5f;
-    int fontSize = 32;
 
-    public NumberBox(Texture texture, float initX, float initY){
+    public NumberBox(Texture texture, float initX, float initY) {
+        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 3.5f);
+
+        configFont(32);
+
         text = new Font(fontSize);
 
-        x = initX;
-        y = initY;
-        width = texture.getWidth()*scale;
-        height = texture.getHeight()*scale;
-
         box = new Sprite(texture);
-        box.setPosition(x,y);
-        box.setSize(width, height);
+        box.setPosition(widgetX, widgetY);
+        box.setSize(widgetWidth, widgetHeight);
     }
 
-    public float getWidth(){
-        return width;
+    public float getWidth() {
+        return widgetWidth;
     }
 
-    public float getHeight(){
-        return height;
+    public float getHeight() {
+        return widgetHeight;
     }
 
-    public void draw(int number, SpriteBatch batch){
+    public void draw(int number, SpriteBatch batch) {
         addBoxSprite(batch);
 
         addText(number, batch);
     }
 
-    private void addBoxSprite(SpriteBatch batch){
-        box.setColor(0,0.9f,0.9f,1);
+    private void addBoxSprite(SpriteBatch batch) {
+        box.setColor(0, 0.9f, 0.9f, 1);
         box.draw(batch);
     }
 
-    private void addText(int number, SpriteBatch batch){
+    private void addText(int number, SpriteBatch batch) {
         String content = String.valueOf(number);
-        float textX = x+width/2-content.length()*fontSize/2f;
-        float textY = y+(height+fontSize)/2;
+        float textX = widgetX + widgetWidth / 2 - content.length() * fontSize / 2f;
+        float textY = widgetY + (widgetHeight + fontSize) / 2;
 
         changeNumColor(number);
 
         text.draw(batch, content, textX, textY);
     }
 
-    private void changeNumColor(int number){
+    private void changeNumColor(int number) {
         int purpleNum = 15;
         int blueNum = 21;
         int yellowNum = 99;
 
-        if (number<purpleNum){
+        if (number < purpleNum)
             text.setColor(Color.PURPLE);
-        } else if (number<=blueNum){
+
+        else if (number <= blueNum)
             text.setColor(Color.BLUE);
-        } else if (number<yellowNum){
+
+        else if (number < yellowNum)
             text.setColor(Color.YELLOW);
-        }
     }
 
-    public void dispose(){
+    public void dispose() {
         text.dispose();
     }
 }
