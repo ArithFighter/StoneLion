@@ -18,8 +18,7 @@ public class GameCore {
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
     MouseAdapter mouseAdapter;
-    int initResetCondition = 6;
-    int autoResetCondition = initResetCondition;
+    AutoResetHandler autoResetHandler;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -53,17 +52,19 @@ public class GameCore {
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+
+        autoResetHandler = new AutoResetHandler();
     }
 
     private void updateWhenPlayCard() {
         playRecorder.update();
         sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
-        autoResetCondition--;
+        autoResetHandler.update();
     }
 
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
-        autoResetCondition = initResetCondition;
+        autoResetHandler.initialize();
     }
 
     public void render() {
@@ -87,9 +88,9 @@ public class GameCore {
     }
 
     private void checkAutoResetCondition() {
-        if (autoResetCondition == 0) {
+        if (autoResetHandler.isTimeToReset()) {
             sumAccessor.resetSum();
-            autoResetCondition = initResetCondition;
+            autoResetHandler.initialize();
         }
     }
 
