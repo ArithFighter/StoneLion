@@ -13,6 +13,7 @@ public class GameComponent implements WindowSetting {
     SumDisplacer sumDisplacer;
     NumberBox numberBox;
     NumberBox[] numberBoxes;
+    RandomNumArrayGenerator randomNumArrayGenerator;
     int[] numbers;
     NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
@@ -36,9 +37,27 @@ public class GameComponent implements WindowSetting {
         }
 
         numbers = new int[numberBoxQuantity];
+
+        randomNumArrayGenerator = new RandomNumArrayGenerator();
     }
 
-    public void getNumbers(int[] numbers){
+    public void setNumberInListToZero(int i){
+        randomNumArrayGenerator.setNumberInListToZero(i);
+    }
+
+    public void clearNumbers(){
+        randomNumArrayGenerator.clear();
+    }
+
+    public int[] getNumbers(){
+        return numbers;
+    }
+
+    public void updateNumbers(){
+        System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
+    }
+
+    public void updateNumbers(int[] numbers){
         System.arraycopy(numbers, 0, this.numbers, 0, this.numbers.length);
     }
 

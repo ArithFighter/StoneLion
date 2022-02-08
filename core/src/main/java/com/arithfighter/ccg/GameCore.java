@@ -17,7 +17,6 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
     MouseAdapter mouseAdapter;
     int initResetCondition = 6;
@@ -35,8 +34,6 @@ public class GameCore {
         batch = new SpriteBatch();
 
         dataDisplacer = new GameDataDisplacer();
-
-        randomNumArrayGenerator = new RandomNumArrayGenerator();
 
         gameComponent = new GameComponent(textures) {
             @Override
@@ -68,13 +65,13 @@ public class GameCore {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        gameComponent.getNumbers(randomNumArrayGenerator.getNumbers());
+        gameComponent.updateNumbers();
 
         handleWhenNumMatchedSum();
 
         checkEveryNumMatched();
 
-        resetAnyThingsManually();
+        resetAnyThingsManually();//for test
 
         workSpriteBatch();
 
@@ -88,31 +85,36 @@ public class GameCore {
     }
 
     private void checkEveryNumMatched(){
-        numberListInspector.inspectNumberList(randomNumArrayGenerator.getNumbers());
+        numberListInspector.inspectNumberList(gameComponent.getNumbers());
 
         if (numberListInspector.isAllNumberAreZero()){
-            randomNumArrayGenerator.clear();
+            gameComponent.clearNumbers();
         }
     }
 
     private void handleWhenNumMatchedSum() {
-        for (int i = 0; i < randomNumArrayGenerator.getMaxQuantity(); i++) {
+        for (int i = 0; i < gameComponent.getNumbers().length; i++) {
             if (isNumAndSumMatched(i)) {
-                if (randomNumArrayGenerator.getNumbers()[i] > 0) {
-                    scoreRecorder.update();
-                    randomNumArrayGenerator.setNumberInListToZero(i);
-                }
+                getScoreAndSetNumToZero(i);
             }
         }
     }
 
+    private void getScoreAndSetNumToZero(int i){
+        if (gameComponent.getNumbers()[i] > 0) {
+            scoreRecorder.update();
+            gameComponent.setNumberInListToZero(i);
+        }
+    }
+
     private boolean isNumAndSumMatched(int index){
-        return sumAccessor.getSum() == randomNumArrayGenerator.getNumbers()[index];
+        return sumAccessor.getSum() == gameComponent.getNumbers()[index];
     }
 
     private void resetAnyThingsManually() {
+        //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            randomNumArrayGenerator.clear();
+            gameComponent.clearNumbers();
             resetVariable();
         }
     }
@@ -138,7 +140,7 @@ public class GameCore {
     private void drawData(){
         dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
         dataDisplacer.drawRecord(playRecorder.getRecord(), batch);
-        dataDisplacer.drawScoreBoard(scoreRecorder.getRecord(), batch);
+        dataDisplacer.drawScore(scoreRecorder.getRecord(), batch);
     }
 
     private void drawGame(){
