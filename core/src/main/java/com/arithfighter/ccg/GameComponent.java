@@ -80,11 +80,17 @@ public class GameComponent implements WindowSetting {
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY){
         if (table.isOnDesk(mouseX, mouseY)){
-            if (hand.isCardActive())
+            if (hand.isCardActive()){
                 doWhenCardPlayed();
+
+                if (hand.isResetCard())
+                    doWhenResetCardPlay();
+            }
         }
         hand.resetHand();
     }
+
+    public void doWhenResetCardPlay() {}
 
     public void doWhenCardPlayed() {}
 

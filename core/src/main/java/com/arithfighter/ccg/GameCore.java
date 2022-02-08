@@ -37,9 +37,12 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
+            }
 
-                if (gameComponent.getHand().isResetCard())
-                    doWhenResetCardPlay();
+            @Override
+            public void doWhenResetCardPlay() {
+                sumAccessor.resetSum();
+                autoResetHandler.initialize();
             }
 
             @Override
@@ -60,11 +63,6 @@ public class GameCore {
         playRecorder.update();
         sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
         autoResetHandler.update();
-    }
-
-    private void doWhenResetCardPlay() {
-        sumAccessor.resetSum();
-        autoResetHandler.initialize();
     }
 
     public void render() {
