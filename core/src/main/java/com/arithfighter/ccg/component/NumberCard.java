@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class NumberCard {
-    float initX, initY;
-    float cardX, cardY, cardWidth, cardHeight;
-    float scale = 3f;
+public class NumberCard extends RawCard{
     enum CardState {ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
     Sprite card;
@@ -17,12 +14,10 @@ public class NumberCard {
     int number;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        this.initX = initX;
-        this.initY = initY;
-        cardWidth = texture.getWidth() * scale;
-        cardHeight = texture.getHeight() * scale;
-        cardX = initX;
-        cardY = initY;
+        setInitPosition(initX, initY);
+
+        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 3);
+
         this.number = number;
 
         card = new Sprite(texture);

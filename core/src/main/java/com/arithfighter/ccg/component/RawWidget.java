@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.component;
 
-public class BasicWidget {
+public class RawWidget {
     float widgetX, widgetY, widgetWidth, widgetHeight;
     int fontSize;
 
