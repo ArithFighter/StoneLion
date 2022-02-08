@@ -4,6 +4,7 @@ import com.arithfighter.ccg.component.NumberBoxPlacer;
 import com.arithfighter.ccg.component.NumberBox;
 import com.arithfighter.ccg.component.SumDisplacer;
 import com.arithfighter.ccg.component.Table;
+import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,6 +15,7 @@ public class GameComponent implements WindowSetting {
     NumberBox numberBox;
     NumberBox[] numberBoxes;
     RandomNumArrayGenerator randomNumArrayGenerator;
+    NumberListInspector numberListInspector;
     int[] numbers;
     NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
@@ -39,6 +41,30 @@ public class GameComponent implements WindowSetting {
         numbers = new int[numberBoxQuantity];
 
         randomNumArrayGenerator = new RandomNumArrayGenerator();
+
+        numberListInspector = new NumberListInspector();
+    }
+
+    public void handleWhenNumMatchedSum(int sum) {
+        for (int i = 0; i < numbers.length; i++) {
+            if (isNumAndSumMatched(i, sum)) {
+                getScoreAndSetNumToZero(i);
+            }
+        }
+    }
+
+    private boolean isNumAndSumMatched(int index, int sum){
+        return sum == numbers[index];
+    }
+
+    private void getScoreAndSetNumToZero(int i){
+        if (numbers[i] > 0) {
+            updateScore();
+            setNumberInListToZero(i);
+        }
+    }
+
+    public void updateScore() {
     }
 
     public void setNumberInListToZero(int i){
@@ -49,16 +75,20 @@ public class GameComponent implements WindowSetting {
         randomNumArrayGenerator.clear();
     }
 
+    public void checkEveryNumMatched(){
+        numberListInspector.inspectNumberList(numbers);
+
+        if (numberListInspector.isAllNumberAreZero()){
+            clearNumbers();
+        }
+    }
+
     public int[] getNumbers(){
         return numbers;
     }
 
     public void updateNumbers(){
         System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
-    }
-
-    public void updateNumbers(int[] numbers){
-        System.arraycopy(numbers, 0, this.numbers, 0, this.numbers.length);
     }
 
     public Hand getHand() {

@@ -17,7 +17,6 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     Recorder playRecorder = new Recorder();
     Recorder scoreRecorder = new Recorder();
-    NumberListInspector numberListInspector;
     MouseAdapter mouseAdapter;
     int initResetCondition = 6;
     int autoResetCondition = initResetCondition;
@@ -47,15 +46,17 @@ public class GameCore {
                     autoResetCondition = initResetCondition;
                 }
             }
+
+            @Override
+            public void updateScore() {
+                scoreRecorder.update();
+            }
         };
         cursorPos = new CursorPositionAccessor();
 
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
-
-        numberListInspector = new NumberListInspector();
-
     }
 
     public void render() {
@@ -67,9 +68,9 @@ public class GameCore {
 
         gameComponent.updateNumbers();
 
-        handleWhenNumMatchedSum();
+        gameComponent.handleWhenNumMatchedSum(sumAccessor.getSum());
 
-        checkEveryNumMatched();
+        gameComponent.checkEveryNumMatched();
 
         resetAnyThingsManually();//for test
 
@@ -81,34 +82,8 @@ public class GameCore {
     private void checkAutoResetCondition(){
         if(autoResetCondition == 0){
             sumAccessor.resetSum();
+            autoResetCondition = initResetCondition;
         }
-    }
-
-    private void checkEveryNumMatched(){
-        numberListInspector.inspectNumberList(gameComponent.getNumbers());
-
-        if (numberListInspector.isAllNumberAreZero()){
-            gameComponent.clearNumbers();
-        }
-    }
-
-    private void handleWhenNumMatchedSum() {
-        for (int i = 0; i < gameComponent.getNumbers().length; i++) {
-            if (isNumAndSumMatched(i)) {
-                getScoreAndSetNumToZero(i);
-            }
-        }
-    }
-
-    private void getScoreAndSetNumToZero(int i){
-        if (gameComponent.getNumbers()[i] > 0) {
-            scoreRecorder.update();
-            gameComponent.setNumberInListToZero(i);
-        }
-    }
-
-    private boolean isNumAndSumMatched(int index){
-        return sumAccessor.getSum() == gameComponent.getNumbers()[index];
     }
 
     private void resetAnyThingsManually() {
