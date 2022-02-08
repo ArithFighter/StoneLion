@@ -29,7 +29,7 @@ public class CounterAssetProcessor {
         int length = fileLibrary.getTextureFile().length;
         Texture[] textures = new Texture[length];
 
-        for (int i = 0; i < fileLibrary.getTextureFile().length; i++)
+        for (int i = 0; i < length; i++)
             textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
 
         return textures;

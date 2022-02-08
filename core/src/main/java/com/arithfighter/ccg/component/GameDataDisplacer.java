@@ -5,40 +5,34 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameDataDisplacer {
-    Font mousePos;
-    Font recorder;
-    Font scoreBoard;
+    Font font;
     int fontSize = 16;
 
     public GameDataDisplacer(){
-        mousePos = new Font(fontSize);
-        recorder = new Font(fontSize);
-        scoreBoard = new Font(fontSize);
+        font = new Font(fontSize);
     }
 
     public void drawMousePos(int x, int y, SpriteBatch batch){
         String posText = "X: " + x + " Y: " + y;
 
-        mousePos.setColor(Color.WHITE);
-        mousePos.draw(batch,posText,0, WindowSetting.MAX_WINDOW_HEIGHT);
+        font.setColor(Color.WHITE);
+        font.draw(batch,posText,0, WindowSetting.MAX_WINDOW_HEIGHT);
 
     }
 
     public void drawRecord(int number, SpriteBatch batch){
-        recorder.setColor(Color.WHITE);
-        recorder.draw(batch, "Record: "+number,0,
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Record: "+number,0,
                 WindowSetting.MAX_WINDOW_HEIGHT-fontSize*1.1f);
     }
 
     public void drawScoreBoard(int score, SpriteBatch batch){
-        recorder.setColor(Color.WHITE);
-        recorder.draw(batch, "Score: "+score,0,
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Score: "+score,0,
                 WindowSetting.MAX_WINDOW_HEIGHT-fontSize*2.1f);
     }
 
     public void dispose(){
-        mousePos.dispose();
-        recorder.dispose();
-        scoreBoard.dispose();
+        font.dispose();
     }
 }
