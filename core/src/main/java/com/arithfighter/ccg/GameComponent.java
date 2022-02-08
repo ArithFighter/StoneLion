@@ -17,10 +17,12 @@ public class GameComponent implements WindowSetting {
     RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
     int[] numbers;
-    NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
+    NumberBoxPlacer numberBoxPlacer;
 
     public GameComponent(Texture[] textures) {
-        hand = new Hand(textures[0], CharacterList.KNIGHT);
+        numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
+
+        hand = new Hand(textures[0], CharacterList.HUNTER);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
