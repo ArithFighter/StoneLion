@@ -37,14 +37,10 @@ public class GameCore {
         gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
-                playRecorder.update();
-                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
-                autoResetCondition--;
+                updateWhenPlayCard();
 
-                if (gameComponent.getHand().isResetCard()){
-                    sumAccessor.resetSum();
-                    autoResetCondition = initResetCondition;
-                }
+                if (gameComponent.getHand().isResetCard())
+                    doWhenResetCardPlay();
             }
 
             @Override
@@ -57,6 +53,17 @@ public class GameCore {
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void updateWhenPlayCard() {
+        playRecorder.update();
+        sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+        autoResetCondition--;
+    }
+
+    private void doWhenResetCardPlay() {
+        sumAccessor.resetSum();
+        autoResetCondition = initResetCondition;
     }
 
     public void render() {
@@ -79,8 +86,8 @@ public class GameCore {
         checkAutoResetCondition();
     }
 
-    private void checkAutoResetCondition(){
-        if(autoResetCondition == 0){
+    private void checkAutoResetCondition() {
+        if (autoResetCondition == 0) {
             sumAccessor.resetSum();
             autoResetCondition = initResetCondition;
         }
@@ -89,7 +96,6 @@ public class GameCore {
     private void resetAnyThingsManually() {
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            gameComponent.clearNumbers();
             resetVariable();
         }
     }
@@ -112,13 +118,13 @@ public class GameCore {
         drawGame();
     }
 
-    private void drawData(){
+    private void drawData() {
         dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
         dataDisplacer.drawRecord(playRecorder.getRecord(), batch);
         dataDisplacer.drawScore(scoreRecorder.getRecord(), batch);
     }
 
-    private void drawGame(){
+    private void drawGame() {
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
         gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
     }

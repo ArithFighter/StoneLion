@@ -20,7 +20,7 @@ public class GameComponent implements WindowSetting {
     NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
     public GameComponent(Texture[] textures) {
-        hand = new Hand(textures[0], CharacterList.HUNTER);
+        hand = new Hand(textures[0], CharacterList.KNIGHT);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
@@ -47,44 +47,27 @@ public class GameComponent implements WindowSetting {
 
     public void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (isNumAndSumMatched(i, sum)) {
+            if (sum == numbers[i]) {
                 getScoreAndSetNumToZero(i);
             }
         }
     }
 
-    private boolean isNumAndSumMatched(int index, int sum){
-        return sum == numbers[index];
-    }
-
     private void getScoreAndSetNumToZero(int i){
         if (numbers[i] > 0) {
             updateScore();
-            setNumberInListToZero(i);
+            randomNumArrayGenerator.setNumberInListToZero(i);
         }
     }
 
-    public void updateScore() {
-    }
-
-    public void setNumberInListToZero(int i){
-        randomNumArrayGenerator.setNumberInListToZero(i);
-    }
-
-    public void clearNumbers(){
-        randomNumArrayGenerator.clear();
-    }
+    public void updateScore() {}
 
     public void checkEveryNumMatched(){
         numberListInspector.inspectNumberList(numbers);
 
         if (numberListInspector.isAllNumberAreZero()){
-            clearNumbers();
+            randomNumArrayGenerator.clear();
         }
-    }
-
-    public int[] getNumbers(){
-        return numbers;
     }
 
     public void updateNumbers(){
@@ -108,10 +91,10 @@ public class GameComponent implements WindowSetting {
     public void drawTableAndNumbers(SpriteBatch batch, int sum) {
         table.draw(batch);
 
-        for (int i = 0; i<numberBoxes.length;i++)
-            if (numbers[i]>0){
+        for (int i = 0; i<numberBoxes.length;i++){
+            if (numbers[i]>0)
                 numberBoxes[i].draw(numbers[i], batch);
-            }
+        }
 
         sumDisplacer.draw(sum, batch);
     }
@@ -125,6 +108,7 @@ public class GameComponent implements WindowSetting {
         hand.dispose();
         sumDisplacer.dispose();
         numberBox.dispose();
+
         for (NumberBox numberBox:numberBoxes)
             numberBox.dispose();
     }
