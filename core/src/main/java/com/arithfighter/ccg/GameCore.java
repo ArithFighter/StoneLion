@@ -15,8 +15,6 @@ public class GameCore {
     CursorPositionAccessor cursorPos;
     SpriteBatch batch;
     SumAccessor sumAccessor = new SumAccessor();
-    Recorder playRecorder = new Recorder();
-    Recorder scoreRecorder = new Recorder();
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
 
@@ -47,7 +45,7 @@ public class GameCore {
 
             @Override
             public void updateScore() {
-                scoreRecorder.update();
+                dataDisplacer.updateScore();
             }
         };
         cursorPos = new CursorPositionAccessor();
@@ -60,7 +58,7 @@ public class GameCore {
     }
 
     private void updateWhenPlayCard() {
-        playRecorder.update();
+        dataDisplacer.updatePlayTimes();
         sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
         autoResetHandler.update();
     }
@@ -100,8 +98,7 @@ public class GameCore {
     }
 
     private void resetVariable() {
-        playRecorder.reset();
-        scoreRecorder.reset();
+        dataDisplacer.resetRecorder();
         sumAccessor.resetSum();
     }
 
@@ -112,19 +109,10 @@ public class GameCore {
     }
 
     private void drawComponent() {
-        drawData();
+        dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);
 
-        drawGame();
-    }
-
-    private void drawData() {
-        dataDisplacer.drawMousePos(cursorPos.getX(), cursorPos.getY(), batch);
-        dataDisplacer.drawRecord(playRecorder.getRecord(), batch);
-        dataDisplacer.drawScore(scoreRecorder.getRecord(), batch);
-    }
-
-    private void drawGame() {
         gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum());
+
         gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
     }
 
