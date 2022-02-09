@@ -3,9 +3,9 @@ package com.arithfighter.ccg;
 import static com.arithfighter.ccg.CharacterList.*;
 
 public class CharacterSetCollection {
-    int[] knightSet = {2,3,9};
-    int[] rogueSet = {-1,3,8};
-    int[] hunterSet = {-2,3,9};
+    int[] knightSet = {2,3,9,0};
+    int[] rogueSet = {-1,3,8,0};
+    int[] hunterSet = {2,3,6,12};
     CharacterList[] characters = {KNIGHT, ROGUE, HUNTER};
     int[][] numberSets = {knightSet, rogueSet, hunterSet};
 

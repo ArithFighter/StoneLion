@@ -14,7 +14,7 @@ public class Hand {
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2],texture);
+        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],texture);
 
         cards = numberCardCollection.getCards();
     }
