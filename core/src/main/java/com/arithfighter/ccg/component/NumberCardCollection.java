@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class NumberCardCollection {
     private final NumberCard[] cards;
 
-    public NumberCardCollection(int min, int mid, int max, int reset,Texture texture) {
+    public NumberCardCollection(int min, int mid, int max, int reset, Texture texture) {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 3;
         float initY = 0;
 

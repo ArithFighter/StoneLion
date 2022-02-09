@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.system.Recorder;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -34,13 +34,13 @@ public class GameDataDisplacer {
     public void draw(int x, int y, SpriteBatch batch){
         String posText = "X: " + x + " Y: " + y;
 
-        font.draw(batch,posText,0, WindowSetting.MAX_WINDOW_HEIGHT);
+        font.draw(batch,posText,0, Gdx.graphics.getHeight());
 
         font.draw(batch, "Record: "+playRecorder.getRecord(),0,
-                WindowSetting.MAX_WINDOW_HEIGHT-fontSize*1.1f);
+                Gdx.graphics.getHeight()-fontSize*1.1f);
 
         font.draw(batch, "Score: "+scoreRecorder.getRecord(),0,
-                WindowSetting.MAX_WINDOW_HEIGHT-fontSize*2.1f);
+                Gdx.graphics.getHeight()-fontSize*2.1f);
     }
 
     public void dispose(){
