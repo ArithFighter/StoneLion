@@ -40,7 +40,6 @@ public class GameCore {
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
-                autoResetHandler.initialize();
             }
 
             @Override
