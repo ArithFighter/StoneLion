@@ -40,6 +40,7 @@ public class GameCore {
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
+                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
             }
 
             @Override

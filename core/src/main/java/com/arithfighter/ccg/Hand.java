@@ -29,7 +29,7 @@ public class Hand {
     }
 
     public boolean isResetCard(){
-        return getCardNumber() == 0;
+        return getActiveCardIndex() == 3;
     }
 
     public void checkTouchingCard(float x, float y) {
