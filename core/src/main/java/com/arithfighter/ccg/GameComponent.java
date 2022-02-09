@@ -22,7 +22,7 @@ public class GameComponent implements WindowSetting {
     public GameComponent(Texture[] textures) {
         numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
-        hand = new Hand(textures[0], CharacterList.HUNTER);
+        hand = new Hand(textures[0], CharacterList.WARRIOR);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
