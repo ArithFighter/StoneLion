@@ -53,7 +53,7 @@ public class NumberCard extends RawCard{
                 cardY += speed;
         }
         else
-            resetCard();
+            resetPosition();
     }
 
     public void dispose() {
@@ -63,13 +63,19 @@ public class NumberCard extends RawCard{
     private void drawNumber(SpriteBatch batch) {
         float numberX = cardX + 10;
         float numberY = cardY + cardHeight;
+
+        text.draw(batch, showNumberText(), numberX, numberY);
+    }
+
+    private String showNumberText(){
         String content;
-        if (number!=0)
+
+        if (number<10 && number!=0)
             content = String.valueOf(number);
         else
-            content = "RE0";
+            content = "RE"+number;
 
-        text.draw(batch, content, numberX, numberY);
+        return content;
     }
 
     private void checkOutOfWindow() {
@@ -92,7 +98,7 @@ public class NumberCard extends RawCard{
             updatePosition(x - cardWidth / 2, y - cardHeight / 2);
     }
 
-    public void resetCard() {
+    public void resetPosition() {
         updatePosition(initX, initY);
         state = CardState.INACTIVE;
     }

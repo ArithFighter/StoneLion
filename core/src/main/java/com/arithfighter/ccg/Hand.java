@@ -49,7 +49,7 @@ public class Hand {
 
     public void resetHand() {
         for (NumberCard card : cards)
-            card.resetCard();
+            card.resetPosition();
     }
 
     public boolean isCardActive() {
