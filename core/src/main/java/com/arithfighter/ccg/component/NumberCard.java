@@ -10,13 +10,12 @@ public class NumberCard extends RawCard{
     enum CardState {ACTIVE, INACTIVE}
     CardState state = CardState.INACTIVE;
     Sprite card;
-    Font text;
     int number;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
         setInitPosition(initX, initY);
 
-        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 1.5f);
+        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 1.8f);
 
         this.number = number;
 
@@ -24,9 +23,6 @@ public class NumberCard extends RawCard{
         card.setColor(Color.GOLDENROD);
         card.setPosition(cardX, cardY);
         card.setSize(cardWidth, cardHeight);
-
-        text = new Font(30);
-        text.setColor(Color.WHITE);
     }
 
     public int getNumber(){
@@ -41,7 +37,6 @@ public class NumberCard extends RawCard{
         checkOutOfWindow();
         card.setPosition(cardX, cardY);
         card.draw(batch);
-        drawNumber(batch);
     }
 
     public void checkTouchingCard(float x, float y) {
@@ -54,28 +49,6 @@ public class NumberCard extends RawCard{
         }
         else
             resetPosition();
-    }
-
-    public void dispose() {
-        text.dispose();
-    }
-
-    private void drawNumber(SpriteBatch batch) {
-        float numberX = cardX + 10;
-        float numberY = cardY + cardHeight;
-
-        text.draw(batch, showNumberText(), numberX, numberY);
-    }
-
-    private String showNumberText(){
-        String content;
-
-        if (number<10 && number!=0)
-            content = String.valueOf(number);
-        else
-            content = "RE"+number;
-
-        return content;
     }
 
     private void checkOutOfWindow() {

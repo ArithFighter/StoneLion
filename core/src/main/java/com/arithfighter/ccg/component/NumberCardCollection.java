@@ -7,7 +7,7 @@ public class NumberCardCollection {
     private final NumberCard[] cards;
 
     public NumberCardCollection(int min, int mid, int max, int reset, Texture[] textures) {
-        float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 3;
+        float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = 0;
 
         NumberCard minCard, midCard, maxCard, resetCard;

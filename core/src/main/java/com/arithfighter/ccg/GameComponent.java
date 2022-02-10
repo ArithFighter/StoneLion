@@ -113,7 +113,6 @@ public class GameComponent implements WindowSetting {
     }
 
     public void dispose() {
-        hand.dispose();
         sumDisplacer.dispose();
         numberBox.dispose();
 

@@ -64,9 +64,4 @@ public class Hand {
         }
         return index;
     }
-
-    public void dispose() {
-        for (NumberCard card : cards)
-            card.dispose();
-    }
 }
