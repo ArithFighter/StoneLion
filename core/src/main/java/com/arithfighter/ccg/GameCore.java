@@ -21,7 +21,7 @@ public class GameCore {
     public void create() {
         assetProcessor = new CounterAssetProcessor();
 
-        assetProcessor.loadAssets();
+        assetProcessor.loadTextures();
 
         assetProcessor.finishLoading();
 

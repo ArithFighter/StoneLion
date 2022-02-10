@@ -12,9 +12,14 @@ public class CounterAssetProcessor {
         fileLibrary = new FileLibrary();
     }
 
-    public void loadAssets(){
+    public void loadTextures(){
         for (String textureFile : fileLibrary.getTextureFile())
             assetManager.load(textureFile, Texture.class);
+    }
+
+    public void loadCards(){
+        for(String cardFile : fileLibrary.getCardFiles())
+            assetManager.load(cardFile, Texture.class);
     }
 
     public void finishLoading(){
@@ -26,11 +31,19 @@ public class CounterAssetProcessor {
     }
 
     public Texture[] getTextures() {
-        int length = fileLibrary.getTextureFile().length;
+        return getTextures(fileLibrary.getTextureFile());
+    }
+
+    public Texture[] getCards(){
+        return getTextures(fileLibrary.getCardFiles());
+    }
+
+    public Texture[] getTextures(String[] files){
+        int length = files.length;
         Texture[] textures = new Texture[length];
 
         for (int i = 0; i < length; i++)
-            textures[i] = assetManager.get(fileLibrary.getTextureFile()[i]);
+            textures[i] = assetManager.get(files[i]);
 
         return textures;
     }
