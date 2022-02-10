@@ -19,6 +19,10 @@ public class FileLibrary {
             "cards/Number-7.png",
             "cards/Number-8.png",
             "cards/Number-9.png",
+            "cards/Number-neg1.png",
+            "cards/Number-neg3.png",
+            "cards/Number-neg7.png",
+            "cards/Number-max.png",
     };
 
     public String[] getTextureFile(){
