@@ -23,6 +23,8 @@ public class GameCore {
 
         assetProcessor.loadTextures();
 
+        assetProcessor.loadCards();
+
         assetProcessor.finishLoading();
 
         textures = assetProcessor.getTextures();
