@@ -17,6 +17,7 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
+    CardTexturesAccessor cardTexturesAccessor;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -29,11 +30,13 @@ public class GameCore {
 
         textures = assetProcessor.getTextures();
 
+        cardTexturesAccessor = new CardTexturesAccessor(assetProcessor.getCards());
+
         batch = new SpriteBatch();
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures) {
+        gameComponent = new GameComponent(textures, cardTexturesAccessor.getKnightCardSet()) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();

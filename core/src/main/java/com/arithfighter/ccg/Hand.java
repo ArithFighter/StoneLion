@@ -9,12 +9,12 @@ public class Hand {
     NumberCard[] cards;
     NumberCardCollection numberCardCollection;
 
-    public Hand(Texture texture, CharacterList character) {
+    public Hand(Texture[] textures, CharacterList character) {
         CharacterSetCollection csc = new CharacterSetCollection();
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],texture);
+        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],textures);
 
         cards = numberCardCollection.getCards();
     }

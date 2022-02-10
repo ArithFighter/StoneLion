@@ -16,7 +16,7 @@ public class NumberCard extends RawCard{
     public NumberCard(float initX, float initY, Texture texture, int number) {
         setInitPosition(initX, initY);
 
-        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 3);
+        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 1.5f);
 
         this.number = number;
 

@@ -19,10 +19,10 @@ public class GameComponent implements WindowSetting {
     int[] numbers;
     NumberBoxPlacer numberBoxPlacer;
 
-    public GameComponent(Texture[] textures) {
+    public GameComponent(Texture[] textures, Texture[] cards) {
         numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
 
-        hand = new Hand(textures[0], CharacterList.WARRIOR);
+        hand = new Hand(cards, CharacterList.KNIGHT);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
