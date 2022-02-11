@@ -52,9 +52,18 @@ public class GameComponent implements WindowSetting {
 
         sumDisplacer.draw(sum, condition, batch);
 
+        drawNumbers(batch);
 
-        drawTableAndNumbers(batch, sum, condition);
         drawHand(batch, mouseX, mouseY);
+        
+    }
+
+    public void update(int sum){
+        updateNumbers();
+
+        handleWhenNumMatchedSum(sum);
+
+        checkEveryNumMatched();
     }
 
     public void handleWhenNumMatchedSum(int sum) {
@@ -106,15 +115,11 @@ public class GameComponent implements WindowSetting {
 
     public void doWhenCardPlayed() {}
 
-    private void drawTableAndNumbers(SpriteBatch batch, int sum, int condition) {
-        table.draw(batch);
-
+    private void drawNumbers(SpriteBatch batch) {
         for (int i = 0; i<numberBoxes.length;i++){
             if (numbers[i]>0)
                 numberBoxes[i].draw(numbers[i], batch);
         }
-
-        sumDisplacer.draw(sum, condition, batch);
     }
 
     private void drawHand(SpriteBatch batch, int mouseX, int mouseY){

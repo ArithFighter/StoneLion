@@ -42,6 +42,12 @@ public class GameCore {
                 updateWhenPlayCard();
             }
 
+            private void updateWhenPlayCard() {
+                dataDisplacer.updatePlayTimes();
+                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+                autoResetHandler.update();
+            }
+
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
@@ -62,30 +68,24 @@ public class GameCore {
         autoResetHandler = new AutoResetHandler();
     }
 
-    private void updateWhenPlayCard() {
-        dataDisplacer.updatePlayTimes();
-        sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
-        autoResetHandler.update();
-    }
-
     public void render() {
-        assetProcessor.update(17);
-
-        cursorPos.updateCursorPosition();
-
-        mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
-
-        gameComponent.updateNumbers();
-
-        gameComponent.handleWhenNumMatchedSum(sumAccessor.getSum());
-
-        gameComponent.checkEveryNumMatched();
+        updateThings();
 
         resetAnyThingsManually();//for test
 
         workSpriteBatch();
 
         checkAutoResetCondition();
+    }
+
+    private void updateThings() {
+        assetProcessor.update(17);
+
+        cursorPos.updateCursorPosition();
+
+        mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
+
+        gameComponent.update(sumAccessor.getSum());
     }
 
     private void checkAutoResetCondition() {
@@ -116,7 +116,8 @@ public class GameCore {
     private void drawComponent() {
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);
 
-        gameComponent.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
+        gameComponent.draw(batch, sumAccessor.getSum(),
+                autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
     }
 
     public void dispose() {
