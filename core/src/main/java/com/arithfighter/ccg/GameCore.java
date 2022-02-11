@@ -116,9 +116,7 @@ public class GameCore {
     private void drawComponent() {
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);
 
-        gameComponent.drawTableAndNumbers(batch, sumAccessor.getSum(), autoResetHandler.getCondition());
-
-        gameComponent.drawHand(batch, cursorPos.getX(), cursorPos.getY());
+        gameComponent.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
     }
 
     public void dispose() {

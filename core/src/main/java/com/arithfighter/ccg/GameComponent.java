@@ -47,6 +47,16 @@ public class GameComponent implements WindowSetting {
         numberListInspector = new NumberListInspector();
     }
 
+    public void draw(SpriteBatch batch, int sum , int condition, int mouseX, int mouseY){
+        table.draw(batch);
+
+        sumDisplacer.draw(sum, condition, batch);
+
+
+        drawTableAndNumbers(batch, sum, condition);
+        drawHand(batch, mouseX, mouseY);
+    }
+
     public void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (sum == numbers[i]) {
@@ -96,7 +106,7 @@ public class GameComponent implements WindowSetting {
 
     public void doWhenCardPlayed() {}
 
-    public void drawTableAndNumbers(SpriteBatch batch, int sum, int condition) {
+    private void drawTableAndNumbers(SpriteBatch batch, int sum, int condition) {
         table.draw(batch);
 
         for (int i = 0; i<numberBoxes.length;i++){
@@ -107,7 +117,7 @@ public class GameComponent implements WindowSetting {
         sumDisplacer.draw(sum, condition, batch);
     }
 
-    public void drawHand(SpriteBatch batch, int mouseX, int mouseY){
+    private void drawHand(SpriteBatch batch, int mouseX, int mouseY){
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
     }
