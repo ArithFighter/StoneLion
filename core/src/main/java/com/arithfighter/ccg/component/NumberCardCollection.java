@@ -8,21 +8,21 @@ public class NumberCardCollection {
 
     public NumberCardCollection(int min, int mid, int max, int reset, Texture[] textures) {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
-        float initY = 0;
+        float initY = -WindowSetting.GRID_Y;
 
-        NumberCard minCard, midCard, maxCard, resetCard;
+        int cardQuantity = 4;
+        cards = new NumberCard[cardQuantity];
 
-        minCard = new NumberCard(initX, initY, textures[0], min);
+        int [] numbers = {min, mid, max, reset};
 
-        float padding = minCard.getWidth() + WindowSetting.GRID_X;
+        NumberCard sample = new NumberCard(initX, initY, textures[0], min);
 
-        midCard = new NumberCard(initX + padding, initY, textures[1], mid);
+        float padding = sample.getWidth() + WindowSetting.GRID_X*0.8f;
 
-        maxCard = new NumberCard(initX + padding * 2, initY, textures[2], max);
+        for(int i = 0; i< cardQuantity;i++){
+            cards[i] = new NumberCard(initX+i*padding, initY, textures[i], numbers[i]);
+        }
 
-        resetCard = new NumberCard(initX + padding * 3, initY, textures[3], reset);
-
-        cards = new NumberCard[]{minCard, midCard, maxCard, resetCard};
     }
 
     public NumberCard[] getCards() {

@@ -40,8 +40,8 @@ public class NumberCard extends RawCard{
     }
 
     public void checkTouchingCard(float x, float y) {
-        int movingDistance = 15;
-        float speed = 2;
+        int movingDistance = 30;
+        float speed = 3;
 
         if (isOnCard(x, y)){
             if (cardY < initY + movingDistance)
