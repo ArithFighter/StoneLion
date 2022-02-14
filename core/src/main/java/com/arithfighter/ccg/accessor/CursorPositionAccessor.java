@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.system;
+package com.arithfighter.ccg.accessor;
 
 import com.badlogic.gdx.Gdx;
 
