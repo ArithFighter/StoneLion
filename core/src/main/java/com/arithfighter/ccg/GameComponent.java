@@ -64,7 +64,7 @@ public class GameComponent implements WindowSetting {
         checkEveryNumMatched();
     }
 
-    public void handleWhenNumMatchedSum(int sum) {
+    private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (sum == numbers[i]) {
                 getScoreAndSetNumToZero(i);
@@ -81,7 +81,7 @@ public class GameComponent implements WindowSetting {
 
     public void updateScore() {}
 
-    public void checkEveryNumMatched(){
+    private void checkEveryNumMatched(){
         numberListInspector.inspectNumberList(numbers);
 
         if (numberListInspector.isAllNumberAreZero()){
@@ -89,7 +89,7 @@ public class GameComponent implements WindowSetting {
         }
     }
 
-    public void updateNumbers(){
+    private void updateNumbers(){
         System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
     }
 
