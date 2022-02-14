@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.asset;
 
 public class FileLibrary {
     String[] textures = {

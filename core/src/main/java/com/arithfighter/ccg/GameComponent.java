@@ -1,9 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.component.NumberBoxPlacer;
-import com.arithfighter.ccg.component.NumberBox;
-import com.arithfighter.ccg.component.SumDisplacer;
-import com.arithfighter.ccg.component.Table;
+import com.arithfighter.ccg.component.*;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
