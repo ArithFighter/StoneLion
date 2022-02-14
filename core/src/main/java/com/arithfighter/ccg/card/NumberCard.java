@@ -20,7 +20,6 @@ public class NumberCard extends RawCard {
         this.number = number;
 
         card = new Sprite(texture);
-        card.setColor(Color.GOLDENROD);
         card.setPosition(cardX, cardY);
         card.setSize(cardWidth, cardHeight);
     }

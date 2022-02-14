@@ -6,7 +6,9 @@ import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameComponent implements WindowSetting {
+import static com.arithfighter.ccg.WindowSetting.*;
+
+public class GameComponent {
     Hand hand;
     Table table;
     SumDisplacer sumDisplacer;
@@ -39,7 +41,6 @@ public class GameComponent implements WindowSetting {
         drawNumbers(batch);
 
         drawHand(batch, mouseX, mouseY);
-        
     }
 
     public void update(int sum){
