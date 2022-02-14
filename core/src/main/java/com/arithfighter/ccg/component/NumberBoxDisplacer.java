@@ -16,7 +16,6 @@ public class NumberBoxDisplacer{
 
         numberBox = new NumberBox(textures[3], 300, 350);
 
-
         numberBoxes = new NumberBox[numberBoxQuantity];
 
         for (int i = 0; i< numberBoxQuantity; i++){
@@ -35,6 +34,8 @@ public class NumberBoxDisplacer{
     }
 
     public void dispose(){
+        numberBox.dispose();
+
         for (NumberBox numberBox:numberBoxes)
             numberBox.dispose();
     }

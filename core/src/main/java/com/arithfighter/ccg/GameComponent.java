@@ -10,35 +10,21 @@ public class GameComponent implements WindowSetting {
     Hand hand;
     Table table;
     SumDisplacer sumDisplacer;
-    NumberBox numberBox;
-    NumberBox[] numberBoxes;
     RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
     int[] numbers;
-    NumberBoxPlacer numberBoxPlacer;
+    NumberBoxDisplacer numberBoxDisplacer;
 
     public GameComponent(Texture[] textures, Texture[] cards) {
-        numberBoxPlacer = new NumberBoxPlacer(GRID_X*9.5f,GRID_Y*5, GRID_X);
-
         hand = new Hand(cards, CharacterList.KNIGHT);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
         sumDisplacer = new SumDisplacer(textures[2], CENTER_X + GRID_X * 8, GRID_Y*7);
 
-        numberBox = new NumberBox(textures[3], 300, 350);
+        numberBoxDisplacer = new NumberBoxDisplacer(textures);
 
-        int numberBoxQuantity = 9;
-
-        numberBoxes = new NumberBox[numberBoxQuantity];
-
-        for (int i = 0; i< numberBoxQuantity; i++){
-            numberBoxes[i] = new NumberBox(textures[3],
-                    numberBoxPlacer.getNumberBoxX(i, numberBox.getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, numberBox.getHeight()));
-        }
-
-        numbers = new int[numberBoxQuantity];
+        numbers = new int[numberBoxDisplacer.getNumberBoxQuantity()];
 
         randomNumArrayGenerator = new RandomNumArrayGenerator();
 
@@ -114,9 +100,9 @@ public class GameComponent implements WindowSetting {
     public void doWhenCardPlayed() {}
 
     private void drawNumbers(SpriteBatch batch) {
-        for (int i = 0; i<numberBoxes.length;i++){
+        for (int i = 0; i<numberBoxDisplacer.getNumberBoxes().length;i++){
             if (numbers[i]>0)
-                numberBoxes[i].draw(numbers[i], batch);
+                numberBoxDisplacer.getNumberBoxes()[i].draw(numbers[i], batch);
         }
     }
 
@@ -127,9 +113,7 @@ public class GameComponent implements WindowSetting {
 
     public void dispose() {
         sumDisplacer.dispose();
-        numberBox.dispose();
 
-        for (NumberBox numberBox:numberBoxes)
-            numberBox.dispose();
+        numberBoxDisplacer.dispose();
     }
 }
