@@ -1,5 +1,7 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.number.RandomNumProducer;
+
 import static com.arithfighter.ccg.CharacterList.*;
 
 public class CharacterSetCollection {
