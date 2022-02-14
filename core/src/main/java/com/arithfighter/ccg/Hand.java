@@ -1,7 +1,7 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.component.NumberCard;
-import com.arithfighter.ccg.component.NumberCardCollection;
+import com.arithfighter.ccg.card.NumberCard;
+import com.arithfighter.ccg.card.NumberCardCollection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

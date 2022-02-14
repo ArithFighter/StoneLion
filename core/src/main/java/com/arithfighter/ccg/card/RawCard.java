@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.card;
 
 public class RawCard {
     float initX, initY;

@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.card;
 
 import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Texture;
