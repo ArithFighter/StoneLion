@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.asset;
+package com.arithfighter.ccg.file;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
