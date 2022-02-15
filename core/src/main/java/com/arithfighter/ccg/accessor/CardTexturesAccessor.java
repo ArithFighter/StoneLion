@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.accessor;
 
+import com.arithfighter.ccg.CharacterList;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardTexturesAccessor {
@@ -8,8 +9,32 @@ public class CardTexturesAccessor {
     public CardTexturesAccessor(Texture[] cardTextures){
         this.cardTextures = cardTextures;
     }
+    
+    public Texture[] getCardSet(CharacterList character){
+        Texture[] cardSet = new Texture[4];
+        
+        switch (character){
+            case KNIGHT:
+                cardSet = getKnightCardSet();
+                break;
+            case ROGUE:
+                cardSet = getRogueCardSet();
+                break;
+            case HUNTER:
+                cardSet = getHunterCardSet();
+                break;
+            case PALADIN:
+                cardSet = getPaladinCardSet();
+                break;
+            case WARRIOR:
+                cardSet = getWarriorCardSet();
+                break;
+        }
+        
+        return cardSet;
+    }
 
-    public Texture[] getKnightCardSet(){
+    private Texture[] getKnightCardSet(){
         Texture[] cardSet = new Texture[4];
 
         cardSet[0] = cardTextures[2];
@@ -20,7 +45,7 @@ public class CardTexturesAccessor {
         return cardSet;
     }
 
-    public Texture[] getRogueCardSet(){
+    private Texture[] getRogueCardSet(){
         Texture[] cardSet = new Texture[4];
 
         cardSet[0] = cardTextures[12];
@@ -31,7 +56,7 @@ public class CardTexturesAccessor {
         return cardSet;
     }
 
-    public Texture[] getHunterCardSet(){
+    private Texture[] getHunterCardSet(){
         Texture[] cardSet = new Texture[4];
 
         cardSet[0] = cardTextures[2];
@@ -42,7 +67,7 @@ public class CardTexturesAccessor {
         return cardSet;
     }
 
-    public Texture[] getPaladinCardSet(){
+    private Texture[] getPaladinCardSet(){
         Texture[] cardSet = new Texture[4];
 
         cardSet[0] = cardTextures[12];
@@ -53,7 +78,7 @@ public class CardTexturesAccessor {
         return cardSet;
     }
 
-    public Texture[] getWarriorCardSet(){
+    private Texture[] getWarriorCardSet(){
         Texture[] cardSet = new Texture[4];
 
         cardSet[0] = cardTextures[12];
