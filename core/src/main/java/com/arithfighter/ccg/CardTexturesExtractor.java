@@ -1,6 +1,5 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.CharacterList;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardTexturesExtractor {

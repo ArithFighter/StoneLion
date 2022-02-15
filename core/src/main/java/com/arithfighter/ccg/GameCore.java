@@ -20,7 +20,6 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
-    CardTexturesExtractor cardTexturesExtractor;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -28,8 +27,6 @@ public class GameCore {
         assetProcessor.load();
 
         textures = assetProcessor.getTextures();
-
-        cardTexturesExtractor = new CardTexturesExtractor(assetProcessor.getCards());
 
         batch = new SpriteBatch();
 
