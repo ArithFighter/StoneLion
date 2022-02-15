@@ -1,5 +1,6 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.accessor.CardTexturesAccessor;
 import com.arithfighter.ccg.component.*;
 import com.arithfighter.ccg.number.RandomNumArrayGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
@@ -16,9 +17,12 @@ public class GameComponent {
     NumberListInspector numberListInspector;
     int[] numbers;
     NumberBoxDisplacer numberBoxDisplacer;
+    CardTexturesAccessor cardTexturesAccessor;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
-        hand = new Hand(cards, character);
+        cardTexturesAccessor = new CardTexturesAccessor(cards);
+
+        hand = new Hand(cardTexturesAccessor.getCardSet(character), character);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 

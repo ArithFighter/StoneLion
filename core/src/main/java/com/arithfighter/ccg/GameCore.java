@@ -37,7 +37,7 @@ public class GameCore {
         dataDisplacer = new GameDataDisplacer();
 
         gameComponent = new GameComponent(textures,
-                cardTexturesAccessor.getCardSet(CharacterList.KNIGHT), CharacterList.KNIGHT) {
+                assetProcessor.getCards(), CharacterList.KNIGHT) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
