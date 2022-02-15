@@ -36,7 +36,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, cardTexturesAccessor.getKnightCardSet()) {
+        gameComponent = new GameComponent(textures, cardTexturesAccessor.getPaladinCardSet()) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();

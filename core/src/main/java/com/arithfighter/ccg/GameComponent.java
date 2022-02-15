@@ -18,7 +18,7 @@ public class GameComponent {
     NumberBoxDisplacer numberBoxDisplacer;
 
     public GameComponent(Texture[] textures, Texture[] cards) {
-        hand = new Hand(cards, CharacterList.KNIGHT);
+        hand = new Hand(cards, CharacterList.PALADIN);
 
         table = new Table(textures[1], CENTER_X+GRID_X*4, GRID_Y * 6);
 
