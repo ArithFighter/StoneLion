@@ -32,7 +32,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.ROGUE) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
