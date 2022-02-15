@@ -1,6 +1,5 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.accessor.CardTexturesAccessor;
 import com.arithfighter.ccg.accessor.CursorPositionAccessor;
 import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
@@ -21,7 +20,7 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
-    CardTexturesAccessor cardTexturesAccessor;
+    CardTexturesExtractor cardTexturesExtractor;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -30,7 +29,7 @@ public class GameCore {
 
         textures = assetProcessor.getTextures();
 
-        cardTexturesAccessor = new CardTexturesAccessor(assetProcessor.getCards());
+        cardTexturesExtractor = new CardTexturesExtractor(assetProcessor.getCards());
 
         batch = new SpriteBatch();
 

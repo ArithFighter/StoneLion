@@ -1,12 +1,12 @@
-package com.arithfighter.ccg.accessor;
+package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.CharacterList;
 import com.badlogic.gdx.graphics.Texture;
 
-public class CardTexturesAccessor {
+public class CardTexturesExtractor {
     Texture[] cardTextures;
 
-    public CardTexturesAccessor(Texture[] cardTextures){
+    public CardTexturesExtractor(Texture[] cardTextures){
         this.cardTextures = cardTextures;
     }
     
@@ -87,5 +87,10 @@ public class CardTexturesAccessor {
         cardSet[3] = cardTextures[15];
 
         return cardSet;
+    }
+
+    public void dispose(){
+        for (Texture texture:cardTextures)
+            texture.dispose();
     }
 }
