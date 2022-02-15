@@ -36,8 +36,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures,
-                assetProcessor.getCards(), CharacterList.KNIGHT) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
@@ -123,6 +122,7 @@ public class GameCore {
 
     public void dispose() {
         batch.dispose();
+        assetProcessor.dispose();
         dataDisplacer.dispose();
         gameComponent.dispose();
     }

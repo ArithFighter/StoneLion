@@ -61,7 +61,7 @@ public class CardTexturesAccessor {
 
         cardSet[0] = cardTextures[2];
         cardSet[1] = cardTextures[3];
-        cardSet[2] = cardTextures[6];
+        cardSet[2] = cardTextures[5];
         cardSet[3] = cardTextures[10];
 
         return cardSet;
@@ -72,7 +72,7 @@ public class CardTexturesAccessor {
 
         cardSet[0] = cardTextures[12];
         cardSet[1] = cardTextures[2];
-        cardSet[2] = cardTextures[7];
+        cardSet[2] = cardTextures[5];
         cardSet[3] = cardTextures[11];
 
         return cardSet;

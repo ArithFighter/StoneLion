@@ -55,4 +55,8 @@ public class CounterAssetProcessor {
 
         return textures;
     }
+
+    public void dispose(){
+        assetManager.dispose();
+    }
 }
