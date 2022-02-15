@@ -71,7 +71,7 @@ public class CardTexturesExtractor {
 
         cardSet[0] = cardTextures[12];
         cardSet[1] = cardTextures[2];
-        cardSet[2] = cardTextures[5];
+        cardSet[2] = cardTextures[7];
         cardSet[3] = cardTextures[11];
 
         return cardSet;

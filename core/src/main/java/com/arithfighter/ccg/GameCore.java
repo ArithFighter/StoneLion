@@ -32,7 +32,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.PALADIN) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
@@ -51,8 +51,18 @@ public class GameCore {
             }
 
             @Override
-            public void updateScore() {
-                dataDisplacer.updateScore();
+            public void updateScore1() {
+                dataDisplacer.updateScore(1);
+            }
+
+            @Override
+            public void updateScore2() {
+                dataDisplacer.updateScore(2);
+            }
+
+            @Override
+            public void updateScore3() {
+                dataDisplacer.updateScore(3);
             }
         };
         cursorPos = new CursorPositionAccessor();

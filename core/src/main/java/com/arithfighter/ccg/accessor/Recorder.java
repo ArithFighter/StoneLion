@@ -7,8 +7,8 @@ public class Recorder {
         return record;
     }
 
-    public void update(){
-        record++;
+    public void update(int change){
+        record+=change;
     }
 
     public void reset(){

@@ -18,12 +18,12 @@ public class GameDataDisplacer {
         font.setColor(Color.WHITE);
     }
 
-    public void updateScore(){
-        scoreRecorder.update();
+    public void updateScore(int change){
+        scoreRecorder.update(change);
     }
 
     public void updatePlayTimes(){
-        playRecorder.update();
+        playRecorder.update(1);
     }
 
     public void resetRecorder(){
