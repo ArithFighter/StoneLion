@@ -17,6 +17,14 @@ public class RawBar extends RawWidget{
         bar.setSize(widgetWidth, widgetHeight);
     }
 
+    public float getWidth(){
+        return widgetWidth;
+    }
+
+    public float getHeight(){
+        return widgetHeight;
+    }
+
     public void draw(SpriteBatch batch) {
         bar.draw(batch);
     }

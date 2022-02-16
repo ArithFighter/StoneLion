@@ -8,13 +8,15 @@ public class EnergyBar {
     BarGrid barGrid;
 
     public EnergyBar(Texture[] textures){
-        rawBar = new RawBar(textures[4], 50, 30);
+        int barX = 50;
+        rawBar = new RawBar(textures[4], barX, 30);
 
-        barGrid = new BarGrid(textures[5], 50, 30);
+        barGrid = new BarGrid(textures[5], barX, 150);
+        barGrid.setPosX(barX+barGrid.getWidth()+9);
     }
 
     public void draw(SpriteBatch batch){
-        barGrid.draw(batch);
+        barGrid.draw(batch, rawBar.getWidth()-71);
         rawBar.draw(batch);
     }
 

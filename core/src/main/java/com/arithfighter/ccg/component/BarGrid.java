@@ -23,10 +23,19 @@ public class BarGrid extends RawWidget{
         grid.setSize(widgetWidth, widgetHeight);
     }
 
-    public void draw(SpriteBatch batch) {
+    public float getWidth(){
+        return widgetWidth;
+    }
+
+    public void setPosX(float x){
+        grid.setPosition(x,widgetY);
+    }
+
+    public void draw(SpriteBatch batch, float width) {
+        grid.setSize(width,widgetHeight);
         grid.draw(batch);
         maxSign.draw(batch, "MAX",
-                widgetX+widgetWidth/2, widgetY+widgetHeight/2);
+                widgetX+width/2, widgetY+widgetHeight);
     }
 
     public void dispose(){
