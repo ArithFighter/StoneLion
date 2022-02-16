@@ -14,76 +14,32 @@ public class CardTexturesExtractor {
         
         switch (character){
             case KNIGHT:
-                cardSet = getKnightCardSet();
+                cardSet = getCardTextures(2,3,9,0);
                 break;
             case ROGUE:
-                cardSet = getRogueCardSet();
+                cardSet = getCardTextures(12,3,8,0);
                 break;
             case HUNTER:
-                cardSet = getHunterCardSet();
+                cardSet = getCardTextures(2,3,5,10);
                 break;
             case PALADIN:
-                cardSet = getPaladinCardSet();
+                cardSet = getCardTextures(12,2,7,11);
                 break;
             case WARRIOR:
-                cardSet = getWarriorCardSet();
+                cardSet = getCardTextures(12,13,14,15);
                 break;
         }
         
         return cardSet;
     }
 
-    private Texture[] getKnightCardSet(){
+    private Texture[] getCardTextures(int min, int mid, int max, int reset){
         Texture[] cardSet = new Texture[4];
 
-        cardSet[0] = cardTextures[2];
-        cardSet[1] = cardTextures[3];
-        cardSet[2] = cardTextures[9];
-        cardSet[3] = cardTextures[0];
-
-        return cardSet;
-    }
-
-    private Texture[] getRogueCardSet(){
-        Texture[] cardSet = new Texture[4];
-
-        cardSet[0] = cardTextures[12];
-        cardSet[1] = cardTextures[3];
-        cardSet[2] = cardTextures[8];
-        cardSet[3] = cardTextures[0];
-
-        return cardSet;
-    }
-
-    private Texture[] getHunterCardSet(){
-        Texture[] cardSet = new Texture[4];
-
-        cardSet[0] = cardTextures[2];
-        cardSet[1] = cardTextures[3];
-        cardSet[2] = cardTextures[5];
-        cardSet[3] = cardTextures[10];
-
-        return cardSet;
-    }
-
-    private Texture[] getPaladinCardSet(){
-        Texture[] cardSet = new Texture[4];
-
-        cardSet[0] = cardTextures[12];
-        cardSet[1] = cardTextures[2];
-        cardSet[2] = cardTextures[7];
-        cardSet[3] = cardTextures[11];
-
-        return cardSet;
-    }
-
-    private Texture[] getWarriorCardSet(){
-        Texture[] cardSet = new Texture[4];
-
-        cardSet[0] = cardTextures[12];
-        cardSet[1] = cardTextures[13];
-        cardSet[2] = cardTextures[14];
-        cardSet[3] = cardTextures[15];
+        cardSet[0] = cardTextures[min];
+        cardSet[1] = cardTextures[mid];
+        cardSet[2] = cardTextures[max];
+        cardSet[3] = cardTextures[reset];
 
         return cardSet;
     }
