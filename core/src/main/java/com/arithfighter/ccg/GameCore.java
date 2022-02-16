@@ -21,7 +21,6 @@ public class GameCore {
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
     EnergyBar energyBar;
-    int energy;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -44,7 +43,7 @@ public class GameCore {
                 dataDisplacer.updatePlayTimes();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
                 autoResetHandler.update();
-                energy+=3;
+                dataDisplacer.updateEnergy(3);
             }
 
             @Override
@@ -88,8 +87,8 @@ public class GameCore {
 
         checkAutoResetCondition();
 
-        if (energy>energyBar.getMax())
-            energy = energyBar.getMax();
+        if (dataDisplacer.getEnergy()>energyBar.getMax())
+            dataDisplacer.setMaxEnergy(energyBar.getMax());
     }
 
     private void updateThings() {
@@ -128,12 +127,12 @@ public class GameCore {
     }
 
     private void drawComponent() {
-        dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);
+        dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
 
         gameComponent.draw(batch, sumAccessor.getSum(),
                 autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
 
-        energyBar.draw(batch, energy);
+        energyBar.draw(batch, dataDisplacer.getEnergy());
     }
 
     public void dispose() {
