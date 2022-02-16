@@ -10,7 +10,7 @@ public class CharacterSetCollection {
     int[] rogueSet = {-1,3,8,0};
     int[] hunterSet = {2,3,5,12};
     int[] paladinSet = {-1,2,7,15};
-    int[] warriorSet = {-1,-3,-7, rnp.getMax()};
+    int[] warriorSet = {-7,-3,-1, rnp.getMax()};
     CharacterList[] characters = {KNIGHT, ROGUE, HUNTER, PALADIN, WARRIOR};
     int[][] numberSets = {knightSet, rogueSet, hunterSet, paladinSet, warriorSet};
 

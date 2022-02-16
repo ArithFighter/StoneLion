@@ -26,7 +26,7 @@ public class CardTexturesExtractor {
                 cardSet = getCardTextures(12,2,7,11);
                 break;
             case WARRIOR:
-                cardSet = getCardTextures(12,13,14,15);
+                cardSet = getCardTextures(14,13,12,15);
                 break;
         }
         
