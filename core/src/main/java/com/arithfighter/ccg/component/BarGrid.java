@@ -6,16 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid extends RawWidget{
-    Font maxSign;
     Sprite grid;
 
     public BarGrid(Texture texture, float initX, float initY){
         configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 0.8f);
 
         configFont(32);
-
-        maxSign = new Font(fontSize);
-        maxSign.setColor(Color.WHITE);
 
         grid = new Sprite(texture);
         grid.setColor(Color.SKY);
@@ -27,18 +23,23 @@ public class BarGrid extends RawWidget{
         return widgetWidth;
     }
 
-    public void setPosX(float x){
-        grid.setPosition(x,widgetY);
+    public float getHeight(){
+        return widgetHeight;
+    }
+
+    public void setPos(float x, float y){
+        widgetX = x;
+        widgetY = y;
+        grid.setPosition(x,y);
     }
 
     public void draw(SpriteBatch batch, float width) {
-        grid.setSize(width,widgetHeight);
+        widgetWidth = width;
+        grid.setSize(widgetWidth,widgetHeight);
         grid.draw(batch);
-        maxSign.draw(batch, "MAX",
-                widgetX+width/2, widgetY+widgetHeight);
     }
 
     public void dispose(){
-        maxSign.dispose();
+
     }
 }

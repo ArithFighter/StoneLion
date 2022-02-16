@@ -128,7 +128,7 @@ public class GameCore {
         gameComponent.draw(batch, sumAccessor.getSum(),
                 autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
 
-        energyBar.draw(batch);
+        energyBar.draw(batch, 20);
     }
 
     public void dispose() {
