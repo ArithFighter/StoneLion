@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class EnergyBar {
     RawBar rawBar;
     BarGrid barGrid;
-    int maxEnergy = 30;
+    private static final int maxEnergy = 30;
 
     public EnergyBar(Texture[] textures){
         int barX = 40;
@@ -17,9 +17,18 @@ public class EnergyBar {
         barGrid.setPos(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
     }
 
+    public int getMax(){
+        return maxEnergy;
+    }
+
     public void draw(SpriteBatch batch, int energy){
+        boolean isMax = false;
+        if (energy>=maxEnergy){
+            energy = maxEnergy;
+            isMax = true;
+        }
         barGrid.draw(batch, (rawBar.getWidth()-71)* energy /maxEnergy);
-        rawBar.draw(batch, false);
+        rawBar.draw(batch, isMax);
     }
 
     public void dispose(){
