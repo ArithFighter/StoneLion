@@ -22,13 +22,12 @@ public class EnergyBar {
     }
 
     public void draw(SpriteBatch batch, int energy){
-        boolean isMax = false;
-        if (energy>=maxEnergy){
-            energy = maxEnergy;
-            isMax = true;
-        }
         barGrid.draw(batch, (rawBar.getWidth()-71)* energy /maxEnergy);
-        rawBar.draw(batch, isMax);
+        rawBar.draw(batch, isMax(energy));
+    }
+
+    private boolean isMax(int energy){
+        return energy >= maxEnergy;
     }
 
     public void dispose(){
