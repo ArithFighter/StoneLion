@@ -1,23 +1,24 @@
 package com.arithfighter.ccg.component;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class EnergyBar extends RawWidget{
-    Sprite bar;
+public class EnergyBar {
+    RawBar rawBar;
+    BarGrid barGrid;
 
-    public EnergyBar(Texture texture, float initX, float initY){
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 8f);
+    public EnergyBar(Texture[] textures){
+        rawBar = new RawBar(textures[4], 50, 30);
 
-        configFont(32);
-
-        bar = new Sprite(texture);
-        bar.setPosition(widgetX, widgetY);
-        bar.setSize(widgetWidth, widgetHeight);
+        barGrid = new BarGrid(textures[5], 50, 30);
     }
 
-    public void draw(SpriteBatch batch) {
-        bar.draw(batch);
+    public void draw(SpriteBatch batch){
+        barGrid.draw(batch);
+        rawBar.draw(batch);
+    }
+
+    public void dispose(){
+        barGrid.dispose();
     }
 }

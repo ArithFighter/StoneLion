@@ -74,7 +74,7 @@ public class GameCore {
 
         autoResetHandler = new AutoResetHandler();
 
-        energyBar = new EnergyBar(textures[4], 50, 30);
+        energyBar = new EnergyBar(textures);
     }
 
     public void render() {

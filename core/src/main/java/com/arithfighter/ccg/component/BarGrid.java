@@ -10,7 +10,7 @@ public class BarGrid extends RawWidget{
     Sprite grid;
 
     public BarGrid(Texture texture, float initX, float initY){
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 8f);
+        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 0.8f);
 
         configFont(32);
 
@@ -24,8 +24,12 @@ public class BarGrid extends RawWidget{
     }
 
     public void draw(SpriteBatch batch) {
+        grid.draw(batch);
         maxSign.draw(batch, "MAX",
                 widgetX+widgetWidth/2, widgetY+widgetHeight/2);
-        grid.draw(batch);
+    }
+
+    public void dispose(){
+        maxSign.dispose();
     }
 }
