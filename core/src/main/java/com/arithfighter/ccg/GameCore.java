@@ -20,6 +20,7 @@ public class GameCore {
     SumAccessor sumAccessor = new SumAccessor();
     MouseAdapter mouseAdapter;
     AutoResetHandler autoResetHandler;
+    EnergyBar energyBar;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -72,6 +73,8 @@ public class GameCore {
         Gdx.input.setInputProcessor(mouseAdapter);
 
         autoResetHandler = new AutoResetHandler();
+
+        energyBar = new EnergyBar(textures[4], 50, 30);
     }
 
     public void render() {
@@ -124,6 +127,8 @@ public class GameCore {
 
         gameComponent.draw(batch, sumAccessor.getSum(),
                 autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
+
+        energyBar.draw(batch);
     }
 
     public void dispose() {

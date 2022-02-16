@@ -8,7 +8,7 @@ public class EnergyBar extends RawWidget{
     Sprite bar;
 
     public EnergyBar(Texture texture, float initX, float initY){
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 3.5f);
+        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 8f);
 
         configFont(32);
 
