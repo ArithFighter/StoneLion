@@ -5,7 +5,9 @@ public class FileLibrary {
             "Card_template.png",
             "desk.png",
             "sum-Display-block.png",
-            "numberBox.png"
+            "numberBox.png",
+            "Energy-bar.png",
+            "white-block.png"
     };
 
     String[] cards = {
