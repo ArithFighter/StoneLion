@@ -1,7 +1,6 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
-import com.arithfighter.ccg.number.RandomNumArrayGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,9 +11,7 @@ public class GameComponent {
     Player player;
     Table table;
     SumDisplacer sumDisplacer;
-    RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
-    int[] numbers;
     NumberBoxDisplacer numberBoxDisplacer;
     enum SkillFlag {NEUTRAL, READY}
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
@@ -26,11 +23,21 @@ public class GameComponent {
 
         sumDisplacer = new SumDisplacer(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures);
+        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+            @Override
+            public void checkNumberTier(int i) {
+                int[] numbers = numberBoxDisplacer.getNumbers();
+                int tier1 = 10;
+                int tier2 = 26;
 
-        numbers = new int[numberBoxDisplacer.getNumberBoxQuantity()];
-
-        randomNumArrayGenerator = new RandomNumArrayGenerator();
+                if (numbers[i] < tier1)
+                    updateScore1();
+                if (numbers[i] >= tier1 && numbers[i] < tier2)
+                    updateScore2();
+                if (numbers[i] >= tier2)
+                    updateScore3();
+            }
+        };
 
         numberListInspector = new NumberListInspector();
     }
@@ -40,44 +47,15 @@ public class GameComponent {
 
         sumDisplacer.draw(sum, condition, batch);
 
-        drawNumbers(batch);
+        numberBoxDisplacer.draw(batch);
 
         drawHand(batch, mouseX, mouseY);
     }
 
     public void update(int sum) {
-        updateNumbers();
-
-        handleWhenNumMatchedSum(sum);
+        numberBoxDisplacer.update(sum);
 
         checkEveryNumMatched();
-    }
-
-    private void handleWhenNumMatchedSum(int sum) {
-        for (int i = 0; i < numbers.length; i++) {
-            if (sum == numbers[i]) {
-                getScoreAndSetNumToZero(i);
-            }
-        }
-    }
-
-    private void getScoreAndSetNumToZero(int i) {
-        if (numbers[i] > 0) {
-            checkNumberTier(i);
-            randomNumArrayGenerator.setNumberInListToZero(i);
-        }
-    }
-
-    private void checkNumberTier(int i) {
-        int tier1 = 10;
-        int tier2 = 26;
-
-        if (numbers[i] < tier1)
-            updateScore1();
-        if (numbers[i] >= tier1 && numbers[i] < tier2)
-            updateScore2();
-        if (numbers[i] >= tier2)
-            updateScore3();
     }
 
     public void updateScore1() {
@@ -90,15 +68,11 @@ public class GameComponent {
     }
 
     private void checkEveryNumMatched() {
-        numberListInspector.inspectNumberList(numbers);
+        numberListInspector.inspectNumberList(numberBoxDisplacer.getNumbers());
 
         if (numberListInspector.isAllNumberAreZero()) {
-            randomNumArrayGenerator.clear();
+            numberBoxDisplacer.refreshNumbers();
         }
-    }
-
-    private void updateNumbers() {
-        System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
     }
 
     public Player getHand() {
@@ -114,21 +88,20 @@ public class GameComponent {
         player.resetHand();
     }
 
-    private void handlePlayingCard(){
+    private void handlePlayingCard() {
         if (player.isResetCard())
             checkResetCardPlay();
-        else{
+        else {
             skillFlag = SkillFlag.NEUTRAL;
             doWhenCardPlayed();
         }
     }
 
     private void checkResetCardPlay() {
-        if (skillFlag == SkillFlag.READY){
+        if (skillFlag == SkillFlag.READY) {
             activeSkill();
             skillFlag = SkillFlag.NEUTRAL;
-        }
-        else {
+        } else {
             doWhenResetCardPlay();
             skillFlag = SkillFlag.READY;
         }
@@ -141,13 +114,6 @@ public class GameComponent {
     }
 
     public void doWhenCardPlayed() {
-    }
-
-    private void drawNumbers(SpriteBatch batch) {
-        for (int i = 0; i < numberBoxDisplacer.getNumberBoxes().length; i++) {
-            if (numbers[i] > 0)
-                numberBoxDisplacer.getNumberBoxes()[i].draw(numbers[i], batch);
-        }
     }
 
     private void drawHand(SpriteBatch batch, int mouseX, int mouseY) {
