@@ -18,6 +18,10 @@ public class GameComponent {
     NumberBoxDisplacer numberBoxDisplacer;
     CardTexturesExtractor cardTexturesExtractor;
 
+    enum SkillFlag {NEUTRAL, READY}
+
+    SkillFlag skillFlag = SkillFlag.NEUTRAL;
+
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         cardTexturesExtractor = new CardTexturesExtractor(cards);
 
@@ -107,15 +111,32 @@ public class GameComponent {
     }
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
-        if (table.isOnDesk(mouseX, mouseY)) {
+        if (table.isOnTable(mouseX, mouseY)) {
             if (hand.isCardActive()) {
-                doWhenCardPlayed();
-
                 if (hand.isResetCard())
-                    doWhenResetCardPlay();
+                    checkResetCardPlay();
+                else
+                    doWhenCardPlayed();
             }
         }
         hand.resetHand();
+    }
+
+    private void checkResetCardPlay() {
+        if (skillFlag == SkillFlag.READY)
+            activeSkill();
+        doWhenResetCardPlay();
+    }
+
+    public void readySkill() {
+        skillFlag = SkillFlag.READY;
+    }
+
+    public void initSkill() {
+        skillFlag = SkillFlag.NEUTRAL;
+    }
+
+    public void activeSkill() {
     }
 
     public void doWhenResetCardPlay() {

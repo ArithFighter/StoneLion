@@ -33,7 +33,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.KNIGHT) {
             @Override
             public void doWhenCardPlayed() {
                 updateWhenPlayCard();
@@ -43,13 +43,22 @@ public class GameCore {
                 dataDisplacer.updatePlayTimes();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
                 autoResetHandler.update();
-                dataDisplacer.updateEnergy(3);
+                dataDisplacer.updateEnergy(6);
+            }
+
+            @Override
+            public void activeSkill() {
+                if (dataDisplacer.getEnergy() == energyBar.getMax()){
+                    dataDisplacer.consumeEnergy();
+                }
+                gameComponent.initSkill();
             }
 
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+                gameComponent.readySkill();
             }
 
             @Override
@@ -140,5 +149,6 @@ public class GameCore {
         assetProcessor.dispose();
         dataDisplacer.dispose();
         gameComponent.dispose();
+        energyBar.dispose();
     }
 }

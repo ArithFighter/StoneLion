@@ -28,6 +28,8 @@ public class GameDataDisplacer {
         energyRecord.update(change);
     }
 
+    public void consumeEnergy(){energyRecord.reset();}
+
     public int getEnergy(){
         return energyRecord.getRecord();
     }

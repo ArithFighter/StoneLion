@@ -27,7 +27,7 @@ public class Table {
         desk.draw(batch);
     }
     
-    public boolean isOnDesk(float x, float y){
+    public boolean isOnTable(float x, float y){
         return x > deskX && x < deskX + deskWidth &&
                 y > deskY && y < deskY + deskHeight;
     }
