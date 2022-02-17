@@ -51,14 +51,12 @@ public class GameCore {
                 if (dataDisplacer.getEnergy() == energyBar.getMax()){
                     dataDisplacer.consumeEnergy();
                 }
-                gameComponent.initSkill();
             }
 
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
-                gameComponent.readySkill();
             }
 
             @Override

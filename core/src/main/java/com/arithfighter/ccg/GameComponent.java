@@ -113,19 +113,30 @@ public class GameComponent {
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
         if (table.isOnTable(mouseX, mouseY)) {
             if (hand.isCardActive()) {
-                if (hand.isResetCard())
-                    checkResetCardPlay();
-                else
-                    doWhenCardPlayed();
+                handlePlayingCard();
             }
         }
         hand.resetHand();
     }
 
+    private void handlePlayingCard(){
+        if (hand.isResetCard())
+            checkResetCardPlay();
+        else{
+            skillFlag = SkillFlag.NEUTRAL;
+            doWhenCardPlayed();
+        }
+    }
+
     private void checkResetCardPlay() {
-        if (skillFlag == SkillFlag.READY)
+        if (skillFlag == SkillFlag.READY){
             activeSkill();
-        doWhenResetCardPlay();
+            skillFlag = SkillFlag.NEUTRAL;
+        }
+        else {
+            doWhenResetCardPlay();
+            skillFlag = SkillFlag.READY;
+        }
     }
 
     public void readySkill() {
