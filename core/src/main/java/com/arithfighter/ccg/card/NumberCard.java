@@ -89,7 +89,7 @@ public class NumberCard extends RawCard {
     }
 
     private boolean isOnCard(float x, float y) {
-        int tolerance = 20;
+        int tolerance = 15;
 
         if(isActive()){
             tolerance*=4;

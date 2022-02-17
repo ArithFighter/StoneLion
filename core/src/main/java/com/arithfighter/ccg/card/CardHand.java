@@ -3,22 +3,22 @@ package com.arithfighter.ccg.card;
 import com.arithfighter.ccg.WindowSetting;
 import com.badlogic.gdx.graphics.Texture;
 
-public class NumberCardCollection {
+public class CardHand {
     private final NumberCard[] cards;
 
-    public NumberCardCollection(int min, int mid, int max, int reset, Texture[] textures) {
+    public CardHand(int[] numberSet, Texture[] textures) {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
-        int [] numbers = {min, mid, max, reset};
-        int cardQuantity = numbers.length;
+        int cardQuantity = numberSet.length;
+
         cards = new NumberCard[cardQuantity];
 
-        NumberCard sample = new NumberCard(initX, initY, textures[0], min);
+        NumberCard sample = new NumberCard(initX, initY, textures[0], numberSet[0]);
 
         float padding = sample.getWidth() + WindowSetting.GRID_X*0.8f;
 
         for(int i = 0; i< cardQuantity;i++)
-            cards[i] = new NumberCard(initX+i*padding, initY, textures[i], numbers[i]);
+            cards[i] = new NumberCard(initX+i*padding, initY, textures[i], numberSet[i]);
     }
 
     public NumberCard[] getCards() {

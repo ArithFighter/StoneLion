@@ -4,13 +4,13 @@ import com.arithfighter.ccg.CardTexturesExtractor;
 import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.CharacterSetCollection;
 import com.arithfighter.ccg.card.NumberCard;
-import com.arithfighter.ccg.card.NumberCardCollection;
+import com.arithfighter.ccg.card.CardHand;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     NumberCard[] cards;
-    NumberCardCollection numberCardCollection;
+    CardHand cardHand;
     CardTexturesExtractor cardTexturesExtractor;
 
     public Player(Texture[] textures, CharacterList character) {
@@ -20,10 +20,9 @@ public class Player {
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],
-                cardTexturesExtractor.getCardSet(character));
+        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character));
 
-        cards = numberCardCollection.getCards();
+        cards = cardHand.getCards();
     }
 
     public void draw(SpriteBatch batch) {
