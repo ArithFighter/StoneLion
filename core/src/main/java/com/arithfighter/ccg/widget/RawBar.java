@@ -1,10 +1,12 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.component.Font;
+import com.arithfighter.ccg.widget.RawWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class RawBar extends RawWidget{
+public class RawBar extends RawWidget {
     Sprite bar;
     Font maxSign;
 

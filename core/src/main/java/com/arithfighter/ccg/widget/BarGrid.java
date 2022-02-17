@@ -1,11 +1,12 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.widget.RawWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BarGrid extends RawWidget{
+public class BarGrid extends RawWidget {
     Sprite grid;
 
     public BarGrid(Texture texture, float initX, float initY){

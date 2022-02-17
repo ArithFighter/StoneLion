@@ -1,5 +1,7 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.widget.BarGrid;
+import com.arithfighter.ccg.widget.RawBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

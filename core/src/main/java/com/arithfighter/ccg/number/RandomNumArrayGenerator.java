@@ -8,10 +8,6 @@ public class RandomNumArrayGenerator {
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final HashSet<Integer> numberSet = new HashSet<>();
 
-    public int getMaxQuantity(){
-        return MAX_QUANTITY;
-    }
-
     public void clear(){
         numberList.clear();
         numberSet.clear();

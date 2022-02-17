@@ -2,6 +2,7 @@ package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.number.RandomNumArrayGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
+import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

@@ -5,6 +5,7 @@ import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -37,7 +38,7 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
-                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+                sumAccessor.updateSum(gameComponent.getPlayer().getCardNumber());
                 autoResetHandler.update();
                 dataDisplacer.updateEnergy(3);
             }
@@ -53,7 +54,7 @@ public class GameCore {
             @Override
             public void doWhenResetCardPlay() {
                 sumAccessor.resetSum();
-                sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
+                sumAccessor.updateSum(gameComponent.getPlayer().getCardNumber());
             }
 
             @Override
@@ -63,12 +64,12 @@ public class GameCore {
 
             @Override
             public void updateScore2() {
-                dataDisplacer.updateScore(2);
+                dataDisplacer.updateScore(1);
             }
 
             @Override
             public void updateScore3() {
-                dataDisplacer.updateScore(3);
+                dataDisplacer.updateScore(1);
             }
         };
         cursorPos = new CursorPositionAccessor();

@@ -19,13 +19,13 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        gameComponent.getHand().checkActive(mouseX, mouseY);
+        gameComponent.getPlayer().checkActive(mouseX, mouseY);
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        gameComponent.getHand().updateWhenDrag(mouseX, mouseY);
+        gameComponent.getPlayer().updateWhenDrag(mouseX, mouseY);
         return true;
     }
 

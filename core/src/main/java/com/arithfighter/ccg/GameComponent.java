@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -61,7 +62,7 @@ public class GameComponent {
     public void updateScore3() {
     }
 
-    public Player getHand() {
+    public Player getPlayer() {
         return player;
     }
 

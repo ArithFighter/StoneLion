@@ -1,10 +1,11 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.widget.RawWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Table extends RawWidget{
+public class Table extends RawWidget {
     Sprite table;
 
     public Table(Texture texture, int x, int y){

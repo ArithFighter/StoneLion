@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
 public class RawWidget {
     float widgetX, widgetY, widgetWidth, widgetHeight;
