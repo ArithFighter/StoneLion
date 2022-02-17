@@ -4,31 +4,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Table {
-    int deskX;
-    int deskY;
-    float deskWidth;
-    float deskHeight;
-    float scale = 14;
-    Sprite desk;
+public class Table extends RawWidget{
+    Sprite table;
 
     public Table(Texture texture, int x, int y){
-        deskX = x;
-        deskY = y;
-        deskWidth = texture.getWidth()*scale;
-        deskHeight = texture.getHeight()*scale;
+        configWidget(x,y,texture.getWidth(), texture.getHeight(), 14);
 
-        desk = new Sprite(texture);
-        desk.setPosition(deskX,deskY);
-        desk.setSize(deskWidth, deskHeight);
+        table = new Sprite(texture);
+        table.setPosition(widgetX,widgetY);
+        table.setSize(widgetWidth, widgetHeight);
     }
     
     public void draw(SpriteBatch batch){
-        desk.draw(batch);
+        table.draw(batch);
     }
     
     public boolean isOnTable(float x, float y){
-        return x > deskX && x < deskX + deskWidth &&
-                y > deskY && y < deskY + deskHeight;
+        return x > widgetX && x < widgetX + widgetWidth &&
+                y > widgetY && y < widgetY + widgetHeight;
     }
 }

@@ -36,10 +36,6 @@ public class GameCore {
         gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.KNIGHT) {
             @Override
             public void doWhenCardPlayed() {
-                updateWhenPlayCard();
-            }
-
-            private void updateWhenPlayCard() {
                 dataDisplacer.updatePlayTimes();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
                 autoResetHandler.update();
@@ -48,9 +44,8 @@ public class GameCore {
 
             @Override
             public void activeSkill() {
-                if (dataDisplacer.getEnergy() == energyBar.getMax()){
+                if (dataDisplacer.getEnergy() == energyBar.getMax())
                     dataDisplacer.consumeEnergy();
-                }
             }
 
             @Override

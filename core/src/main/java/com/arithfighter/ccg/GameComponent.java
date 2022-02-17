@@ -17,9 +17,7 @@ public class GameComponent {
     int[] numbers;
     NumberBoxDisplacer numberBoxDisplacer;
     CardTexturesExtractor cardTexturesExtractor;
-
     enum SkillFlag {NEUTRAL, READY}
-
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
@@ -137,14 +135,6 @@ public class GameComponent {
             doWhenResetCardPlay();
             skillFlag = SkillFlag.READY;
         }
-    }
-
-    public void readySkill() {
-        skillFlag = SkillFlag.READY;
-    }
-
-    public void initSkill() {
-        skillFlag = SkillFlag.NEUTRAL;
     }
 
     public void activeSkill() {
