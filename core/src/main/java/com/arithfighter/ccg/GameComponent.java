@@ -9,21 +9,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class GameComponent {
-    Hand hand;
+    Player player;
     Table table;
     SumDisplacer sumDisplacer;
     RandomNumArrayGenerator randomNumArrayGenerator;
     NumberListInspector numberListInspector;
     int[] numbers;
     NumberBoxDisplacer numberBoxDisplacer;
-    CardTexturesExtractor cardTexturesExtractor;
     enum SkillFlag {NEUTRAL, READY}
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
-        cardTexturesExtractor = new CardTexturesExtractor(cards);
-
-        hand = new Hand(cardTexturesExtractor.getCardSet(character), character);
+        player = new Player(cards, character);
 
         table = new Table(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
 
@@ -104,21 +101,21 @@ public class GameComponent {
         System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
     }
 
-    public Hand getHand() {
-        return hand;
+    public Player getHand() {
+        return player;
     }
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
         if (table.isOnTable(mouseX, mouseY)) {
-            if (hand.isCardActive()) {
+            if (player.isCardActive()) {
                 handlePlayingCard();
             }
         }
-        hand.resetHand();
+        player.resetHand();
     }
 
     private void handlePlayingCard(){
-        if (hand.isResetCard())
+        if (player.isResetCard())
             checkResetCardPlay();
         else{
             skillFlag = SkillFlag.NEUTRAL;
@@ -154,8 +151,8 @@ public class GameComponent {
     }
 
     private void drawHand(SpriteBatch batch, int mouseX, int mouseY) {
-        hand.draw(batch);
-        hand.checkTouchingCard(mouseX, mouseY);
+        player.draw(batch);
+        player.checkTouchingCard(mouseX, mouseY);
     }
 
     public void dispose() {
@@ -163,6 +160,6 @@ public class GameComponent {
 
         numberBoxDisplacer.dispose();
 
-        cardTexturesExtractor.dispose();
+        player.dispose();
     }
 }

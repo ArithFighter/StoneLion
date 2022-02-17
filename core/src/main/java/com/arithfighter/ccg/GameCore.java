@@ -39,13 +39,15 @@ public class GameCore {
                 dataDisplacer.updatePlayTimes();
                 sumAccessor.updateSum(gameComponent.getHand().getCardNumber());
                 autoResetHandler.update();
-                dataDisplacer.updateEnergy(6);
+                dataDisplacer.updateEnergy(3);
             }
 
             @Override
             public void activeSkill() {
-                if (dataDisplacer.getEnergy() == energyBar.getMax())
+                if (dataDisplacer.getEnergy() == energyBar.getMax()){
                     dataDisplacer.consumeEnergy();
+                    autoResetHandler.initialize();
+                }
             }
 
             @Override

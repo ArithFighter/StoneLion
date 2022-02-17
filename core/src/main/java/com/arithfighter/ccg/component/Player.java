@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.component;
 
+import com.arithfighter.ccg.CardTexturesExtractor;
 import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.CharacterSetCollection;
 import com.arithfighter.ccg.card.NumberCard;
@@ -7,16 +8,20 @@ import com.arithfighter.ccg.card.NumberCardCollection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Hand {
+public class Player {
     NumberCard[] cards;
     NumberCardCollection numberCardCollection;
+    CardTexturesExtractor cardTexturesExtractor;
 
-    public Hand(Texture[] textures, CharacterList character) {
+    public Player(Texture[] textures, CharacterList character) {
+        cardTexturesExtractor = new CardTexturesExtractor(textures);
+
         CharacterSetCollection csc = new CharacterSetCollection();
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],textures);
+        numberCardCollection = new NumberCardCollection(numberSet[0],numberSet[1],numberSet[2], numberSet[3],
+                cardTexturesExtractor.getCardSet(character));
 
         cards = numberCardCollection.getCards();
     }
@@ -65,5 +70,9 @@ public class Hand {
                 index = i;
         }
         return index;
+    }
+
+    public void dispose(){
+        cardTexturesExtractor.dispose();
     }
 }
