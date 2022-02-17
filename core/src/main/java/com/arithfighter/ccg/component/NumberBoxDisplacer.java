@@ -1,6 +1,7 @@
 package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.number.RandomNumArrayGenerator;
+import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,6 +15,7 @@ public class NumberBoxDisplacer {
     private final int numberBoxQuantity = 9;
     int[] numbers;
     RandomNumArrayGenerator randomNumArrayGenerator;
+    NumberListInspector numberListInspector;
 
     public NumberBoxDisplacer(Texture[] textures) {
         numberBoxPlacer = new NumberBoxPlacer(GRID_X * 9.5f, GRID_Y * 5, GRID_X);
@@ -31,10 +33,8 @@ public class NumberBoxDisplacer {
         numbers = new int[numberBoxQuantity];
 
         randomNumArrayGenerator = new RandomNumArrayGenerator();
-    }
 
-    public void refreshNumbers(){
-        randomNumArrayGenerator.clear();
+        numberListInspector = new NumberListInspector();
     }
 
     public int[] getNumbers(){
@@ -45,6 +45,8 @@ public class NumberBoxDisplacer {
         updateNumbers();
 
         handleWhenNumMatchedSum(sum);
+
+        checkEveryNumMatched();
     }
 
     private void updateNumbers() {
@@ -67,6 +69,13 @@ public class NumberBoxDisplacer {
     }
 
     public void checkNumberTier(int i) {
+    }
+
+    private void checkEveryNumMatched() {
+        numberListInspector.inspectNumberList(numbers);
+
+        if (numberListInspector.isAllNumberAreZero())
+            randomNumArrayGenerator.clear();
     }
 
     public void draw(SpriteBatch batch) {

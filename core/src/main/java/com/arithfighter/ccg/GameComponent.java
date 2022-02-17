@@ -1,7 +1,6 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
-import com.arithfighter.ccg.system.NumberListInspector;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -11,7 +10,6 @@ public class GameComponent {
     Player player;
     Table table;
     SumDisplacer sumDisplacer;
-    NumberListInspector numberListInspector;
     NumberBoxDisplacer numberBoxDisplacer;
     enum SkillFlag {NEUTRAL, READY}
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
@@ -38,8 +36,6 @@ public class GameComponent {
                     updateScore3();
             }
         };
-
-        numberListInspector = new NumberListInspector();
     }
 
     public void draw(SpriteBatch batch, int sum, int condition, int mouseX, int mouseY) {
@@ -54,8 +50,6 @@ public class GameComponent {
 
     public void update(int sum) {
         numberBoxDisplacer.update(sum);
-
-        checkEveryNumMatched();
     }
 
     public void updateScore1() {
@@ -65,14 +59,6 @@ public class GameComponent {
     }
 
     public void updateScore3() {
-    }
-
-    private void checkEveryNumMatched() {
-        numberListInspector.inspectNumberList(numberBoxDisplacer.getNumbers());
-
-        if (numberListInspector.isAllNumberAreZero()) {
-            numberBoxDisplacer.refreshNumbers();
-        }
     }
 
     public Player getHand() {
