@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class CounterMain extends ApplicationAdapter {
+public class Main extends ApplicationAdapter {
     Camera camera;
     GameCore core;
     @Override

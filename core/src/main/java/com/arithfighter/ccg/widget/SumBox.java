@@ -1,16 +1,16 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.widget.RawWidget;
+import com.arithfighter.ccg.component.Font;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SumDisplacer extends RawWidget {
+public class SumBox extends RawWidget {
     Font text;
     Sprite sumDisplayBlock;
     
-    public SumDisplacer(Texture texture, float initX, float initY){
+    public SumBox(Texture texture, float initX, float initY){
         configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 10);
         
         configFont(36);

@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.SumBox;
 import com.arithfighter.ccg.widget.Table;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +11,7 @@ import static com.arithfighter.ccg.WindowSetting.*;
 public class GameComponent {
     Player player;
     Table table;
-    SumDisplacer sumDisplacer;
+    SumBox sumBox;
     NumberBoxDisplacer numberBoxDisplacer;
     enum SkillFlag {NEUTRAL, READY}
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
@@ -20,7 +21,7 @@ public class GameComponent {
 
         table = new Table(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
 
-        sumDisplacer = new SumDisplacer(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
+        sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -42,7 +43,7 @@ public class GameComponent {
     public void draw(SpriteBatch batch, int sum, int condition, int mouseX, int mouseY) {
         table.draw(batch);
 
-        sumDisplacer.draw(sum, condition, batch);
+        sumBox.draw(sum, condition, batch);
 
         numberBoxDisplacer.draw(batch);
 
@@ -109,7 +110,7 @@ public class GameComponent {
     }
 
     public void dispose() {
-        sumDisplacer.dispose();
+        sumBox.dispose();
 
         numberBoxDisplacer.dispose();
 
