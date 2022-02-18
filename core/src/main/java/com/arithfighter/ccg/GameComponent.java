@@ -2,7 +2,7 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
 import com.arithfighter.ccg.widget.SumBox;
-import com.arithfighter.ccg.widget.Table;
+import com.arithfighter.ccg.widget.CardBoard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,7 +10,7 @@ import static com.arithfighter.ccg.WindowSetting.*;
 
 public class GameComponent {
     Player player;
-    Table table;
+    CardBoard cardBoard;
     SumBox sumBox;
     NumberBoxDisplacer numberBoxDisplacer;
     enum SkillFlag {NEUTRAL, READY}
@@ -19,7 +19,7 @@ public class GameComponent {
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
 
-        table = new Table(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
+        cardBoard = new CardBoard(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
 
         sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
 
@@ -41,7 +41,7 @@ public class GameComponent {
     }
 
     public void draw(SpriteBatch batch, int sum, int condition, int mouseX, int mouseY) {
-        table.draw(batch);
+        cardBoard.draw(batch);
 
         sumBox.draw(sum, condition, batch);
 
@@ -68,7 +68,7 @@ public class GameComponent {
     }
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
-        if (table.isOnTable(mouseX, mouseY)) {
+        if (cardBoard.isOnTable(mouseX, mouseY)) {
             if (player.isCardActive()) {
                 handlePlayingCard();
             }

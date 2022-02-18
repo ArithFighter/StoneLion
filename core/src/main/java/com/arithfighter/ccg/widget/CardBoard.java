@@ -1,14 +1,13 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.widget.RawWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Table extends RawWidget {
+public class CardBoard extends RawWidget {
     Sprite table;
 
-    public Table(Texture texture, int x, int y){
+    public CardBoard(Texture texture, int x, int y){
         configWidget(x,y,texture.getWidth(), texture.getHeight(), 14);
 
         table = new Sprite(texture);
