@@ -1,66 +1,53 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
-import com.arithfighter.ccg.widget.SumBox;
-import com.arithfighter.ccg.widget.CardBoard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static com.arithfighter.ccg.WindowSetting.*;
-
 public class GameComponent {
     Player player;
-    CardBoard cardBoard;
-    SumBox sumBox;
-    NumberBoxDisplacer numberBoxDisplacer;
+    CardTable cardTable;
     enum SkillFlag {NEUTRAL, READY}
     SkillFlag skillFlag = SkillFlag.NEUTRAL;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
 
-        cardBoard = new CardBoard(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
-
-        sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
-
-        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+        cardTable = new CardTable(textures){
             @Override
-            public void checkNumberTier(int i) {
-                int[] numbers = numberBoxDisplacer.getNumbers();
-                int tier1 = 10;
-                int tier2 = 26;
+            public void updateScore1() {
+                getScore1();
+            }
 
-                if (numbers[i] < tier1)
-                    updateScore1();
-                if (numbers[i] >= tier1 && numbers[i] < tier2)
-                    updateScore2();
-                if (numbers[i] >= tier2)
-                    updateScore3();
+            @Override
+            public void updateScore2() {
+                getScore2();
+            }
+
+            @Override
+            public void updateScore3() {
+                getScore3();
             }
         };
     }
 
     public void draw(SpriteBatch batch, int sum, int condition, int mouseX, int mouseY) {
-        cardBoard.draw(batch);
-
-        sumBox.draw(sum, condition, batch);
-
-        numberBoxDisplacer.draw(batch);
+        cardTable.draw(batch, sum, condition);
 
         drawPlayer(batch, mouseX, mouseY);
     }
 
     public void update(int sum) {
-        numberBoxDisplacer.update(sum);
+        cardTable.update(sum);
     }
 
-    public void updateScore1() {
+    public void getScore1() {
     }
 
-    public void updateScore2() {
+    public void getScore2() {
     }
 
-    public void updateScore3() {
+    public void getScore3() {
     }
 
     public Player getPlayer() {
@@ -68,7 +55,7 @@ public class GameComponent {
     }
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
-        if (cardBoard.isOnBoard(mouseX, mouseY)) {
+        if (cardTable.isCardOnBoard(mouseX,mouseY)) {
             if (player.isCardActive()) {
                 handlePlayingCard();
             }
@@ -110,9 +97,7 @@ public class GameComponent {
     }
 
     public void dispose() {
-        sumBox.dispose();
-
-        numberBoxDisplacer.dispose();
+        cardTable.dispose();
 
         player.dispose();
     }
