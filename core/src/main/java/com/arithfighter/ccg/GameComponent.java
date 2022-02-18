@@ -47,7 +47,7 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        drawHand(batch, mouseX, mouseY);
+        drawPlayer(batch, mouseX, mouseY);
     }
 
     public void update(int sum) {
@@ -68,7 +68,7 @@ public class GameComponent {
     }
 
     public final void whenPlayCardOnTable(int mouseX, int mouseY) {
-        if (cardBoard.isOnTable(mouseX, mouseY)) {
+        if (cardBoard.isOnBoard(mouseX, mouseY)) {
             if (player.isCardActive()) {
                 handlePlayingCard();
             }
@@ -104,7 +104,7 @@ public class GameComponent {
     public void doWhenCardPlayed() {
     }
 
-    private void drawHand(SpriteBatch batch, int mouseX, int mouseY) {
+    private void drawPlayer(SpriteBatch batch, int mouseX, int mouseY) {
         player.draw(batch);
         player.checkTouchingCard(mouseX, mouseY);
     }

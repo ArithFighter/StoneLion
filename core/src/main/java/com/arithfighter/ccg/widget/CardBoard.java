@@ -19,7 +19,7 @@ public class CardBoard extends RawWidget {
         table.draw(batch);
     }
     
-    public boolean isOnTable(float x, float y){
+    public boolean isOnBoard(float x, float y){
         return x > widgetX && x < widgetX + widgetWidth &&
                 y > widgetY && y < widgetY + widgetHeight;
     }
