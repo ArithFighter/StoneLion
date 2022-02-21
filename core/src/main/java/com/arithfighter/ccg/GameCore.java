@@ -52,14 +52,6 @@ public class GameCore {
     }
 
     public void render() {
-        updateThings();
-
-        resetRecordManually();//for test
-
-        workSpriteBatch();
-    }
-
-    private void updateThings() {
         assetProcessor.update(17);
 
         cursorPos.updateCursorPosition();
@@ -67,6 +59,10 @@ public class GameCore {
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
         gameComponent.update();
+
+        resetRecordManually();//for test
+
+        drawComponent();
     }
 
     private void resetRecordManually() {
@@ -80,16 +76,11 @@ public class GameCore {
         dataDisplacer.resetRecorder();
     }
 
-    private void workSpriteBatch() {
-        batch.begin();
-        drawComponent();
-        batch.end();
-    }
-
     private void drawComponent() {
+        batch.begin();
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
-
         gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY(), dataDisplacer.getEnergy());
+        batch.end();
     }
 
     public void dispose() {

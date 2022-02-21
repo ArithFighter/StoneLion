@@ -52,13 +52,13 @@ public class NumberBoxDisplacer {
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (isSumAndNumMatched(i, sum))
+            if (isSumAndNumMatched(numbers[i], sum))
                 randomNumArrayGenerator.setNumberInListToZero(i);
         }
     }
 
-    private boolean isSumAndNumMatched(int i, int sum) {
-        return sum == numbers[i] && numbers[i] > 0;
+    private boolean isSumAndNumMatched(int number, int sum) {
+        return sum == number && number > 0;
     }
 
     private void checkEveryNumMatched() {

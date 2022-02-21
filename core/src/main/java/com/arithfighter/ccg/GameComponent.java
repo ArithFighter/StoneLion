@@ -75,6 +75,8 @@ public class GameComponent {
     private void checkResetCardPlay() {
         if (skillFlag == SkillFlag.READY) {
             activeSkill();
+            autoResetHandler.initialize();
+            skillFlag = SkillFlag.NEUTRAL;
         } else {
             doWhenResetCardPlay();
             skillFlag = SkillFlag.READY;
@@ -82,8 +84,6 @@ public class GameComponent {
     }
 
     public void activeSkill() {
-        autoResetHandler.initialize();
-        skillFlag = SkillFlag.NEUTRAL;
     }
 
     private void doWhenResetCardPlay() {
@@ -109,9 +109,7 @@ public class GameComponent {
 
     public void dispose() {
         cardTable.dispose();
-
         player.dispose();
-
         energyBar.dispose();
     }
 }
