@@ -60,7 +60,7 @@ public class GameComponent {
                 handlePlayingCard();
             }
         }
-        player.resetHand();
+        player.initCardsPosition();
     }
 
     private void handlePlayingCard() {

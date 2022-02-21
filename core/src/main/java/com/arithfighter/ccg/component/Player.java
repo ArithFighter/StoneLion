@@ -43,9 +43,9 @@ public class Player {
             card.checkTouchingCard(x, y);
     }
 
-    public void checkActive(float x, float y) {
+    public void activateCard(float x, float y) {
         for (NumberCard card : cards)
-            card.checkActive(x, y);
+            card.activateCard(x, y);
     }
 
     public void updateWhenDrag(float x, float y) {
@@ -53,9 +53,9 @@ public class Player {
             card.updateWhenDrag(x, y);
     }
 
-    public void resetHand() {
+    public void initCardsPosition() {
         for (NumberCard card : cards)
-            card.resetPosition();
+            card.initPosition();
     }
 
     public boolean isCardActive() {

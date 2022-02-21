@@ -37,10 +37,11 @@ public class NumberCard extends RawCard {
     }
 
     public void checkTouchingCard(float x, float y) {
-        if (isOnCard(x, y))
+        if (isOnCard(x, y)){
             playTouchedAnimation();
+        }
         else
-            resetPosition();
+            initPosition();
     }
 
     private void playTouchedAnimation(){
@@ -70,14 +71,14 @@ public class NumberCard extends RawCard {
             updatePosition(x - cardWidth / 2, y - cardHeight / 2);
     }
 
-    public void resetPosition() {
+    public void initPosition() {
         updatePosition(initX, initY);
-        stateManager.inActive();
+        stateManager.deactivate();
     }
 
-    public void checkActive(float mouseX, float mouseY) {
+    public void activateCard(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
-            stateManager.active();
+            stateManager.activate();
     }
 
     private void updatePosition(float x, float y) {

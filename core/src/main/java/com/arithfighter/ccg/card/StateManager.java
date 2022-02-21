@@ -4,11 +4,11 @@ public class StateManager {
     enum State {ACTIVE, INACTIVE}
     State state = State.INACTIVE;
 
-    public void inActive(){
+    public void deactivate(){
         state = State.INACTIVE;
     }
 
-    public void active(){
+    public void activate(){
         state = State.ACTIVE;
     }
 
