@@ -1,14 +1,17 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.component.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameComponent {
-    Player player;
-    CardTable cardTable;
-    enum SkillFlag {NEUTRAL, READY}
-    SkillFlag skillFlag = SkillFlag.NEUTRAL;
+    private final Player player;
+    private final CardTable cardTable;
+    private enum SkillFlag {NEUTRAL, READY}
+    private SkillFlag skillFlag = SkillFlag.NEUTRAL;
+    private final AutoResetHandler autoResetHandler;
+    private final SumAccessor sumAccessor;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
@@ -29,16 +32,29 @@ public class GameComponent {
                 getScore3();
             }
         };
+
+        autoResetHandler = new AutoResetHandler();
+
+        sumAccessor = new SumAccessor();
     }
 
-    public void draw(SpriteBatch batch, int sum, int condition, int mouseX, int mouseY) {
-        cardTable.draw(batch, sum, condition);
+    public void draw(SpriteBatch batch, int mouseX, int mouseY) {
+        cardTable.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition());
 
         drawPlayer(batch, mouseX, mouseY);
     }
 
-    public void update(int sum) {
-        cardTable.update(sum);
+    public void update() {
+        cardTable.update(sumAccessor.getSum());
+
+        checkAutoResetCondition();
+    }
+
+    private void checkAutoResetCondition() {
+        if (autoResetHandler.isTimeToReset()) {
+            sumAccessor.resetSum();
+            autoResetHandler.initialize();
+        }
     }
 
     public void getScore1() {
@@ -54,7 +70,7 @@ public class GameComponent {
         return player;
     }
 
-    public final void whenPlayCardOnTable(int mouseX, int mouseY) {
+    public final void playCardOnTable(int mouseX, int mouseY) {
         if (cardTable.isCardOnBoard(mouseX,mouseY)) {
             if (player.isCardActive()) {
                 handlePlayingCard();
@@ -69,13 +85,14 @@ public class GameComponent {
         else {
             skillFlag = SkillFlag.NEUTRAL;
             doWhenCardPlayed();
+            sumAccessor.updateSum(player.getCardNumber());
+            autoResetHandler.update();
         }
     }
 
     private void checkResetCardPlay() {
         if (skillFlag == SkillFlag.READY) {
             activeSkill();
-            skillFlag = SkillFlag.NEUTRAL;
         } else {
             doWhenResetCardPlay();
             skillFlag = SkillFlag.READY;
@@ -83,9 +100,13 @@ public class GameComponent {
     }
 
     public void activeSkill() {
+        autoResetHandler.initialize();
+        skillFlag = SkillFlag.NEUTRAL;
     }
 
-    public void doWhenResetCardPlay() {
+    private void doWhenResetCardPlay() {
+        sumAccessor.resetSum();
+        sumAccessor.updateSum(player.getCardNumber());
     }
 
     public void doWhenCardPlayed() {

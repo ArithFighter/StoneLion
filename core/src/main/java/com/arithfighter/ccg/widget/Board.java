@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CardBoard extends RawWidget {
+public class Board extends RawWidget {
     Sprite table;
 
-    public CardBoard(Texture texture, int x, int y){
+    public Board(Texture texture, int x, int y){
         configWidget(x,y,texture.getWidth(), texture.getHeight(), 14);
 
         table = new Sprite(texture);

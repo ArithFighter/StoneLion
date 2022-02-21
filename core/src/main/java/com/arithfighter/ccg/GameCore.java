@@ -1,7 +1,6 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.accessor.CursorPositionAccessor;
-import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.component.*;
@@ -18,9 +17,7 @@ public class GameCore {
     GameComponent gameComponent;
     CursorPositionAccessor cursorPos;
     SpriteBatch batch;
-    SumAccessor sumAccessor = new SumAccessor();
     MouseAdapter mouseAdapter;
-    AutoResetHandler autoResetHandler;
     EnergyBar energyBar;
 
     public void create() {
@@ -38,8 +35,6 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
-                sumAccessor.updateSum(gameComponent.getPlayer().getCardNumber());
-                autoResetHandler.update();
                 dataDisplacer.updateEnergy(3);
             }
 
@@ -47,14 +42,7 @@ public class GameCore {
             public void activeSkill() {
                 if (dataDisplacer.getEnergy() == energyBar.getMax()){
                     dataDisplacer.consumeEnergy();
-                    autoResetHandler.initialize();
                 }
-            }
-
-            @Override
-            public void doWhenResetCardPlay() {
-                sumAccessor.resetSum();
-                sumAccessor.updateSum(gameComponent.getPlayer().getCardNumber());
             }
 
             @Override
@@ -78,8 +66,6 @@ public class GameCore {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        autoResetHandler = new AutoResetHandler();
-
         energyBar = new EnergyBar(textures);
     }
 
@@ -89,8 +75,6 @@ public class GameCore {
         resetAnyThingsManually();//for test
 
         workSpriteBatch();
-
-        checkAutoResetCondition();
 
         if (dataDisplacer.getEnergy()>energyBar.getMax())
             dataDisplacer.setMaxEnergy(energyBar.getMax());
@@ -103,14 +87,7 @@ public class GameCore {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        gameComponent.update(sumAccessor.getSum());
-    }
-
-    private void checkAutoResetCondition() {
-        if (autoResetHandler.isTimeToReset()) {
-            sumAccessor.resetSum();
-            autoResetHandler.initialize();
-        }
+        gameComponent.update();
     }
 
     private void resetAnyThingsManually() {
@@ -122,7 +99,6 @@ public class GameCore {
 
     private void resetVariable() {
         dataDisplacer.resetRecorder();
-        sumAccessor.resetSum();
     }
 
     private void workSpriteBatch() {
@@ -134,8 +110,7 @@ public class GameCore {
     private void drawComponent() {
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
 
-        gameComponent.draw(batch, sumAccessor.getSum(),
-                autoResetHandler.getCondition(), cursorPos.getX(), cursorPos.getY());
+        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY());
 
         energyBar.draw(batch, dataDisplacer.getEnergy());
     }

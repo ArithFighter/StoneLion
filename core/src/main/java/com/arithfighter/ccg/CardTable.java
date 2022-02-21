@@ -1,7 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.NumberBoxDisplacer;
-import com.arithfighter.ccg.widget.CardBoard;
+import com.arithfighter.ccg.widget.Board;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class CardTable {
-    CardBoard cardBoard;
+    Board board;
     SumBox sumBox;
     NumberBoxDisplacer numberBoxDisplacer;
 
     public CardTable(Texture[] textures){
-        cardBoard = new CardBoard(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
+        board = new Board(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
 
         sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
 
@@ -36,7 +36,7 @@ public class CardTable {
     }
 
     public void draw(SpriteBatch batch, int sum, int condition){
-        cardBoard.draw(batch);
+        board.draw(batch);
 
         sumBox.draw(sum, condition, batch);
 
@@ -48,7 +48,7 @@ public class CardTable {
     }
 
     public boolean isCardOnBoard(float mouseX, float mouseY){
-        return cardBoard.isOnBoard(mouseX, mouseY);
+        return board.isOnBoard(mouseX, mouseY);
     }
 
     public void updateScore1() {
