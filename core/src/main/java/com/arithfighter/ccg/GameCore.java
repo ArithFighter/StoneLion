@@ -57,7 +57,7 @@ public class GameCore {
     public void render() {
         updateThings();
 
-        resetAnyThingsManually();//for test
+        resetRecordManually();//for test
 
         workSpriteBatch();
 
@@ -75,7 +75,7 @@ public class GameCore {
         gameComponent.update();
     }
 
-    private void resetAnyThingsManually() {
+    private void resetRecordManually() {
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             resetVariable();

@@ -10,13 +10,13 @@ public class NumberListInspector {
     }
 
     private void resetInspector() {
-        sumOfNumInspector -= sumOfNumInspector + 1;
+        sumOfNumInspector =-1;
     }
 
     private void checkEveryNumInListAreZero(int[] numberList) {
-        for (int number : numberList)
+        for (int number : numberList){
             sumOfNumInspector += number;
-
+        }
         allNumAreZero = sumOfNumInspector == -1;
     }
 

@@ -38,7 +38,7 @@ public class NumberBoxDisplacer {
         numberListInspector = new NumberListInspector();
     }
 
-    public void update(int sum){
+    public void update(int sum) {
         updateNumbers();
 
         handleWhenNumMatchedSum(sum);
@@ -52,16 +52,13 @@ public class NumberBoxDisplacer {
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (sum == numbers[i]) {
-                getScoreAndSetNumToZero(i);
-            }
+            if (isSumAndNumMatched(i, sum))
+                randomNumArrayGenerator.setNumberInListToZero(i);
         }
     }
 
-    private void getScoreAndSetNumToZero(int i) {
-        if (numbers[i] > 0) {
-            randomNumArrayGenerator.setNumberInListToZero(i);
-        }
+    private boolean isSumAndNumMatched(int i, int sum) {
+        return sum == numbers[i] && numbers[i] > 0;
     }
 
     private void checkEveryNumMatched() {
