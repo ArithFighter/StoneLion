@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class NumberCard extends RawCard {
     Sprite card;
     int number;
+    StateManager stateManager = new StateManager();
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
         setInitPosition(initX, initY);
@@ -65,18 +66,18 @@ public class NumberCard extends RawCard {
     }
 
     public void updateWhenDrag(float x, float y) {
-        if (isActive())
+        if (stateManager.isActive())
             updatePosition(x - cardWidth / 2, y - cardHeight / 2);
     }
 
     public void resetPosition() {
         updatePosition(initX, initY);
-        inActiveCard();
+        stateManager.inActive();
     }
 
     public void checkActive(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
-            activeCard();
+            stateManager.active();
     }
 
     private void updatePosition(float x, float y) {
@@ -84,10 +85,14 @@ public class NumberCard extends RawCard {
         cardY = y;
     }
 
+    public boolean isActive(){
+        return stateManager.isActive();
+    }
+
     private boolean isOnCard(float x, float y) {
         int tolerance = 15;
 
-        if(isActive()){
+        if(stateManager.isActive()){
             tolerance*=4;
         }
         return x > cardX - tolerance &&
