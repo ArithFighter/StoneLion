@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard extends RawCard {
-    enum CardState {ACTIVE, INACTIVE}
-    CardState state = CardState.INACTIVE;
     Sprite card;
     int number;
 
@@ -38,15 +36,17 @@ public class NumberCard extends RawCard {
     }
 
     public void checkTouchingCard(float x, float y) {
-        int movingDistance = 30;
-        float speed = 3;
-
-        if (isOnCard(x, y)){
-            if (cardY < initY + movingDistance)
-                cardY += speed;
-        }
+        if (isOnCard(x, y))
+            playTouchedAnimation();
         else
             resetPosition();
+    }
+
+    private void playTouchedAnimation(){
+        int movingDistance = 30;
+        float speed = 3;
+        if (cardY < initY + movingDistance)
+            cardY += speed;
     }
 
     private void checkOutOfWindow() {
@@ -71,16 +71,12 @@ public class NumberCard extends RawCard {
 
     public void resetPosition() {
         updatePosition(initX, initY);
-        state = CardState.INACTIVE;
+        inActiveCard();
     }
 
     public void checkActive(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
-            state = CardState.ACTIVE;
-    }
-
-    public boolean isActive() {
-        return state == CardState.ACTIVE;
+            activeCard();
     }
 
     private void updatePosition(float x, float y) {
