@@ -4,7 +4,6 @@ import com.arithfighter.ccg.accessor.CursorPositionAccessor;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.component.*;
-import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +17,6 @@ public class GameCore {
     CursorPositionAccessor cursorPos;
     SpriteBatch batch;
     MouseAdapter mouseAdapter;
-    EnergyBar energyBar;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -35,12 +33,13 @@ public class GameCore {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
-                dataDisplacer.updateEnergy(3);
+                if (gameComponent.isEnergyNotMax(dataDisplacer.getEnergy()))
+                    dataDisplacer.updateEnergy(3);
             }
 
             @Override
             public void activeSkill() {
-                if (dataDisplacer.getEnergy() == energyBar.getMax()){
+                if (gameComponent.isMaxEnergy(dataDisplacer.getEnergy())){
                     dataDisplacer.consumeEnergy();
                 }
             }
@@ -50,8 +49,6 @@ public class GameCore {
         mouseAdapter = new MouseAdapter(gameComponent);
 
         Gdx.input.setInputProcessor(mouseAdapter);
-
-        energyBar = new EnergyBar(textures);
     }
 
     public void render() {
@@ -60,9 +57,6 @@ public class GameCore {
         resetRecordManually();//for test
 
         workSpriteBatch();
-
-        if (dataDisplacer.getEnergy()>energyBar.getMax())
-            dataDisplacer.setMaxEnergy(energyBar.getMax());
     }
 
     private void updateThings() {
@@ -95,9 +89,7 @@ public class GameCore {
     private void drawComponent() {
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
 
-        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY());
-
-        energyBar.draw(batch, dataDisplacer.getEnergy());
+        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY(), dataDisplacer.getEnergy());
     }
 
     public void dispose() {
@@ -105,6 +97,5 @@ public class GameCore {
         assetProcessor.dispose();
         dataDisplacer.dispose();
         gameComponent.dispose();
-        energyBar.dispose();
     }
 }

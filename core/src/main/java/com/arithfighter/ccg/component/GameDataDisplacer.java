@@ -34,11 +34,6 @@ public class GameDataDisplacer {
         return energyRecord.getRecord();
     }
 
-    public void setMaxEnergy(int maxEnergy){
-        energyRecord.reset();
-        energyRecord.update(maxEnergy);
-    }
-
     public void updatePlayTimes(){
         playRecorder.update(1);
     }

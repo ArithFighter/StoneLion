@@ -2,6 +2,7 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,6 +13,7 @@ public class GameComponent {
     private SkillFlag skillFlag = SkillFlag.NEUTRAL;
     private final AutoResetHandler autoResetHandler;
     private final SumAccessor sumAccessor;
+    private final EnergyBar energyBar;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
@@ -21,12 +23,16 @@ public class GameComponent {
         autoResetHandler = new AutoResetHandler();
 
         sumAccessor = new SumAccessor();
+
+        energyBar = new EnergyBar(textures);
     }
 
-    public void draw(SpriteBatch batch, int mouseX, int mouseY) {
+    public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
         cardTable.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition());
 
         drawPlayer(batch, mouseX, mouseY);
+
+        energyBar.draw(batch, energy);
     }
 
     public void update() {
@@ -93,9 +99,19 @@ public class GameComponent {
         player.checkTouchingCard(mouseX, mouseY);
     }
 
+    public boolean isEnergyNotMax(int energy){
+        return energy<energyBar.getMax();
+    }
+
+    public boolean isMaxEnergy(int energy){
+        return energy==energyBar.getMax();
+    }
+
     public void dispose() {
         cardTable.dispose();
 
         player.dispose();
+
+        energyBar.dispose();
     }
 }
