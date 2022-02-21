@@ -38,10 +38,6 @@ public class NumberBoxDisplacer {
         numberListInspector = new NumberListInspector();
     }
 
-    public int[] getNumbers(){
-        return numbers;
-    }
-
     public void update(int sum){
         updateNumbers();
 
@@ -64,12 +60,8 @@ public class NumberBoxDisplacer {
 
     private void getScoreAndSetNumToZero(int i) {
         if (numbers[i] > 0) {
-            checkNumberTier(i);
             randomNumArrayGenerator.setNumberInListToZero(i);
         }
-    }
-
-    public void checkNumberTier(int i) {
     }
 
     private void checkEveryNumMatched() {

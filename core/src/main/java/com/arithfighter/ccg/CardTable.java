@@ -18,21 +18,7 @@ public class CardTable {
 
         sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
-            @Override
-            public void checkNumberTier(int i) {
-                int[] numbers = numberBoxDisplacer.getNumbers();
-                int tier1 = 10;
-                int tier2 = 26;
-
-                if (numbers[i] < tier1)
-                    updateScore1();
-                if (numbers[i] >= tier1 && numbers[i] < tier2)
-                    updateScore2();
-                if (numbers[i] >= tier2)
-                    updateScore3();
-            }
-        };
+        numberBoxDisplacer = new NumberBoxDisplacer(textures);
     }
 
     public void draw(SpriteBatch batch, int sum, int condition){
@@ -49,15 +35,6 @@ public class CardTable {
 
     public boolean isCardOnBoard(float mouseX, float mouseY){
         return board.isOnBoard(mouseX, mouseY);
-    }
-
-    public void updateScore1() {
-    }
-
-    public void updateScore2() {
-    }
-
-    public void updateScore3() {
     }
 
     public void dispose(){

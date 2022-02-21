@@ -16,22 +16,7 @@ public class GameComponent {
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
 
-        cardTable = new CardTable(textures){
-            @Override
-            public void updateScore1() {
-                getScore1();
-            }
-
-            @Override
-            public void updateScore2() {
-                getScore2();
-            }
-
-            @Override
-            public void updateScore3() {
-                getScore3();
-            }
-        };
+        cardTable = new CardTable(textures);
 
         autoResetHandler = new AutoResetHandler();
 
@@ -55,15 +40,6 @@ public class GameComponent {
             sumAccessor.resetSum();
             autoResetHandler.initialize();
         }
-    }
-
-    public void getScore1() {
-    }
-
-    public void getScore2() {
-    }
-
-    public void getScore3() {
     }
 
     public Player getPlayer() {
