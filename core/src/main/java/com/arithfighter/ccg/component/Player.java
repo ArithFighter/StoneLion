@@ -55,7 +55,7 @@ public class Player {
 
     public void initCardsPosition() {
         for (NumberCard card : cards)
-            card.initPosition();
+            card.initCard();
     }
 
     public boolean isCardActive() {

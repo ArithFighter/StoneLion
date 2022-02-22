@@ -32,7 +32,12 @@ public class NumberCard extends RawCard {
 
     public void draw(SpriteBatch batch) {
         checkOutOfWindow();
+
         card.setPosition(cardX, cardY);
+
+        if (stateManager.isActive())
+            card.setSize(cardWidth*1.2f, cardHeight*1.2f);
+
         card.draw(batch);
     }
 
@@ -41,7 +46,7 @@ public class NumberCard extends RawCard {
             playTouchedAnimation();
         }
         else
-            initPosition();
+            initCard();
     }
 
     private void playTouchedAnimation(){
@@ -71,9 +76,10 @@ public class NumberCard extends RawCard {
             updatePosition(x - cardWidth / 2, y - cardHeight / 2);
     }
 
-    public void initPosition() {
+    public void initCard() {
         updatePosition(initX, initY);
         stateManager.deactivate();
+        card.setSize(cardWidth, cardHeight);
     }
 
     public void activateCard(float mouseX, float mouseY) {
