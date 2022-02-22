@@ -80,6 +80,7 @@ public class GameComponent {
         if (autoResetHandler.isTimeToReset()) {
             sumAccessor.resetSum();
             autoResetHandler.initialize();
+            skillFlag = SkillFlag.NEUTRAL;
         }
     }
 
@@ -116,7 +117,8 @@ public class GameComponent {
             skillFlag = SkillFlag.ACTIVE;
         } else {
             doWhenResetCardPlay();
-            skillFlag = SkillFlag.READY;
+            if (skillFlag == SkillFlag.NEUTRAL)
+                skillFlag = SkillFlag.READY;
         }
     }
 
