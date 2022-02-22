@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.component;
 
+import com.arithfighter.ccg.SkillFlag;
 import com.arithfighter.ccg.card.CardTexturesExtractor;
 import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.CharacterSetCollection;
@@ -25,9 +26,14 @@ public class Player {
         cards = cardHand.getCards();
     }
 
-    public void draw(SpriteBatch batch) {
-        for (NumberCard card : cards)
-            card.draw(batch);
+    public void draw(SpriteBatch batch, SkillFlag isSkillActive) {
+        if (isSkillActive == SkillFlag.ACTIVE){
+            for(int i = 1;i<5;i++)
+                cards[i].draw(batch);
+        }
+        else
+            for (int i = 0; i<4;i++)
+                cards[i].draw(batch);
     }
 
     public int getCardNumber(){

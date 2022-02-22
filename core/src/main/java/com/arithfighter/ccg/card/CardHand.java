@@ -13,7 +13,6 @@ public class CardHand {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
 
-
         for(int i = 0; i< numberSet.length;i++)
             cardList.add(new NumberCard(initX+i*getPadding(textures), initY, textures[i], numberSet[i]));
 

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameComponent {
     private final Player player;
     private final CardTable cardTable;
-    private enum SkillFlag {NEUTRAL, READY, ACTIVE}
     private SkillFlag skillFlag = SkillFlag.NEUTRAL;
     private final AutoResetHandler autoResetHandler;
     private final SumAccessor sumAccessor;
@@ -64,7 +63,8 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        drawPlayer(batch, mouseX, mouseY);
+        player.draw(batch, skillFlag);
+        player.checkTouchingCard(mouseX, mouseY);
 
         if (skillFlag == SkillFlag.ACTIVE)
             skillSign.draw(batch, "Super",100, 300);
@@ -131,11 +131,6 @@ public class GameComponent {
     }
 
     public void doWhenCardPlayed() {
-    }
-
-    private void drawPlayer(SpriteBatch batch, int mouseX, int mouseY) {
-        player.draw(batch);
-        player.checkTouchingCard(mouseX, mouseY);
     }
 
     public boolean isEnergyNotMax(int energy) {
