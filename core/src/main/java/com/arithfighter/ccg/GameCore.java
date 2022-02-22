@@ -51,12 +51,12 @@ public class GameCore {
 
             @Override
             public void updateScore2() {
-                dataDisplacer.updateScore(2);
+                dataDisplacer.updateScore(1);
             }
 
             @Override
             public void updateScore3() {
-                dataDisplacer.updateScore(3);
+                dataDisplacer.updateScore(1);
             }
         };
         cursorPos = new CursorPositionAccessor();

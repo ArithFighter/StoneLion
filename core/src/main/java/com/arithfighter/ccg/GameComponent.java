@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameComponent {
     private final Player player;
     private final CardTable cardTable;
-    private enum SkillFlag {NEUTRAL, READY}
+    private enum SkillFlag {NEUTRAL, READY, ACTIVE}
     private SkillFlag skillFlag = SkillFlag.NEUTRAL;
     private final AutoResetHandler autoResetHandler;
     private final SumAccessor sumAccessor;
     private final EnergyBar energyBar;
     private final NumberBoxDisplacer numberBoxDisplacer;
+    private final Font skillSign;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
@@ -43,6 +44,8 @@ public class GameComponent {
                 updateScore3();
             }
         };
+
+        skillSign = new Font(32);
     }
 
     public void updateScore1() {
@@ -62,6 +65,9 @@ public class GameComponent {
         numberBoxDisplacer.draw(batch);
 
         drawPlayer(batch, mouseX, mouseY);
+
+        if (skillFlag == SkillFlag.ACTIVE)
+            skillSign.draw(batch, "Super",100, 300);
     }
 
     public void update() {
@@ -94,7 +100,9 @@ public class GameComponent {
         if (player.isResetCard())
             checkResetCardPlay();
         else {
-            skillFlag = SkillFlag.NEUTRAL;
+            if (skillFlag == SkillFlag.READY){
+                skillFlag = SkillFlag.NEUTRAL;
+            }
             doWhenCardPlayed();
             sumAccessor.updateSum(player.getCardNumber());
             autoResetHandler.update();
@@ -105,7 +113,7 @@ public class GameComponent {
         if (skillFlag == SkillFlag.READY) {
             activeSkill();
             autoResetHandler.initialize();
-            skillFlag = SkillFlag.NEUTRAL;
+            skillFlag = SkillFlag.ACTIVE;
         } else {
             doWhenResetCardPlay();
             skillFlag = SkillFlag.READY;
@@ -141,5 +149,6 @@ public class GameComponent {
         player.dispose();
         energyBar.dispose();
         numberBoxDisplacer.dispose();
+        skillSign.dispose();
     }
 }
