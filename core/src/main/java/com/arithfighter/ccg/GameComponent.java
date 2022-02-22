@@ -71,9 +71,9 @@ public class GameComponent {
     }
 
     public void update() {
-        checkAutoResetCondition();
-
         numberBoxDisplacer.update(sumAccessor.getSum());
+
+        checkAutoResetCondition();
     }
 
     private void checkAutoResetCondition() {
