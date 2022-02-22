@@ -27,7 +27,31 @@ public class GameComponent {
 
         energyBar = new EnergyBar(textures);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures);
+        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+            @Override
+            public void getTier1() {
+                updateScore1();
+            }
+
+            @Override
+            public void getTier2() {
+                updateScore2();
+            }
+
+            @Override
+            public void getTier3() {
+                updateScore3();
+            }
+        };
+    }
+
+    public void updateScore1() {
+    }
+
+    public void updateScore2() {
+    }
+
+    public void updateScore3() {
     }
 
     public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
@@ -58,7 +82,7 @@ public class GameComponent {
     }
 
     public final void playCardOnTable(int mouseX, int mouseY) {
-        if (cardTable.isCardOnBoard(mouseX,mouseY)) {
+        if (cardTable.isCardOnBoard(mouseX, mouseY)) {
             if (player.isCardActive()) {
                 handlePlayingCard();
             }
@@ -104,12 +128,12 @@ public class GameComponent {
         player.checkTouchingCard(mouseX, mouseY);
     }
 
-    public boolean isEnergyNotMax(int energy){
-        return energy<energyBar.getMax();
+    public boolean isEnergyNotMax(int energy) {
+        return energy < energyBar.getMax();
     }
 
-    public boolean isMaxEnergy(int energy){
-        return energy==energyBar.getMax();
+    public boolean isMaxEnergy(int energy) {
+        return energy == energyBar.getMax();
     }
 
     public void dispose() {

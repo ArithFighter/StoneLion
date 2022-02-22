@@ -43,6 +43,21 @@ public class GameCore {
                     dataDisplacer.consumeEnergy();
                 }
             }
+
+            @Override
+            public void updateScore1() {
+                dataDisplacer.updateScore(1);
+            }
+
+            @Override
+            public void updateScore2() {
+                dataDisplacer.updateScore(2);
+            }
+
+            @Override
+            public void updateScore3() {
+                dataDisplacer.updateScore(3);
+            }
         };
         cursorPos = new CursorPositionAccessor();
 

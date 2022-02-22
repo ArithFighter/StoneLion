@@ -52,9 +52,32 @@ public class NumberBoxDisplacer {
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (isSumAndNumMatched(numbers[i], sum))
+            if (isSumAndNumMatched(numbers[i], sum)) {
+                checkNumberTier(i);
                 randomNumArrayGenerator.setNumberInListToZero(i);
+            }
         }
+    }
+
+    private void checkNumberTier(int i) {
+        int tier1 = 10;
+        int tier2 = 26;
+
+        if (numbers[i] < tier1)
+            getTier1();
+        if (numbers[i] >= tier1 && numbers[i] < tier2)
+            getTier2();
+        if (numbers[i] >= tier2)
+            getTier3();
+    }
+
+    public void getTier1() {
+    }
+
+    public void getTier2() {
+    }
+
+    public void getTier3() {
     }
 
     private boolean isSumAndNumMatched(int number, int sum) {
