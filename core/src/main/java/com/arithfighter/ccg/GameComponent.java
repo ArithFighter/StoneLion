@@ -14,6 +14,7 @@ public class GameComponent {
     private final AutoResetHandler autoResetHandler;
     private final SumAccessor sumAccessor;
     private final EnergyBar energyBar;
+    private final NumberBoxDisplacer numberBoxDisplacer;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         player = new Player(cards, character);
@@ -25,20 +26,24 @@ public class GameComponent {
         sumAccessor = new SumAccessor();
 
         energyBar = new EnergyBar(textures);
+
+        numberBoxDisplacer = new NumberBoxDisplacer(textures);
     }
 
     public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
         cardTable.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition());
 
-        drawPlayer(batch, mouseX, mouseY);
-
         energyBar.draw(batch, energy);
+
+        numberBoxDisplacer.draw(batch);
+
+        drawPlayer(batch, mouseX, mouseY);
     }
 
     public void update() {
-        cardTable.update(sumAccessor.getSum());
-
         checkAutoResetCondition();
+
+        numberBoxDisplacer.update(sumAccessor.getSum());
     }
 
     private void checkAutoResetCondition() {
@@ -111,5 +116,6 @@ public class GameComponent {
         cardTable.dispose();
         player.dispose();
         energyBar.dispose();
+        numberBoxDisplacer.dispose();
     }
 }
