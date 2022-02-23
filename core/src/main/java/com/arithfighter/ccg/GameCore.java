@@ -29,7 +29,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.ROGUE) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();

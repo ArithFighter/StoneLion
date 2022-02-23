@@ -18,16 +18,16 @@ public class CardTexturesExtractor {
                 cardSet = getCardTextures(2,3,9,0,1);
                 break;
             case ROGUE:
-                cardSet = getCardTextures(12,3,8,0, 0);
+                cardSet = getCardTextures(12,3,8,0, 12);
                 break;
             case HUNTER:
-                cardSet = getCardTextures(2,3,5,10, 0);
+                cardSet = getCardTextures(2,3,5,10, 2);
                 break;
             case PALADIN:
-                cardSet = getCardTextures(12,2,7,11, 0);
+                cardSet = getCardTextures(12,2,7,11, 12);
                 break;
             case WARRIOR:
-                cardSet = getCardTextures(14,13,12,15, 0);
+                cardSet = getCardTextures(14,13,12,15, 14);
                 break;
         }
         

@@ -22,7 +22,7 @@ public class Player {
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character), character);
+        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character));
 
         cards = cardHand.getCards();
 
@@ -31,14 +31,8 @@ public class Player {
 
     public void draw(SpriteBatch batch, SkillFlag isSkillActive) {
         if (isSkillActive == SkillFlag.ACTIVE){
-            if (characterList == CharacterList.KNIGHT){
-                for(int i = 1;i<5;i++)
-                    cards[i].draw(batch);
-            }
-            else{
-                for (int i = 0; i<4;i++)
-                    cards[i].draw(batch);
-            }
+            for(int i = 1;i<5;i++)
+                cards[i].draw(batch);
         }
         else
             for (int i = 0; i<4;i++)
