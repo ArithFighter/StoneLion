@@ -63,7 +63,7 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        player.draw(batch, skillFlag);
+        player.draw(batch);
         player.checkTouchingCard(mouseX, mouseY);
 
         if (skillFlag == SkillFlag.ACTIVE)
