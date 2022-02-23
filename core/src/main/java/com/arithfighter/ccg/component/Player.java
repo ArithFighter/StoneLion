@@ -13,6 +13,7 @@ public class Player {
     NumberCard[] cards;
     CardHand cardHand;
     CardTexturesExtractor cardTexturesExtractor;
+    CharacterList characterList;
 
     public Player(Texture[] textures, CharacterList character) {
         cardTexturesExtractor = new CardTexturesExtractor(textures);
@@ -24,6 +25,8 @@ public class Player {
         cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character), character);
 
         cards = cardHand.getCards();
+
+        characterList = character;
     }
 
     public void draw(SpriteBatch batch, SkillFlag isSkillActive) {
@@ -36,8 +39,18 @@ public class Player {
                 cards[i].draw(batch);
     }
 
-    public int getCardNumber(){
-        return cards[getActiveCardIndex()].getNumber();
+    public int getCardNumber(SkillFlag isSkillActive){
+        int cardNumber;
+
+        if (isSkillActive == SkillFlag.ACTIVE){
+            if (characterList == CharacterList.KNIGHT && getActiveCardIndex() == 4)
+                cardNumber = cards[getActiveCardIndex()].getNumber()-1;
+            else
+                cardNumber = cards[getActiveCardIndex()].getNumber();
+        }
+        else cardNumber = cards[getActiveCardIndex()].getNumber();
+
+        return cardNumber;
     }
 
     public boolean isResetCard(){

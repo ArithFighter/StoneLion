@@ -105,7 +105,7 @@ public class GameComponent {
                 skillFlag = SkillFlag.NEUTRAL;
             }
             doWhenCardPlayed();
-            sumAccessor.updateSum(player.getCardNumber());
+            sumAccessor.updateSum(player.getCardNumber(skillFlag));
             autoResetHandler.update();
         }
     }
@@ -127,7 +127,7 @@ public class GameComponent {
 
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
-        sumAccessor.updateSum(player.getCardNumber());
+        sumAccessor.updateSum(player.getCardNumber(skillFlag));
     }
 
     public void doWhenCardPlayed() {
