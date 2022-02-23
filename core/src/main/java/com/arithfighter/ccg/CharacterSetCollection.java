@@ -1,21 +1,25 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.number.RandomNumProducer;
-
 import static com.arithfighter.ccg.CharacterList.*;
 
 public class CharacterSetCollection {
-    RandomNumProducer rnp = new RandomNumProducer();
-    int[] knightSet = {2,3,9,0};
-    int[] rogueSet = {-1,3,8,0};
-    int[] hunterSet = {2,3,5,12};
-    int[] paladinSet = {-1,2,7,15};
-    int[] warriorSet = {-7,-3,-1, rnp.getMax()};
-    CharacterList[] characters = {KNIGHT, ROGUE, HUNTER, PALADIN, WARRIOR};
-    int[][] numberSets = {knightSet, rogueSet, hunterSet, paladinSet, warriorSet};
+    CharacterList[] characters = {
+            KNIGHT,
+            ROGUE,
+            HUNTER,
+            PALADIN,
+            WARRIOR
+    };
+    int[][] numberSets = {
+            KNIGHT.numberSet,
+            ROGUE.numberSet,
+            HUNTER.numberSet,
+            PALADIN.numberSet,
+            WARRIOR.numberSet
+    };
 
     public int[] getCharacterSet(CharacterList character){
-        int[] numberSet = new int[]{knightSet.length};
+        int[] numberSet = new int[]{numberSets[0].length};
 
         for (int i = 0; i<characters.length;i++){
             if (character==characters[i]){
