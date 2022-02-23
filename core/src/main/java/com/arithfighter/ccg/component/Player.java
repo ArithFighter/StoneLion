@@ -20,7 +20,7 @@ public class Player {
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character), character);
+        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character));
 
         cards = cardHand.getCards();
     }

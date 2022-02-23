@@ -41,7 +41,6 @@ public class CardTexturesExtractor {
         cardSet[1] = cardTextures[mid];
         cardSet[2] = cardTextures[max];
         cardSet[3] = cardTextures[reset];
-        cardSet[4] = cardTextures[1];
 
         return cardSet;
     }
