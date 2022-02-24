@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameComponent {
     private final Player player;
     private final CardTable cardTable;
-    private SkillFlag skillFlag = SkillFlag.NEUTRAL;
+    private final SkillHandler skillHandler;
     private final AutoResetHandler autoResetHandler;
     private final SumAccessor sumAccessor;
     private final EnergyBar energyBar;
@@ -17,6 +17,8 @@ public class GameComponent {
     private final Font skillSign;
 
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
+        skillHandler = new SkillHandler();
+
         player = new Player(cards, character);
 
         cardTable = new CardTable(textures);
@@ -63,10 +65,10 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        player.draw(batch, skillFlag);
+        player.draw(batch, skillHandler.getSkillFlag());
         player.checkTouchingCard(mouseX, mouseY);
 
-        if (skillFlag == SkillFlag.ACTIVE)
+        if (skillHandler.isSkillActive())
             skillSign.draw(batch, "Super",100, 300);
     }
 
@@ -80,7 +82,7 @@ public class GameComponent {
         if (autoResetHandler.isTimeToReset()) {
             sumAccessor.resetSum();
             autoResetHandler.initialize();
-            skillFlag = SkillFlag.NEUTRAL;
+            skillHandler.init();
         }
     }
 
@@ -91,34 +93,37 @@ public class GameComponent {
     public final void playCardOnTable(int mouseX, int mouseY, int energy) {
         if (cardTable.isCardOnBoard(mouseX, mouseY)) {
             if (player.isCardActive()) {
-                handlePlayingCard(energy);
                 doWhenCardPlayed();
+                handlePlayingCard(energy);
             }
         }
         player.initCardsPosition();
+    }
+
+    public void doWhenCardPlayed() {
     }
 
     private void handlePlayingCard(int energy) {
         if (player.isResetCard())
             checkResetCardPlay(energy);
         else {
-            if (skillFlag == SkillFlag.READY){
-                skillFlag = SkillFlag.NEUTRAL;
+            if (skillHandler.isSkillReady()){
+                skillHandler.init();
             }
-            sumAccessor.updateSum(player.getCardNumber(skillFlag));
+            sumAccessor.updateSum(player.getCardNumber(skillHandler.getSkillFlag()));
             autoResetHandler.update();
         }
     }
 
     private void checkResetCardPlay(int energy) {
-        if (skillFlag == SkillFlag.READY && isMaxEnergy(energy)) {
+        if (skillHandler.isSkillReady() && isMaxEnergy(energy)) {
+            skillHandler.setActive();
             activeSkill();
             autoResetHandler.initialize();
-            skillFlag = SkillFlag.ACTIVE;
         } else {
             doWhenResetCardPlay();
-            if (skillFlag == SkillFlag.NEUTRAL)
-                skillFlag = SkillFlag.READY;
+            if (skillHandler.isSkillNeutral())
+                skillHandler.setReady();
         }
     }
 
@@ -127,11 +132,8 @@ public class GameComponent {
 
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
-        sumAccessor.updateSum(player.getCardNumber(skillFlag));
+        sumAccessor.updateSum(player.getCardNumber(skillHandler.getSkillFlag()));
         autoResetHandler.update();
-    }
-
-    public void doWhenCardPlayed() {
     }
 
     public boolean isEnergyNotMax(int energy) {
