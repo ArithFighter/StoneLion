@@ -29,7 +29,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.WARRIOR) {
+        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.ROGUE) {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
@@ -39,9 +39,7 @@ public class GameCore {
 
             @Override
             public void activeSkill() {
-                if (gameComponent.isMaxEnergy(dataDisplacer.getEnergy())){
                     dataDisplacer.consumeEnergy();
-                }
             }
 
             @Override
@@ -72,6 +70,8 @@ public class GameCore {
         cursorPos.updateCursorPosition();
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
+
+        mouseAdapter.updateEnergy(dataDisplacer.getEnergy());
 
         gameComponent.update();
 

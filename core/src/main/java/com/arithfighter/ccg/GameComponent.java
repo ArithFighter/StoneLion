@@ -88,30 +88,30 @@ public class GameComponent {
         return player;
     }
 
-    public final void playCardOnTable(int mouseX, int mouseY) {
+    public final void playCardOnTable(int mouseX, int mouseY, int energy) {
         if (cardTable.isCardOnBoard(mouseX, mouseY)) {
             if (player.isCardActive()) {
-                handlePlayingCard();
+                handlePlayingCard(energy);
+                doWhenCardPlayed();
             }
         }
         player.initCardsPosition();
     }
 
-    private void handlePlayingCard() {
+    private void handlePlayingCard(int energy) {
         if (player.isResetCard())
-            checkResetCardPlay();
+            checkResetCardPlay(energy);
         else {
             if (skillFlag == SkillFlag.READY){
                 skillFlag = SkillFlag.NEUTRAL;
             }
-            doWhenCardPlayed();
             sumAccessor.updateSum(player.getCardNumber(skillFlag));
             autoResetHandler.update();
         }
     }
 
-    private void checkResetCardPlay() {
-        if (skillFlag == SkillFlag.READY) {
+    private void checkResetCardPlay(int energy) {
+        if (skillFlag == SkillFlag.READY && isMaxEnergy(energy)) {
             activeSkill();
             autoResetHandler.initialize();
             skillFlag = SkillFlag.ACTIVE;
@@ -128,6 +128,7 @@ public class GameComponent {
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
         sumAccessor.updateSum(player.getCardNumber(skillFlag));
+        autoResetHandler.update();
     }
 
     public void doWhenCardPlayed() {

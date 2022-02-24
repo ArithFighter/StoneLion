@@ -7,6 +7,7 @@ public class MouseAdapter extends InputAdapter {
     GameComponent gameComponent;
     int mouseX;
     int mouseY;
+    int energy;
 
     public MouseAdapter(GameComponent gameComponent) {
         this.gameComponent = gameComponent;
@@ -15,6 +16,10 @@ public class MouseAdapter extends InputAdapter {
     public void updateMousePos(int mouseX, int mouseY){
         this.mouseX = mouseX;
         this.mouseY = mouseY;
+    }
+
+    public void updateEnergy(int energy){
+        this.energy = energy;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        gameComponent.playCardOnTable(mouseX, mouseY);
+        gameComponent.playCardOnTable(mouseX, mouseY, energy);
         return true;
     }
 }
