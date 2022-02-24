@@ -1,9 +1,6 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.SkillFlag;
 import com.arithfighter.ccg.card.CardTexturesExtractor;
-import com.arithfighter.ccg.CharacterList;
-import com.arithfighter.ccg.CharacterSetCollection;
 import com.arithfighter.ccg.card.NumberCard;
 import com.arithfighter.ccg.card.CardHand;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,8 +26,8 @@ public class Player {
         characterList = character;
     }
 
-    public void draw(SpriteBatch batch, SkillFlag isSkillActive) {
-        if (isSkillActive == SkillFlag.ACTIVE){
+    public void draw(SpriteBatch batch, SkillState isSkillActive) {
+        if (isSkillActive == SkillState.ACTIVE){
             for(int i = 1;i<5;i++)
                 cards[i].draw(batch);
         }
@@ -39,10 +36,10 @@ public class Player {
                 cards[i].draw(batch);
     }
 
-    public int getCardNumber(SkillFlag isSkillActive){
+    public int getCardNumber(SkillState isSkillActive){
         int cardNumber;
 
-        if (isSkillActive == SkillFlag.ACTIVE){
+        if (isSkillActive == SkillState.ACTIVE){
             if (characterList == CharacterList.KNIGHT)
                 cardNumber = useKnightSkill();
             else

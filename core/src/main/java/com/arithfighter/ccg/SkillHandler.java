@@ -1,33 +1,33 @@
 package com.arithfighter.ccg;
 
 public class SkillHandler {
-    private SkillFlag skillFlag = SkillFlag.NEUTRAL;
+    private SkillState skillState = SkillState.NEUTRAL;
 
-    public SkillFlag getSkillFlag(){
-        return skillFlag;
+    public SkillState getSkillFlag(){
+        return skillState;
     }
 
     public void setActive(){
-        skillFlag = SkillFlag.ACTIVE;
+        skillState = SkillState.ACTIVE;
     }
 
     public void setReady(){
-        skillFlag = SkillFlag.READY;
+        skillState = SkillState.READY;
     }
 
     public void init(){
-        skillFlag = SkillFlag.NEUTRAL;
+        skillState = SkillState.NEUTRAL;
     }
 
     public boolean isSkillActive(){
-        return skillFlag == SkillFlag.ACTIVE;
+        return skillState == SkillState.ACTIVE;
     }
 
     public boolean isSkillReady(){
-        return skillFlag == SkillFlag.READY;
+        return skillState == SkillState.READY;
     }
 
     public boolean isSkillNeutral(){
-        return skillFlag == SkillFlag.NEUTRAL;
+        return skillState == SkillState.NEUTRAL;
     }
 }

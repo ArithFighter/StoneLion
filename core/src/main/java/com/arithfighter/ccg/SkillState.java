@@ -1,6 +1,6 @@
 package com.arithfighter.ccg;
 
-public enum SkillFlag {
+public enum SkillState {
     NEUTRAL,
     READY,
     ACTIVE
