@@ -26,39 +26,13 @@ public class Player {
         characterList = character;
     }
 
-    public void draw(SpriteBatch batch, SkillState isSkillActive) {
-        if (isSkillActive == SkillState.ACTIVE){
-            for(int i = 1;i<5;i++)
-                cards[i].draw(batch);
-        }
-        else
-            for (int i = 0; i<4;i++)
-                cards[i].draw(batch);
+    public void draw(SpriteBatch batch) {
+        for (NumberCard card : cards)
+            card.draw(batch);
     }
 
-    public int getCardNumber(SkillState isSkillActive){
-        int cardNumber;
-
-        if (isSkillActive == SkillState.ACTIVE){
-            if (characterList == CharacterList.KNIGHT)
-                cardNumber = useKnightSkill();
-            else
-                cardNumber = cards[getActiveCardIndex()].getNumber();
-        }
-        else cardNumber = cards[getActiveCardIndex()].getNumber();
-
-        return cardNumber;
-    }
-
-    private int useKnightSkill(){
-        int cardNumber;
-
-        if (getActiveCardIndex() == 4)
-            cardNumber = cards[getActiveCardIndex()].getNumber()-1;
-        else
-            cardNumber = cards[getActiveCardIndex()].getNumber();
-
-        return cardNumber;
+    public int getCardNumber(){
+        return cards[getActiveCardIndex()].getNumber();
     }
 
     public boolean isResetCard(){

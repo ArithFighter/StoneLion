@@ -16,12 +16,6 @@ public class CardHand {
 
         for (int i = 0; i < numberSet.length; i++)
             cardList.add(new NumberCard(initX + i * getPadding(textures), initY, textures[i], numberSet[i]));
-
-        addSkillCard(textures);
-    }
-
-    private void addSkillCard(Texture[] textures) {
-        cardList.add(new NumberCard(initX, initY, textures[4], numberSet[0]));
     }
 
     private float getPadding(Texture[] textures) {

@@ -15,33 +15,32 @@ public class CardTexturesExtractor {
         
         switch (character){
             case KNIGHT:
-                cardSet = getCardTextures(2,3,9,0,1);
+                cardSet = getCardTextures(2,3,9,0);
                 break;
             case ROGUE:
-                cardSet = getCardTextures(12,3,8,0, 12);
+                cardSet = getCardTextures(12,3,8,0);
                 break;
             case HUNTER:
-                cardSet = getCardTextures(2,3,5,10, 2);
+                cardSet = getCardTextures(2,3,5,10);
                 break;
             case PALADIN:
-                cardSet = getCardTextures(12,2,7,11, 12);
+                cardSet = getCardTextures(12,2,7,11);
                 break;
             case WARRIOR:
-                cardSet = getCardTextures(14,13,12,15, 14);
+                cardSet = getCardTextures(14,13,12,15);
                 break;
         }
         
         return cardSet;
     }
 
-    private Texture[] getCardTextures(int min, int mid, int max, int reset, int skill){
+    private Texture[] getCardTextures(int min, int mid, int max, int reset){
         Texture[] cardSet = new Texture[5];
 
         cardSet[0] = cardTextures[min];
         cardSet[1] = cardTextures[mid];
         cardSet[2] = cardTextures[max];
         cardSet[3] = cardTextures[reset];
-        cardSet[4] = cardTextures[skill];
 
         return cardSet;
     }

@@ -65,7 +65,7 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        player.draw(batch, skillHandler.getSkillFlag());
+        player.draw(batch);
         player.checkTouchingCard(mouseX, mouseY);
 
         if (skillHandler.isSkillActive())
@@ -110,7 +110,7 @@ public class GameComponent {
             if (skillHandler.isSkillReady()){
                 skillHandler.init();
             }
-            sumAccessor.updateSum(player.getCardNumber(skillHandler.getSkillFlag()));
+            sumAccessor.updateSum(player.getCardNumber());
             autoResetHandler.update();
         }
     }
@@ -132,7 +132,7 @@ public class GameComponent {
 
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
-        sumAccessor.updateSum(player.getCardNumber(skillHandler.getSkillFlag()));
+        sumAccessor.updateSum(player.getCardNumber());
         autoResetHandler.update();
     }
 
