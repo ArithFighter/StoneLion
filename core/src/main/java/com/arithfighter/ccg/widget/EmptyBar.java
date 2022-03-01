@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class RawBar extends RawWidget {
+public class EmptyBar extends RawWidget {
     Sprite bar;
     Font maxSign;
+    private static final int maxEnergy = 30;
 
-    public RawBar(Texture texture, float initX, float initY){
+    public EmptyBar(Texture texture, float initX, float initY){
         configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 8f);
 
         configFont(32);
@@ -25,13 +26,21 @@ public class RawBar extends RawWidget {
         return widgetWidth;
     }
 
-    public void draw(SpriteBatch batch, boolean isMax) {
+    public int getMax(){
+        return maxEnergy;
+    }
+
+    public void draw(SpriteBatch batch, int energy) {
         bar.draw(batch);
         String content = "MAX";
-        if (isMax){
+        if (isMax(energy)){
             maxSign.draw(batch,content,
                     widgetX+widgetWidth/2-content.length()*fontSize/2f+10, widgetY+widgetHeight/2+fontSize);
         }
+    }
+
+    private boolean isMax(int energy){
+        return energy >= maxEnergy;
     }
 
     public void dispose(){

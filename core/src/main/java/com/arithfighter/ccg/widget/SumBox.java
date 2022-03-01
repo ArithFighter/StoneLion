@@ -28,6 +28,10 @@ public class SumBox extends RawWidget {
 
         sumDisplayBlock.draw(batch);
 
+        drawText(number, batch);
+    }
+
+    private void drawText(int number, SpriteBatch batch){
         String sum = String.valueOf(number);
         float textX = widgetX+widgetWidth/2-sum.length()*fontSize/2f;
         float textY = widgetY+(widgetHeight+fontSize)/2;
