@@ -43,17 +43,7 @@ public class GameCore {
             }
 
             @Override
-            public void updateScore1() {
-                dataDisplacer.updateScore(1);
-            }
-
-            @Override
-            public void updateScore2() {
-                dataDisplacer.updateScore(1);
-            }
-
-            @Override
-            public void updateScore3() {
+            public void getScore() {
                 dataDisplacer.updateScore(1);
             }
         };

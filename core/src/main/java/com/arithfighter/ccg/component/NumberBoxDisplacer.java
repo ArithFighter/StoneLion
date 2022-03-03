@@ -14,11 +14,9 @@ import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 public class NumberBoxDisplacer {
     NumberBox sample;
     NumberBox[] numberBoxes;
-    NumberBoxPlacer numberBoxPlacer;
     private final int numberBoxQuantity = 9;
     int[] numbers;
     RandomNumListGenerator randomNumListGenerator;
-    NumberListInspector numberListInspector;
     LinkedList<Integer> numberList = new LinkedList<>();
 
     public NumberBoxDisplacer(Texture texture) {
@@ -29,12 +27,14 @@ public class NumberBoxDisplacer {
         numbers = new int[numberBoxQuantity];
 
         randomNumListGenerator = new RandomNumListGenerator();
-
-        numberListInspector = new NumberListInspector();
     }
 
     private void createNumberBoxes(Texture texture){
-        numberBoxPlacer = new NumberBoxPlacer(GRID_X * 9.5f, GRID_Y * 5, GRID_X);
+        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(
+                GRID_X * 9.5f,
+                GRID_Y * 5,
+                GRID_X);
+
         sample = new NumberBox(texture, 300, 350);
 
         for (int i = 0; i < numberBoxQuantity; i++) {
@@ -69,31 +69,13 @@ public class NumberBoxDisplacer {
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (isSumAndNumMatched(numbers[i], sum)) {
-                checkNumberTier(i);
+                doWhenSumAndNumMatched();
                 set(i, 0);
             }
         }
     }
 
-    private void checkNumberTier(int i) {
-        int tier1 = 10;
-        int tier2 = 26;
-
-        if (numbers[i] < tier1)
-            getTier1();
-        if (numbers[i] >= tier1 && numbers[i] < tier2)
-            getTier2();
-        if (numbers[i] >= tier2)
-            getTier3();
-    }
-
-    public void getTier1() {
-    }
-
-    public void getTier2() {
-    }
-
-    public void getTier3() {
+    public void doWhenSumAndNumMatched() {
     }
 
     private boolean isSumAndNumMatched(int number, int sum) {
@@ -101,6 +83,8 @@ public class NumberBoxDisplacer {
     }
 
     private void checkEveryNumMatched() {
+        NumberListInspector numberListInspector = new NumberListInspector();
+
         numberListInspector.inspectNumberList(numbers);
 
         if (numberListInspector.isAllNumberAreZero()){

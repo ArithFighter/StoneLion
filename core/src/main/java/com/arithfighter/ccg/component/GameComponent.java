@@ -33,31 +33,15 @@ public class GameComponent {
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
-            public void getTier1() {
-                updateScore1();
-            }
-
-            @Override
-            public void getTier2() {
-                updateScore2();
-            }
-
-            @Override
-            public void getTier3() {
-                updateScore3();
+            public void doWhenSumAndNumMatched() {
+                getScore();
             }
         };
 
         skillSign = new Font(32);
     }
 
-    public void updateScore1() {
-    }
-
-    public void updateScore2() {
-    }
-
-    public void updateScore3() {
+    public void getScore(){
     }
 
     public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
