@@ -42,7 +42,7 @@ public class EmptyBar{
         if (isMax(energy)){
             maxSign.draw(batch,content,
                     setting.getCenterX(widget.posX, widget.width, content)+10,
-                    setting.getCenterY(widget.posY, widget.height));
+                    setting.getCenterY(widget.posY, widget.height)+widget.fontSize/2);
         }
     }
 
