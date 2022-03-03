@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.system;
 
-import com.arithfighter.ccg.GameComponent;
+import com.arithfighter.ccg.component.GameComponent;
 import com.badlogic.gdx.InputAdapter;
 
 public class MouseAdapter extends InputAdapter {

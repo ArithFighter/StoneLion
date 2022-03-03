@@ -1,7 +1,9 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.component;
 
+import com.arithfighter.ccg.system.AutoResetHandler;
+import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.accessor.SumAccessor;
-import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

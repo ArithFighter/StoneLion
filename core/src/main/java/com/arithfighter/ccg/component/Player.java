@@ -1,5 +1,7 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.component;
 
+import com.arithfighter.ccg.CharacterList;
+import com.arithfighter.ccg.CharacterSetCollection;
 import com.arithfighter.ccg.card.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
 import com.arithfighter.ccg.card.CardHand;

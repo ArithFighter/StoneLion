@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.component;
 
 public enum SkillState {
     NEUTRAL,

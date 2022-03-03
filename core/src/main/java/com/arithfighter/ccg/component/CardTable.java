@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.widget.Board;
 import com.arithfighter.ccg.widget.SumBox;

@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.component.Font;
+import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.font;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
