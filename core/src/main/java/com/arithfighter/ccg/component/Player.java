@@ -12,7 +12,6 @@ public class Player {
     NumberCard[] cards;
     CardHand cardHand;
     CardTexturesExtractor cardTexturesExtractor;
-    CharacterList characterList;
 
     public Player(Texture[] textures, CharacterList character) {
         cardTexturesExtractor = new CardTexturesExtractor(textures);
@@ -24,8 +23,6 @@ public class Player {
         cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character));
 
         cards = cardHand.getCards();
-
-        characterList = character;
     }
 
     public void draw(SpriteBatch batch) {

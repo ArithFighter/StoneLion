@@ -9,10 +9,8 @@ public class CardHand {
     private final ArrayList<NumberCard> cardList = new ArrayList<>();
     float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
     float initY = -WindowSetting.GRID_Y;
-    int[] numberSet;
 
     public CardHand(int[] numberSet, Texture[] textures) {
-        this.numberSet = numberSet;
 
         for (int i = 0; i < numberSet.length; i++)
             cardList.add(new NumberCard(initX + i * getPadding(textures), initY, textures[i], numberSet[i]));

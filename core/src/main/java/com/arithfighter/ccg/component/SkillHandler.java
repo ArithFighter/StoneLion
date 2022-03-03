@@ -3,10 +3,6 @@ package com.arithfighter.ccg.component;
 public class SkillHandler {
     private SkillState skillState = SkillState.NEUTRAL;
 
-    public SkillState getSkillFlag(){
-        return skillState;
-    }
-
     public void setActive(){
         skillState = SkillState.ACTIVE;
     }
