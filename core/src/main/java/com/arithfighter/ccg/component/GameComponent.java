@@ -31,7 +31,7 @@ public class GameComponent {
 
         energyBar = new EnergyBar(textures);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
             public void getTier1() {
                 updateScore1();

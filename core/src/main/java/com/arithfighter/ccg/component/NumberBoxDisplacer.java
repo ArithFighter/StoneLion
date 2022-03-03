@@ -1,41 +1,54 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.number.RandomNumArrayGenerator;
+import com.arithfighter.ccg.number.RandomNumListGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.LinkedList;
+
 import static com.arithfighter.ccg.WindowSetting.GRID_X;
 import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
-    NumberBox numberBox;
+    NumberBox sample;
     NumberBox[] numberBoxes;
     NumberBoxPlacer numberBoxPlacer;
     private final int numberBoxQuantity = 9;
     int[] numbers;
-    RandomNumArrayGenerator randomNumArrayGenerator;
+    RandomNumListGenerator randomNumListGenerator;
     NumberListInspector numberListInspector;
+    LinkedList<Integer> numberList = new LinkedList<>();
 
-    public NumberBoxDisplacer(Texture[] textures) {
-        numberBoxPlacer = new NumberBoxPlacer(GRID_X * 9.5f, GRID_Y * 5, GRID_X);
-
-        numberBox = new NumberBox(textures[3], 300, 350);
-
+    public NumberBoxDisplacer(Texture texture) {
         numberBoxes = new NumberBox[numberBoxQuantity];
 
-        for (int i = 0; i < numberBoxQuantity; i++) {
-            numberBoxes[i] = new NumberBox(textures[3],
-                    numberBoxPlacer.getNumberBoxX(i, numberBox.getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, numberBox.getHeight()));
-        }
+        createNumberBoxes(texture);
 
         numbers = new int[numberBoxQuantity];
 
-        randomNumArrayGenerator = new RandomNumArrayGenerator();
+        randomNumListGenerator = new RandomNumListGenerator();
 
         numberListInspector = new NumberListInspector();
+    }
+
+    private void createNumberBoxes(Texture texture){
+        numberBoxPlacer = new NumberBoxPlacer(GRID_X * 9.5f, GRID_Y * 5, GRID_X);
+        sample = new NumberBox(texture, 300, 350);
+
+        for (int i = 0; i < numberBoxQuantity; i++) {
+            numberBoxes[i] = new NumberBox(texture,
+                    numberBoxPlacer.getNumberBoxX(i, sample.getWidth()),
+                    numberBoxPlacer.getNumberBoxY(i, sample.getHeight()));
+        }
+    }
+
+    public void set(int index, int value){
+        if (index>numberBoxQuantity)
+            index = numberBoxQuantity;
+
+        numberList.set(index, value);
     }
 
     public void update(int sum) {
@@ -47,14 +60,17 @@ public class NumberBoxDisplacer {
     }
 
     private void updateNumbers() {
-        System.arraycopy(randomNumArrayGenerator.getNumbers(), 0, this.numbers, 0, this.numbers.length);
+        numberList.addAll(randomNumListGenerator.getNumbers());
+
+        for (int i = 0; i < numberBoxQuantity; i++)
+            numbers[i] = numberList.get(i);
     }
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (isSumAndNumMatched(numbers[i], sum)) {
                 checkNumberTier(i);
-                randomNumArrayGenerator.setNumberInListToZero(i);
+                set(i, 0);
             }
         }
     }
@@ -87,8 +103,11 @@ public class NumberBoxDisplacer {
     private void checkEveryNumMatched() {
         numberListInspector.inspectNumberList(numbers);
 
-        if (numberListInspector.isAllNumberAreZero())
-            randomNumArrayGenerator.clear();
+        if (numberListInspector.isAllNumberAreZero()){
+            randomNumListGenerator.clear();
+            numberList.clear();
+        }
+
     }
 
     public void draw(SpriteBatch batch) {
@@ -99,7 +118,7 @@ public class NumberBoxDisplacer {
     }
 
     public void dispose() {
-        numberBox.dispose();
+        sample.dispose();
 
         for (NumberBox numberBox : numberBoxes)
             numberBox.dispose();

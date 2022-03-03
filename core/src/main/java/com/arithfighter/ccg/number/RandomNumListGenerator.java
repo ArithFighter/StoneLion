@@ -2,8 +2,9 @@ package com.arithfighter.ccg.number;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 
-public class RandomNumArrayGenerator {
+public class RandomNumListGenerator {
     private static final int MAX_QUANTITY = 9;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final HashSet<Integer> numberSet = new HashSet<>();
@@ -13,19 +14,10 @@ public class RandomNumArrayGenerator {
         numberSet.clear();
     }
 
-    public void setNumberInListToZero(int index){
-        numberList.set(index,0);
-    }
-
-    public int[] getNumbers() {
-        int[] numArray = new int[MAX_QUANTITY];
-
+    public List<Integer> getNumbers() {
         addNumbersToList();
 
-        for (int i = 0; i<numberList.size();i++)
-            numArray[i] = numberList.get(i);
-
-        return numArray;
+        return numberList;
     }
 
     private void addNumbersToList() {
