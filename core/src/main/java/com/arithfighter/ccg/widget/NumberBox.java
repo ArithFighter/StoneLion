@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class NumberBox extends RawWidget {
+public class NumberBox extends Widget {
     Font text;
     Sprite box;
 
@@ -18,16 +18,16 @@ public class NumberBox extends RawWidget {
         text = new Font(fontSize);
 
         box = new Sprite(texture);
-        box.setPosition(widgetX, widgetY);
-        box.setSize(widgetWidth, widgetHeight);
+        box.setPosition(posX, posY);
+        box.setSize(width, height);
     }
 
     public float getWidth() {
-        return widgetWidth;
+        return width;
     }
 
     public float getHeight() {
-        return widgetHeight;
+        return height;
     }
 
     public void draw(int number, SpriteBatch batch) {
@@ -43,8 +43,8 @@ public class NumberBox extends RawWidget {
 
     private void addText(int number, SpriteBatch batch) {
         String content = String.valueOf(number);
-        float textX = widgetX + widgetWidth / 2 - content.length() * fontSize / 2f;
-        float textY = widgetY + (widgetHeight + fontSize) / 2;
+        float textX = posX + width / 2 - content.length() * fontSize / 2f;
+        float textY = posY + (height + fontSize) / 2;
 
         changeNumColor(number);
 

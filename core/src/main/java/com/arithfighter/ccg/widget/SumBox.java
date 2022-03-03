@@ -6,21 +6,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SumBox extends RawWidget {
-    Font text;
-    Sprite sumDisplayBlock;
+public class SumBox{
+    private final Font text;
+    private final Sprite sumDisplayBlock;
+    private final TextureWidget widget;
+    private final WidgetSetting setting;
     
     public SumBox(Texture texture, float initX, float initY){
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 10);
+        widget = new TextureWidget();
+        widget.configWidget(texture, 10);
+        widget.posX = initX;
+        widget.posY = initY;
+        widget.fontSize = 36;
+
+        setting = new WidgetSetting(widget.fontSize);
         
-        configFont(36);
-        
-        text = new Font(fontSize);
+        text = new Font(widget.fontSize);
 
         sumDisplayBlock = new Sprite(texture);
         sumDisplayBlock.setColor(Color.TEAL);
-        sumDisplayBlock.setPosition(widgetX,widgetY);
-        sumDisplayBlock.setSize(widgetWidth, widgetHeight);
+        sumDisplayBlock.setPosition(widget.posX, widget.posY);
+        sumDisplayBlock.setSize(widget.width, widget.height);
     }
 
     public void draw(int number, int condition, SpriteBatch batch){
@@ -33,8 +39,9 @@ public class SumBox extends RawWidget {
 
     private void drawText(int number, SpriteBatch batch){
         String sum = String.valueOf(number);
-        float textX = widgetX+widgetWidth/2-sum.length()*fontSize/2f;
-        float textY = widgetY+(widgetHeight+fontSize)/2;
+
+        float textX = setting.getCenterX(widget.posX, widget.width, sum);
+        float textY = setting.getCenterY(widget.posY, widget.height);
 
         text.setColor(Color.WHITE);
         text.draw(batch, sum, textX, textY);
