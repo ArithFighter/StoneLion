@@ -27,6 +27,5 @@ public class EnergyBar {
 
     public void dispose(){
         emptyBar.dispose();
-        barGrid.dispose();
     }
 }

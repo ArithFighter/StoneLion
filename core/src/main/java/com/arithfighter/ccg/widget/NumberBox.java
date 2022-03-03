@@ -6,28 +6,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class NumberBox extends Widget {
-    Font text;
-    Sprite box;
+public class NumberBox{
+    private final Font text;
+    private final Sprite box;
+    private final TextureWidget widget;
+    private final WidgetSetting widgetSetting;
 
     public NumberBox(Texture texture, float initX, float initY) {
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 3.5f);
+        widget = new TextureWidget();
+        widget.configWidget(texture, 3.5f);
+        widget.posX = initX;
+        widget.posY = initY;
+        widget.fontSize = 32;
 
-        configFont(32);
-
-        text = new Font(fontSize);
+        text = new Font(widget.fontSize);
 
         box = new Sprite(texture);
-        box.setPosition(posX, posY);
-        box.setSize(width, height);
+        box.setPosition(widget.posX, widget.posY);
+        box.setSize(widget.width, widget.height);
+
+        widgetSetting = new WidgetSetting(widget.fontSize);
     }
 
     public float getWidth() {
-        return width;
+        return widget.width;
     }
 
     public float getHeight() {
-        return height;
+        return widget.height;
     }
 
     public void draw(int number, SpriteBatch batch) {
@@ -43,8 +49,9 @@ public class NumberBox extends Widget {
 
     private void addText(int number, SpriteBatch batch) {
         String content = String.valueOf(number);
-        float textX = posX + width / 2 - content.length() * fontSize / 2f;
-        float textY = posY + (height + fontSize) / 2;
+
+        float textX = widgetSetting.getCenterX(widget.posX, widget.width, content);
+        float textY = widgetSetting.getCenterY(widget.posY,widget.height);
 
         changeNumColor(number);
 

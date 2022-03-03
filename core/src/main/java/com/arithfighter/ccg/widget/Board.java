@@ -4,15 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Board extends Widget {
-    Sprite table;
+public class Board{
+    private final Sprite table;
+    private final TextureWidget widget;
 
     public Board(Texture texture, int x, int y){
-        configWidget(x,y,texture.getWidth(), texture.getHeight(), 14);
+        widget = new TextureWidget();
+        widget.configWidget(texture, 14);
+        widget.posX = x;
+        widget.posY = y;
 
         table = new Sprite(texture);
-        table.setPosition(this.posX, this.posY);
-        table.setSize(width, height);
+        table.setPosition(widget.posX, widget.posY);
+        table.setSize(widget.width, widget.height);
     }
     
     public void draw(SpriteBatch batch){
@@ -20,7 +24,7 @@ public class Board extends Widget {
     }
     
     public boolean isOnBoard(float x, float y){
-        return x > this.posX && x < this.posX + width &&
-                y > this.posY && y < this.posY + height;
+        return x > widget.posX && x < widget.posX + widget.width &&
+                y > widget.posY && y < widget.posY + widget.height;
     }
 }

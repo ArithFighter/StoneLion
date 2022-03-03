@@ -5,25 +5,28 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class EmptyBar extends Widget {
-    Sprite bar;
-    Font maxSign;
+public class EmptyBar{
+    private final Sprite bar;
+    private final Font maxSign;
     private static final int maxEnergy = 30;
+    private final TextureWidget widget;
 
     public EmptyBar(Texture texture, float initX, float initY){
-        configWidget(initX, initY, texture.getWidth(), texture.getHeight(), 8f);
+        widget = new TextureWidget();
+        widget.configWidget(texture, 8f);
+        widget.posX = initX;
+        widget.posY = initY;
+        widget.fontSize = 32;
 
-        configFont(32);
-
-        maxSign = new Font(fontSize);
+        maxSign = new Font(widget.fontSize);
 
         bar = new Sprite(texture);
-        bar.setPosition(posX, posY);
-        bar.setSize(width, height);
+        bar.setPosition(widget.posX, widget.posY);
+        bar.setSize(widget.width, widget.height);
     }
 
     public float getWidth(){
-        return width;
+        return widget.width;
     }
 
     public int getMax(){
@@ -35,7 +38,7 @@ public class EmptyBar extends Widget {
         String content = "MAX";
         if (isMax(energy)){
             maxSign.draw(batch,content,
-                    posX + width /2-content.length()*fontSize/2f+10, posY + height /2+fontSize);
+                    widget.posX + widget.width /2-content.length()*widget.fontSize/2f+10, widget.posY + widget.height /2+widget.fontSize);
         }
     }
 
