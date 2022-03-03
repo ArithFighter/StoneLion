@@ -9,11 +9,9 @@ public class BarGrid{
     Sprite grid;
     private final TextureWidget widget;
 
-    public BarGrid(Texture texture, float initX, float initY){
+    public BarGrid(Texture texture){
         widget = new TextureWidget();
         widget.configWidget(texture, 0.8f);
-        widget.posX = initX;
-        widget.posY = initY;
 
         grid = new Sprite(texture);
         grid.setColor(Color.SKY);

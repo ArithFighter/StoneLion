@@ -12,7 +12,8 @@ public class EnergyBar {
         int barY = 20;
         emptyBar = new EmptyBar(textures[4], barX, barY);
 
-        barGrid = new BarGrid(textures[5], barX, barY);
+        barGrid = new BarGrid(textures[5]);
+
         barGrid.setPos(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
     }
 
