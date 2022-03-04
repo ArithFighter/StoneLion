@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.number.RandomNumListGenerator;
+import com.arithfighter.ccg.randomnum.RandomNumListGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,12 +12,11 @@ import static com.arithfighter.ccg.WindowSetting.GRID_X;
 import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
-    NumberBox sample;
-    NumberBox[] numberBoxes;
+    private final NumberBox[] numberBoxes;
     private final int numberBoxQuantity = 9;
-    int[] numbers;
-    RandomNumListGenerator randomNumListGenerator;
-    LinkedList<Integer> numberList = new LinkedList<>();
+    private final int[] numbers;
+    private final RandomNumListGenerator randomNumListGenerator;
+    private final LinkedList<Integer> numberList = new LinkedList<>();
 
     public NumberBoxDisplacer(Texture texture) {
         numberBoxes = new NumberBox[numberBoxQuantity];
@@ -30,17 +29,16 @@ public class NumberBoxDisplacer {
     }
 
     private void createNumberBoxes(Texture texture){
-        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(
-                GRID_X * 9.5f,
-                GRID_Y * 5,
-                GRID_X);
-
-        sample = new NumberBox(texture, 300, 350);
+        float initX = GRID_X * 9.5f;
+        float initY = GRID_Y * 5;
+        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(initX, initY, GRID_X);
 
         for (int i = 0; i < numberBoxQuantity; i++) {
-            numberBoxes[i] = new NumberBox(texture,
-                    numberBoxPlacer.getNumberBoxX(i, sample.getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, sample.getHeight()));
+            numberBoxes[i] = new NumberBox(texture);
+            numberBoxes[i].setPosition(
+                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
+                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
+            );
         }
     }
 
@@ -68,7 +66,7 @@ public class NumberBoxDisplacer {
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (isSumAndNumMatched(numbers[i], sum)) {
+            if (sum == numbers[i] && numbers[i] > 0) {
                 doWhenSumAndNumMatched();
                 set(i, 0);
             }
@@ -76,10 +74,6 @@ public class NumberBoxDisplacer {
     }
 
     public void doWhenSumAndNumMatched() {
-    }
-
-    private boolean isSumAndNumMatched(int number, int sum) {
-        return sum == number && number > 0;
     }
 
     private void checkEveryNumMatched() {
@@ -102,8 +96,6 @@ public class NumberBoxDisplacer {
     }
 
     public void dispose() {
-        sample.dispose();
-
         for (NumberBox numberBox : numberBoxes)
             numberBox.dispose();
     }

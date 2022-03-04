@@ -12,20 +12,22 @@ public class NumberBox{
     private final TextureWidget widget;
     private final WidgetSetting widgetSetting;
 
-    public NumberBox(Texture texture, float initX, float initY) {
+    public NumberBox(Texture texture) {
         widget = new TextureWidget();
+
         widget.configWidget(texture, 3.5f);
-        widget.posX = initX;
-        widget.posY = initY;
         widget.fontSize = 32;
 
         text = new Font(widget.fontSize);
 
         box = new Sprite(texture);
-        box.setPosition(widget.posX, widget.posY);
-        box.setSize(widget.width, widget.height);
 
         widgetSetting = new WidgetSetting(widget.fontSize);
+    }
+
+    public void setPosition(float initX, float initY){
+        widget.posX = initX;
+        widget.posY = initY;
     }
 
     public float getWidth() {
@@ -43,6 +45,8 @@ public class NumberBox{
     }
 
     private void addBoxSprite(SpriteBatch batch) {
+        box.setSize(widget.width, widget.height);
+        box.setPosition(widget.posX, widget.posY);
         box.setColor(0, 0.9f, 0.9f, 1);
         box.draw(batch);
     }

@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.number;
+package com.arithfighter.ccg.randomnum;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -1,6 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.number.RandomNumProducer;
+import com.arithfighter.ccg.randomnum.RandomNumProducer;
 
 public enum CharacterList {
     KNIGHT(new int[]{2,3,9,0}),
