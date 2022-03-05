@@ -3,7 +3,7 @@ package com.arithfighter.ccg.component;
 import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.CharacterSetCollection;
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.card.CardTexturesExtractor;
+import com.arithfighter.ccg.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
