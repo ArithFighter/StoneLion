@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class CardTexturesExtractor {
     Texture[] cardTextures;
+    private final static int quantity = 4;
 
     public CardTexturesExtractor(Texture[] cardTextures){
         this.cardTextures = cardTextures;
     }
     
     public Texture[] getCardSet(CharacterList character){
-        Texture[] cardSet = new Texture[4];
+        Texture[] cardSet = new Texture[quantity];
         
         switch (character){
             case KNIGHT:
@@ -35,7 +36,7 @@ public class CardTexturesExtractor {
     }
 
     private Texture[] getCardTextures(int min, int mid, int max, int reset){
-        Texture[] cardSet = new Texture[5];
+        Texture[] cardSet = new Texture[quantity];
 
         cardSet[0] = cardTextures[min];
         cardSet[1] = cardTextures[mid];

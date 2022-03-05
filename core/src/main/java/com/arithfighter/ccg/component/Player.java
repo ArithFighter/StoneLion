@@ -32,7 +32,8 @@ public class Player {
             cards[i] = new NumberCard(
                     initX + i * getPadding(cardSet),
                     initY,
-                    cardSet[i], csc.getCharacterSet(character)[i]
+                    cardSet[i],
+                    csc.getCharacterSet(character)[i]
             );
     }
 

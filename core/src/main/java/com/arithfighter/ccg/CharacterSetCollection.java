@@ -10,6 +10,7 @@ public class CharacterSetCollection {
             PALADIN,
             WARRIOR
     };
+
     int[][] numberSets = {
             KNIGHT.numberSet,
             ROGUE.numberSet,
@@ -21,7 +22,7 @@ public class CharacterSetCollection {
     public int[] getCharacterSet(CharacterList character){
         int[] numberSet = new int[]{numberSets[0].length};
 
-        for (int i = 0; i<characters.length;i++){
+        for (int i = 0; i< characters.length;i++){
             if (character==characters[i]){
                 numberSet = numberSets[i];
             }
