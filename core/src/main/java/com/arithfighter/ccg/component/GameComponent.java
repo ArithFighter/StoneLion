@@ -54,7 +54,7 @@ public class GameComponent {
         player.draw(batch);
         player.checkTouchingCard(mouseX, mouseY);
 
-        if (skillHandler.isSkillActive())
+        if (skillHandler.isSkillActive())//show font when skill is active
             skillSign.draw(batch, "Super",100, 300);
     }
 

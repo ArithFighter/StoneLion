@@ -2,16 +2,17 @@ package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.CharacterList;
 import com.arithfighter.ccg.CharacterSetCollection;
+import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.card.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
-import com.arithfighter.ccg.card.CardHand;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+
 public class Player {
-    NumberCard[] cards;
-    CardHand cardHand;
-    CardTexturesExtractor cardTexturesExtractor;
+    private final NumberCard[] cards;
+    private final CardTexturesExtractor cardTexturesExtractor;
 
     public Player(Texture[] textures, CharacterList character) {
         cardTexturesExtractor = new CardTexturesExtractor(textures);
@@ -20,9 +21,24 @@ public class Player {
 
         int[] numberSet = csc.getCharacterSet(character);
 
-        cardHand = new CardHand(numberSet, cardTexturesExtractor.getCardSet(character));
+        float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
+        float initY = -WindowSetting.GRID_Y;
+        ArrayList<NumberCard> cardList = new ArrayList<>();
+        for (int i = 0; i < numberSet.length; i++)
+            cardList.add(new NumberCard(initX + i * getPadding(textures), initY, textures[i], numberSet[i]));
 
-        cards = cardHand.getCards();
+        cards = new NumberCard[cardList.size()];
+        for (int i = 0; i < cardList.size(); i++)
+            cards[i] = cardList.get(i);
+    }
+
+    private void createCardList(){
+
+    }
+
+    private float getPadding(Texture[] textures) {
+        NumberCard sample = new NumberCard(0, 0, textures[0], 0);
+        return sample.getWidth() + WindowSetting.GRID_X * 0.8f;
     }
 
     public void draw(SpriteBatch batch) {
