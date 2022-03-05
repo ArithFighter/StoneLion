@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.system.AutoResetHandler;
-import com.arithfighter.ccg.CharacterList;
+import com.arithfighter.ccg.character.CharacterList;
 import com.arithfighter.ccg.accessor.SumAccessor;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.EnergyBar;

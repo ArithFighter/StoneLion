@@ -1,9 +1,9 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.CharacterList;
-import com.arithfighter.ccg.CharacterSetService;
+import com.arithfighter.ccg.character.CharacterList;
+import com.arithfighter.ccg.character.CharacterSetService;
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.CardTexturesExtractor;
+import com.arithfighter.ccg.character.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -50,7 +50,7 @@ public class Player {
     }
 
     public boolean isResetCard() {
-        return getActiveCardIndex() == 3;
+        return getActiveCardIndex() == cards.length-1;
     }
 
     public void checkTouchingCard(float x, float y) {

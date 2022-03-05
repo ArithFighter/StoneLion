@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.character;
 
 import com.badlogic.gdx.graphics.Texture;
 

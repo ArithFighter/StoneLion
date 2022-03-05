@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.character;
 
 public class CharacterSetService {
     public int[] getCharacterSet(CharacterList player) {

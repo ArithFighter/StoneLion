@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.accessor.CursorPositionAccessor;
+import com.arithfighter.ccg.character.CharacterList;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.component.*;
@@ -29,7 +30,11 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures, assetProcessor.getCards(), CharacterList.ROGUE) {
+        gameComponent = new GameComponent(
+                textures,
+                assetProcessor.getCards(),
+                CharacterList.PALADIN
+        ) {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
