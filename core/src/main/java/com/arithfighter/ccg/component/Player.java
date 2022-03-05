@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.CharacterList;
-import com.arithfighter.ccg.CharacterSetCollection;
+import com.arithfighter.ccg.CharacterSetService;
 import com.arithfighter.ccg.WindowSetting;
 import com.arithfighter.ccg.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
@@ -21,8 +21,6 @@ public class Player {
     }
 
     private void createCardList(CharacterList character) {
-        CharacterSetCollection csc = new CharacterSetCollection();
-
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
 
@@ -33,7 +31,7 @@ public class Player {
                     initX + i * getPadding(cardSet),
                     initY,
                     cardSet[i],
-                    csc.getCharacterSet(character)[i]
+                    new CharacterSetService().getCharacterSet(character)[i]
             );
     }
 
