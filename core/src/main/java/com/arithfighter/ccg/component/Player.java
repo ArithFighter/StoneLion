@@ -8,32 +8,32 @@ import com.arithfighter.ccg.card.NumberCard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
-
 public class Player {
     private final NumberCard[] cards;
-    private final CardTexturesExtractor cardTexturesExtractor;
+    private final CardTexturesExtractor texturesExtractor;
 
     public Player(Texture[] textures, CharacterList character) {
-        cardTexturesExtractor = new CardTexturesExtractor(textures);
+        texturesExtractor = new CardTexturesExtractor(textures);
 
+        cards = new NumberCard[texturesExtractor.getCardSet(character).length];
+
+        createCardList(character);
+    }
+
+    private void createCardList(CharacterList character) {
         CharacterSetCollection csc = new CharacterSetCollection();
-
-        int[] numberSet = csc.getCharacterSet(character);
 
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
-        ArrayList<NumberCard> cardList = new ArrayList<>();
-        for (int i = 0; i < numberSet.length; i++)
-            cardList.add(new NumberCard(initX + i * getPadding(textures), initY, textures[i], numberSet[i]));
 
-        cards = new NumberCard[cardList.size()];
-        for (int i = 0; i < cardList.size(); i++)
-            cards[i] = cardList.get(i);
-    }
+        Texture[] cardSet = texturesExtractor.getCardSet(character);
 
-    private void createCardList(){
-
+        for (int i = 0; i < cards.length; i++)
+            cards[i] = new NumberCard(
+                    initX + i * getPadding(cardSet),
+                    initY,
+                    cardSet[i], csc.getCharacterSet(character)[i]
+            );
     }
 
     private float getPadding(Texture[] textures) {
@@ -46,11 +46,11 @@ public class Player {
             card.draw(batch);
     }
 
-    public int getCardNumber(){
+    public int getCardNumber() {
         return cards[getActiveCardIndex()].getNumber();
     }
 
-    public boolean isResetCard(){
+    public boolean isResetCard() {
         return getActiveCardIndex() == 3;
     }
 
@@ -78,16 +78,16 @@ public class Player {
         return cards[getActiveCardIndex()].isActive();
     }
 
-    private int getActiveCardIndex(){
+    private int getActiveCardIndex() {
         int index = 0;
-        for (int i = 0; i < cards.length; i++){
+        for (int i = 0; i < cards.length; i++) {
             if (cards[i].isActive())
                 index = i;
         }
         return index;
     }
 
-    public void dispose(){
-        cardTexturesExtractor.dispose();
+    public void dispose() {
+        texturesExtractor.dispose();
     }
 }
