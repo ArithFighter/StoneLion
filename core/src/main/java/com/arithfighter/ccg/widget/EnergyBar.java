@@ -10,10 +10,11 @@ public class EnergyBar {
     public EnergyBar(Texture[] textures){
         int barX = 40;
         int barY = 20;
-        emptyBar = new EmptyBar(textures[4], barX, barY);
+
+        emptyBar = new EmptyBar(textures[4]);
+        emptyBar.setPosition(barX, barY);
 
         barGrid = new BarGrid(textures[5]);
-
         barGrid.setPosition(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
     }
 

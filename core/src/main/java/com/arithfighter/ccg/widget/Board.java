@@ -8,18 +8,25 @@ public class Board{
     private final Sprite table;
     private final SpriteWidget widget;
 
-    public Board(Texture texture, int x, int y){
+    public Board(Texture texture){
         widget = new SpriteWidget();
         widget.configWidget(texture, 14);
-        widget.posX = x;
-        widget.posY = y;
 
         table = new Sprite(texture);
+    }
+
+    public void setPosition(int x, int y){
+        widget.posX = x;
+        widget.posY = y;
+    }
+
+    private void setSprite(){
         table.setPosition(widget.posX, widget.posY);
         table.setSize(widget.width, widget.height);
     }
     
     public void draw(SpriteBatch batch){
+        setSprite();
         table.draw(batch);
     }
     
