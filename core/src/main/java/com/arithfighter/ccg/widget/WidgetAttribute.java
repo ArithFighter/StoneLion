@@ -1,9 +1,9 @@
 package com.arithfighter.ccg.widget;
 
-public class WidgetSetting {
+public class WidgetAttribute {
     int fontSize;
 
-    public WidgetSetting(int fontSize) {
+    public WidgetAttribute(int fontSize) {
         this.fontSize = fontSize;
     }
 

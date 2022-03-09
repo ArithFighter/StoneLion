@@ -14,11 +14,13 @@ public class CardTable {
     public CardTable(Texture[] textures){
         board = new Board(textures[1], CENTER_X + GRID_X * 4, GRID_Y * 6);
 
-        sumBox = new SumBox(textures[2], CENTER_X + GRID_X * 8, GRID_Y * 7);
+        sumBox = new SumBox(textures[2]);
     }
 
     public void draw(SpriteBatch batch, int sum, int condition){
         board.draw(batch);
+
+        sumBox.setPosition(CENTER_X + GRID_X * 8, GRID_Y * 7);
 
         sumBox.draw(sum, condition, batch);
     }

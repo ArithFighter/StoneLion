@@ -14,7 +14,7 @@ public class EnergyBar {
 
         barGrid = new BarGrid(textures[5]);
 
-        barGrid.setPos(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
+        barGrid.setPosition(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
     }
 
     public int getMax(){

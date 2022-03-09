@@ -7,16 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid{
     Sprite grid;
-    private final TextureWidget widget;
+    private final SpriteWidget widget;
 
     public BarGrid(Texture texture){
-        widget = new TextureWidget();
+        widget = new SpriteWidget();
         widget.configWidget(texture, 0.8f);
 
         grid = new Sprite(texture);
         grid.setColor(Color.SKY);
-        grid.setPosition(widget.posX, widget.posY);
-        grid.setSize(widget.width, widget.height);
     }
 
     public float getWidth(){
@@ -27,14 +25,14 @@ public class BarGrid{
         return widget.height;
     }
 
-    public void setPos(float x, float y){
+    public void setPosition(float x, float y){
         widget.posX = x;
         widget.posY = y;
-        grid.setPosition(x,y);
     }
 
     public void draw(SpriteBatch batch, float width) {
         widget.width = width;
+        grid.setPosition(widget.posX,widget.posY);
         grid.setSize(widget.width, widget.height);
         grid.draw(batch);
     }

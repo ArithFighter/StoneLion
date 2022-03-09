@@ -9,11 +9,11 @@ public class EmptyBar{
     private final Sprite bar;
     private final Font maxSign;
     private static final int maxEnergy = 30;
-    private final TextureWidget widget;
-    private final WidgetSetting setting;
+    private final SpriteWidget widget;
+    private final WidgetAttribute attribute;
 
     public EmptyBar(Texture texture, float initX, float initY){
-        widget = new TextureWidget();
+        widget = new SpriteWidget();
         widget.configWidget(texture, 8f);
         widget.posX = initX;
         widget.posY = initY;
@@ -21,7 +21,7 @@ public class EmptyBar{
 
         maxSign = new Font(widget.fontSize);
 
-        setting = new WidgetSetting(widget.fontSize);
+        attribute = new WidgetAttribute(widget.fontSize);
 
         bar = new Sprite(texture);
         bar.setPosition(widget.posX, widget.posY);
@@ -41,8 +41,8 @@ public class EmptyBar{
         String content = "MAX";
         if (isMax(energy)){
             maxSign.draw(batch,content,
-                    setting.getCenterX(widget.posX, widget.width, content)+10,
-                    setting.getCenterY(widget.posY, widget.height)+widget.fontSize/2f);
+                    attribute.getCenterX(widget.posX, widget.width, content)+10,
+                    attribute.getCenterY(widget.posY, widget.height)+widget.fontSize/2f);
         }
     }
 

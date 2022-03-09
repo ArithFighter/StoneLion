@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class NumberBox{
     private final Font text;
     private final Sprite box;
-    private final TextureWidget widget;
-    private final WidgetSetting widgetSetting;
+    private final SpriteWidget widget;
+    private final WidgetAttribute attribute;
 
     public NumberBox(Texture texture) {
-        widget = new TextureWidget();
+        widget = new SpriteWidget();
 
         widget.configWidget(texture, 3.5f);
         widget.fontSize = 32;
@@ -22,12 +22,12 @@ public class NumberBox{
 
         box = new Sprite(texture);
 
-        widgetSetting = new WidgetSetting(widget.fontSize);
+        attribute = new WidgetAttribute(widget.fontSize);
     }
 
-    public void setPosition(float initX, float initY){
-        widget.posX = initX;
-        widget.posY = initY;
+    public void setPosition(float x, float y){
+        widget.posX = x;
+        widget.posY = y;
     }
 
     public float getWidth() {
@@ -39,23 +39,24 @@ public class NumberBox{
     }
 
     public void draw(int number, SpriteBatch batch) {
-        addBoxSprite(batch);
+        setSprite();
+
+        box.draw(batch);
 
         addText(number, batch);
     }
 
-    private void addBoxSprite(SpriteBatch batch) {
+    private void setSprite() {
         box.setSize(widget.width, widget.height);
         box.setPosition(widget.posX, widget.posY);
         box.setColor(0, 0.9f, 0.9f, 1);
-        box.draw(batch);
     }
 
     private void addText(int number, SpriteBatch batch) {
         String content = String.valueOf(number);
 
-        float textX = widgetSetting.getCenterX(widget.posX, widget.width, content);
-        float textY = widgetSetting.getCenterY(widget.posY,widget.height);
+        float textX = attribute.getCenterX(widget.posX, widget.width, content);
+        float textY = attribute.getCenterY(widget.posY,widget.height);
 
         changeNumColor(number);
 

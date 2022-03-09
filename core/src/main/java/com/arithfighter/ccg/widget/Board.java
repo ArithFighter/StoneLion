@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Board{
     private final Sprite table;
-    private final TextureWidget widget;
+    private final SpriteWidget widget;
 
     public Board(Texture texture, int x, int y){
-        widget = new TextureWidget();
+        widget = new SpriteWidget();
         widget.configWidget(texture, 14);
         widget.posX = x;
         widget.posY = y;
