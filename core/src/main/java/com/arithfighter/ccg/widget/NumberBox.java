@@ -14,7 +14,7 @@ public class NumberBox{
 
     public NumberBox(Texture texture) {
         widget = new SpriteWidget();
-        widget.configWidget(texture, 3.5f);
+        widget.setSize(texture, 3.5f);
         widget.fontSize = 32;
         widget.point = new Point(0,0);
         point = widget.point;

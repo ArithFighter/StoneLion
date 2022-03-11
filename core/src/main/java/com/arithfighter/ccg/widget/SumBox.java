@@ -13,10 +13,8 @@ public class SumBox{
     private final Point point;
     
     public SumBox(Texture texture){
-        widget = new SpriteWidget();
-        widget.configWidget(texture, 10);
-        widget.fontSize = 36;
-        widget.point = new Point(0,0);
+        widget = new SpriteWidget(36);
+        widget.setSize(texture, 10);
         point = widget.point;
         
         text = new Font(widget.fontSize);

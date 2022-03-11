@@ -10,11 +10,12 @@ public class EmptyBar{
     private final Font maxSign;
     private static final int maxEnergy = 30;
     private final SpriteWidget widget;
+    private final Point point;
 
     public EmptyBar(Texture texture){
-        widget = new SpriteWidget();
-        widget.configWidget(texture, 8f);
-        widget.fontSize = 32;
+        widget = new SpriteWidget(23);
+        widget.setSize(texture, 8f);
+        point = widget.point;
 
         maxSign = new Font(widget.fontSize);
 
@@ -30,12 +31,12 @@ public class EmptyBar{
     }
 
     public void setPosition(float x, float y){
-        widget.posX = x;
-        widget.posY = y;
+        point.setX(x);
+        point.setY(y);
     }
 
     private void setSprite(){
-        bar.setPosition(widget.posX, widget.posY);
+        bar.setPosition(point.getX(), point.getY());
         bar.setSize(widget.width, widget.height);
     }
 

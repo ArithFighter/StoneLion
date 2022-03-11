@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BarGrid{
     Sprite grid;
     private final SpriteWidget widget;
+    private final Point point;
 
     public BarGrid(Texture texture){
         widget = new SpriteWidget();
-        widget.configWidget(texture, 0.8f);
+        widget.setSize(texture, 0.8f);
+        point = widget.point;
 
         grid = new Sprite(texture);
         grid.setColor(Color.SKY);
@@ -26,13 +28,13 @@ public class BarGrid{
     }
 
     public void setPosition(float x, float y){
-        widget.posX = x;
-        widget.posY = y;
+        point.setX(x);
+        point.setY(y);
     }
 
     public void draw(SpriteBatch batch, float width) {
         widget.width = width;
-        grid.setPosition(widget.posX,widget.posY);
+        grid.setPosition(point.getX(), point.getY());
         grid.setSize(widget.width, widget.height);
         grid.draw(batch);
     }

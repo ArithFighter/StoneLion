@@ -2,6 +2,6 @@ package com.arithfighter.ccg.widget;
 
 public class Widget {
     Point point;
-    float posX, posY, width, height;
+    float width, height;
     int fontSize;
 }

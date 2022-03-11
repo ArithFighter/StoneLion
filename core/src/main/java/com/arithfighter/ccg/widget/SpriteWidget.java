@@ -3,7 +3,16 @@ package com.arithfighter.ccg.widget;
 import com.badlogic.gdx.graphics.Texture;
 
 public class SpriteWidget extends Widget{
-    public void configWidget(Texture texture, float scale) {
+    public SpriteWidget(){
+        point = new Point(0,0);
+    }
+
+    public SpriteWidget(int fontSize){
+        point = new Point(0,0);
+        this.fontSize = fontSize;
+    }
+
+    public void setSize(Texture texture, float scale) {
         configSize(texture.getWidth(), texture.getHeight(), scale);
     }
 
