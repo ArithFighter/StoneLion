@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameComponent {
-    private final Player player;
+    private final Hand hand;
     private final CardTable cardTable;
     private final SkillHandler skillHandler;
     private final AutoResetHandler autoResetHandler;
@@ -21,7 +21,7 @@ public class GameComponent {
     public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
         skillHandler = new SkillHandler();
 
-        player = new Player(cards, character);
+        hand = new Hand(cards, character);
 
         cardTable = new CardTable(textures);
 
@@ -51,8 +51,8 @@ public class GameComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        player.draw(batch);
-        player.checkTouchingCard(mouseX, mouseY);
+        hand.draw(batch);
+        hand.checkTouchingCard(mouseX, mouseY);
 
         if (skillHandler.isSkillActive())//show font when skill is active
             skillSign.draw(batch, "Super",100, 300);
@@ -72,31 +72,31 @@ public class GameComponent {
         }
     }
 
-    public Player getPlayer() {
-        return player;
+    public Hand getPlayer() {
+        return hand;
     }
 
     public final void playCardOnTable(int mouseX, int mouseY, int energy) {
         if (cardTable.isCardOnBoard(mouseX, mouseY)) {
-            if (player.isCardActive()) {
+            if (hand.isCardActive()) {
                 doWhenCardPlayed();
                 handlePlayingCard(energy);
             }
         }
-        player.initCardsPosition();
+        hand.initCardsPosition();
     }
 
     public void doWhenCardPlayed() {
     }
 
     private void handlePlayingCard(int energy) {
-        if (player.isResetCard())
+        if (hand.isResetCard())
             checkResetCardPlay(energy);
         else {
             if (skillHandler.isSkillReady()){
                 skillHandler.init();
             }
-            sumAccessor.updateSum(player.getCardNumber());
+            sumAccessor.updateSum(hand.getCardNumber());
             autoResetHandler.update();
         }
     }
@@ -118,7 +118,7 @@ public class GameComponent {
 
     private void doWhenResetCardPlay() {
         sumAccessor.resetSum();
-        sumAccessor.updateSum(player.getCardNumber());
+        sumAccessor.updateSum(hand.getCardNumber());
         autoResetHandler.update();
     }
 
@@ -132,7 +132,7 @@ public class GameComponent {
 
     public void dispose() {
         cardTable.dispose();
-        player.dispose();
+        hand.dispose();
         energyBar.dispose();
         numberBoxDisplacer.dispose();
         skillSign.dispose();
