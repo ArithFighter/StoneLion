@@ -31,17 +31,29 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(textures) {
+        player = new Player(textures, assetProcessor.getCards(), CharacterList.KNIGHT){
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
-                if (gameComponent.isEnergyNotMax(dataDisplacer.getEnergy()))
+                if (player.isEnergyNotMax(dataDisplacer.getEnergy()))
                     dataDisplacer.updateEnergy(3);
             }
 
             @Override
             public void activeSkill() {
-                    dataDisplacer.consumeEnergy();
+                dataDisplacer.consumeEnergy();
+            }
+        };
+
+        gameComponent = new GameComponent(textures) {
+            @Override
+            public void initComponent() {
+                player.initHand();
+            }
+
+            @Override
+            public void checkCardPlayed() {
+                player.playCard(dataDisplacer.getEnergy());
             }
 
             @Override
@@ -50,13 +62,9 @@ public class GameCore {
             }
         };
 
-        player = new Player(textures, assetProcessor.getCards(), CharacterList.KNIGHT){
-
-        };
-
         cursorPos = new CursorPositionAccessor();
 
-        mouseAdapter = new MouseAdapter(gameComponent);
+        mouseAdapter = new MouseAdapter(gameComponent, player);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -70,7 +78,7 @@ public class GameCore {
 
         mouseAdapter.updateEnergy(dataDisplacer.getEnergy());
 
-        gameComponent.update();
+        gameComponent.update(player.getSum());
 
         resetRecordManually();//for test
 
@@ -91,7 +99,8 @@ public class GameCore {
     private void drawComponent() {
         batch.begin();
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
-        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY());
+        gameComponent.draw(batch, player.getSum(), player.getCondition());
+        player.draw(batch, cursorPos.getX(), cursorPos.getY(), dataDisplacer.getEnergy());
         batch.end();
     }
 

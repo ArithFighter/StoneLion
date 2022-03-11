@@ -30,17 +30,47 @@ public class Player {
         energyBar = new EnergyBar(textures);
     }
 
+    public void activateCard(int mouseX, int mouseY){
+        hand.activateCard(mouseX, mouseY);
+    }
+
+    public void updateWhenDrag(int mouseX, int mouseY){
+        hand.updateWhenDrag(mouseX, mouseY);
+    }
+
     public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
 
         energyBar.draw(batch, energy);
 
+        checkAutoResetCondition();
+
         if (skillHandler.isSkillActive())//show font when skill is active
             skillSign.draw(batch, "Super", 100, 300);
     }
 
-    public final void playCard(int mouseX, int mouseY, int energy) {
+    private void checkAutoResetCondition() {
+        if (autoResetHandler.isTimeToReset()) {
+            sumAccessor.resetSum();
+            autoResetHandler.initialize();
+            skillHandler.init();
+        }
+    }
+
+    public void initHand(){
+        hand.initCardsPosition();
+    }
+
+    public int getSum(){
+        return sumAccessor.getSum();
+    }
+
+    public int getCondition(){
+        return autoResetHandler.getCondition();
+    }
+
+    public final void playCard(int energy) {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
             handlePlayingCard(energy);

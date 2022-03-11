@@ -34,8 +34,8 @@ public class GameComponent {
     public final void playCardOnTable(int mouseX, int mouseY) {
         if (cardTable.isCardOnBoard(mouseX, mouseY)) {
             checkCardPlayed();
-        }else
-            initComponent();
+        }
+        initComponent();
     }
 
     public void initComponent() {
