@@ -18,6 +18,7 @@ public class GameCore {
     CursorPositionAccessor cursorPos;
     SpriteBatch batch;
     MouseAdapter mouseAdapter;
+    Player player;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -30,11 +31,7 @@ public class GameCore {
 
         dataDisplacer = new GameDataDisplacer();
 
-        gameComponent = new GameComponent(
-                textures,
-                assetProcessor.getCards(),
-                CharacterList.PALADIN
-        ) {
+        gameComponent = new GameComponent(textures) {
             @Override
             public void doWhenCardPlayed() {
                 dataDisplacer.updatePlayTimes();
@@ -52,6 +49,11 @@ public class GameCore {
                 dataDisplacer.updateScore(1);
             }
         };
+
+        player = new Player(textures, assetProcessor.getCards(), CharacterList.KNIGHT){
+
+        };
+
         cursorPos = new CursorPositionAccessor();
 
         mouseAdapter = new MouseAdapter(gameComponent);
@@ -89,7 +91,7 @@ public class GameCore {
     private void drawComponent() {
         batch.begin();
         dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
-        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY(), dataDisplacer.getEnergy());
+        gameComponent.draw(batch, cursorPos.getX(), cursorPos.getY());
         batch.end();
     }
 
@@ -98,5 +100,6 @@ public class GameCore {
         assetProcessor.dispose();
         dataDisplacer.dispose();
         gameComponent.dispose();
+        player.dispose();
     }
 }

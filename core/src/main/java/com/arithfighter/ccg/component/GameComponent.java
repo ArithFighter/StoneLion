@@ -1,35 +1,14 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.system.AutoResetHandler;
-import com.arithfighter.ccg.character.CharacterList;
-import com.arithfighter.ccg.accessor.SumAccessor;
-import com.arithfighter.ccg.font.Font;
-import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameComponent {
-    private final Hand hand;
     private final CardTable cardTable;
-    private final SkillHandler skillHandler;
-    private final AutoResetHandler autoResetHandler;
-    private final SumAccessor sumAccessor;
-    private final EnergyBar energyBar;
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private final Font skillSign;
 
-    public GameComponent(Texture[] textures, Texture[] cards, CharacterList character) {
-        skillHandler = new SkillHandler();
-
-        hand = new Hand(cards, character);
-
+    public GameComponent(Texture[] textures) {
         cardTable = new CardTable(textures);
-
-        autoResetHandler = new AutoResetHandler();
-
-        sumAccessor = new SumAccessor();
-
-        energyBar = new EnergyBar(textures);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
@@ -37,104 +16,38 @@ public class GameComponent {
                 getScore();
             }
         };
-
-        skillSign = new Font(32);
     }
 
     public void getScore(){
     }
 
-    public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
-        cardTable.draw(batch, sumAccessor.getSum(), autoResetHandler.getCondition());
-
-        energyBar.draw(batch, energy);
+    public void draw(SpriteBatch batch, int sum, int condition) {
+        cardTable.draw(batch, sum, condition);
 
         numberBoxDisplacer.draw(batch);
-
-        hand.draw(batch);
-        hand.checkTouchingCard(mouseX, mouseY);
-
-        if (skillHandler.isSkillActive())//show font when skill is active
-            skillSign.draw(batch, "Super",100, 300);
     }
 
-    public void update() {
-        numberBoxDisplacer.update(sumAccessor.getSum());//this always on top of stack
-
-        checkAutoResetCondition();
+    public void update(int sum) {
+        numberBoxDisplacer.update(sum);//this always on top of stack
     }
 
-    private void checkAutoResetCondition() {
-        if (autoResetHandler.isTimeToReset()) {
-            sumAccessor.resetSum();
-            autoResetHandler.initialize();
-            skillHandler.init();
-        }
-    }
-
-    public Hand getPlayer() {
-        return hand;
-    }
-
-    public final void playCardOnTable(int mouseX, int mouseY, int energy) {
+    public final void playCardOnTable(int mouseX, int mouseY) {
         if (cardTable.isCardOnBoard(mouseX, mouseY)) {
-            if (hand.isCardActive()) {
-                doWhenCardPlayed();
-                handlePlayingCard(energy);
-            }
-        }
-        hand.initCardsPosition();
+            checkCardPlayed();
+        }else
+            initComponent();
     }
 
-    public void doWhenCardPlayed() {
+    public void initComponent() {
+
     }
 
-    private void handlePlayingCard(int energy) {
-        if (hand.isResetCard())
-            checkResetCardPlay(energy);
-        else {
-            if (skillHandler.isSkillReady()){
-                skillHandler.init();
-            }
-            sumAccessor.updateSum(hand.getCardNumber());
-            autoResetHandler.update();
-        }
-    }
+    public void checkCardPlayed() {
 
-    private void checkResetCardPlay(int energy) {
-        if (skillHandler.isSkillReady() && isMaxEnergy(energy)) {
-            skillHandler.setActive();
-            activeSkill();
-            autoResetHandler.initialize();
-        } else {
-            doWhenResetCardPlay();
-            if (skillHandler.isSkillNeutral())
-                skillHandler.setReady();
-        }
-    }
-
-    public void activeSkill() {
-    }
-
-    private void doWhenResetCardPlay() {
-        sumAccessor.resetSum();
-        sumAccessor.updateSum(hand.getCardNumber());
-        autoResetHandler.update();
-    }
-
-    public boolean isEnergyNotMax(int energy) {
-        return energy < energyBar.getMax();
-    }
-
-    public boolean isMaxEnergy(int energy) {
-        return energy == energyBar.getMax();
     }
 
     public void dispose() {
         cardTable.dispose();
-        hand.dispose();
-        energyBar.dispose();
         numberBoxDisplacer.dispose();
-        skillSign.dispose();
     }
 }
