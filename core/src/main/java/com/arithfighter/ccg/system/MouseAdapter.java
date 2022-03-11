@@ -9,7 +9,6 @@ public class MouseAdapter extends InputAdapter {
     Player player;
     int mouseX;
     int mouseY;
-    int energy;
 
     public MouseAdapter(GameComponent gameComponent, Player player) {
         this.gameComponent = gameComponent;
@@ -19,10 +18,6 @@ public class MouseAdapter extends InputAdapter {
     public void updateMousePos(int mouseX, int mouseY){
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-    }
-
-    public void updateEnergy(int energy){
-        this.energy = energy;
     }
 
     @Override

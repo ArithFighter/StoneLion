@@ -76,8 +76,6 @@ public class GameCore {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        mouseAdapter.updateEnergy(dataDisplacer.getEnergy());
-
         gameComponent.update(player.getSum());
 
         resetRecordManually();//for test
