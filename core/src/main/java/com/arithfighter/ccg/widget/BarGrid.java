@@ -32,8 +32,11 @@ public class BarGrid{
         point.setY(y);
     }
 
-    public void draw(SpriteBatch batch, float width) {
+    public void updateWidth(float width){
         widget.width = width;
+    }
+
+    public void draw(SpriteBatch batch) {
         grid.setPosition(point.getX(), point.getY());
         grid.setSize(widget.width, widget.height);
         grid.draw(batch);

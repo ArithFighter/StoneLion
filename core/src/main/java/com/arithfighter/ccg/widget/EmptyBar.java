@@ -43,6 +43,10 @@ public class EmptyBar{
     public void draw(SpriteBatch batch, int energy) {
         setSprite();
         bar.draw(batch);
+        drawMaxSign(energy, batch);
+    }
+
+    private void drawMaxSign(int energy, SpriteBatch batch){
         String content = "MAX";
         if (isMax(energy)){
             maxSign.draw(

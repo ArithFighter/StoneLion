@@ -22,9 +22,14 @@ public class EnergyBar {
         return emptyBar.getMax();
     }
 
+    private void update(int energy){
+        barGrid.updateWidth((emptyBar.getWidth()-71)* energy / emptyBar.getMax());
+    }
+
     public void draw(SpriteBatch batch, int energy){
-        barGrid.draw(batch, (emptyBar.getWidth()-71)* energy / emptyBar.getMax());
+        barGrid.draw(batch);
         emptyBar.draw(batch, energy);
+        update(energy);
     }
 
     public void dispose(){
