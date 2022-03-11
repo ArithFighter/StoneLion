@@ -10,7 +10,6 @@ public class SumBox{
     private final Font text;
     private final Sprite sumDisplayBlock;
     private final SpriteWidget widget;
-    private final WidgetAttribute attribute;
     private final Point point;
     
     public SumBox(Texture texture){
@@ -19,8 +18,6 @@ public class SumBox{
         widget.fontSize = 36;
         widget.point = new Point(0,0);
         point = widget.point;
-
-        attribute = new WidgetAttribute(widget.fontSize);
         
         text = new Font(widget.fontSize);
 
@@ -51,8 +48,8 @@ public class SumBox{
     private void drawText(int number, SpriteBatch batch){
         String sum = String.valueOf(number);
 
-        float textX = attribute.getCenterX(point.getX(), widget.width, sum);
-        float textY = attribute.getCenterY(point.getY(), widget.height);
+        float textX = widget.getCenterX(sum);
+        float textY = widget.getCenterY();
 
         text.setColor(Color.WHITE);
         text.draw(batch, sum, textX, textY);

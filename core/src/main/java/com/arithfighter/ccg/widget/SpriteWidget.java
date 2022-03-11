@@ -11,4 +11,16 @@ public class SpriteWidget extends Widget{
         this.width = scale*width;
         this.height = scale*height;
     }
+
+    public float getCenterX(String content) {
+        float midLength = width / 2 - content.length() * fontSize / 2f;
+
+        return point.getX() + midLength;
+    }
+
+    public float getCenterY() {
+        float midHeight = (height + fontSize) / 2;
+
+        return point.getY() + midHeight;
+    }
 }
