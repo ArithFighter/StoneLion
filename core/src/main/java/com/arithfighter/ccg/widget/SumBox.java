@@ -11,11 +11,14 @@ public class SumBox{
     private final Sprite sumDisplayBlock;
     private final SpriteWidget widget;
     private final WidgetAttribute attribute;
+    private final Point point;
     
     public SumBox(Texture texture){
         widget = new SpriteWidget();
         widget.configWidget(texture, 10);
         widget.fontSize = 36;
+        widget.point = new Point(0,0);
+        point = widget.point;
 
         attribute = new WidgetAttribute(widget.fontSize);
         
@@ -25,13 +28,13 @@ public class SumBox{
     }
 
     public void setPosition(float x, float y){
-        widget.posX = x;
-        widget.posY = y;
+        point.setX(x);
+        point.setY(y);
     }
 
     private void setSprite(){
         sumDisplayBlock.setColor(Color.TEAL);
-        sumDisplayBlock.setPosition(widget.posX, widget.posY);
+        sumDisplayBlock.setPosition(point.getX(), point.getY());
         sumDisplayBlock.setSize(widget.width, widget.height);
     }
 
@@ -48,8 +51,8 @@ public class SumBox{
     private void drawText(int number, SpriteBatch batch){
         String sum = String.valueOf(number);
 
-        float textX = attribute.getCenterX(widget.posX, widget.width, sum);
-        float textY = attribute.getCenterY(widget.posY, widget.height);
+        float textX = attribute.getCenterX(point.getX(), widget.width, sum);
+        float textY = attribute.getCenterY(point.getY(), widget.height);
 
         text.setColor(Color.WHITE);
         text.draw(batch, sum, textX, textY);
