@@ -10,7 +10,6 @@ public class NumberBox{
     private final Font text;
     private final Sprite box;
     private final SpriteWidget widget;
-    private final WidgetAttribute attribute;
     private final Point point;
 
     public NumberBox(Texture texture) {
@@ -23,8 +22,6 @@ public class NumberBox{
         text = new Font(widget.fontSize);
 
         box = new Sprite(texture);
-
-        attribute = new WidgetAttribute(widget.fontSize);
     }
 
     public void setPosition(float x, float y){
@@ -57,8 +54,8 @@ public class NumberBox{
     private void addText(int number, SpriteBatch batch) {
         String content = String.valueOf(number);
 
-        float textX = attribute.getCenterX(point.getX(), widget.width, content);
-        float textY = attribute.getCenterY(point.getY(), widget.height);
+        float textX = widget.getCenterX(content);
+        float textY = widget.getCenterY();
 
         changeNumColor(number);
 
