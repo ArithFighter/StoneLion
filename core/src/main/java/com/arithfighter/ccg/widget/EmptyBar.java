@@ -1,5 +1,7 @@
 package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.widget.Point;
+import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,17 +14,17 @@ public class EmptyBar{
     public EmptyBar(Texture texture){
         widget = new SpriteWidget(23);
         widget.setSize(texture, 8f);
-        point = widget.point;
+        point = widget.getPoint();
 
         bar = new Sprite(texture);
     }
 
     public float getWidth(){
-        return widget.width;
+        return widget.getWidth();
     }
 
     public float getHeight(){
-        return widget.height;
+        return widget.getHeight();
     }
 
     public void setPosition(float x, float y){
@@ -32,7 +34,7 @@ public class EmptyBar{
 
     private void setSprite(){
         bar.setPosition(point.getX(), point.getY());
-        bar.setSize(widget.width, widget.height);
+        bar.setSize(widget.getWidth(), widget.getHeight());
     }
 
     public void draw(SpriteBatch batch) {

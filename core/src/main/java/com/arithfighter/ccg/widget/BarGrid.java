@@ -1,5 +1,7 @@
 package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.widget.Point;
+import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,18 +15,18 @@ public class BarGrid{
     public BarGrid(Texture texture){
         widget = new SpriteWidget();
         widget.setSize(texture, 0.8f);
-        point = widget.point;
+        point = widget.getPoint();
 
         grid = new Sprite(texture);
         grid.setColor(Color.SKY);
     }
 
     public float getWidth(){
-        return widget.width;
+        return widget.getWidth();
     }
 
     public float getHeight(){
-        return widget.height;
+        return widget.getHeight();
     }
 
     public void setPosition(float x, float y){
@@ -33,12 +35,12 @@ public class BarGrid{
     }
 
     public void updateWidth(float width){
-        widget.width = width;
+        widget.setWidth(width);
     }
 
     public void draw(SpriteBatch batch) {
         grid.setPosition(point.getX(), point.getY());
-        grid.setSize(widget.width, widget.height);
+        grid.setSize(widget.getWidth(), widget.getHeight());
         grid.draw(batch);
     }
 }

@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class SpriteWidget extends Widget{
     public SpriteWidget(){
-        point = new Point(0,0);
+        setPoint(new Point(0,0));
     }
 
     public SpriteWidget(int fontSize){
-        point = new Point(0,0);
-        this.fontSize = fontSize;
+        setPoint(new Point(0,0));
+        setFontSize(fontSize);
     }
 
     public void setSize(Texture texture, float scale) {
@@ -17,19 +17,19 @@ public class SpriteWidget extends Widget{
     }
 
     private void configSize(float width, float height, float scale){
-        this.width = scale*width;
-        this.height = scale*height;
+        setWidth(scale*width);
+        setHeight(scale*height);
     }
 
     public float getCenterX(String content) {
-        float midLength = width / 2 - content.length() * fontSize / 2f;
+        float midLength = getWidth() / 2 - content.length() * getFontSize() / 2f;
 
-        return point.getX() + midLength;
+        return getPoint().getX() + midLength;
     }
 
     public float getCenterY() {
-        float midHeight = (height + fontSize) / 2;
+        float midHeight = (getHeight() + getFontSize()) / 2;
 
-        return point.getY() + midHeight;
+        return getPoint().getY() + midHeight;
     }
 }

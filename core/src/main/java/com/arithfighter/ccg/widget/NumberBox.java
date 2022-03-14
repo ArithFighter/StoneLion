@@ -15,11 +15,10 @@ public class NumberBox{
     public NumberBox(Texture texture) {
         widget = new SpriteWidget();
         widget.setSize(texture, 3.5f);
-        widget.fontSize = 32;
-        widget.point = new Point(0,0);
-        point = widget.point;
+        widget.setFontSize(32);
+        point = widget.getPoint();
 
-        text = new Font(widget.fontSize);
+        text = new Font(widget.getFontSize());
 
         box = new Sprite(texture);
     }
@@ -30,11 +29,11 @@ public class NumberBox{
     }
 
     public float getWidth() {
-        return widget.width;
+        return widget.getWidth();
     }
 
     public float getHeight() {
-        return widget.height;
+        return widget.getHeight();
     }
 
     public void draw(int number, SpriteBatch batch) {
@@ -46,7 +45,7 @@ public class NumberBox{
     }
 
     private void setSprite() {
-        box.setSize(widget.width, widget.height);
+        box.setSize(widget.getWidth(), widget.getHeight());
         box.setPosition(point.getX(), point.getY());
         box.setColor(0, 0.9f, 0.9f, 1);
     }

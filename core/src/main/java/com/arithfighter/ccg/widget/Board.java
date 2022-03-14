@@ -12,7 +12,7 @@ public class Board{
     public Board(Texture texture){
         widget = new SpriteWidget();
         widget.setSize(texture, 14);
-        point = widget.point;
+        point = widget.getPoint();
 
         table = new Sprite(texture);
     }
@@ -24,7 +24,7 @@ public class Board{
 
     private void setSprite(){
         table.setPosition(point.getX(), point.getY());
-        table.setSize(widget.width, widget.height);
+        table.setSize(widget.getWidth(), widget.getHeight());
     }
 
     public void draw(SpriteBatch batch){
@@ -33,7 +33,9 @@ public class Board{
     }
 
     public boolean isOnBoard(float x, float y){
-        return x > point.getX() && x < point.getX() + widget.width &&
-                y > point.getY() && y < point.getY() + widget.height;
+        return x > point.getX()
+                && x < point.getX() + widget.getWidth()
+                && y > point.getY()
+                && y < point.getY() + widget.getHeight();
     }
 }
