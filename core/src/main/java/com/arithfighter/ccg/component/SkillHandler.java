@@ -1,11 +1,8 @@
 package com.arithfighter.ccg.component;
 
 public class SkillHandler {
+    private enum SkillState {NEUTRAL, READY}
     private SkillState skillState = SkillState.NEUTRAL;
-
-    public void setActive(){
-        skillState = SkillState.ACTIVE;
-    }
 
     public void setReady(){
         skillState = SkillState.READY;
@@ -13,10 +10,6 @@ public class SkillHandler {
 
     public void init(){
         skillState = SkillState.NEUTRAL;
-    }
-
-    public boolean isSkillActive(){
-        return skillState == SkillState.ACTIVE;
     }
 
     public boolean isSkillReady(){

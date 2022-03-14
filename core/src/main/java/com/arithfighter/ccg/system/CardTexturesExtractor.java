@@ -1,10 +1,11 @@
-package com.arithfighter.ccg.character;
+package com.arithfighter.ccg.system;
 
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardTexturesExtractor {
     private final Texture[] cardTextures;
-    private final static int quantity = CharacterList.KNIGHT.numberSet.length;
+    private final CharacterList[] characters = CharacterList.values();
+    private final int quantity = characters[0].numberSet.length;
 
     public CardTexturesExtractor(Texture[] cardTextures) {
         this.cardTextures = cardTextures;
@@ -13,9 +14,7 @@ public class CardTexturesExtractor {
     public Texture[] getCardSet(CharacterList player) {
         Texture[] cardSet = new Texture[quantity];
 
-        CharacterList[] characterList = CharacterList.values();
-
-        for (CharacterList character : characterList)
+        for (CharacterList character : characters)
             if (player == character) {
                 for (int j = 0; j < quantity; j++)
                     cardSet[j] = cardTextures[character.textureMap[j]];

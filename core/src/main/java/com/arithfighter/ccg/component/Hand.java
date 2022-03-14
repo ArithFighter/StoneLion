@@ -1,9 +1,9 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.character.CharacterList;
-import com.arithfighter.ccg.character.CharacterSetService;
+import com.arithfighter.ccg.system.CharacterList;
+import com.arithfighter.ccg.system.CharacterSetService;
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.character.CardTexturesExtractor;
+import com.arithfighter.ccg.system.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

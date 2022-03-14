@@ -1,7 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.accessor.CursorPositionAccessor;
-import com.arithfighter.ccg.character.CharacterList;
+import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.*;
 import com.arithfighter.ccg.component.*;
