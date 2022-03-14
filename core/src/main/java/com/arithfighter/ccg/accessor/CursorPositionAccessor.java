@@ -13,7 +13,7 @@ public class CursorPositionAccessor {
         return mouseY;
     }
 
-    public void updateCursorPosition(){
+    public void update(){
         mouseX = Gdx.input.getX();
         mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
     }

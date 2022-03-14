@@ -5,8 +5,8 @@ import com.arithfighter.ccg.component.Player;
 import com.badlogic.gdx.InputAdapter;
 
 public class MouseAdapter extends InputAdapter {
-    GameComponent gameComponent;
-    Player player;
+    final GameComponent gameComponent;
+    final Player player;
     int mouseX;
     int mouseY;
 

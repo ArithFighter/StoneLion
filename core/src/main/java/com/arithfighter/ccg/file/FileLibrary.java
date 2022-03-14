@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.file;
 
 public class FileLibrary {
-    String[] textures = {
+    private final String[] textures = {
             "Card_template.png",
             "desk.png",
             "sum-Display-block.png",
@@ -10,7 +10,7 @@ public class FileLibrary {
             "white-block.png"
     };
 
-    String[] cards = {
+    private final String[] cards = {
             "cards/Number-re0.png",
             "cards/Number-1.png",
             "cards/Number-2.png",

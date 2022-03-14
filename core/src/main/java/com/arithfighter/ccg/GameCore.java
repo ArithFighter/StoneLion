@@ -72,7 +72,7 @@ public class GameCore {
     public void render() {
         assetProcessor.update(17);
 
-        cursorPos.updateCursorPosition();
+        cursorPos.update();
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 

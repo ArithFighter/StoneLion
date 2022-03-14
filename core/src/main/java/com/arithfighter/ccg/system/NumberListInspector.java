@@ -1,8 +1,8 @@
 package com.arithfighter.ccg.system;
 
 public class NumberListInspector {
-    int sumOfNumInspector = -1;
-    boolean allNumAreZero = false;
+    private int sumOfNumInspector = -1;
+    private boolean allNumAreZero = false;
 
     public final void inspectNumberList(int[] numberList) {
         checkEveryNumInListAreZero(numberList);

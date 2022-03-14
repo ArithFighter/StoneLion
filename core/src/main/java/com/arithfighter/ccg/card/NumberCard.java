@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard extends RawCard {
-    Sprite card;
-    int number;
-    StateManager stateManager = new StateManager();
+    private final Sprite card;
+    private final int number;
+    private final StateManager stateManager = new StateManager();
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
         setInitPosition(initX, initY);

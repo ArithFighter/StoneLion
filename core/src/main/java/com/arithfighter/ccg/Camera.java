@@ -6,11 +6,10 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 public class Camera {
-    OrthographicCamera camera;
-    ScalingViewport viewport;
+    private ScalingViewport viewport;
 
     public void create() {
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new ScalingViewport(Scaling.fit,Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
     }

@@ -1,9 +1,9 @@
 package com.arithfighter.ccg.component;
 
 public class NumberBoxPlacer{
-    float initX;
-    float initY;
-    float margin;
+    private final float initX;
+    private final float initY;
+    private final float margin;
 
     public NumberBoxPlacer(float initX, float initY, float margin){
         this.initX = initX;

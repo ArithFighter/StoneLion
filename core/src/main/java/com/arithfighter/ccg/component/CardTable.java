@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class CardTable {
-    Board board;
-    SumBox sumBox;
+    private final Board board;
+    private final SumBox sumBox;
 
     public CardTable(Texture[] textures){
         board = new Board(textures[1]);

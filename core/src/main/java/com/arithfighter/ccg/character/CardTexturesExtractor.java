@@ -3,7 +3,7 @@ package com.arithfighter.ccg.character;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardTexturesExtractor {
-    Texture[] cardTextures;
+    private final Texture[] cardTextures;
     private final static int quantity = CharacterList.KNIGHT.numberSet.length;
 
     public CardTexturesExtractor(Texture[] cardTextures) {

@@ -7,14 +7,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Font {
-    FreeTypeFontGenerator fontGenerator;
-	FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-	BitmapFont font;
+    private final FreeTypeFontGenerator fontGenerator;
+    private final BitmapFont font;
 
     public Font(int size){
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fontstyle/pcsenior.ttf"));
-        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter =
+                new FreeTypeFontGenerator.FreeTypeFontParameter();
+
         fontParameter.size = size;
+
         font = fontGenerator.generateFont(fontParameter);
     }
 

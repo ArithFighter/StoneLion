@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.accessor.SumAccessor;
+import com.arithfighter.ccg.accessor.Recorder;
 import com.arithfighter.ccg.character.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.system.AutoResetHandler;
@@ -13,7 +13,7 @@ public class Player {
     private final SkillHandler skillHandler;
     private final Font skillSign;
     private final AutoResetHandler autoResetHandler;
-    private final SumAccessor sumAccessor;
+    private final Recorder sumAccessor;
     private final EnergyBar energyBar;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
@@ -25,7 +25,7 @@ public class Player {
 
         autoResetHandler = new AutoResetHandler();
 
-        sumAccessor = new SumAccessor();
+        sumAccessor = new Recorder();
 
         energyBar = new EnergyBar(textures);
     }
@@ -52,7 +52,7 @@ public class Player {
 
     private void checkAutoResetCondition() {
         if (autoResetHandler.isTimeToReset()) {
-            sumAccessor.resetSum();
+            sumAccessor.reset();
             autoResetHandler.initialize();
             skillHandler.init();
         }
@@ -63,7 +63,7 @@ public class Player {
     }
 
     public int getSum(){
-        return sumAccessor.getSum();
+        return sumAccessor.getRecord();
     }
 
     public int getCondition(){
@@ -88,7 +88,7 @@ public class Player {
             if (skillHandler.isSkillReady()) {
                 skillHandler.init();
             }
-            sumAccessor.updateSum(hand.getCardNumber());
+            sumAccessor.update(hand.getCardNumber());
             autoResetHandler.update();
         }
     }
@@ -118,8 +118,8 @@ public class Player {
     }
 
     private void doWhenResetCardPlay() {
-        sumAccessor.resetSum();
-        sumAccessor.updateSum(hand.getCardNumber());
+        sumAccessor.reset();
+        sumAccessor.update(hand.getCardNumber());
         autoResetHandler.update();
     }
 

@@ -66,14 +66,11 @@ public class NumberBox{
         int blueNum = 21;
         int yellowNum = 99;
 
-        if (number < purpleNum)
-            text.setColor(Color.PURPLE);
+        if (number < purpleNum) text.setColor(Color.PURPLE);
 
-        else if (number <= blueNum)
-            text.setColor(Color.BLUE);
+        else if (number <= blueNum) text.setColor(Color.BLUE);
 
-        else if (number < yellowNum)
-            text.setColor(Color.YELLOW);
+        else if (number < yellowNum) text.setColor(Color.YELLOW);
     }
 
     public void dispose() {
