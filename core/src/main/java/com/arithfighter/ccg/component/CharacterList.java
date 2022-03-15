@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.system;
+package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.randomnum.RandomNumProducer;
 

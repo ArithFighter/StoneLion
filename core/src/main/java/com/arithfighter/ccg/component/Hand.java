@@ -1,9 +1,6 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.system.CharacterList;
-import com.arithfighter.ccg.system.CharacterSetService;
 import com.arithfighter.ccg.WindowSetting;
-import com.arithfighter.ccg.system.CardTexturesExtractor;
 import com.arithfighter.ccg.card.NumberCard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +12,7 @@ public class Hand {
     public Hand(Texture[] textures, CharacterList character) {
         texturesExtractor = new CardTexturesExtractor(textures);
 
-        cards = new NumberCard[texturesExtractor.getCardSet(character).length];
+        cards = new NumberCard[texturesExtractor.getCardTextures(character).length];
 
         createCardList(character);
     }
@@ -23,15 +20,15 @@ public class Hand {
     private void createCardList(CharacterList character) {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
-
-        Texture[] cardSet = texturesExtractor.getCardSet(character);
+        Texture[] cardSet = texturesExtractor.getCardTextures(character);
+        CharacterSetService css = new CharacterSetService();
 
         for (int i = 0; i < cards.length; i++)
             cards[i] = new NumberCard(
                     initX + i * getPadding(cardSet),
                     initY,
                     cardSet[i],
-                    new CharacterSetService().getCharacterSet(character)[i]
+                    css.getNumberSet(character)[i]
             );
     }
 
@@ -88,5 +85,47 @@ public class Hand {
 
     public void dispose() {
         texturesExtractor.dispose();
+    }
+}
+
+class CharacterSetService {
+    public int[] getNumberSet(CharacterList player) {
+        CharacterList[] characters = CharacterList.values();
+
+        int[] numberSet = new int[]{characters[0].numberSet.length};
+
+        for (CharacterList character : characters) {
+            if (player == character)
+                numberSet = character.numberSet;
+        }
+
+        return numberSet;
+    }
+}
+
+class CardTexturesExtractor {
+    private final Texture[] cardTextures;
+    private final CharacterList[] characters = CharacterList.values();
+    private final int quantity = characters[0].numberSet.length;
+
+    public CardTexturesExtractor(Texture[] cardTextures) {
+        this.cardTextures = cardTextures;
+    }
+
+    public Texture[] getCardTextures(CharacterList player) {
+        Texture[] cardSet = new Texture[quantity];
+
+        for (CharacterList character : characters)
+            if (player == character) {
+                for (int j = 0; j < quantity; j++)
+                    cardSet[j] = cardTextures[character.textureMap[j]];
+            }
+
+        return cardSet;
+    }
+
+    public void dispose() {
+        for (Texture texture : cardTextures)
+            texture.dispose();
     }
 }

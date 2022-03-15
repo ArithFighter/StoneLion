@@ -1,7 +1,6 @@
 package com.arithfighter.ccg.component;
 
 import com.arithfighter.ccg.system.Recorder;
-import com.arithfighter.ccg.system.CharacterList;
 import com.arithfighter.ccg.system.AutoResetHandler;
 import com.arithfighter.ccg.widget.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
