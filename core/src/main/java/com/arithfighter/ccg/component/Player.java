@@ -13,6 +13,7 @@ public class Player {
     private final AutoResetHandler autoResetHandler;
     private final Recorder sumAccessor;
     private final EnergyBar energyBar;
+    private final CharacterList character;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
         skillHandler = new SkillHandler();
@@ -24,6 +25,12 @@ public class Player {
         sumAccessor = new Recorder();
 
         energyBar = new EnergyBar(textures);
+
+        this.character = character;
+    }
+
+    public CharacterList getCharacter(){
+        return character;
     }
 
     public void activateCard(int mouseX, int mouseY){

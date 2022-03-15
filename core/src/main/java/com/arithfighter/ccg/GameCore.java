@@ -41,6 +41,8 @@ public class GameCore {
             @Override
             public void activeSkill() {
                 dataDisplacer.consumeEnergy();
+                if (getCharacter() == CharacterList.KNIGHT)
+                    gameComponent.set(0,33);
             }
         };
 

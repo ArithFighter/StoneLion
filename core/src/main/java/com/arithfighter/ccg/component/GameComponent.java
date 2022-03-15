@@ -46,6 +46,10 @@ public class GameComponent {
 
     }
 
+    public void set(int index, int value){
+        numberBoxDisplacer.set(index, value);
+    }
+
     public void dispose() {
         cardTable.dispose();
         numberBoxDisplacer.dispose();
