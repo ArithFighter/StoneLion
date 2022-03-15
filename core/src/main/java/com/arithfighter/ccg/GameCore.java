@@ -79,20 +79,12 @@ public class GameCore {
 
         gameComponent.update(player.getSum());
 
-        resetRecordManually();//for test
-
-        drawComponent();
-    }
-
-    private void resetRecordManually() {
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            resetVariable();
+            dataDisplacer.resetRecorder();
         }
-    }
 
-    private void resetVariable() {
-        dataDisplacer.resetRecorder();
+        drawComponent();
     }
 
     private void drawComponent() {

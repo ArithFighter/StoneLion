@@ -13,9 +13,8 @@ public class NumberBox{
     private final Point point;
 
     public NumberBox(Texture texture) {
-        widget = new SpriteWidget();
+        widget = new SpriteWidget(32);
         widget.setSize(texture, 3.5f);
-        widget.setFontSize(32);
         point = widget.getPoint();
 
         text = new Font(widget.getFontSize());
@@ -24,8 +23,7 @@ public class NumberBox{
     }
 
     public void setPosition(float x, float y){
-        point.setX(x);
-        point.setY(y);
+        point.set(x,y);
     }
 
     public float getWidth() {

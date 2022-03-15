@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Board{
+public class BoardArea {
     private final Sprite table;
     private final SpriteWidget widget;
     private final Point point;
 
-    public Board(Texture texture){
+    public BoardArea(Texture texture){
         widget = new SpriteWidget();
         widget.setSize(texture, 14);
         point = widget.getPoint();
@@ -18,8 +18,7 @@ public class Board{
     }
 
     public void setPosition(int x, int y){
-        point.setX(x);
-        point.setY(y);
+        point.set(x,y);
     }
 
     private void setSprite(){

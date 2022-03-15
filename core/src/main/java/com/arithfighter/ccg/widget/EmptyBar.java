@@ -1,7 +1,5 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.widget.Point;
-import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,8 +26,7 @@ public class EmptyBar{
     }
 
     public void setPosition(float x, float y){
-        point.setX(x);
-        point.setY(y);
+        point.set(x,y);
     }
 
     private void setSprite(){

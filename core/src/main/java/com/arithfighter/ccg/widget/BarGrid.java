@@ -30,8 +30,7 @@ public class BarGrid{
     }
 
     public void setPosition(float x, float y){
-        point.setX(x);
-        point.setY(y);
+        point.set(x, y);
     }
 
     public void updateWidth(float width){

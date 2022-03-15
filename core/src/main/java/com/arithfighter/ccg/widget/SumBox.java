@@ -23,8 +23,7 @@ public class SumBox{
     }
 
     public void setPosition(float x, float y){
-        point.setX(x);
-        point.setY(y);
+        point.set(x,y);
     }
 
     private void setSprite(){
