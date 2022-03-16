@@ -6,14 +6,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameDataDisplacer {
+public class GameDataAccessor {
     private final Font font;
     private final Recorder playRecorder;
     private final Recorder scoreRecorder;
     private final Recorder energyRecord;
     private final int fontSize = 16;
 
-    public GameDataDisplacer(){
+    public GameDataAccessor(){
         font = new Font(fontSize);
         playRecorder = new Recorder();
         scoreRecorder = new Recorder();

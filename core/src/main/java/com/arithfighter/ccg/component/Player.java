@@ -28,19 +28,19 @@ public class Player {
         this.character = character;
     }
 
-    public CharacterList getCharacter(){
+    public final CharacterList getCharacter(){
         return character;
     }
 
-    public void activateCard(int mouseX, int mouseY){
+    public final void activateCard(int mouseX, int mouseY){
         hand.activateCard(mouseX, mouseY);
     }
 
-    public void updateWhenDrag(int mouseX, int mouseY){
+    public final void updateWhenDrag(int mouseX, int mouseY){
         hand.updateWhenDrag(mouseX, mouseY);
     }
 
-    public void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
+    public final void draw(SpriteBatch batch, int mouseX, int mouseY, int energy) {
         hand.draw(batch);
         hand.checkTouchingCard(mouseX, mouseY);
 
@@ -57,23 +57,31 @@ public class Player {
         }
     }
 
-    public void initHand(){
+    public final void initHand(){
         hand.initCardsPosition();
     }
 
-    public int getSum(){
+    public final int getSum(){
         return sumAccessor.getRecord();
     }
 
-    public int getCondition(){
+    public final int getCondition(){
         return autoResetHandler.getCondition();
     }
 
     public final void playCard(int energy) {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
+
+            if (energy < energyBar.getMax())
+                updateEnergy();
+
             handlePlayingCard(energy);
         }
+    }
+
+    public void updateEnergy() {
+
     }
 
     public void doWhenCardPlayed() {
@@ -84,16 +92,22 @@ public class Player {
         if (hand.isResetCard())
             checkResetCardPlay(energy);
         else {
-            if (skillHandler.isSkillReady()) {
-                skillHandler.init();
-            }
-            sumAccessor.update(hand.getCardNumber());
-            autoResetHandler.update();
+            checkNormalCardPlayed();
         }
     }
 
+    private void checkNormalCardPlayed(){
+        if (skillHandler.isSkillReady())
+            skillHandler.init();
+
+        sumAccessor.update(hand.getCardNumber());
+
+        autoResetHandler.update();
+    }
+
     private void checkResetCardPlay(int energy) {
-        if (skillHandler.isSkillReady() && isMaxEnergy(energy)) {
+        if (skillHandler.isSkillReady() &&
+                energy == energyBar.getMax()) {
             activeSkill();
             autoResetHandler.initialize();
             skillHandler.init();
@@ -102,14 +116,6 @@ public class Player {
             if (skillHandler.isSkillNeutral())
                 skillHandler.setReady();
         }
-    }
-
-    public boolean isEnergyNotMax(int energy) {
-        return energy < energyBar.getMax();
-    }
-
-    public boolean isMaxEnergy(int energy) {
-        return energy == energyBar.getMax();
     }
 
     public void activeSkill() {
@@ -122,7 +128,7 @@ public class Player {
         autoResetHandler.update();
     }
 
-    public void dispose() {
+    public final void dispose() {
         hand.dispose();
         energyBar.dispose();
     }

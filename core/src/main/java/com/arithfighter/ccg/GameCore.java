@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameCore {
     CounterAssetProcessor assetProcessor;
     Texture[] textures;
-    GameDataDisplacer dataDisplacer;
+    GameDataAccessor dataAccessor;
     GameComponent gameComponent;
     CursorPositionAccessor cursorPos;
     SpriteBatch batch;
@@ -28,19 +28,22 @@ public class GameCore {
 
         batch = new SpriteBatch();
 
-        dataDisplacer = new GameDataDisplacer();
+        dataAccessor = new GameDataAccessor();
 
         player = new Player(textures, assetProcessor.getCards(), CharacterList.KNIGHT){
             @Override
             public void doWhenCardPlayed() {
-                dataDisplacer.updatePlayTimes();
-                if (player.isEnergyNotMax(dataDisplacer.getEnergy()))
-                    dataDisplacer.updateEnergy(3);
+                dataAccessor.updatePlayTimes();
+            }
+
+            @Override
+            public void updateEnergy() {
+                dataAccessor.updateEnergy(3);
             }
 
             @Override
             public void activeSkill() {
-                dataDisplacer.consumeEnergy();
+                dataAccessor.consumeEnergy();
                 if (getCharacter() == CharacterList.KNIGHT)
                     gameComponent.set(0,33);
             }
@@ -54,12 +57,12 @@ public class GameCore {
 
             @Override
             public void checkCardPlayed() {
-                player.playCard(dataDisplacer.getEnergy());
+                player.playCard(dataAccessor.getEnergy());
             }
 
             @Override
             public void getScore() {
-                dataDisplacer.updateScore(1);
+                dataAccessor.updateScore(1);
             }
         };
 
@@ -81,7 +84,7 @@ public class GameCore {
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            dataDisplacer.resetRecorder();
+            dataAccessor.resetRecorder();
         }
 
         drawComponent();
@@ -89,16 +92,16 @@ public class GameCore {
 
     private void drawComponent() {
         batch.begin();
-        dataDisplacer.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
+        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
         gameComponent.draw(batch, player.getSum(), player.getCondition());
-        player.draw(batch, cursorPos.getX(), cursorPos.getY(), dataDisplacer.getEnergy());
+        player.draw(batch, cursorPos.getX(), cursorPos.getY(), dataAccessor.getEnergy());
         batch.end();
     }
 
     public void dispose() {
         batch.dispose();
         assetProcessor.dispose();
-        dataDisplacer.dispose();
+        dataAccessor.dispose();
         gameComponent.dispose();
         player.dispose();
     }
