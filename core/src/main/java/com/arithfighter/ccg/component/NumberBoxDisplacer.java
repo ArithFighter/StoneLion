@@ -42,6 +42,10 @@ public class NumberBoxDisplacer {
         }
     }
 
+    public LinkedList<Integer> getNumberList(){
+        return numberList;
+    }
+
     public void set(int index, int value){
         if (index>numberBoxQuantity)
             index = numberBoxQuantity;
