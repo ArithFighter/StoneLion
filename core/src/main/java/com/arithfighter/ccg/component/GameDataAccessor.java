@@ -10,29 +10,17 @@ public class GameDataAccessor {
     private final Font font;
     private final Recorder playRecorder;
     private final Recorder scoreRecorder;
-    private final Recorder energyRecord;
     private final int fontSize = 16;
 
     public GameDataAccessor(){
         font = new Font(fontSize);
         playRecorder = new Recorder();
         scoreRecorder = new Recorder();
-        energyRecord = new Recorder();
         font.setColor(Color.WHITE);
     }
 
     public void updateScore(int change){
         scoreRecorder.update(change);
-    }
-
-    public void updateEnergy(int change){
-        energyRecord.update(change);
-    }
-
-    public void consumeEnergy(){energyRecord.reset();}
-
-    public int getEnergy(){
-        return energyRecord.getRecord();
     }
 
     public void updatePlayTimes(){
@@ -42,10 +30,9 @@ public class GameDataAccessor {
     public void resetRecorder(){
         scoreRecorder.reset();
         playRecorder.reset();
-        energyRecord.reset();
     }
 
-    public void draw(int x, int y, SpriteBatch batch){
+    public void draw(int x, int y, int energy,SpriteBatch batch){
         String posText = "X: " + x + " Y: " + y;
 
         font.draw(batch,posText,0, Gdx.graphics.getHeight());
@@ -56,7 +43,7 @@ public class GameDataAccessor {
         font.draw(batch, "Score: "+scoreRecorder.getRecord(),0,
                 Gdx.graphics.getHeight()-fontSize*2.2f);
 
-        font.draw(batch, "Energy: "+energyRecord.getRecord(), 0,
+        font.draw(batch, "Energy: "+energy, 0,
                 Gdx.graphics.getHeight()-fontSize*3.2f);
     }
 

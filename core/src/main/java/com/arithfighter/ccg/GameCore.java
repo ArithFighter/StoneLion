@@ -37,13 +37,7 @@ public class GameCore {
             }
 
             @Override
-            public void updateEnergy() {
-                dataAccessor.updateEnergy(3);
-            }
-
-            @Override
             public void activeSkill() {
-                dataAccessor.consumeEnergy();
                 if (getCharacter() == CharacterList.KNIGHT)
                     gameComponent.set(0,33);
             }
@@ -57,7 +51,7 @@ public class GameCore {
 
             @Override
             public void checkCardPlayed() {
-                player.playCard(dataAccessor.getEnergy());
+                player.playCard();
             }
 
             @Override
@@ -92,9 +86,9 @@ public class GameCore {
 
     private void drawComponent() {
         batch.begin();
-        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), batch);//for dev
+        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), player.getEnergy(),batch);//for dev
         gameComponent.draw(batch, player.getSum(), player.getCondition());
-        player.draw(batch, cursorPos.getX(), cursorPos.getY(), dataAccessor.getEnergy());
+        player.draw(batch, cursorPos.getX(), cursorPos.getY());
         batch.end();
     }
 
