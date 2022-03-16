@@ -31,10 +31,6 @@ public class Player {
         this.character = character;
     }
 
-    public final CharacterList getCharacter() {
-        return character;
-    }
-
     public final void activateCard(int mouseX, int mouseY) {
         hand.activateCard(mouseX, mouseY);
     }
@@ -102,7 +98,7 @@ public class Player {
     private void checkResetCardPlay() {
         if (isSkillReady()) {
             energyRecorder.reset();
-            activeSkill();
+            castSkill(character);
             autoResetHandler.initialize();
             skillHandler.init();
         } else {
@@ -116,7 +112,7 @@ public class Player {
                 energyRecorder.getRecord() == energyBar.getMax();
     }
 
-    public void activeSkill() {
+    public void castSkill(CharacterList character) {
     }
 
     private void doWhenResetCardPlay() {

@@ -28,6 +28,10 @@ public class NumberBoxDisplacer {
         randomNumListGenerator = new RandomNumListGenerator();
     }
 
+    public int getNumberBoxQuantity(){
+        return numberBoxQuantity;
+    }
+
     private void createNumberBoxes(Texture texture){
         float initX = GRID_X * 9.5f;
         float initY = GRID_Y * 5;
