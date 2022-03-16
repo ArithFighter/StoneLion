@@ -31,15 +31,15 @@ public class Player {
         this.character = character;
     }
 
-    public final CharacterList getCharacter(){
+    public final CharacterList getCharacter() {
         return character;
     }
 
-    public final void activateCard(int mouseX, int mouseY){
+    public final void activateCard(int mouseX, int mouseY) {
         hand.activateCard(mouseX, mouseY);
     }
 
-    public final void updateWhenDrag(int mouseX, int mouseY){
+    public final void updateWhenDrag(int mouseX, int mouseY) {
         hand.updateWhenDrag(mouseX, mouseY);
     }
 
@@ -60,15 +60,15 @@ public class Player {
         }
     }
 
-    public final void initHand(){
+    public final void initHand() {
         hand.initCardsPosition();
     }
 
-    public final int getSum(){
+    public final int getSum() {
         return sumAccessor.getRecord();
     }
 
-    public final int getCondition(){
+    public final int getCondition() {
         return autoResetHandler.getCondition();
     }
 
@@ -79,7 +79,10 @@ public class Player {
             if (energyRecorder.getRecord() < energyBar.getMax())
                 energyRecorder.update(3);
 
-            handlePlayingCard();
+            if (hand.isResetCard())
+                checkResetCardPlay();
+            else
+                checkNormalCardPlayed();
         }
     }
 
@@ -87,15 +90,7 @@ public class Player {
 
     }
 
-    private void handlePlayingCard() {
-        if (hand.isResetCard())
-            checkResetCardPlay();
-        else {
-            checkNormalCardPlayed();
-        }
-    }
-
-    private void checkNormalCardPlayed(){
+    private void checkNormalCardPlayed() {
         if (skillHandler.isSkillReady())
             skillHandler.init();
 
@@ -116,7 +111,7 @@ public class Player {
         }
     }
 
-    private boolean isSkillReady(){
+    private boolean isSkillReady() {
         return skillHandler.isSkillReady() &&
                 energyRecorder.getRecord() == energyBar.getMax();
     }
@@ -135,7 +130,7 @@ public class Player {
         energyBar.dispose();
     }
 
-    public int getEnergy() {
+    public final int getEnergy() {
         return energyRecorder.getRecord();
     }
 }

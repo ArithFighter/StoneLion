@@ -25,7 +25,22 @@ public class CardTable {
         sumBox.draw(sum, condition, batch);
     }
 
-    public boolean isCardOnBoard(float mouseX, float mouseY){
+    public final void playCardOnTable(int mouseX, int mouseY) {
+        if (isCardOnBoard(mouseX, mouseY)) {
+            checkCardPlayed();
+        }
+        initCardPosition();
+    }
+
+    public void initCardPosition() {
+
+    }
+
+    public void checkCardPlayed() {
+
+    }
+
+    private boolean isCardOnBoard(float mouseX, float mouseY){
         return boardArea.isOnBoard(mouseX, mouseY);
     }
 

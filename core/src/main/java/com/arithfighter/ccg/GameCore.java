@@ -10,14 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameCore {
-    CounterAssetProcessor assetProcessor;
-    Texture[] textures;
-    GameDataAccessor dataAccessor;
-    GameComponent gameComponent;
-    CursorPositionAccessor cursorPos;
-    SpriteBatch batch;
-    MouseAdapter mouseAdapter;
-    Player player;
+    private CounterAssetProcessor assetProcessor;
+    private Texture[] textures;
+    private GameDataAccessor dataAccessor;
+    private CardTable cardTable;
+    private NumberBoxDisplacer numberBoxDisplacer;
+    private CursorPositionAccessor cursorPos;
+    private SpriteBatch batch;
+    private MouseAdapter mouseAdapter;
+    private Player player;
 
     public void create() {
         assetProcessor = new CounterAssetProcessor();
@@ -39,13 +40,13 @@ public class GameCore {
             @Override
             public void activeSkill() {
                 if (getCharacter() == CharacterList.KNIGHT)
-                    gameComponent.set(0,33);
+                    numberBoxDisplacer.set(0,33);
             }
         };
 
-        gameComponent = new GameComponent(textures) {
+        cardTable = new CardTable(textures){
             @Override
-            public void initComponent() {
+            public void initCardPosition() {
                 player.initHand();
             }
 
@@ -53,16 +54,18 @@ public class GameCore {
             public void checkCardPlayed() {
                 player.playCard();
             }
+        };
 
+        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
-            public void getScore() {
+            public void doWhenSumAndNumMatched() {
                 dataAccessor.updateScore(1);
             }
         };
 
         cursorPos = new CursorPositionAccessor();
 
-        mouseAdapter = new MouseAdapter(gameComponent, player);
+        mouseAdapter = new MouseAdapter(cardTable, player);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -74,7 +77,7 @@ public class GameCore {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        gameComponent.update(player.getSum());
+        numberBoxDisplacer.update(player.getSum());
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -87,7 +90,8 @@ public class GameCore {
     private void drawComponent() {
         batch.begin();
         dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), player.getEnergy(),batch);//for dev
-        gameComponent.draw(batch, player.getSum(), player.getCondition());
+        cardTable.draw(batch, player.getSum(), player.getCondition());
+        numberBoxDisplacer.draw(batch);
         player.draw(batch, cursorPos.getX(), cursorPos.getY());
         batch.end();
     }
@@ -96,7 +100,8 @@ public class GameCore {
         batch.dispose();
         assetProcessor.dispose();
         dataAccessor.dispose();
-        gameComponent.dispose();
+        cardTable.dispose();
+        numberBoxDisplacer.dispose();
         player.dispose();
     }
 }

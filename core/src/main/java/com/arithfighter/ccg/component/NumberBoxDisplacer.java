@@ -45,6 +45,8 @@ public class NumberBoxDisplacer {
     public void set(int index, int value){
         if (index>numberBoxQuantity)
             index = numberBoxQuantity;
+        if (index<0)
+            index = 0;
 
         numberList.set(index, value);
     }

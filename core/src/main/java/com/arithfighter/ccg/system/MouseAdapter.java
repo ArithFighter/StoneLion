@@ -1,17 +1,17 @@
 package com.arithfighter.ccg.system;
 
-import com.arithfighter.ccg.component.GameComponent;
+import com.arithfighter.ccg.component.CardTable;
 import com.arithfighter.ccg.component.Player;
 import com.badlogic.gdx.InputAdapter;
 
 public class MouseAdapter extends InputAdapter {
-    final GameComponent gameComponent;
-    final Player player;
+    private final CardTable cardTable;
+    private final Player player;
     int mouseX;
     int mouseY;
 
-    public MouseAdapter(GameComponent gameComponent, Player player) {
-        this.gameComponent = gameComponent;
+    public MouseAdapter(CardTable cardTable, Player player) {
+        this.cardTable = cardTable;
         this.player = player;
     }
 
@@ -34,7 +34,7 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        gameComponent.playCardOnTable(mouseX, mouseY);
+        cardTable.playCardOnTable(mouseX, mouseY);
         return true;
     }
 }
