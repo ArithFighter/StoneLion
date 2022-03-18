@@ -14,6 +14,7 @@ public class Player {
     private final EnergyBar energyBar;
     private final CharacterList character;
     private final Recorder energyRecorder;
+    private int energyGain;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
         energyRecorder = new Recorder();
@@ -29,6 +30,15 @@ public class Player {
         energyBar = new EnergyBar(textures);
 
         this.character = character;
+
+        setEnergyGain(character);
+    }
+
+    private void setEnergyGain(CharacterList character){
+        if (character == CharacterList.ROGUE)
+            energyGain = 4;
+        else
+            energyGain = 3;
     }
 
     public final void activateCard(int mouseX, int mouseY) {
@@ -73,7 +83,7 @@ public class Player {
             doWhenCardPlayed();
 
             if (energyRecorder.getRecord() < energyBar.getMax())
-                energyRecorder.update(3);
+                energyRecorder.update(energyGain);
 
             if (hand.isResetCard())
                 checkResetCardPlay();
@@ -109,7 +119,7 @@ public class Player {
 
     private boolean isSkillReady() {
         return skillHandler.isSkillReady() &&
-                energyRecorder.getRecord() == energyBar.getMax();
+                energyRecorder.getRecord() >= energyBar.getMax();
     }
 
     public void castSkill(CharacterList character) {

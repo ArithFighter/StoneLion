@@ -32,6 +32,8 @@ public class EnergyBar {
     }
 
     public void draw(SpriteBatch batch, int energy){
+        if (energy>=maxEnergy)
+            energy = maxEnergy;
         barGrid.draw(batch);
         emptyBar.draw(batch);
         update(energy);
