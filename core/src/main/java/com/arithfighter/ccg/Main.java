@@ -1,14 +1,11 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.component.*;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.arithfighter.ccg.system.MouseAdapter;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -16,14 +13,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
-    private Texture[] textures;
-    private GameDataAccessor dataAccessor;
-    private CardTable cardTable;
-    private NumberBoxDisplacer numberBoxDisplacer;
+    private MouseAdapter mouseAdapter;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private MouseAdapter mouseAdapter;
-    private Player player;
+    private Game game;
 
     @Override
     public void create() {
@@ -31,64 +24,15 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.load();
 
-        textures = assetProcessor.getTextures();
-
         batch = new SpriteBatch();
-
-        dataAccessor = new GameDataAccessor();
-
-        player = new Player(textures, assetProcessor.getCards(), CharacterList.ROGUE) {
-            @Override
-            public void doWhenCardPlayed() {
-                dataAccessor.updatePlayTimes();
-            }
-
-            @Override
-            public void castSkill(CharacterList character) {
-                castCharacterSkill(character);
-            }
-        };
-
-        cardTable = new CardTable(textures) {
-            @Override
-            public void initCardPosition() {
-                player.initHand();
-            }
-
-            @Override
-            public void checkCardPlayed() {
-                player.playCard();
-            }
-        };
-
-        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
-            @Override
-            public void doWhenSumAndNumMatched() {
-                dataAccessor.updateScore(1);
-            }
-        };
 
         cursorPos = new CursorPositionAccessor();
 
-        mouseAdapter = new MouseAdapter(cardTable, player);
+        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
+
+        mouseAdapter = new MouseAdapter(game);
 
         Gdx.input.setInputProcessor(mouseAdapter);
-    }
-
-    private void castCharacterSkill(CharacterList character) {
-        switch (character) {
-            case KNIGHT:
-                //change one value of numberBox
-                numberBoxDisplacer.set(0, 33);
-                break;
-            case ROGUE:
-                //reduce all values by 1
-                for(int i = 0; i<= numberBoxDisplacer.getNumberBoxQuantity();i++)
-                    if (numberBoxDisplacer.getNumberList().get(i)>0){
-                        numberBoxDisplacer.set(i, numberBoxDisplacer.getNumberList().get(i)-1);
-                    }
-                break;
-        }
     }
 
     @Override
@@ -102,27 +46,14 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        numberBoxDisplacer.update(player.getSum());
-
-        //This is for test, will remove in future version
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            dataAccessor.resetRecorder();
-        }
+        game.update();
 
         drawComponent();
     }
 
     private void drawComponent() {
         batch.begin();
-
-        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), player.getEnergy(), batch);//for dev
-
-        cardTable.draw(batch, player.getSum(), player.getCondition());
-
-        numberBoxDisplacer.draw(batch);
-
-        player.draw(batch, cursorPos.getX(), cursorPos.getY());
-
+        game.draw(batch, cursorPos.getX(), cursorPos.getY());
         batch.end();
     }
 
@@ -130,9 +61,6 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         assetProcessor.dispose();
-        dataAccessor.dispose();
-        cardTable.dispose();
-        numberBoxDisplacer.dispose();
-        player.dispose();
+        game.dispose();
     }
 }

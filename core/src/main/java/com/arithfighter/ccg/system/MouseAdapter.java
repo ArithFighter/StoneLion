@@ -1,18 +1,15 @@
 package com.arithfighter.ccg.system;
 
-import com.arithfighter.ccg.component.CardTable;
-import com.arithfighter.ccg.component.Player;
+import com.arithfighter.ccg.Game;
 import com.badlogic.gdx.InputAdapter;
 
 public class MouseAdapter extends InputAdapter {
-    private final CardTable cardTable;
-    private final Player player;
+    private final Game game;
     int mouseX;
     int mouseY;
 
-    public MouseAdapter(CardTable cardTable, Player player) {
-        this.cardTable = cardTable;
-        this.player = player;
+    public MouseAdapter(Game game) {
+        this.game = game;
     }
 
     public void updateMousePos(int mouseX, int mouseY){
@@ -22,19 +19,19 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        player.activateCard(mouseX, mouseY);
+        game.getPlayer().activateCard(mouseX, mouseY);
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        player.updateWhenDrag(mouseX, mouseY);
+        game.getPlayer().updateWhenDrag(mouseX, mouseY);
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        cardTable.playCardOnTable(mouseX, mouseY);
+        game.getCardTable().playCardOnTable(mouseX, mouseY);
         return true;
     }
 }

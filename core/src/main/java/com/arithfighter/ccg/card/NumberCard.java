@@ -72,29 +72,31 @@ public class NumberCard{
 
     private float updateWhenOutOfWindow(float current, float limit) {
         int minimum = -45;
-        if (current > limit) current = limit;
-        if (current < minimum) current = minimum;
+        if (current > limit)
+            current = limit;
+
+        if (current < minimum)
+            current = minimum;
+
         return current;
     }
 
     public void updateWhenDrag(float x, float y) {
         if (stateManager.isActive())
-            updatePosition(x - card.getWidth() / 2, y - card.getHeight() / 2);
+            point.set(x - card.getWidth() / 2, y - card.getHeight() / 2);
     }
 
     public void initCard() {
-        updatePosition(initPoint.getX(), initPoint.getY());
-        stateManager.deactivate();
+        point.set(initPoint.getX(), initPoint.getY());
+
+        stateManager.setInactive();
+
         sprite.setSize(card.getWidth(), card.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
             stateManager.activate();
-    }
-
-    private void updatePosition(float x, float y) {
-        point.set(x,y);
     }
 
     public boolean isActive(){

@@ -4,7 +4,7 @@ public class StateManager {
     private enum State {ACTIVE, INACTIVE}
     private State state = State.INACTIVE;
 
-    public void deactivate(){
+    public void setInactive(){
         state = State.INACTIVE;
     }
 
