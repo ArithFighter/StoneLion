@@ -1,18 +1,41 @@
 package com.arithfighter.ccg.card;
 
-public class RawCard {
-    float initX, initY;
-    float cardX, cardY, cardWidth, cardHeight;
+import com.arithfighter.ccg.widget.Point;
 
-    public void setInitPosition(float initX, float initY){
-        this.initX = initX;
-        this.initY = initY;
+public class RawCard {
+    private Point initPoint;
+    private Point point;
+    private float width, height;
+
+    public void setInitPoint(Point initPoint) {
+        this.initPoint = initPoint;
     }
 
-    public void configCard(float cardX,float cardY,float cardWidth,float cardHeight, float scale){
-        this.cardX = cardX;
-        this.cardY = cardY;
-        this.cardWidth = cardWidth*scale;
-        this.cardHeight = cardHeight*scale;
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public Point getInitPoint() {
+        return initPoint;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
     }
 }

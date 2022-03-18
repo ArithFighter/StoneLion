@@ -1,25 +1,31 @@
 package com.arithfighter.ccg.card;
 
+import com.arithfighter.ccg.widget.Point;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class NumberCard extends RawCard {
-    private final Sprite card;
+public class NumberCard{
+    private final SpriteCard card;
+    private final Sprite sprite;
     private final int number;
     private final StateManager stateManager = new StateManager();
+    private final Point initPoint;
+    private final Point point;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        setInitPosition(initX, initY);
-
-        configCard(initX, initY, texture.getWidth(), texture.getHeight(), 1.8f);
+        card = new SpriteCard(initX, initY);
+        card.setSize(texture, 1.8f);
+        
+        initPoint = card.getInitPoint();
+        point = card.getPoint();
 
         this.number = number;
 
-        card = new Sprite(texture);
-        card.setPosition(cardX, cardY);
-        card.setSize(cardWidth, cardHeight);
+        sprite = new Sprite(texture);
+        sprite.setPosition(point.getX(), point.getY());
+        sprite.setSize(card.getWidth(), card.getHeight());
     }
 
     public int getNumber(){
@@ -27,18 +33,18 @@ public class NumberCard extends RawCard {
     }
 
     public float getWidth() {
-        return cardWidth;
+        return card.getWidth();
     }
 
     public void draw(SpriteBatch batch) {
         checkOutOfWindow();
 
-        card.setPosition(cardX, cardY);
+        sprite.setPosition(point.getX(), point.getY());
 
         if (stateManager.isActive())
-            card.setSize(cardWidth*1.2f, cardHeight*1.2f);
+            sprite.setSize(card.getWidth()*1.2f, card.getHeight()*1.2f);
 
-        card.draw(batch);
+        sprite.draw(batch);
     }
 
     public void checkTouchingCard(float x, float y) {
@@ -52,16 +58,16 @@ public class NumberCard extends RawCard {
     private void playTouchedAnimation(){
         int movingDistance = 30;
         float speed = 3;
-        if (cardY < initY + movingDistance)
-            cardY += speed;
+        if (point.getY() < initPoint.getY() + movingDistance)
+            point.setY(point.getY()+speed);
     }
 
     private void checkOutOfWindow() {
-        float limitX = Gdx.graphics.getWidth() - cardWidth;
-        float limitY = Gdx.graphics.getHeight() - cardHeight;
+        float limitX = Gdx.graphics.getWidth() - card.getWidth();
+        float limitY = Gdx.graphics.getHeight() - card.getHeight();
 
-        cardX = updateWhenOutOfWindow(cardX, limitX);
-        cardY = updateWhenOutOfWindow(cardY, limitY);
+        point.set(updateWhenOutOfWindow(point.getX(), limitX),
+                updateWhenOutOfWindow(point.getY(), limitY));
     }
 
     private float updateWhenOutOfWindow(float current, float limit) {
@@ -73,13 +79,13 @@ public class NumberCard extends RawCard {
 
     public void updateWhenDrag(float x, float y) {
         if (stateManager.isActive())
-            updatePosition(x - cardWidth / 2, y - cardHeight / 2);
+            updatePosition(x - card.getWidth() / 2, y - card.getHeight() / 2);
     }
 
     public void initCard() {
-        updatePosition(initX, initY);
+        updatePosition(initPoint.getX(), initPoint.getY());
         stateManager.deactivate();
-        card.setSize(cardWidth, cardHeight);
+        sprite.setSize(card.getWidth(), card.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
@@ -88,8 +94,7 @@ public class NumberCard extends RawCard {
     }
 
     private void updatePosition(float x, float y) {
-        cardX = x;
-        cardY = y;
+        point.set(x,y);
     }
 
     public boolean isActive(){
@@ -102,9 +107,9 @@ public class NumberCard extends RawCard {
         if(stateManager.isActive()){
             tolerance*=4;
         }
-        return x > cardX - tolerance &&
-                x < cardX + cardWidth + tolerance &&
-                y > cardY - tolerance &&
-                y < cardY + cardHeight + tolerance;
+        return x > point.getX() - tolerance &&
+                x < point.getX() + card.getWidth() + tolerance &&
+                y > point.getY() - tolerance &&
+                y < point.getY() + card.getHeight() + tolerance;
     }
 }

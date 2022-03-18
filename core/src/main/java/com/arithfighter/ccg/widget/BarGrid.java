@@ -1,7 +1,5 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.widget.Point;
-import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
