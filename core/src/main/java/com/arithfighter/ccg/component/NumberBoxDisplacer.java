@@ -46,6 +46,11 @@ public class NumberBoxDisplacer {
         }
     }
 
+    public void refresh(){
+        randomNumListGenerator.clear();
+        numberList.clear();
+    }
+
     public LinkedList<Integer> getNumberList(){
         return numberList;
     }

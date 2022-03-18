@@ -78,8 +78,13 @@ public class Game {
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            dataAccessor.resetRecorder();
+            refresh();
         }
+    }
+
+    private void refresh(){
+        dataAccessor.resetRecorder();
+        numberBoxDisplacer.refresh();
     }
 
     public void draw(SpriteBatch batch, int x, int y) {

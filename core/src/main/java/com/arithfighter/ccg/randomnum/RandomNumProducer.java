@@ -9,6 +9,6 @@ public class RandomNumProducer{
     }
 
     public int getRandomNum(){
-        return (int)(Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER + 1);
+        return (int)(Math.random() * (MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER);
     }
 }
