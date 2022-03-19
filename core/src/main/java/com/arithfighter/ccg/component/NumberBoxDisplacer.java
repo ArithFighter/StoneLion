@@ -25,7 +25,7 @@ public class NumberBoxDisplacer {
 
         numbers = new int[numberBoxQuantity];
 
-        randomNumListGenerator = new RandomNumListGenerator();
+        randomNumListGenerator = new RandomNumListGenerator(numberBoxQuantity);
     }
 
     public int getNumberBoxQuantity(){
@@ -74,7 +74,7 @@ public class NumberBoxDisplacer {
 
     private void updateNumbers() {
         if (numberList.size()<numberBoxQuantity)
-            numberList.addAll(randomNumListGenerator.getNumbers(numberBoxQuantity));
+            numberList.addAll(randomNumListGenerator.getNumbers());
 
         for (int i = 0; i < numberBoxQuantity; i++)
             numbers[i] = numberList.get(i);
