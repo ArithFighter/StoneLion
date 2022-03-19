@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.BoardArea;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,7 +12,7 @@ import static com.arithfighter.ccg.WindowSetting.*;
 
 public class Game {
     private final GameDataAccessor dataAccessor;
-    private final CardTable cardTable;
+    private final BoardArea boardArea;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private final Player player;
     private final SumBox sumBox;
@@ -31,7 +32,7 @@ public class Game {
             }
         };
 
-        cardTable = new CardTable(textures) {
+        boardArea = new BoardArea(textures[1]) {
             @Override
             public void initCardPosition() {
                 player.initHand();
@@ -42,6 +43,7 @@ public class Game {
                 player.playCard();
             }
         };
+        boardArea.setPosition(CENTER_X + GRID_X * 4, GRID_Y * 6);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
@@ -58,8 +60,8 @@ public class Game {
         return player;
     }
 
-    public CardTable getCardTable(){
-        return cardTable;
+    public BoardArea getBoardArea(){
+        return boardArea;
     }
 
     private void castCharacterSkill(CharacterList character) {
@@ -97,13 +99,13 @@ public class Game {
     public void draw(SpriteBatch batch, int x, int y) {
         dataAccessor.draw(x, y, player.getEnergy(), batch);//for dev
 
-        cardTable.draw(batch);
+        boardArea.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 
-        player.draw(batch, x, y);
-
         sumBox.draw(player.getSum(), player.getCondition(), batch);
+
+        player.draw(batch, x, y);
     }
 
     public void dispose(){

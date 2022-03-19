@@ -31,6 +31,21 @@ public class BoardArea {
         table.draw(batch);
     }
 
+    public final void playCardOnBoard(int mouseX, int mouseY) {
+        if (isOnBoard(mouseX, mouseY)) {
+            checkCardPlayed();
+        }
+        initCardPosition();
+    }
+
+    public void initCardPosition() {
+
+    }
+
+    public void checkCardPlayed() {
+
+    }
+
     public boolean isOnBoard(float x, float y){
         return x > point.getX()
                 && x < point.getX() + widget.getWidth()

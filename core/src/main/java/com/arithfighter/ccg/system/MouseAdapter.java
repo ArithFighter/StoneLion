@@ -31,7 +31,7 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        game.getCardTable().playCardOnTable(mouseX, mouseY);
+        game.getBoardArea().playCardOnBoard(mouseX, mouseY);
         return true;
     }
 }
