@@ -13,23 +13,21 @@ import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
     private final NumberBox[] numberBoxes;
-    private final int numberBoxQuantity = 9;
-    private final int[] numbers;
+    private final static int BOX_QUANTITY = 9;
+    private final int[] numbers = new int[BOX_QUANTITY];
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
 
     public NumberBoxDisplacer(Texture texture) {
-        numberBoxes = new NumberBox[numberBoxQuantity];
+        numberBoxes = new NumberBox[BOX_QUANTITY];
 
         createNumberBoxes(texture);
 
-        numbers = new int[numberBoxQuantity];
-
-        randomNumListGenerator = new RandomNumListGenerator(numberBoxQuantity);
+        randomNumListGenerator = new RandomNumListGenerator(BOX_QUANTITY);
     }
 
     public int getNumberBoxQuantity(){
-        return numberBoxQuantity;
+        return BOX_QUANTITY;
     }
 
     private void createNumberBoxes(Texture texture){
@@ -37,7 +35,7 @@ public class NumberBoxDisplacer {
         float initY = GRID_Y * 5;
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(initX, initY, GRID_X);
 
-        for (int i = 0; i < numberBoxQuantity; i++) {
+        for (int i = 0; i < BOX_QUANTITY; i++) {
             numberBoxes[i] = new NumberBox(texture);
             numberBoxes[i].setPosition(
                     numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
@@ -56,8 +54,8 @@ public class NumberBoxDisplacer {
     }
 
     public void set(int index, int value){
-        if (index>numberBoxQuantity)
-            index = numberBoxQuantity;
+        if (index> BOX_QUANTITY)
+            index = BOX_QUANTITY;
         if (index<0)
             index = 0;
 
@@ -73,10 +71,10 @@ public class NumberBoxDisplacer {
     }
 
     private void updateNumbers() {
-        if (numberList.size()<numberBoxQuantity)
+        if (numberList.size()< BOX_QUANTITY)
             numberList.addAll(randomNumListGenerator.getNumbers());
 
-        for (int i = 0; i < numberBoxQuantity; i++)
+        for (int i = 0; i < BOX_QUANTITY; i++)
             numbers[i] = numberList.get(i);
     }
 
@@ -105,7 +103,7 @@ public class NumberBoxDisplacer {
     }
 
     public void draw(SpriteBatch batch) {
-        for (int i = 0; i < numberBoxQuantity; i++) {
+        for (int i = 0; i < BOX_QUANTITY; i++) {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(numbers[i], batch);
         }
