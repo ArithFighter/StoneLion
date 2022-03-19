@@ -35,6 +35,7 @@ public class Player {
     }
 
     private void setEnergyGain(CharacterList character){
+        //Rogue gain more energy than other characters when play card
         if (character == CharacterList.ROGUE)
             energyGain = 4;
         else
@@ -107,8 +108,8 @@ public class Player {
 
     private void checkResetCardPlay() {
         if (isSkillReady()) {
-            energyRecorder.reset();
             castSkill(character);
+            energyRecorder.reset();
             autoResetHandler.initialize();
             skillHandler.init();
         } else {

@@ -1,16 +1,20 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import static com.arithfighter.ccg.WindowSetting.*;
 
 public class Game {
     private final GameDataAccessor dataAccessor;
     private final CardTable cardTable;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private final Player player;
+    private final SumBox sumBox;
 
     public Game(Texture[] textures, Texture[] cards){
         dataAccessor = new GameDataAccessor();
@@ -45,6 +49,9 @@ public class Game {
                 dataAccessor.updateScore(1);
             }
         };
+
+        sumBox = new SumBox(textures[2]);
+        sumBox.setPosition(CENTER_X + GRID_X * 8, GRID_Y * 7);
     }
 
     public Player getPlayer() {
@@ -90,17 +97,19 @@ public class Game {
     public void draw(SpriteBatch batch, int x, int y) {
         dataAccessor.draw(x, y, player.getEnergy(), batch);//for dev
 
-        cardTable.draw(batch, player.getSum(), player.getCondition());
+        cardTable.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 
         player.draw(batch, x, y);
+
+        sumBox.draw(player.getSum(), player.getCondition(), batch);
     }
 
     public void dispose(){
         dataAccessor.dispose();
-        cardTable.dispose();
         numberBoxDisplacer.dispose();
         player.dispose();
+        sumBox.dispose();
     }
 }
