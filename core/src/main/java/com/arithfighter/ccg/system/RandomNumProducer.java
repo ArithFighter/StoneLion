@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.randomnum;
+package com.arithfighter.ccg.system;
 
 public class RandomNumProducer{
     private static final int MAX_NUMBER = 30;

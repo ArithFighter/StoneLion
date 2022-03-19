@@ -1,11 +1,10 @@
-package com.arithfighter.ccg.randomnum;
+package com.arithfighter.ccg.system;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RandomNumListGenerator {
-    private static final int MAX_QUANTITY = 9;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final HashSet<Integer> numberSet = new HashSet<>();
 
@@ -14,15 +13,15 @@ public class RandomNumListGenerator {
         numberSet.clear();
     }
 
-    public List<Integer> getNumbers() {
-        addNumbersToList();
+    public List<Integer> getNumbers(int quantity) {
+        addNumbersToList(quantity);
 
         return numberList;
     }
 
-    private void addNumbersToList() {
-        if (numberList.size() < MAX_QUANTITY) {
-            addNumberUntilEqualToQuantity(MAX_QUANTITY);
+    private void addNumbersToList(int quantity) {
+        if (numberList.size() < quantity) {
+            addNumberUntilEqualToQuantity(quantity);
 
             numberList.addAll(numberSet);
         }

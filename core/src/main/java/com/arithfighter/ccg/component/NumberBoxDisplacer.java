@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.component;
 
-import com.arithfighter.ccg.randomnum.RandomNumListGenerator;
+import com.arithfighter.ccg.system.RandomNumListGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -73,7 +73,8 @@ public class NumberBoxDisplacer {
     }
 
     private void updateNumbers() {
-        numberList.addAll(randomNumListGenerator.getNumbers());
+        if (numberList.size()<numberBoxQuantity)
+            numberList.addAll(randomNumListGenerator.getNumbers(numberBoxQuantity));
 
         for (int i = 0; i < numberBoxQuantity; i++)
             numbers[i] = numberList.get(i);
