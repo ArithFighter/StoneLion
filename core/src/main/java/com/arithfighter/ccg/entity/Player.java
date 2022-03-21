@@ -50,13 +50,16 @@ public class Player {
         hand.updateWhenDrag(mouseX, mouseY);
     }
 
-    public final void draw(SpriteBatch batch, int mouseX, int mouseY) {
+    public final void draw(SpriteBatch batch) {
         hand.draw(batch);
-        hand.checkTouchingCard(mouseX, mouseY);
 
         energyBar.draw(batch, energyRecorder.getRecord());
 
         checkAutoResetCondition();
+    }
+
+    public void checkCardIsTouched(int mouseX, int mouseY){
+        hand.checkTouchingCard(mouseX, mouseY);
     }
 
     private void checkAutoResetCondition() {

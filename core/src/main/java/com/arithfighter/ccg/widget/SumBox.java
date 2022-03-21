@@ -27,15 +27,12 @@ public class SumBox{
     }
 
     private void setSprite(){
-        sumDisplayBlock.setColor(Color.TEAL);
         sumDisplayBlock.setPosition(point.getX(), point.getY());
         sumDisplayBlock.setSize(widget.getWidth(), widget.getHeight());
     }
 
-    public void draw(int number, int condition, SpriteBatch batch){
+    public void draw(int number, SpriteBatch batch){
         setSprite();
-
-        changeColor(condition);
 
         sumDisplayBlock.draw(batch);
 
@@ -52,7 +49,7 @@ public class SumBox{
         text.draw(batch, sum, textX, textY);
     }
 
-    private void changeColor(int condition){
+    public void changeColor(int condition){
         if (condition<3)
             sumDisplayBlock.setColor(Color.RED);
         else

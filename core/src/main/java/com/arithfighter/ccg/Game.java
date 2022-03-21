@@ -16,6 +16,8 @@ public class Game {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private final Player player;
     private final SumBox sumBox;
+    private int cursorX;
+    private int cursorY;
 
     public Game(Texture[] textures, Texture[] cards){
         dataAccessor = new GameDataAccessor();
@@ -72,7 +74,7 @@ public class Game {
                 break;
             case ROGUE:
                 //reduce all values by 1
-                for(int i = 0; i<= numberBoxDisplacer.getNumberBoxQuantity();i++)
+                for(int i = 0; i< numberBoxDisplacer.getNumberBoxQuantity();i++)
                     if (numberBoxDisplacer.getNumberList().get(i)>0){
                         numberBoxDisplacer.set(
                                 i,
@@ -82,8 +84,13 @@ public class Game {
         }
     }
 
-    public void update(){
+    public void update(int mouseX, int mouseY){
+        cursorX = mouseX;
+        cursorY = mouseY;
+
         numberBoxDisplacer.update(player.getSum());
+
+        player.checkCardIsTouched(mouseX, mouseY);
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -96,16 +103,17 @@ public class Game {
         numberBoxDisplacer.refresh();
     }
 
-    public void draw(SpriteBatch batch, int x, int y) {
-        dataAccessor.draw(x, y, player.getEnergy(), batch);//for dev
+    public void draw(SpriteBatch batch) {
+        dataAccessor.draw(cursorX, cursorY, player.getEnergy(), batch);//for dev
 
         boardArea.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 
-        sumBox.draw(player.getSum(), player.getCondition(), batch);
+        sumBox.changeColor(player.getCondition());
+        sumBox.draw(player.getSum(), batch);
 
-        player.draw(batch, x, y);
+        player.draw(batch);
     }
 
     public void dispose(){

@@ -46,14 +46,14 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
-        game.update();
+        game.update(cursorPos.getX(), cursorPos.getY());
 
         drawComponent();
     }
 
     private void drawComponent() {
         batch.begin();
-        game.draw(batch, cursorPos.getX(), cursorPos.getY());
+        game.draw(batch);
         batch.end();
     }
 
