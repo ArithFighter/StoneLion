@@ -75,7 +75,7 @@ public class Button {
             buttonState = State.ON;
     }
 
-    private boolean isActive(){
+    public boolean isActive(){
         return buttonState == State.ON;
     }
 
