@@ -70,7 +70,7 @@ public class Button {
                 y< point.getY()+ widget.getHeight();
     }
 
-    public void active(float x, float y){
+    public void activate(float x, float y){
         if (isOnButton(x, y))
             buttonState = State.ON;
     }
@@ -79,7 +79,7 @@ public class Button {
         return buttonState == State.ON;
     }
 
-    public void inActive(){
+    public void deactivate(){
         buttonState = State.OFF;
     }
 

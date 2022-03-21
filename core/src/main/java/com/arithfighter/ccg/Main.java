@@ -2,7 +2,6 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
-import com.arithfighter.ccg.widget.Button;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -17,13 +16,13 @@ public class Main extends ApplicationAdapter {
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private Game game;
-    private Button greenButton;
+    private CharacterMenu characterMenu;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
-            greenButton.active(cursorPos.getX(), cursorPos.getY());
+            characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
@@ -36,7 +35,7 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
-            greenButton.inActive();
+            characterMenu.deactivateButton();
             return true;
         }
     };
@@ -53,8 +52,7 @@ public class Main extends ApplicationAdapter {
 
         game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
 
-        greenButton = new Button(assetProcessor.getTextures()[6]);
-        greenButton.setPosition(450, 450);
+        characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -76,7 +74,7 @@ public class Main extends ApplicationAdapter {
     private void drawComponent() {
         batch.begin();
         //game.draw(batch);
-        greenButton.draw(batch, "Button");
+        characterMenu.draw(batch);
         batch.end();
     }
 
