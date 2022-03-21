@@ -19,10 +19,10 @@ public class Game {
     private int cursorX;
     private int cursorY;
 
-    public Game(Texture[] textures, Texture[] cards){
+    public Game(Texture[] textures, Texture[] cards, CharacterList character){
         dataAccessor = new GameDataAccessor();
 
-        player = new Player(textures, cards, CharacterList.ROGUE) {
+        player = new Player(textures, cards, character) {
             @Override
             public void doWhenCardPlayed() {
                 dataAccessor.updatePlayTimes();

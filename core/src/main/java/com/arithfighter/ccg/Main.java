@@ -1,5 +1,6 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -50,7 +51,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
+        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.KNIGHT);
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
@@ -83,5 +84,6 @@ public class Main extends ApplicationAdapter {
         batch.dispose();
         assetProcessor.dispose();
         game.dispose();
+        characterMenu.dispose();
     }
 }
