@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.system.Recorder;
 import com.arithfighter.ccg.font.Font;

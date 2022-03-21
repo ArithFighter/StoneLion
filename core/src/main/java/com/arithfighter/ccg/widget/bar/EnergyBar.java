@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.widget;
+package com.arithfighter.ccg.widget.bar;
 
 import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.graphics.Texture;

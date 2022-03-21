@@ -1,8 +1,8 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.system.Recorder;
 import com.arithfighter.ccg.system.AutoResetHandler;
-import com.arithfighter.ccg.widget.EnergyBar;
+import com.arithfighter.ccg.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

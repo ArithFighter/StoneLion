@@ -1,6 +1,6 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.entity;
 
-import com.arithfighter.ccg.system.RandomNumListGenerator;
+import com.arithfighter.ccg.system.number.RandomNumListGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;

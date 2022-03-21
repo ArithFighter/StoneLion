@@ -1,6 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.component.*;
+import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.widget.BoardArea;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;

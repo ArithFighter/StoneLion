@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.component;
+package com.arithfighter.ccg.entity;
 
 public class SkillHandler {
     private enum SkillState {NEUTRAL, READY}

@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.system;
+package com.arithfighter.ccg.system.number;
 
 import java.util.HashSet;
 import java.util.LinkedList;
