@@ -2,9 +2,9 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
-import com.arithfighter.ccg.system.MouseAdapter;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -13,10 +13,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
-    private MouseAdapter mouseAdapter;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private Game game;
+
+    private final InputAdapter mouseAdapter = new InputAdapter(){
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            return true;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            game.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            return true;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            return true;
+        }
+    };
 
     @Override
     public void create() {
@@ -30,8 +49,6 @@ public class Main extends ApplicationAdapter {
 
         game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
 
-        mouseAdapter = new MouseAdapter(game);
-
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
@@ -43,8 +60,6 @@ public class Main extends ApplicationAdapter {
         assetProcessor.update(17);
 
         cursorPos.update();
-
-        mouseAdapter.updateMousePos(cursorPos.getX(), cursorPos.getY());
 
         game.update(cursorPos.getX(), cursorPos.getY());
 
