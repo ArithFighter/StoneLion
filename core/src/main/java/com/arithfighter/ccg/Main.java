@@ -19,6 +19,8 @@ public class Main extends ApplicationAdapter {
     private Game[] games;
     private CharacterMenu characterMenu;
     private int selectionIndex = 0;
+    private enum GameState{MENU, GAME}
+    private GameState gameState = GameState.MENU;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -77,19 +79,30 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
+        selectionIndex = characterMenu.getSelectIndex();
+
+        if (characterMenu.isStart()){
+            characterMenu.init();
+            gameState = GameState.GAME;
+        }
+        if (games[selectionIndex].isReturnToMenu()){
+            games[selectionIndex].init();
+            gameState = GameState.MENU;
+        }
+
+
         drawGame();
     }
 
     private void drawGame() {
         batch.begin();
-        if (characterMenu.isStart()&&!games[selectionIndex].isReturnToMenu()) {
-            selectionIndex = characterMenu.getSelectIndex();
+        if (gameState == GameState.MENU){
+            characterMenu.draw(batch);
+        }
+        if (gameState == GameState.GAME) {
             games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
             games[selectionIndex].draw(batch);
         }
-        if (!characterMenu.isStart()||games[selectionIndex].isReturnToMenu())
-            characterMenu.draw(batch);
-
         batch.end();
     }
 

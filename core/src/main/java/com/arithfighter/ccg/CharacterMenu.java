@@ -29,6 +29,10 @@ public class CharacterMenu {
         selectionFont.setColor(Color.WHITE);
     }
 
+    public void init(){
+        isGameStart = false;
+    }
+
     public void draw(SpriteBatch batch) {
         for (int i = 0; i< buttons.length;i++)
             buttons[i].draw(batch, names[i]);

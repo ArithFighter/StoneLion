@@ -72,6 +72,13 @@ public class Game {
         boardArea.setPosition(CENTER_X + GRID_X * 4, GRID_Y * 6);
     }
 
+    public void init(){
+        returnToMenuFlag = false;
+        numberBoxDisplacer.refresh();
+        dataAccessor.resetRecorder();
+        player.init();
+    }
+
     public Player getPlayer() {
         return player;
     }

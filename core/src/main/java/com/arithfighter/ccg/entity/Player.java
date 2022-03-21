@@ -42,6 +42,11 @@ public class Player {
             energyGain = 3;
     }
 
+    public void init(){
+        sumAccessor.reset();
+        autoResetHandler.initialize();
+    }
+
     public final void activateCard(int mouseX, int mouseY) {
         hand.activateCard(mouseX, mouseY);
     }
