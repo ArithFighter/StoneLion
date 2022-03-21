@@ -24,6 +24,9 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             games[selectionIndex].getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+
+            games[selectionIndex].getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
+
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
         }
@@ -37,6 +40,9 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             games[selectionIndex].getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+
+            games[selectionIndex].getReturnButton().deactivate();
+
             characterMenu.deactivateButton();
             return true;
         }
@@ -52,12 +58,12 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        games = new Game[2];
-
-        for (int i =0; i< games.length;i++)
-            games[i] = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.values()[i]);
-
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
+
+        games = new Game[characterMenu.getSelectionQuantity()];
+
+        for (int i = 0; i < games.length; i++)
+            games[i] = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.values()[i]);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -76,13 +82,14 @@ public class Main extends ApplicationAdapter {
 
     private void drawGame() {
         batch.begin();
-        if (characterMenu.isStart()){
+        if (characterMenu.isStart()&&!games[selectionIndex].isReturnToMenu()) {
             selectionIndex = characterMenu.getSelectIndex();
             games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
             games[selectionIndex].draw(batch);
-        }else {
-            characterMenu.draw(batch);
         }
+        if (!characterMenu.isStart()||games[selectionIndex].isReturnToMenu())
+            characterMenu.draw(batch);
+
         batch.end();
     }
 
@@ -90,8 +97,9 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         assetProcessor.dispose();
-        for (Game game:games)
+        for (Game game : games)
             game.dispose();
+
         characterMenu.dispose();
     }
 }
