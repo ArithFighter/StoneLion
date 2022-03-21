@@ -90,7 +90,6 @@ public class Main extends ApplicationAdapter {
             gameState = GameState.MENU;
         }
 
-
         drawGame();
     }
 

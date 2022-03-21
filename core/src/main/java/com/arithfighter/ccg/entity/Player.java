@@ -45,6 +45,7 @@ public class Player {
     public void init(){
         sumAccessor.reset();
         autoResetHandler.initialize();
+        energyRecorder.reset();
     }
 
     public final void activateCard(int mouseX, int mouseY) {
