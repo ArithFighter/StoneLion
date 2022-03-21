@@ -2,12 +2,13 @@ package com.arithfighter.ccg.file;
 
 public class FileLibrary {
     private final String[] textures = {
-            "Card_template.png",
-            "desk.png",
-            "sum-Display-block.png",
-            "numberBox.png",
-            "Energy-bar.png",
-            "white-block.png"
+            "widget/Card_template.png",
+            "widget/desk.png",
+            "widget/sum-Display-block.png",
+            "widget/numberBox.png",
+            "widget/Energy-bar.png",
+            "widget/white-block.png",
+            "widget/Button1.png"
     };
 
     private final String[] cards = {
