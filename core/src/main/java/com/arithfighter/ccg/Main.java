@@ -16,26 +16,27 @@ public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private Game game;
+    private Game[] games;
     private CharacterMenu characterMenu;
+    private int selectionIndex = 0;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            games[selectionIndex].getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            game.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            games[selectionIndex].getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            games[selectionIndex].getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
             characterMenu.deactivateButton();
             return true;
         }
@@ -51,7 +52,10 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.KNIGHT);
+        games = new Game[2];
+
+        for (int i =0; i< games.length;i++)
+            games[i] = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.values()[i]);
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
@@ -67,15 +71,18 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        //game.update(cursorPos.getX(), cursorPos.getY());
-
-        drawComponent();
+        drawGame();
     }
 
-    private void drawComponent() {
+    private void drawGame() {
         batch.begin();
-        //game.draw(batch);
-        characterMenu.draw(batch);
+        if (characterMenu.isStart()){
+            selectionIndex = characterMenu.getSelectIndex();
+            games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
+            games[selectionIndex].draw(batch);
+        }else {
+            characterMenu.draw(batch);
+        }
         batch.end();
     }
 
@@ -83,7 +90,8 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         assetProcessor.dispose();
-        game.dispose();
+        for (Game game:games)
+            game.dispose();
         characterMenu.dispose();
     }
 }

@@ -10,8 +10,9 @@ public class CharacterMenu {
     private final Font selectionFont;
     private final Button[] buttons;
     private final Button startButton;
-    private final String[] names = {"Knight", "Rogue"};
     private int selectIndex = 0;
+    private final String[] names = {"Knight", "Rogue"};
+    private boolean isGameStart = false;
 
     public CharacterMenu(Texture[] textures) {
         buttons = new Button[names.length];
@@ -34,12 +35,21 @@ public class CharacterMenu {
 
         startButton.draw(batch, "Start");
 
+        selectionFont.draw(batch, names[getSelectIndex()], 700,450);
+    }
+
+    public int getSelectIndex(){
         for (int i = 0; i< buttons.length;i++){
             if (buttons[i].isActive())
                 selectIndex = i;
         }
+        return selectIndex;
+    }
 
-        selectionFont.draw(batch, names[selectIndex], 700,450);
+    public boolean isStart(){
+        if (startButton.isActive())
+            isGameStart = true;
+        return isGameStart;
     }
 
     public void activateButton(int mouseX, int mouseY) {
