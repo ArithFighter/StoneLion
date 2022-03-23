@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.entity.CharacterList;
+import com.arithfighter.ccg.entity.GameDataAccessor;
 import com.arithfighter.ccg.entity.Player;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
@@ -20,6 +21,8 @@ public class Main extends ApplicationAdapter {
     private Game game;
     private Player[] players;
     private CharacterMenu characterMenu;
+    private GameDataAccessor dataAccessor;
+    private int selectionIndex = 0;
 
     private enum GameState{MENU, GAME}
     private GameState gameState = GameState.MENU;
@@ -62,6 +65,8 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
+        dataAccessor = new GameDataAccessor();
+
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
         players = new Player[characterMenu.getSelectionQuantity()];
@@ -70,9 +75,14 @@ public class Main extends ApplicationAdapter {
             players[i] = new Player(
                     assetProcessor.getTextures(),
                     assetProcessor.getCards(),
-                    CharacterList.values()[i]);
+                    CharacterList.values()[i]){
+                @Override
+                public void doWhenCardPlayed() {
+                    dataAccessor.updatePlayTimes();
+                }
+            };
 
-        game = new Game(assetProcessor.getTextures());
+        game = new Game(assetProcessor.getTextures(), dataAccessor);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -86,7 +96,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        int selectionIndex = characterMenu.getSelectIndex();
+        selectionIndex = characterMenu.getSelectIndex();
 
         game.setPlayer(players[selectionIndex]);
 
@@ -122,8 +132,9 @@ public class Main extends ApplicationAdapter {
 
         game.dispose();
 
-        for (Player player:players)
-            player.dispose();
+        for (int i = 0; i< players.length;i++)
+            if (i!=selectionIndex)
+                players[i].dispose();
 
         characterMenu.dispose();
     }

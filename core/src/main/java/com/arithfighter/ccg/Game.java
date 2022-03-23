@@ -22,8 +22,8 @@ public class Game {
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
-    public Game(Texture[] textures){
-        dataAccessor = new GameDataAccessor();
+    public Game(Texture[] textures, GameDataAccessor dataAccessor){
+        this.dataAccessor = dataAccessor;
 
         createBoardArea(textures);
 

@@ -11,7 +11,7 @@ public class CharacterMenu {
     private final Button[] buttons;
     private final Button startButton;
     private int selectIndex = 0;
-    private final String[] names = {"Knight", "Rogue", "Hunter"};
+    private final String[] names = {"Knight", "Rogue", "Hunter", "Paladin", "Warrior"};
     private boolean isGameStart = false;
 
     public CharacterMenu(Texture[] textures) {
@@ -19,7 +19,7 @@ public class CharacterMenu {
 
         for (int i = 0; i<names.length;i++){
             buttons[i] = new Button(textures[6]);
-            buttons[i].setPosition(360, 450-i*150);
+            buttons[i].setPosition(360, 630-i*150);
         }
 
         startButton = new Button(textures[6]);
