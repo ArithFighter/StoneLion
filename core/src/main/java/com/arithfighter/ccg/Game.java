@@ -22,10 +22,8 @@ public class Game {
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
-    public Game(Texture[] textures, Texture[] cards, CharacterList character){
+    public Game(Texture[] textures){
         dataAccessor = new GameDataAccessor();
-
-        createPlayer(textures, cards, character);
 
         createBoardArea(textures);
 
@@ -43,18 +41,8 @@ public class Game {
         returnButton.setPosition(1000, 600);
     }
 
-    private void createPlayer(Texture[] textures,Texture[] cards, CharacterList character){
-        player = new Player(textures, cards, character) {
-            @Override
-            public void doWhenCardPlayed() {
-                dataAccessor.updatePlayTimes();
-            }
-
-            @Override
-            public void castSkill(CharacterList character) {
-                castCharacterSkill(character);
-            }
-        };
+    public void setPlayer(Player player){
+        this.player = player;
     }
 
     private void createBoardArea(Texture[] textures){

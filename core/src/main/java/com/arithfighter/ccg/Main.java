@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.entity.CharacterList;
+import com.arithfighter.ccg.entity.Player;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -16,18 +17,19 @@ public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private Game[] games;
+    private Game game;
+    private Player[] players;
     private CharacterMenu characterMenu;
-    private int selectionIndex = 0;
+
     private enum GameState{MENU, GAME}
     private GameState gameState = GameState.MENU;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            games[selectionIndex].getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
 
-            games[selectionIndex].getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
+            game.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
 
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -35,15 +37,15 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            games[selectionIndex].getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            game.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            games[selectionIndex].getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
 
-            games[selectionIndex].getReturnButton().deactivate();
+            game.getReturnButton().deactivate();
 
             characterMenu.deactivateButton();
             return true;
@@ -62,10 +64,15 @@ public class Main extends ApplicationAdapter {
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
-        games = new Game[characterMenu.getSelectionQuantity()];
+        players = new Player[characterMenu.getSelectionQuantity()];
 
-        for (int i = 0; i < games.length; i++)
-            games[i] = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.values()[i]);
+        for (int i = 0; i< characterMenu.getSelectionQuantity();i++)
+            players[i] = new Player(
+                    assetProcessor.getTextures(),
+                    assetProcessor.getCards(),
+                    CharacterList.values()[i]);
+
+        game = new Game(assetProcessor.getTextures());
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -79,14 +86,16 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        selectionIndex = characterMenu.getSelectIndex();
+        int selectionIndex = characterMenu.getSelectIndex();
+
+        game.setPlayer(players[selectionIndex]);
 
         if (characterMenu.isStart()){
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (games[selectionIndex].isReturnToMenu()){
-            games[selectionIndex].init();
+        if (game.isReturnToMenu()){
+            game.init();
             gameState = GameState.MENU;
         }
 
@@ -99,8 +108,8 @@ public class Main extends ApplicationAdapter {
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
-            games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
-            games[selectionIndex].draw(batch);
+            game.update(cursorPos.getX(), cursorPos.getY());
+            game.draw(batch);
         }
         batch.end();
     }
@@ -108,9 +117,13 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+
         assetProcessor.dispose();
-        for (Game game : games)
-            game.dispose();
+
+        game.dispose();
+
+        for (Player player:players)
+            player.dispose();
 
         characterMenu.dispose();
     }
