@@ -24,7 +24,8 @@ public class Main extends ApplicationAdapter {
     private GameDataAccessor dataAccessor;
     private int selectionIndex = 0;
 
-    private enum GameState{MENU, GAME}
+    private enum GameState {MENU, GAME}
+
     private GameState gameState = GameState.MENU;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
@@ -71,20 +72,43 @@ public class Main extends ApplicationAdapter {
 
         players = new Player[characterMenu.getSelectionQuantity()];
 
-        for (int i = 0; i< characterMenu.getSelectionQuantity();i++)
+        for (int i = 0; i < characterMenu.getSelectionQuantity(); i++)
             players[i] = new Player(
                     assetProcessor.getTextures(),
                     assetProcessor.getCards(),
-                    CharacterList.values()[i]){
+                    CharacterList.values()[i]) {
                 @Override
                 public void doWhenCardPlayed() {
                     dataAccessor.updatePlayTimes();
+                }
+
+                @Override
+                public void castSkill(CharacterList character) {
+                    castCharacterSkill(character);
                 }
             };
 
         game = new Game(assetProcessor.getTextures(), dataAccessor);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void castCharacterSkill(CharacterList character) {
+        switch (character) {
+            case KNIGHT:
+                //change one value of numberBox
+                game.getNumberBoxDisplacer().set(0, 33);
+                break;
+            case ROGUE:
+                //reduce all values by 1
+                for (int i = 0; i < game.getNumberBoxDisplacer().getNumberBoxQuantity(); i++)
+                    if (game.getNumberBoxDisplacer().getNumberList().get(i) > 0) {
+                        game.getNumberBoxDisplacer().set(
+                                i,
+                                game.getNumberBoxDisplacer().getNumberList().get(i) - 1);
+                    }
+                break;
+        }
     }
 
     @Override
@@ -100,11 +124,11 @@ public class Main extends ApplicationAdapter {
 
         game.setPlayer(players[selectionIndex]);
 
-        if (characterMenu.isStart()){
+        if (characterMenu.isStart()) {
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (game.isReturnToMenu()){
+        if (game.isReturnToMenu()) {
             game.init();
             gameState = GameState.MENU;
         }
@@ -114,7 +138,7 @@ public class Main extends ApplicationAdapter {
 
     private void drawGame() {
         batch.begin();
-        if (gameState == GameState.MENU){
+        if (gameState == GameState.MENU) {
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
@@ -132,8 +156,8 @@ public class Main extends ApplicationAdapter {
 
         game.dispose();
 
-        for (int i = 0; i< players.length;i++)
-            if (i!=selectionIndex)
+        for (int i = 0; i < players.length; i++)
+            if (i != selectionIndex)
                 players[i].dispose();
 
         characterMenu.dispose();

@@ -67,6 +67,10 @@ public class Game {
         player.init();
     }
 
+    public NumberBoxDisplacer getNumberBoxDisplacer(){
+        return numberBoxDisplacer;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -77,24 +81,6 @@ public class Game {
 
     public Button getReturnButton(){
         return returnButton;
-    }
-
-    private void castCharacterSkill(CharacterList character) {
-        switch (character) {
-            case KNIGHT:
-                //change one value of numberBox
-                numberBoxDisplacer.set(0, 33);
-                break;
-            case ROGUE:
-                //reduce all values by 1
-                for(int i = 0; i< numberBoxDisplacer.getNumberBoxQuantity();i++)
-                    if (numberBoxDisplacer.getNumberList().get(i)>0){
-                        numberBoxDisplacer.set(
-                                i,
-                                numberBoxDisplacer.getNumberList().get(i)-1);
-                    }
-                break;
-        }
     }
 
     public boolean isReturnToMenu(){
