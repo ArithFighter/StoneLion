@@ -14,7 +14,6 @@ import static com.arithfighter.ccg.WindowSetting.*;
 public class Game {
     private final GameDataAccessor dataAccessor;
     private BoardArea boardArea;
-    private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
     private int cursorX;
@@ -28,13 +27,6 @@ public class Game {
         createPlayer(textures, cards, character);
 
         createBoardArea(textures);
-
-        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
-            @Override
-            public void doWhenSumAndNumMatched() {
-                dataAccessor.updateScore(1);
-            }
-        };
 
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 8, GRID_Y * 7);
@@ -52,7 +44,7 @@ public class Game {
 
             @Override
             public void castSkill(CharacterList character) {
-                castCharacterSkill(character);
+
             }
         };
     }
@@ -74,7 +66,6 @@ public class Game {
 
     public void init(){
         returnToMenuFlag = false;
-        numberBoxDisplacer.refresh();
         dataAccessor.resetRecorder();
         player.init();
     }
@@ -91,24 +82,6 @@ public class Game {
         return returnButton;
     }
 
-    private void castCharacterSkill(CharacterList character) {
-        switch (character) {
-            case KNIGHT:
-                //change one value of numberBox
-                numberBoxDisplacer.set(0, 33);
-                break;
-            case ROGUE:
-                //reduce all values by 1
-                for(int i = 0; i< numberBoxDisplacer.getNumberBoxQuantity();i++)
-                    if (numberBoxDisplacer.getNumberList().get(i)>0){
-                        numberBoxDisplacer.set(
-                                i,
-                                numberBoxDisplacer.getNumberList().get(i)-1);
-                    }
-                break;
-        }
-    }
-
     public boolean isReturnToMenu(){
         return returnToMenuFlag;
     }
@@ -116,8 +89,6 @@ public class Game {
     public void update(int mouseX, int mouseY){
         cursorX = mouseX;
         cursorY = mouseY;
-
-        numberBoxDisplacer.update(player.getSum());
 
         player.checkCardIsTouched(mouseX, mouseY);
 
@@ -131,7 +102,6 @@ public class Game {
 
     private void refresh(){
         dataAccessor.resetRecorder();
-        numberBoxDisplacer.refresh();
     }
 
     public void draw(SpriteBatch batch) {
@@ -141,8 +111,6 @@ public class Game {
 
         boardArea.draw(batch);
 
-        numberBoxDisplacer.draw(batch);
-
         sumBox.changeColor(player.getCondition());
         sumBox.draw(player.getSum(), batch);
 
@@ -151,7 +119,6 @@ public class Game {
 
     public void dispose(){
         dataAccessor.dispose();
-        numberBoxDisplacer.dispose();
         player.dispose();
         sumBox.dispose();
         returnButton.dispose();

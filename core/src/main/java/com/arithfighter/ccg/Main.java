@@ -1,6 +1,7 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.entity.CharacterList;
+import com.arithfighter.ccg.entity.NumberBoxDisplacer;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,6 +19,7 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Game[] games;
     private CharacterMenu characterMenu;
+    private NumberBoxDisplacer numberBoxDisplacer;
     private int selectionIndex = 0;
     private enum GameState{MENU, GAME}
     private GameState gameState = GameState.MENU;
@@ -62,6 +64,12 @@ public class Main extends ApplicationAdapter {
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
+        numberBoxDisplacer = new NumberBoxDisplacer(assetProcessor.getTextures()[3]) {
+            @Override
+            public void doWhenSumAndNumMatched() {
+            }
+        };
+
         games = new Game[characterMenu.getSelectionQuantity()];
 
         for (int i = 0; i < games.length; i++)
@@ -87,6 +95,7 @@ public class Main extends ApplicationAdapter {
         }
         if (games[selectionIndex].isReturnToMenu()){
             games[selectionIndex].init();
+            numberBoxDisplacer.refresh();
             gameState = GameState.MENU;
         }
 
@@ -100,6 +109,8 @@ public class Main extends ApplicationAdapter {
         }
         if (gameState == GameState.GAME) {
             games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
+            numberBoxDisplacer.update(games[selectionIndex].getPlayer().getSum());
+            numberBoxDisplacer.draw(batch);
             games[selectionIndex].draw(batch);
         }
         batch.end();
@@ -112,6 +123,7 @@ public class Main extends ApplicationAdapter {
         for (Game game : games)
             game.dispose();
 
+        numberBoxDisplacer.dispose();
         characterMenu.dispose();
     }
 }
