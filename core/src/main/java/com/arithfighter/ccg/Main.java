@@ -1,11 +1,13 @@
 package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.entity.CharacterList;
+import com.arithfighter.ccg.entity.GameDataAccessor;
 import com.arithfighter.ccg.entity.NumberBoxDisplacer;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,16 +22,18 @@ public class Main extends ApplicationAdapter {
     private Game[] games;
     private CharacterMenu characterMenu;
     private NumberBoxDisplacer numberBoxDisplacer;
-    private int selectionIndex = 0;
+    private GameDataAccessor dataAccessor;
+
     private enum GameState{MENU, GAME}
     private GameState gameState = GameState.MENU;
+    private Game currentGame;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            games[selectionIndex].getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            currentGame.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
 
-            games[selectionIndex].getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
+            currentGame.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
 
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -37,15 +41,15 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            games[selectionIndex].getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            currentGame.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            games[selectionIndex].getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            currentGame.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
 
-            games[selectionIndex].getReturnButton().deactivate();
+            currentGame.getReturnButton().deactivate();
 
             characterMenu.deactivateButton();
             return true;
@@ -61,6 +65,8 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
 
         cursorPos = new CursorPositionAccessor();
+        
+        dataAccessor = new GameDataAccessor();
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
@@ -87,19 +93,31 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        selectionIndex = characterMenu.getSelectIndex();
+        int selectionIndex = characterMenu.getSelectIndex();
+        
+        //This is for test, will remove in future version
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            refresh();
+        }
+        
+        currentGame = games[selectionIndex];
 
         if (characterMenu.isStart()){
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (games[selectionIndex].isReturnToMenu()){
-            games[selectionIndex].init();
-            numberBoxDisplacer.refresh();
+        if (currentGame.isReturnToMenu()){
+            refresh();
             gameState = GameState.MENU;
         }
 
         drawGame();
+    }
+    
+    private void refresh(){
+        currentGame.init();
+        dataAccessor.resetRecorder();
+        numberBoxDisplacer.refresh();
     }
 
     private void drawGame() {
@@ -108,10 +126,13 @@ public class Main extends ApplicationAdapter {
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
-            games[selectionIndex].update(cursorPos.getX(), cursorPos.getY());
-            numberBoxDisplacer.update(games[selectionIndex].getPlayer().getSum());
+            numberBoxDisplacer.update(currentGame.getPlayer().getSum());
             numberBoxDisplacer.draw(batch);
-            games[selectionIndex].draw(batch);
+            
+            currentGame.update(cursorPos.getX(), cursorPos.getY());
+            currentGame.draw(batch);
+            
+            dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), currentGame.getPlayer().getEnergy(), batch);//for dev
         }
         batch.end();
     }
@@ -124,6 +145,7 @@ public class Main extends ApplicationAdapter {
             game.dispose();
 
         numberBoxDisplacer.dispose();
+        dataAccessor.dispose();
         characterMenu.dispose();
     }
 }

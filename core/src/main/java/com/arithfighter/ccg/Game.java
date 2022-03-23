@@ -12,18 +12,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class Game {
-    private final GameDataAccessor dataAccessor;
     private BoardArea boardArea;
     private Player player;
     private final SumBox sumBox;
-    private int cursorX;
-    private int cursorY;
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
     public Game(Texture[] textures, Texture[] cards, CharacterList character){
-        dataAccessor = new GameDataAccessor();
-
         createPlayer(textures, cards, character);
 
         createBoardArea(textures);
@@ -39,7 +34,6 @@ public class Game {
         player = new Player(textures, cards, character) {
             @Override
             public void doWhenCardPlayed() {
-                dataAccessor.updatePlayTimes();
             }
 
             @Override
@@ -66,7 +60,6 @@ public class Game {
 
     public void init(){
         returnToMenuFlag = false;
-        dataAccessor.resetRecorder();
         player.init();
     }
 
@@ -87,27 +80,13 @@ public class Game {
     }
 
     public void update(int mouseX, int mouseY){
-        cursorX = mouseX;
-        cursorY = mouseY;
-
         player.checkCardIsTouched(mouseX, mouseY);
 
         returnToMenuFlag = returnButton.isActive();
-
-        //This is for test, will remove in future version
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            refresh();
-        }
-    }
-
-    private void refresh(){
-        dataAccessor.resetRecorder();
     }
 
     public void draw(SpriteBatch batch) {
         returnButton.draw(batch, "Return");
-
-        dataAccessor.draw(cursorX, cursorY, player.getEnergy(), batch);//for dev
 
         boardArea.draw(batch);
 
@@ -118,7 +97,6 @@ public class Game {
     }
 
     public void dispose(){
-        dataAccessor.dispose();
         player.dispose();
         sumBox.dispose();
         returnButton.dispose();
