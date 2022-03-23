@@ -12,27 +12,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class Game {
-    private final GameDataAccessor dataAccessor;
     private BoardArea boardArea;
-    private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private int cursorX;
-    private int cursorY;
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
-    public Game(Texture[] textures, GameDataAccessor dataAccessor){
-        this.dataAccessor = dataAccessor;
+    public Game(Texture[] textures, Texture[] cards, CharacterList character){
+        createPlayer(textures, cards, character);
 
         createBoardArea(textures);
-
-        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
-            @Override
-            public void doWhenSumAndNumMatched() {
-                dataAccessor.updateScore(1);
-            }
-        };
 
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 8, GRID_Y * 7);
@@ -41,8 +30,17 @@ public class Game {
         returnButton.setPosition(1000, 600);
     }
 
-    public void setPlayer(Player player){
-        this.player = player;
+    private void createPlayer(Texture[] textures,Texture[] cards, CharacterList character){
+        player = new Player(textures, cards, character) {
+            @Override
+            public void doWhenCardPlayed() {
+            }
+
+            @Override
+            public void castSkill(CharacterList character) {
+
+            }
+        };
     }
 
     private void createBoardArea(Texture[] textures){
@@ -62,13 +60,7 @@ public class Game {
 
     public void init(){
         returnToMenuFlag = false;
-        numberBoxDisplacer.refresh();
-        dataAccessor.resetRecorder();
         player.init();
-    }
-
-    public NumberBoxDisplacer getNumberBoxDisplacer(){
-        return numberBoxDisplacer;
     }
 
     public Player getPlayer() {
@@ -88,34 +80,15 @@ public class Game {
     }
 
     public void update(int mouseX, int mouseY){
-        cursorX = mouseX;
-        cursorY = mouseY;
-
-        numberBoxDisplacer.update(player.getSum());
-
         player.checkCardIsTouched(mouseX, mouseY);
 
         returnToMenuFlag = returnButton.isActive();
-
-        //This is for test, will remove in future version
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            refresh();
-        }
-    }
-
-    private void refresh(){
-        dataAccessor.resetRecorder();
-        numberBoxDisplacer.refresh();
     }
 
     public void draw(SpriteBatch batch) {
         returnButton.draw(batch, "Return");
 
-        dataAccessor.draw(cursorX, cursorY, player.getEnergy(), batch);//for dev
-
         boardArea.draw(batch);
-
-        numberBoxDisplacer.draw(batch);
 
         sumBox.changeColor(player.getCondition());
         sumBox.draw(player.getSum(), batch);
@@ -124,8 +97,6 @@ public class Game {
     }
 
     public void dispose(){
-        dataAccessor.dispose();
-        numberBoxDisplacer.dispose();
         player.dispose();
         sumBox.dispose();
         returnButton.dispose();

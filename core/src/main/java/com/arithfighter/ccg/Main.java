@@ -2,11 +2,12 @@ package com.arithfighter.ccg;
 
 import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.entity.GameDataAccessor;
-import com.arithfighter.ccg.entity.Player;
+import com.arithfighter.ccg.entity.NumberBoxDisplacer;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,22 +19,21 @@ public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private Game game;
-    private Player[] players;
+    private Game[] games;
     private CharacterMenu characterMenu;
+    private NumberBoxDisplacer numberBoxDisplacer;
     private GameDataAccessor dataAccessor;
-    private int selectionIndex = 0;
 
-    private enum GameState {MENU, GAME}
-
+    private enum GameState{MENU, GAME}
     private GameState gameState = GameState.MENU;
+    private Game currentGame;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            currentGame.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
 
-            game.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
+            currentGame.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
 
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -41,15 +41,15 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            game.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            currentGame.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            currentGame.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
 
-            game.getReturnButton().deactivate();
+            currentGame.getReturnButton().deactivate();
 
             characterMenu.deactivateButton();
             return true;
@@ -65,50 +65,23 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
 
         cursorPos = new CursorPositionAccessor();
-
+        
         dataAccessor = new GameDataAccessor();
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
-        players = new Player[characterMenu.getSelectionQuantity()];
+        numberBoxDisplacer = new NumberBoxDisplacer(assetProcessor.getTextures()[3]) {
+            @Override
+            public void doWhenSumAndNumMatched() {
+            }
+        };
 
-        for (int i = 0; i < characterMenu.getSelectionQuantity(); i++)
-            players[i] = new Player(
-                    assetProcessor.getTextures(),
-                    assetProcessor.getCards(),
-                    CharacterList.values()[i]) {
-                @Override
-                public void doWhenCardPlayed() {
-                    dataAccessor.updatePlayTimes();
-                }
+        games = new Game[characterMenu.getSelectionQuantity()];
 
-                @Override
-                public void castSkill(CharacterList character) {
-                    castCharacterSkill(character);
-                }
-            };
-
-        game = new Game(assetProcessor.getTextures(), dataAccessor);
+        for (int i = 0; i < games.length; i++)
+            games[i] = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), CharacterList.values()[i]);
 
         Gdx.input.setInputProcessor(mouseAdapter);
-    }
-
-    private void castCharacterSkill(CharacterList character) {
-        switch (character) {
-            case KNIGHT:
-                //change one value of numberBox
-                game.getNumberBoxDisplacer().set(0, 33);
-                break;
-            case ROGUE:
-                //reduce all values by 1
-                for (int i = 0; i < game.getNumberBoxDisplacer().getNumberBoxQuantity(); i++)
-                    if (game.getNumberBoxDisplacer().getNumberList().get(i) > 0) {
-                        game.getNumberBoxDisplacer().set(
-                                i,
-                                game.getNumberBoxDisplacer().getNumberList().get(i) - 1);
-                    }
-                break;
-        }
     }
 
     @Override
@@ -120,30 +93,46 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        selectionIndex = characterMenu.getSelectIndex();
+        int selectionIndex = characterMenu.getSelectIndex();
+        
+        //This is for test, will remove in future version
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            refresh();
+        }
+        
+        currentGame = games[selectionIndex];
 
-        game.setPlayer(players[selectionIndex]);
-
-        if (characterMenu.isStart()) {
+        if (characterMenu.isStart()){
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (game.isReturnToMenu()) {
-            game.init();
+        if (currentGame.isReturnToMenu()){
+            refresh();
             gameState = GameState.MENU;
         }
 
         drawGame();
     }
+    
+    private void refresh(){
+        currentGame.init();
+        dataAccessor.resetRecorder();
+        numberBoxDisplacer.refresh();
+    }
 
     private void drawGame() {
         batch.begin();
-        if (gameState == GameState.MENU) {
+        if (gameState == GameState.MENU){
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
-            game.update(cursorPos.getX(), cursorPos.getY());
-            game.draw(batch);
+            numberBoxDisplacer.update(currentGame.getPlayer().getSum());
+            numberBoxDisplacer.draw(batch);
+            
+            currentGame.update(cursorPos.getX(), cursorPos.getY());
+            currentGame.draw(batch);
+            
+            dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), currentGame.getPlayer().getEnergy(), batch);//for dev
         }
         batch.end();
     }
@@ -151,15 +140,12 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-
         assetProcessor.dispose();
+        for (Game game : games)
+            game.dispose();
 
-        game.dispose();
-
-        for (int i = 0; i < players.length; i++)
-            if (i != selectionIndex)
-                players[i].dispose();
-
+        numberBoxDisplacer.dispose();
+        dataAccessor.dispose();
         characterMenu.dispose();
     }
 }
