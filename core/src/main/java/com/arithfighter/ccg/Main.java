@@ -71,9 +71,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        int selectionIndex = characterMenu.getSelectIndex();
-
-        game.setCurrentPlayerInGame(selectionIndex);
+        game.setCurrentPlayerInGame(characterMenu.getSelectIndex());
 
         if (characterMenu.isStart()) {
             characterMenu.init();
@@ -95,6 +93,7 @@ public class Main extends ApplicationAdapter {
         if (gameState == GameState.GAME) {
             game.update(cursorPos.getX(), cursorPos.getY());
             game.draw(batch);
+            game.drawData(batch, cursorPos.getX(), cursorPos.getY(), characterMenu.getSelectIndex());
         }
         batch.end();
     }

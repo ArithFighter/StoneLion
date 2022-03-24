@@ -12,19 +12,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class GameComponent {
-    private final GameDataAccessor dataAccessor;
     private BoardArea boardArea;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private int cursorX;
-    private int cursorY;
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
     public GameComponent(Texture[] textures, GameDataAccessor dataAccessor){
-        this.dataAccessor = dataAccessor;
-
         createBoardArea(textures);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
@@ -63,7 +58,6 @@ public class GameComponent {
     public void init(){
         returnToMenuFlag = false;
         numberBoxDisplacer.refresh();
-        dataAccessor.resetRecorder();
         player.init();
     }
 
@@ -88,9 +82,6 @@ public class GameComponent {
     }
 
     public void update(int mouseX, int mouseY){
-        cursorX = mouseX;
-        cursorY = mouseY;
-
         numberBoxDisplacer.update(player.getSum());
 
         player.checkCardIsTouched(mouseX, mouseY);
@@ -104,14 +95,11 @@ public class GameComponent {
     }
 
     private void refresh(){
-        dataAccessor.resetRecorder();
         numberBoxDisplacer.refresh();
     }
 
     public void draw(SpriteBatch batch) {
         returnButton.draw(batch, "Return");
-
-        dataAccessor.draw(cursorX, cursorY, player.getEnergy(), batch);//for dev
 
         boardArea.draw(batch);
 

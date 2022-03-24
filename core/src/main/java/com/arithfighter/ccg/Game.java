@@ -48,6 +48,7 @@ public class Game {
 
     public void init(){
         gameComponent.init();
+        dataAccessor.resetRecorder();
     }
 
     public void update(int mouseX, int mouseY){
@@ -56,6 +57,10 @@ public class Game {
 
     public void draw(SpriteBatch batch){
         gameComponent.draw(batch);
+    }
+
+    public void drawData(SpriteBatch batch, int mouseX, int mouseY, int index){
+        dataAccessor.draw(mouseX, mouseY, players[index].getEnergy(), batch);//for dev
     }
 
     public void setCurrentPlayerInGame(int i){
