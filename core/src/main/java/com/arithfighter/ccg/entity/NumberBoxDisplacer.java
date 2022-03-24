@@ -54,6 +54,7 @@ public class NumberBoxDisplacer {
     public void set(int index, int value){
         if (index> BOX_QUANTITY)
             index = BOX_QUANTITY;
+
         if (index<0)
             index = 0;
 

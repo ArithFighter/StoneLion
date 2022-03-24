@@ -56,9 +56,9 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        hand.draw(batch);
-
         energyBar.draw(batch, energyRecorder.getRecord());
+
+        hand.draw(batch);
 
         checkAutoResetCondition();
     }
