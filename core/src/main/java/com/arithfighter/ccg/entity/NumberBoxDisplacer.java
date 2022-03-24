@@ -31,9 +31,7 @@ public class NumberBoxDisplacer {
     }
 
     private void createNumberBoxes(Texture texture){
-        float initX = GRID_X * 9.5f;
-        float initY = GRID_Y * 5;
-        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer(initX, initY, GRID_X);
+        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
 
         for (int i = 0; i < BOX_QUANTITY; i++) {
             numberBoxes[i] = new NumberBox(texture);
@@ -112,5 +110,30 @@ public class NumberBoxDisplacer {
     public void dispose() {
         for (NumberBox numberBox : numberBoxes)
             numberBox.dispose();
+    }
+}
+
+class NumberBoxPlacer{
+    private final float initX = GRID_X * 9.5f;
+    private final float initY = GRID_Y * 5;
+    private final float margin = GRID_X;
+
+    public float getNumberBoxX(int i, float width) {
+        float x = initX;
+
+        for (int j = 0;j<3;j++)
+            if (i%3 == j) x += (margin + width) * j;
+
+        return x;
+    }
+
+    public float getNumberBoxY(int i, float height) {
+        float y = initY;
+
+        for(int j =0; j<5; j++)
+            if (i/3 == j)
+                y += (margin + height) * j;
+
+        return y;
     }
 }

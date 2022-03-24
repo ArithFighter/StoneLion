@@ -19,7 +19,7 @@ public class CharacterMenu {
 
         for (int i = 0; i < names.length; i++) {
             buttons[i] = new Button(textures[6]);
-            buttons[i].setPosition(changeX(i), changeY(i));
+            buttons[i].setPosition(getButtonX(i), getButtonY(i));
         }
 
         startButton = new Button(textures[6]);
@@ -29,11 +29,11 @@ public class CharacterMenu {
         selectionFont.setColor(Color.WHITE);
     }
 
-    private int changeX(int i) {
+    private int getButtonX(int i) {
         return i < 3 ? 200 : 500;
     }
 
-    private int changeY(int i) {
+    private int getButtonY(int i) {
         int initY = 480;
         int margin = 150;
         int row = 3;
