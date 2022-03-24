@@ -63,7 +63,7 @@ public class Game {
         dataAccessor.draw(mouseX, mouseY, players[index].getEnergy(), batch);//for dev
     }
 
-    public void setCurrentPlayerInGame(int i){
+    public void setCurrentPlayerToGame(int i){
         gameComponent.setPlayer(players[i]);
     }
 

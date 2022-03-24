@@ -17,9 +17,7 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private CharacterMenu characterMenu;
     private Game game;
-
     private enum GameState {MENU, GAME}
-
     private GameState gameState = GameState.MENU;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
@@ -71,7 +69,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        game.setCurrentPlayerInGame(characterMenu.getSelectIndex());
+        game.setCurrentPlayerToGame(characterMenu.getSelectIndex());
 
         if (characterMenu.isStart()) {
             characterMenu.init();

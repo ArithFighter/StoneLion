@@ -1,14 +1,12 @@
 package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.system.Recorder;
-import com.arithfighter.ccg.system.AutoResetHandler;
 import com.arithfighter.ccg.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final SkillStateManager skillStateManager;
     private final AutoResetHandler autoResetHandler;
     private final Recorder sumAccessor;
     private final EnergyBar energyBar;
@@ -16,10 +14,11 @@ public class Player {
     private final Recorder energyRecorder;
     private int energyGain;
 
+    private enum SkillState {NEUTRAL, READY}
+    private SkillState skillState = SkillState.NEUTRAL;
+
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
         energyRecorder = new Recorder();
-
-        skillStateManager = new SkillStateManager();
 
         hand = new Hand(cards, character);
 
@@ -72,7 +71,7 @@ public class Player {
         if (autoResetHandler.isTimeToReset()) {
             sumAccessor.reset();
             autoResetHandler.initialize();
-            skillStateManager.init();
+            skillState = SkillState.NEUTRAL;
         }
     }
 
@@ -107,8 +106,8 @@ public class Player {
     }
 
     private void checkNormalCardPlayed() {
-        if (skillStateManager.isSkillReady())
-            skillStateManager.init();
+        if (skillState == SkillState.READY)
+            skillState = SkillState.NEUTRAL;
 
         sumAccessor.update(hand.getCardNumber());
 
@@ -120,15 +119,14 @@ public class Player {
             castSkill(character);
             energyRecorder.reset();
             autoResetHandler.initialize();
-            skillStateManager.init();
+            skillState = SkillState.NEUTRAL;
         } else {
             doWhenResetCardPlay();
-            skillStateManager.setReady();
         }
     }
 
     private boolean isSkillReady() {
-        return skillStateManager.isSkillReady() &&
+        return skillState == SkillState.READY &&
                 energyRecorder.getRecord() >= energyBar.getMax();
     }
 
@@ -139,6 +137,7 @@ public class Player {
         sumAccessor.reset();
         sumAccessor.update(hand.getCardNumber());
         autoResetHandler.update();
+        skillState = SkillState.READY;
     }
 
     public final void dispose() {
@@ -148,5 +147,26 @@ public class Player {
 
     public final int getEnergy() {
         return energyRecorder.getRecord();
+    }
+}
+
+class AutoResetHandler {
+    private final static int initCondition = 6;
+    private int condition = initCondition;
+
+    public int getCondition(){
+        return condition;
+    }
+
+    public void update(){
+        condition--;
+    }
+
+    public void initialize(){
+        condition = initCondition;
+    }
+
+    public boolean isTimeToReset(){
+        return condition == 0;
     }
 }
