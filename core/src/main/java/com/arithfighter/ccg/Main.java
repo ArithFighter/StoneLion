@@ -1,8 +1,5 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.entity.CharacterList;
-import com.arithfighter.ccg.entity.GameDataAccessor;
-import com.arithfighter.ccg.entity.Player;
 import com.arithfighter.ccg.file.CounterAssetProcessor;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,10 +15,8 @@ public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private GameComponent gameComponent;
-    private Player[] players;
     private CharacterMenu characterMenu;
-    private GameDataAccessor dataAccessor;
+    private Game game;
 
     private enum GameState {MENU, GAME}
 
@@ -30,25 +25,20 @@ public class Main extends ApplicationAdapter {
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            gameComponent.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
-
-            gameComponent.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
-
+            game.touchDown(cursorPos.getX(), cursorPos.getY());
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            gameComponent.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            game.touchDragged(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            gameComponent.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
-
-            gameComponent.getReturnButton().deactivate();
+            game.touchUp(cursorPos.getX(), cursorPos.getY());
 
             characterMenu.deactivateButton();
             return true;
@@ -65,37 +55,11 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        dataAccessor = new GameDataAccessor();
+        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
-        players = new Player[characterMenu.getSelectionQuantity()];
-
-        addPlayers();
-
-        gameComponent = new GameComponent(assetProcessor.getTextures(), dataAccessor);
-
         Gdx.input.setInputProcessor(mouseAdapter);
-    }
-
-    private void addPlayers(){
-        SkillHandler skillHandler = new SkillHandler();
-
-        for (int i = 0; i < characterMenu.getSelectionQuantity(); i++)
-            players[i] = new Player(
-                    assetProcessor.getTextures(),
-                    assetProcessor.getCards(),
-                    CharacterList.values()[i]) {
-                @Override
-                public void doWhenCardPlayed() {
-                    dataAccessor.updatePlayTimes();
-                }
-
-                @Override
-                public void castSkill(CharacterList character) {
-                    skillHandler.cast(character, gameComponent.getNumberBoxDisplacer());
-                }
-            };
     }
 
     @Override
@@ -109,14 +73,14 @@ public class Main extends ApplicationAdapter {
 
         int selectionIndex = characterMenu.getSelectIndex();
 
-        gameComponent.setPlayer(players[selectionIndex]);
+        game.setCurrentPlayerInGame(selectionIndex);
 
         if (characterMenu.isStart()) {
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (gameComponent.isReturnToMenu()) {
-            gameComponent.init();
+        if (game.isReturnToMenu()) {
+            game.init();
             gameState = GameState.MENU;
         }
 
@@ -129,8 +93,8 @@ public class Main extends ApplicationAdapter {
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
-            gameComponent.update(cursorPos.getX(), cursorPos.getY());
-            gameComponent.draw(batch);
+            game.update(cursorPos.getX(), cursorPos.getY());
+            game.draw(batch);
         }
         batch.end();
     }
@@ -141,9 +105,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.dispose();
 
-        gameComponent.dispose();
-
-        for (Player player : players) player.dispose();
+        game.dispose();
 
         characterMenu.dispose();
     }
