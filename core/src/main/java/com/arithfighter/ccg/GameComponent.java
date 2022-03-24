@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.arithfighter.ccg.WindowSetting.*;
 
-public class Game {
+public class GameComponent {
     private final GameDataAccessor dataAccessor;
     private BoardArea boardArea;
     private final NumberBoxDisplacer numberBoxDisplacer;
@@ -22,7 +22,7 @@ public class Game {
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
-    public Game(Texture[] textures, GameDataAccessor dataAccessor){
+    public GameComponent(Texture[] textures, GameDataAccessor dataAccessor){
         this.dataAccessor = dataAccessor;
 
         createBoardArea(textures);

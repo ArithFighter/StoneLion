@@ -15,8 +15,8 @@ public class Button {
     private State buttonState = State.OFF;
 
     public Button(Texture texture){
-        widget = new SpriteWidget(25);
-        widget.setSize(texture, 2f);
+        widget = new SpriteWidget(22);
+        widget.setSize(texture, 1.8f);
         point = widget.getPoint();
 
         font = new Font(widget.getFontSize());

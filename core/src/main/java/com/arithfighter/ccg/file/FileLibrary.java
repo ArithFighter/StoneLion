@@ -3,7 +3,7 @@ package com.arithfighter.ccg.file;
 public class FileLibrary {
     private final String[] textures = {
             "widget/Card_template.png",
-            "widget/desk.png",
+            "widget/BoardArea.png",
             "widget/sum-Display-block.png",
             "widget/numberBox.png",
             "widget/Energy-bar.png",

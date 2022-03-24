@@ -18,7 +18,7 @@ public class Main extends ApplicationAdapter {
     private CounterAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private Game game;
+    private GameComponent gameComponent;
     private Player[] players;
     private CharacterMenu characterMenu;
     private GameDataAccessor dataAccessor;
@@ -30,9 +30,9 @@ public class Main extends ApplicationAdapter {
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            game.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
+            gameComponent.getPlayer().activateCard(cursorPos.getX(), cursorPos.getY());
 
-            game.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
+            gameComponent.getReturnButton().activate(cursorPos.getX(), cursorPos.getY());
 
             characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -40,15 +40,15 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            game.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
+            gameComponent.getPlayer().updateWhenDrag(cursorPos.getX(), cursorPos.getY());
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            game.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
+            gameComponent.getBoardArea().playCardOnBoard(cursorPos.getX(), cursorPos.getY());
 
-            game.getReturnButton().deactivate();
+            gameComponent.getReturnButton().deactivate();
 
             characterMenu.deactivateButton();
             return true;
@@ -71,6 +71,14 @@ public class Main extends ApplicationAdapter {
 
         players = new Player[characterMenu.getSelectionQuantity()];
 
+        addPlayers();
+
+        gameComponent = new GameComponent(assetProcessor.getTextures(), dataAccessor);
+
+        Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void addPlayers(){
         SkillHandler skillHandler = new SkillHandler();
 
         for (int i = 0; i < characterMenu.getSelectionQuantity(); i++)
@@ -85,13 +93,9 @@ public class Main extends ApplicationAdapter {
 
                 @Override
                 public void castSkill(CharacterList character) {
-                    skillHandler.cast(character, game.getNumberBoxDisplacer());
+                    skillHandler.cast(character, gameComponent.getNumberBoxDisplacer());
                 }
             };
-
-        game = new Game(assetProcessor.getTextures(), dataAccessor);
-
-        Gdx.input.setInputProcessor(mouseAdapter);
     }
 
     @Override
@@ -105,14 +109,14 @@ public class Main extends ApplicationAdapter {
 
         int selectionIndex = characterMenu.getSelectIndex();
 
-        game.setPlayer(players[selectionIndex]);
+        gameComponent.setPlayer(players[selectionIndex]);
 
         if (characterMenu.isStart()) {
             characterMenu.init();
             gameState = GameState.GAME;
         }
-        if (game.isReturnToMenu()) {
-            game.init();
+        if (gameComponent.isReturnToMenu()) {
+            gameComponent.init();
             gameState = GameState.MENU;
         }
 
@@ -125,8 +129,8 @@ public class Main extends ApplicationAdapter {
             characterMenu.draw(batch);
         }
         if (gameState == GameState.GAME) {
-            game.update(cursorPos.getX(), cursorPos.getY());
-            game.draw(batch);
+            gameComponent.update(cursorPos.getX(), cursorPos.getY());
+            gameComponent.draw(batch);
         }
         batch.end();
     }
@@ -137,7 +141,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.dispose();
 
-        game.dispose();
+        gameComponent.dispose();
 
         for (Player player : players) player.dispose();
 

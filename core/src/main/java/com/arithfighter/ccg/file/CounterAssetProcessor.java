@@ -17,7 +17,7 @@ public class CounterAssetProcessor {
 
         loadCards();
 
-        finishLoading();
+        assetManager.finishLoading();
     }
 
     private void loadTextures(){
@@ -28,10 +28,6 @@ public class CounterAssetProcessor {
     private void loadCards(){
         for(String cardFile : fileLibrary.getCardFiles())
             assetManager.load(cardFile, Texture.class);
-    }
-
-    private void finishLoading(){
-        assetManager.finishLoading();
     }
 
     public void update(int millis){
