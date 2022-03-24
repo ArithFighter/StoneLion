@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.entity;
 
-public class SkillHandler {
+public class SkillStateManager {
     private enum SkillState {NEUTRAL, READY}
     private SkillState skillState = SkillState.NEUTRAL;
 

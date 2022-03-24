@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final SkillHandler skillHandler;
+    private final SkillStateManager skillStateManager;
     private final AutoResetHandler autoResetHandler;
     private final Recorder sumAccessor;
     private final EnergyBar energyBar;
@@ -19,7 +19,7 @@ public class Player {
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
         energyRecorder = new Recorder();
 
-        skillHandler = new SkillHandler();
+        skillStateManager = new SkillStateManager();
 
         hand = new Hand(cards, character);
 
@@ -72,7 +72,7 @@ public class Player {
         if (autoResetHandler.isTimeToReset()) {
             sumAccessor.reset();
             autoResetHandler.initialize();
-            skillHandler.init();
+            skillStateManager.init();
         }
     }
 
@@ -107,8 +107,8 @@ public class Player {
     }
 
     private void checkNormalCardPlayed() {
-        if (skillHandler.isSkillReady())
-            skillHandler.init();
+        if (skillStateManager.isSkillReady())
+            skillStateManager.init();
 
         sumAccessor.update(hand.getCardNumber());
 
@@ -120,15 +120,15 @@ public class Player {
             castSkill(character);
             energyRecorder.reset();
             autoResetHandler.initialize();
-            skillHandler.init();
+            skillStateManager.init();
         } else {
             doWhenResetCardPlay();
-            skillHandler.setReady();
+            skillStateManager.setReady();
         }
     }
 
     private boolean isSkillReady() {
-        return skillHandler.isSkillReady() &&
+        return skillStateManager.isSkillReady() &&
                 energyRecorder.getRecord() >= energyBar.getMax();
     }
 

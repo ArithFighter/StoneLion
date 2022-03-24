@@ -22,7 +22,6 @@ public class Main extends ApplicationAdapter {
     private Player[] players;
     private CharacterMenu characterMenu;
     private GameDataAccessor dataAccessor;
-    private int selectionIndex = 0;
 
     private enum GameState {MENU, GAME}
 
@@ -72,6 +71,8 @@ public class Main extends ApplicationAdapter {
 
         players = new Player[characterMenu.getSelectionQuantity()];
 
+        SkillHandler skillHandler = new SkillHandler();
+
         for (int i = 0; i < characterMenu.getSelectionQuantity(); i++)
             players[i] = new Player(
                     assetProcessor.getTextures(),
@@ -84,31 +85,13 @@ public class Main extends ApplicationAdapter {
 
                 @Override
                 public void castSkill(CharacterList character) {
-                    castCharacterSkill(character);
+                    skillHandler.cast(character, game.getNumberBoxDisplacer());
                 }
             };
 
         game = new Game(assetProcessor.getTextures(), dataAccessor);
 
         Gdx.input.setInputProcessor(mouseAdapter);
-    }
-
-    private void castCharacterSkill(CharacterList character) {
-        switch (character) {
-            case KNIGHT:
-                //change one value of numberBox
-                game.getNumberBoxDisplacer().set(0, 33);
-                break;
-            case ROGUE:
-                //reduce all values by 1
-                for (int i = 0; i < game.getNumberBoxDisplacer().getNumberBoxQuantity(); i++)
-                    if (game.getNumberBoxDisplacer().getNumberList().get(i) > 0) {
-                        game.getNumberBoxDisplacer().set(
-                                i,
-                                game.getNumberBoxDisplacer().getNumberList().get(i) - 1);
-                    }
-                break;
-        }
     }
 
     @Override
@@ -120,7 +103,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        selectionIndex = characterMenu.getSelectIndex();
+        int selectionIndex = characterMenu.getSelectIndex();
 
         game.setPlayer(players[selectionIndex]);
 
@@ -156,9 +139,7 @@ public class Main extends ApplicationAdapter {
 
         game.dispose();
 
-        for (int i = 0; i < players.length; i++)
-            if (i != selectionIndex)
-                players[i].dispose();
+        for (Player player : players) player.dispose();
 
         characterMenu.dispose();
     }

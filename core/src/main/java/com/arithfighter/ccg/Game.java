@@ -126,7 +126,6 @@ public class Game {
     public void dispose(){
         dataAccessor.dispose();
         numberBoxDisplacer.dispose();
-        player.dispose();
         sumBox.dispose();
         returnButton.dispose();
     }
