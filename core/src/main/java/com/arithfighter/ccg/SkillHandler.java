@@ -7,9 +7,12 @@ import java.util.ArrayList;
 
 public class SkillHandler {
     NumberBoxDisplacer numberBoxDisplacer;
+    NumBoxOperator operator;
 
     public SkillHandler(NumberBoxDisplacer numberBoxDisplacer){
         this.numberBoxDisplacer = numberBoxDisplacer;
+
+        operator = new NumBoxOperator(this.numberBoxDisplacer);
     }
 
     public void cast(CharacterList character){
@@ -20,18 +23,33 @@ public class SkillHandler {
             case ROGUE:
                 changeANoneZeroValueToSixteen();
                 break;
+            case HUNTER:
+                break;
         }
     }
 
     private void reduceAllValueByOne(){
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
-
-            if (isValueBiggerThanZero(i))
-                numberBoxDisplacer.set(i, getNumberBoxValue(i) - 1);
+            if (operator.isValueBiggerThanZero(i))
+                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) - 1);
         }
     }
 
     private void changeANoneZeroValueToSixteen(){
+        numberBoxDisplacer.set(operator.getRandomNonZeroValueIndex(), 16);
+    }
+
+
+}
+
+class NumBoxOperator{
+    NumberBoxDisplacer numberBoxDisplacer;
+
+    public NumBoxOperator(NumberBoxDisplacer numberBoxDisplacer){
+        this.numberBoxDisplacer = numberBoxDisplacer;
+    }
+
+    public int getRandomNonZeroValueIndex(){
         ArrayList<Integer> indexList = new ArrayList<>();
 
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
@@ -41,14 +59,14 @@ public class SkillHandler {
 
         int indexPick = getRandomNum(indexList.size());
 
-        numberBoxDisplacer.set(indexList.get(indexPick), 16);
+        return indexList.get(indexPick);
     }
 
-    private boolean isValueBiggerThanZero(int i){
+    public boolean isValueBiggerThanZero(int i){
         return getNumberBoxValue(i) > 0;
     }
 
-    private int getNumberBoxValue(int i){
+    public int getNumberBoxValue(int i){
         return numberBoxDisplacer.getNumberList().get(i);
     }
 
