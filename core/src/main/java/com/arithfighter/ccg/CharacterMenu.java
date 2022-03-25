@@ -54,10 +54,6 @@ public class CharacterMenu {
         selectionFont.draw(batch, names[getSelectIndex()], 900, 500);
     }
 
-    public int getSelectionQuantity() {
-        return names.length;
-    }
-
     public int getSelectIndex() {
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].isActive())
