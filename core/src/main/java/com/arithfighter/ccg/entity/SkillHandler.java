@@ -52,7 +52,8 @@ public class SkillHandler {
     }
 
     private void replaceOneNonZeroValue(int value){
-        numberBoxDisplacer.set(operator.getRandomNonZeroValueIndex(), value);
+        int index = operator.getRandomNonZeroValueIndex();
+        numberBoxDisplacer.set(index, value);
     }
 }
 
