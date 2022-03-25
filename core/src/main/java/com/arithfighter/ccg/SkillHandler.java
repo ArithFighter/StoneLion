@@ -4,21 +4,34 @@ import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.entity.NumberBoxDisplacer;
 
 public class SkillHandler {
-    public void cast(CharacterList character, NumberBoxDisplacer numDisplacer){
+    NumberBoxDisplacer numberBoxDisplacer;
+    public SkillHandler(NumberBoxDisplacer numberBoxDisplacer){
+        this.numberBoxDisplacer = numberBoxDisplacer;
+    }
+
+    public void cast(CharacterList character){
         switch (character) {
             case KNIGHT:
                 //change one value of numberBox
-                numDisplacer.set(0, 33);
+                numberBoxDisplacer.set(0, 33);
                 break;
             case ROGUE:
-                //reduce all values by 1
-                for (int i = 0; i < numDisplacer.getNumberBoxQuantity(); i++)
-                    if (numDisplacer.getNumberList().get(i) > 0) {
-                        numDisplacer.set(
-                                i,
-                                numDisplacer.getNumberList().get(i) - 1);
-                    }
+                reduceAllValueByOne();
                 break;
         }
+    }
+
+    private int getNumberBoxValue(int i){
+        return numberBoxDisplacer.getNumberList().get(i);
+    }
+
+    private void reduceAllValueByOne(){
+        int quantity = numberBoxDisplacer.getNumberBoxQuantity();
+        for (int i = 0; i < quantity; i++)
+                    if (getNumberBoxValue(i) > 0) {
+                        numberBoxDisplacer.set(
+                                i,
+                                getNumberBoxValue(i) - 1);
+                    }
     }
 }

@@ -17,13 +17,13 @@ public class Game {
 
         players = new Player[characterQuantity];
 
-        addPlayers(textures, cards);
-
         gameComponent = new GameComponent(textures, dataAccessor);
+
+        addPlayers(textures, cards);
     }
 
     private void addPlayers(Texture[] textures, Texture[] cards) {
-        SkillHandler skillHandler = new SkillHandler();
+        SkillHandler skillHandler = new SkillHandler(gameComponent.getNumberBoxDisplacer());
 
         for (int i = 0; i < characterQuantity; i++)
             players[i] = new Player(
@@ -37,7 +37,7 @@ public class Game {
 
                 @Override
                 public void castSkill(CharacterList character) {
-                    skillHandler.cast(character, gameComponent.getNumberBoxDisplacer());
+                    skillHandler.cast(character);
                 }
             };
     }
