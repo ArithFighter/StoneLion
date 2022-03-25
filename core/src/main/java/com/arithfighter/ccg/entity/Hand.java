@@ -21,14 +21,13 @@ public class Hand {
         float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
         float initY = -WindowSetting.GRID_Y;
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
-        CharacterSetService css = new CharacterSetService();
 
         for (int i = 0; i < cards.length; i++)
             cards[i] = new NumberCard(
                     initX + i * getPadding(cardSet),
                     initY,
                     cardSet[i],
-                    css.getNumberSet(character)[i]
+                    character.numberSet[i]
             );
     }
 
@@ -85,21 +84,6 @@ public class Hand {
 
     public void dispose() {
         texturesExtractor.dispose();
-    }
-}
-
-class CharacterSetService {
-    public int[] getNumberSet(CharacterList player) {
-        CharacterList[] characters = CharacterList.values();
-
-        int[] numberSet = new int[]{characters[0].numberSet.length};
-
-        for (CharacterList character : characters) {
-            if (player == character)
-                numberSet = character.numberSet;
-        }
-
-        return numberSet;
     }
 }
 
