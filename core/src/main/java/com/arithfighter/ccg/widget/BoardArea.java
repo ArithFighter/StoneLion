@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.widget;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,10 +12,11 @@ public class BoardArea {
 
     public BoardArea(Texture texture){
         widget = new SpriteWidget();
-        widget.setSize(texture, 14);
+        widget.setSize(texture, 3);
         point = widget.getPoint();
 
         table = new Sprite(texture);
+        table.setColor(Color.BROWN);
     }
 
     public void setPosition(int x, int y){

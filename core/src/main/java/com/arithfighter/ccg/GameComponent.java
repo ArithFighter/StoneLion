@@ -30,7 +30,7 @@ public class GameComponent {
         };
 
         sumBox = new SumBox(textures[2]);
-        sumBox.setPosition(CENTER_X + GRID_X * 8, GRID_Y * 7);
+        sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
 
         returnButton = new Button(textures[6]);
         returnButton.setPosition(1000, 600);
@@ -52,7 +52,7 @@ public class GameComponent {
                 player.playCard();
             }
         };
-        boardArea.setPosition(CENTER_X + GRID_X * 4, GRID_Y * 6);
+        boardArea.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
     }
 
     public void init(){
