@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.widget.BoardArea;

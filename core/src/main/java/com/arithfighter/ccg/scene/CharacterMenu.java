@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.Button;

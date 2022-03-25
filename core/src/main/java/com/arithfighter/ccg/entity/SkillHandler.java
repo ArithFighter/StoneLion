@@ -1,7 +1,4 @@
-package com.arithfighter.ccg;
-
-import com.arithfighter.ccg.entity.CharacterList;
-import com.arithfighter.ccg.entity.NumberBoxDisplacer;
+package com.arithfighter.ccg.entity;
 
 import java.util.ArrayList;
 

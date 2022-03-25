@@ -1,8 +1,10 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.entity.GameComponent;
 import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.entity.GameDataAccessor;
 import com.arithfighter.ccg.entity.Player;
+import com.arithfighter.ccg.entity.SkillHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
