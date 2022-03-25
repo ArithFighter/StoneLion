@@ -18,28 +18,45 @@ public class SkillHandler {
     public void cast(CharacterList character){
         switch (character) {
             case KNIGHT:
-                reduceAllValueByOne();
+                increaseOneNonZeroValueBySix();
                 break;
             case ROGUE:
-                changeANoneZeroValueToSixteen();
+                replaceOneNonZeroValue(16);
                 break;
             case HUNTER:
+                reduceAllNonZeroValueByOne();
+                break;
+            case PALADIN:
+                replaceOneNonZeroValue(31);
+                break;
+            case WARRIOR:
+                increaseAllNonZeroValueByOne();
                 break;
         }
     }
 
-    private void reduceAllValueByOne(){
+    private void increaseAllNonZeroValueByOne(){
+        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+            if (operator.isValueBiggerThanZero(i))
+                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) + 1);
+        }
+    }
+
+    private void reduceAllNonZeroValueByOne(){
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
             if (operator.isValueBiggerThanZero(i))
                 numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) - 1);
         }
     }
 
-    private void changeANoneZeroValueToSixteen(){
-        numberBoxDisplacer.set(operator.getRandomNonZeroValueIndex(), 16);
+    private void increaseOneNonZeroValueBySix(){
+        int index = operator.getRandomNonZeroValueIndex();
+        numberBoxDisplacer.set(index, operator.getNumberBoxValue(index)+6);
     }
 
-
+    private void replaceOneNonZeroValue(int value){
+        numberBoxDisplacer.set(operator.getRandomNonZeroValueIndex(), value);
+    }
 }
 
 class NumBoxOperator{
