@@ -20,9 +20,11 @@ public class CharacterMenu {
         int length = CharacterList.values().length;
         buttons = new Button[length];
 
+        ButtonPlacer placer = new ButtonPlacer();
+
         for (int i = 0; i < length; i++) {
             buttons[i] = new Button(textures[6]);
-            buttons[i].setPosition(getButtonX(i), getButtonY(i));
+            buttons[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
 
         startButton = new Button(textures[6]);
@@ -42,18 +44,6 @@ public class CharacterMenu {
 
     public void setBatch(SpriteBatch batch) {
         this.batch = batch;
-    }
-
-    private int getButtonX(int i) {
-        return i < 3 ? 200 : 500;
-    }
-
-    private int getButtonY(int i) {
-        int initY = 480;
-        int margin = 150;
-        int row = 3;
-
-        return i < row ? initY - i * margin : initY - (i - row) * margin;
     }
 
     public void init() {
@@ -114,5 +104,19 @@ public class CharacterMenu {
 
         startButton.dispose();
         selectionFont.dispose();
+    }
+}
+
+class ButtonPlacer{
+    public int getButtonX(int i) {
+        return i < 3 ? 200 : 500;
+    }
+
+    public int getButtonY(int i) {
+        int initY = 480;
+        int margin = 150;
+        int row = 3;
+
+        return i < row ? initY - i * margin : initY - (i - row) * margin;
     }
 }
