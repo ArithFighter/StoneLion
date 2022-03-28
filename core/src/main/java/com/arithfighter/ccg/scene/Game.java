@@ -1,13 +1,11 @@
 package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.SoundManager;
-import com.arithfighter.ccg.entity.GameComponent;
-import com.arithfighter.ccg.entity.CharacterList;
-import com.arithfighter.ccg.entity.GameDataAccessor;
-import com.arithfighter.ccg.entity.Player;
-import com.arithfighter.ccg.entity.SkillHandler;
+import com.arithfighter.ccg.entity.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.ArrayList;
 
 public class Game {
     private final Player[] players;
@@ -95,5 +93,93 @@ public class Game {
         dataAccessor.dispose();
         gameComponent.dispose();
         for (Player player : players) player.dispose();
+    }
+}
+
+class SkillHandler {
+    NumberBoxDisplacer numberBoxDisplacer;
+    NumBoxOperator operator;
+
+    public SkillHandler(NumberBoxDisplacer numberBoxDisplacer){
+        this.numberBoxDisplacer = numberBoxDisplacer;
+
+        operator = new NumBoxOperator(this.numberBoxDisplacer);
+    }
+
+    public void cast(CharacterList character){
+        switch (character) {
+            case KNIGHT:
+                increaseOneNonZeroValueBySix();
+                break;
+            case ROGUE:
+                replaceOneNonZeroValue(16);
+                break;
+            case HUNTER:
+                reduceAllNonZeroValueByOne();
+                break;
+            case PALADIN:
+                replaceOneNonZeroValue(31);
+                break;
+            case WARRIOR:
+                increaseAllNonZeroValueByOne();
+                break;
+        }
+    }
+
+    private void increaseAllNonZeroValueByOne(){
+        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+            if (operator.isValueBiggerThanZero(i))
+                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) + 1);
+        }
+    }
+
+    private void reduceAllNonZeroValueByOne(){
+        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+            if (operator.isValueBiggerThanZero(i))
+                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) - 1);
+        }
+    }
+
+    private void increaseOneNonZeroValueBySix(){
+        int index = operator.getRandomNonZeroValueIndex();
+        numberBoxDisplacer.set(index, operator.getNumberBoxValue(index)+6);
+    }
+
+    private void replaceOneNonZeroValue(int value){
+        int index = operator.getRandomNonZeroValueIndex();
+        numberBoxDisplacer.set(index, value);
+    }
+}
+
+class NumBoxOperator{
+    NumberBoxDisplacer numberBoxDisplacer;
+
+    public NumBoxOperator(NumberBoxDisplacer numberBoxDisplacer){
+        this.numberBoxDisplacer = numberBoxDisplacer;
+    }
+
+    public int getRandomNonZeroValueIndex(){
+        ArrayList<Integer> indexList = new ArrayList<>();
+
+        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+            if (isValueBiggerThanZero(i))
+                indexList.add(i);
+        }
+
+        int indexPick = getRandomNum(indexList.size());
+
+        return indexList.get(indexPick);
+    }
+
+    public boolean isValueBiggerThanZero(int i){
+        return getNumberBoxValue(i) > 0;
+    }
+
+    public int getNumberBoxValue(int i){
+        return numberBoxDisplacer.getNumberList().get(i);
+    }
+
+    private int getRandomNum(int range){
+        return (int)(Math.random() * (range + 1) - 1);
     }
 }
