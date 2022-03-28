@@ -30,6 +30,10 @@ public class CharacterMenu {
         selectionFont.setColor(Color.WHITE);
     }
 
+    public boolean isStartButtonActive(){
+        return startButton.isActive();
+    }
+
     public void setBatch(SpriteBatch batch){
         this.batch = batch;
     }

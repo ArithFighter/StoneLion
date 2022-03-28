@@ -44,6 +44,9 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            if (characterMenu.isStartButtonActive()){
+                soundManager.playAcceptSound();
+            }
             characterMenu.deactivateButton();
 
             game.touchUp(cursorPos.getX(), cursorPos.getY());
