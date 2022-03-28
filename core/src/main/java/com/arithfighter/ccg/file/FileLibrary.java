@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.file;
 
 public class FileLibrary {
-    private final String[] textures = {
+    private final String[] textureFiles = {
             "widget/Card_template.png",
             "widget/BoardArea.png",
             "widget/sum-Display-block.png",
@@ -11,7 +11,7 @@ public class FileLibrary {
             "widget/Button1.png"
     };
 
-    private final String[] cards = {
+    private final String[] cardFiles = {
             "cards/Number-re0.png",
             "cards/Number-1.png",
             "cards/Number-2.png",
@@ -30,11 +30,32 @@ public class FileLibrary {
             "cards/Number-max.png",
     };
 
-    public String[] getTextureFile(){
-        return textures;
+    private final String[] musicFiles = {
+            "music/character-select.ogg",
+            "music/theme.ogg",
+            "music/game-complete.ogg"
+    };
+
+    private final String[] soundFiles = {
+            "sound/accept.ogg",
+            "sound/collected.ogg",
+            "sound/denied.ogg",
+            "sound/select.ogg"
+    };
+
+    public String[] getTextureFiles(){
+        return textureFiles;
     }
 
     public String[] getCardFiles(){
-        return cards;
+        return cardFiles;
+    }
+
+    public String[] getMusicFiles() {
+        return musicFiles;
+    }
+
+    public String[] getSoundFiles() {
+        return soundFiles;
     }
 }

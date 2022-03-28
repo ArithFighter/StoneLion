@@ -1,6 +1,6 @@
 package com.arithfighter.ccg;
 
-import com.arithfighter.ccg.file.CounterAssetProcessor;
+import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.CharacterMenu;
 import com.arithfighter.ccg.scene.Game;
 import com.arithfighter.ccg.system.CursorPositionAccessor;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class Main extends ApplicationAdapter {
-    private CounterAssetProcessor assetProcessor;
+    private MyAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private CharacterMenu characterMenu;
@@ -49,7 +49,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        assetProcessor = new CounterAssetProcessor();
+        assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
 
