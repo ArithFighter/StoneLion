@@ -7,7 +7,6 @@ import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -23,6 +22,7 @@ public class Main extends ApplicationAdapter {
     private enum GameState {MENU, GAME}
     private GameState gameState = GameState.MENU;
     private SoundManager soundManager;
+    private MusicManager musicManager;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
@@ -67,6 +67,8 @@ public class Main extends ApplicationAdapter {
 
         soundManager = new SoundManager(assetProcessor.getSounds());
 
+        musicManager = new MusicManager(assetProcessor.getMusics());
+
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
@@ -80,6 +82,8 @@ public class Main extends ApplicationAdapter {
         cursorPos.update();
 
         soundManager.setVolume(0.8f);
+
+        musicManager.setVolume(0.8f);
 
         game.setCurrentPlayerToGame(characterMenu.getSelectIndex());
 
@@ -96,19 +100,14 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawGame() {
-        Music menuMusic = assetProcessor.getMusics()[0];
-        Music gameTheme = assetProcessor.getMusics()[1];
-
         batch.begin();
         if (gameState == GameState.MENU) {
-            gameTheme.stop();
-            menuMusic.play();
+            musicManager.playMenuMusic();
             characterMenu.setBatch(batch);
             characterMenu.draw();
         }
         if (gameState == GameState.GAME) {
-            menuMusic.stop();
-            gameTheme.play();
+            musicManager.playTheme();
             game.setBatch(batch);
             game.update(cursorPos.getX(), cursorPos.getY());
             game.draw();
@@ -126,5 +125,9 @@ public class Main extends ApplicationAdapter {
         game.dispose();
 
         characterMenu.dispose();
+
+        soundManager.dispose();
+
+        musicManager.dispose();
     }
 }
