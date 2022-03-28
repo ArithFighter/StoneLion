@@ -28,7 +28,6 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if (gameState == GameState.MENU){
-                soundManager.playTouchedSound();
                 characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             }
 
@@ -44,9 +43,12 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (characterMenu.isStartButtonActive()){
+            if (characterMenu.isCharButtonActive())
+                soundManager.playTouchedSound();
+
+            if (characterMenu.isStartButtonActive())
                 soundManager.playAcceptSound();
-            }
+
             characterMenu.deactivateButton();
 
             game.touchUp(cursorPos.getX(), cursorPos.getY());

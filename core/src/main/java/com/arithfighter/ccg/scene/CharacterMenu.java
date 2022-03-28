@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.Button;
 import com.badlogic.gdx.graphics.Color;
@@ -11,14 +12,14 @@ public class CharacterMenu {
     private final Button[] buttons;
     private final Button startButton;
     private int selectIndex = 0;
-    private final String[] names = {"Knight", "Rogue", "Hunter", "Paladin", "Warrior"};
     private boolean isGameStart = false;
     private SpriteBatch batch;
 
     public CharacterMenu(Texture[] textures) {
-        buttons = new Button[names.length];
+        int length = CharacterList.values().length;
+        buttons = new Button[length];
 
-        for (int i = 0; i < names.length; i++) {
+        for (int i = 0; i < length; i++) {
             buttons[i] = new Button(textures[6]);
             buttons[i].setPosition(getButtonX(i), getButtonY(i));
         }
@@ -30,11 +31,15 @@ public class CharacterMenu {
         selectionFont.setColor(Color.WHITE);
     }
 
-    public boolean isStartButtonActive(){
+    public boolean isCharButtonActive() {
+        return buttons[selectIndex].isActive();
+    }
+
+    public boolean isStartButtonActive() {
         return startButton.isActive();
     }
 
-    public void setBatch(SpriteBatch batch){
+    public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }
 
@@ -55,12 +60,14 @@ public class CharacterMenu {
     }
 
     public void draw() {
+        CharacterList[] characters = CharacterList.values();
+
         for (int i = 0; i < buttons.length; i++)
-            buttons[i].draw(batch, names[i]);
+            buttons[i].draw(batch, characters[i].name());
 
         startButton.draw(batch, "Start");
 
-        selectionFont.draw(batch, names[getSelectIndex()], 900, 500);
+        selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
     }
 
     public int getSelectIndex() {
