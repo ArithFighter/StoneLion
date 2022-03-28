@@ -22,14 +22,13 @@ public class Main extends ApplicationAdapter {
     private Game game;
     private enum GameState {MENU, GAME}
     private GameState gameState = GameState.MENU;
+    private SoundManager soundManager;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            Music touchedSound = assetProcessor.getSounds()[3];
             if (gameState == GameState.MENU){
-                touchedSound.stop();
-                touchedSound.play();
+                soundManager.playTouchedSound();
                 characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
             }
 
@@ -66,6 +65,8 @@ public class Main extends ApplicationAdapter {
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
+        soundManager = new SoundManager(assetProcessor.getSounds());
+
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
@@ -77,6 +78,8 @@ public class Main extends ApplicationAdapter {
         assetProcessor.update(17);
 
         cursorPos.update();
+
+        soundManager.setVolume(0.8f);
 
         game.setCurrentPlayerToGame(characterMenu.getSelectIndex());
 
