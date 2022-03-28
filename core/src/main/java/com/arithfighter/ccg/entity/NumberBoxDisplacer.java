@@ -1,10 +1,13 @@
 package com.arithfighter.ccg.entity;
 
+import com.arithfighter.ccg.animate.Animator;
 import com.arithfighter.ccg.system.number.RandomNumListGenerator;
 import com.arithfighter.ccg.system.NumberListInspector;
+import com.arithfighter.ccg.time.TimeHandler;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.LinkedList;
 
@@ -17,6 +20,8 @@ public class NumberBoxDisplacer {
     private final int[] numbers = new int[BOX_QUANTITY];
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
+    private int matchedBoxIndex = -1;
+    private final TimeHandler timeHandler = new TimeHandler();
 
     public NumberBoxDisplacer(Texture texture) {
         numberBoxes = new NumberBox[BOX_QUANTITY];
@@ -80,6 +85,7 @@ public class NumberBoxDisplacer {
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (sum == numbers[i] && numbers[i] > 0) {
+                matchedBoxIndex = i;
                 doWhenSumAndNumMatched();
                 set(i, 0);
             }
@@ -102,9 +108,20 @@ public class NumberBoxDisplacer {
     }
 
     public void draw(SpriteBatch batch) {
+        long timeGap = 1000 / 8;
         for (int i = 0; i < BOX_QUANTITY; i++) {
-            if (numbers[i] > 0)
+            if (numbers[i] > 0){
                 numberBoxes[i].draw(numbers[i], batch);
+            }
+        }
+        if (matchedBoxIndex>=0){
+            timeHandler.updatePastedTime();
+            if (TimeUtils.millis() % (timeGap + timeGap) < timeGap)
+                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
+            if (timeHandler.getPastedTime()>1.2f){
+                timeHandler.resetPastedTime();
+                matchedBoxIndex-=matchedBoxIndex+1;
+            }
         }
     }
 
