@@ -7,6 +7,7 @@ import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -25,8 +26,12 @@ public class Main extends ApplicationAdapter {
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            if (gameState == GameState.MENU)
+            Music touchedSound = assetProcessor.getSounds()[3];
+            if (gameState == GameState.MENU){
+                touchedSound.stop();
+                touchedSound.play();
                 characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
+            }
 
             game.touchDown(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -88,12 +93,19 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawGame() {
+        Music menuMusic = assetProcessor.getMusics()[0];
+        Music gameTheme = assetProcessor.getMusics()[1];
+
         batch.begin();
         if (gameState == GameState.MENU) {
+            gameTheme.stop();
+            menuMusic.play();
             characterMenu.setBatch(batch);
             characterMenu.draw();
         }
         if (gameState == GameState.GAME) {
+            menuMusic.stop();
+            gameTheme.play();
             game.setBatch(batch);
             game.update(cursorPos.getX(), cursorPos.getY());
             game.draw();
