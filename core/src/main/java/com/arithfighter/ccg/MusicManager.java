@@ -17,12 +17,12 @@ public class MusicManager {
     }
 
     public void playMenuMusic(){
-        gameTheme.stop();
+        gameTheme.dispose();
         menuMusic.play();
     }
 
     public void playTheme(){
-        menuMusic.stop();
+        menuMusic.dispose();
         gameTheme.play();
     }
 

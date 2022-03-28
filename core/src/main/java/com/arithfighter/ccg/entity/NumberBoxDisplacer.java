@@ -19,8 +19,7 @@ public class NumberBoxDisplacer {
     private final int[] numbers = new int[BOX_QUANTITY];
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
-    private int matchedBoxIndex = -1;
-    private final TimeHandler timeHandler = new TimeHandler();
+    private final NumberBoxAnimation animation;
 
     public NumberBoxDisplacer(Texture texture) {
         numberBoxes = new NumberBox[BOX_QUANTITY];
@@ -28,13 +27,15 @@ public class NumberBoxDisplacer {
         createNumberBoxes(texture);
 
         randomNumListGenerator = new RandomNumListGenerator(BOX_QUANTITY);
+
+        animation = new NumberBoxAnimation(numberBoxes);
     }
 
-    public int getNumberBoxQuantity(){
+    public int getNumberBoxQuantity() {
         return BOX_QUANTITY;
     }
 
-    private void createNumberBoxes(Texture texture){
+    private void createNumberBoxes(Texture texture) {
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
 
         for (int i = 0; i < BOX_QUANTITY; i++) {
@@ -46,20 +47,20 @@ public class NumberBoxDisplacer {
         }
     }
 
-    public void refresh(){
+    public void refresh() {
         randomNumListGenerator.clear();
         numberList.clear();
     }
 
-    public LinkedList<Integer> getNumberList(){
+    public LinkedList<Integer> getNumberList() {
         return numberList;
     }
 
-    public void set(int index, int value){
-        if (index> BOX_QUANTITY)
+    public void set(int index, int value) {
+        if (index > BOX_QUANTITY)
             index = BOX_QUANTITY;
 
-        if (index<0)
+        if (index < 0)
             index = 0;
 
         numberList.set(index, value);
@@ -71,10 +72,12 @@ public class NumberBoxDisplacer {
         handleWhenNumMatchedSum(sum);
 
         checkEveryNumMatched();
+
+        animation.setNumbers(numbers);
     }
 
     private void updateNumbers() {
-        if (numberList.size()< BOX_QUANTITY)
+        if (numberList.size() < BOX_QUANTITY)
             numberList.addAll(randomNumListGenerator.getNumbers());
 
         for (int i = 0; i < BOX_QUANTITY; i++)
@@ -84,7 +87,7 @@ public class NumberBoxDisplacer {
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
             if (sum == numbers[i] && numbers[i] > 0) {
-                matchedBoxIndex = i;
+                animation.setMatchedBoxIndex(i);
 
                 doWhenSumAndNumMatched();
 
@@ -101,7 +104,7 @@ public class NumberBoxDisplacer {
 
         numberListInspector.inspectNumberList(numbers);
 
-        if (numberListInspector.isAllNumberAreZero()){
+        if (numberListInspector.isAllNumberAreZero()) {
             randomNumListGenerator.clear();
             numberList.clear();
         }
@@ -112,26 +115,9 @@ public class NumberBoxDisplacer {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(numbers[i], batch);
         }
-        drawAnimationWhenSumNumMatched(batch);
-    }
 
-    private void drawAnimationWhenSumNumMatched(SpriteBatch batch){
-        Animator animator = new Animator(){
-            @Override
-            public void renderEffect() {
-                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
-            }
-        };
-        if (matchedBoxIndex>=0){
-            timeHandler.updatePastedTime();
-
-            animator.animateFlashy(8);
-
-            if (timeHandler.getPastedTime()>1.2f){
-                timeHandler.resetPastedTime();
-                matchedBoxIndex-=matchedBoxIndex+1;
-            }
-        }
+        animation.setBatch(batch);
+        animation.draw();
     }
 
     public void dispose() {
@@ -140,7 +126,7 @@ public class NumberBoxDisplacer {
     }
 }
 
-class NumberBoxPlacer{
+class NumberBoxPlacer {
     private final float initX = GRID_X * 9.5f;
     private final float initY = GRID_Y * 5;
     private final float margin = GRID_X;
@@ -148,8 +134,8 @@ class NumberBoxPlacer{
     public float getNumberBoxX(int i, float width) {
         float x = initX;
 
-        for (int j = 0;j<3;j++)
-            if (i%3 == j) x += (margin + width) * j;
+        for (int j = 0; j < 3; j++)
+            if (i % 3 == j) x += (margin + width) * j;
 
         return x;
     }
@@ -157,10 +143,59 @@ class NumberBoxPlacer{
     public float getNumberBoxY(int i, float height) {
         float y = initY;
 
-        for(int j =0; j<5; j++)
-            if (i/3 == j)
+        for (int j = 0; j < 5; j++)
+            if (i / 3 == j)
                 y += (margin + height) * j;
 
         return y;
+    }
+}
+
+class NumberBoxAnimation {
+    private int[] numbers;
+    private final Animator animator;
+    private final TimeHandler timeHandler;
+    private SpriteBatch batch;
+    private int matchedBoxIndex = -1;
+
+    public NumberBoxAnimation(NumberBox[] numberBoxes) {
+        animator = new Animator() {
+            @Override
+            public void renderEffect() {
+                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
+            }
+        };
+        timeHandler = new TimeHandler();
+    }
+
+    public void setNumbers(int[] numbers){
+        this.numbers = numbers;
+    }
+
+    public void setBatch(SpriteBatch batch){
+        this.batch = batch;
+    }
+
+    public void setMatchedBoxIndex(int i) {
+        matchedBoxIndex = i;
+    }
+
+    public void draw() {
+        int ratePerSec = 8;
+        float durationSec = 1.2f;
+
+        if (matchedBoxIndex >= 0) {
+            timeHandler.updatePastedTime();
+
+            animator.animateFlashy(ratePerSec);
+
+            if (timeHandler.getPastedTime() > durationSec)
+                init();
+        }
+    }
+
+    private void init(){
+        timeHandler.resetPastedTime();
+        matchedBoxIndex -= matchedBoxIndex + 1;
     }
 }

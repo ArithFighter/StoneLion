@@ -27,9 +27,8 @@ public class Main extends ApplicationAdapter {
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            if (gameState == GameState.MENU){
+            if (gameState == GameState.MENU)
                 characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
-            }
 
             game.touchDown(cursorPos.getX(), cursorPos.getY());
             return true;
