@@ -12,7 +12,8 @@ public class CharacterMenu {
     private final Button[] buttons;
     private final Button startButton;
     private int selectIndex = 0;
-    private boolean gameStart = false;
+    private enum GameReady {NEUTRAL, READY, START}
+    private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
 
     public CharacterMenu(Texture[] textures) {
@@ -56,10 +57,12 @@ public class CharacterMenu {
     }
 
     public void init() {
-        gameStart = false;
+        gameReady = GameReady.NEUTRAL;
     }
 
     public void draw() {
+        handleStartButton();
+
         CharacterList[] characters = CharacterList.values();
 
         for (int i = 0; i < buttons.length; i++)
@@ -68,6 +71,15 @@ public class CharacterMenu {
         startButton.draw(batch, "Start");
 
         selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
+    }
+
+    private void handleStartButton(){
+        if (startButton.isActive())
+            gameReady = GameReady.READY;
+        else{
+            if (gameReady == GameReady.READY)
+                gameReady = GameReady.START;
+        }
     }
 
     public int getSelectIndex() {
@@ -79,9 +91,7 @@ public class CharacterMenu {
     }
 
     public boolean isGameStart() {
-        if (startButton.isActive())
-            gameStart = true;
-        return gameStart;
+        return gameReady == GameReady.START;
     }
 
     public void activateButton(int mouseX, int mouseY) {
