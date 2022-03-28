@@ -86,7 +86,9 @@ public class NumberBoxDisplacer {
         for (int i = 0; i < numbers.length; i++) {
             if (sum == numbers[i] && numbers[i] > 0) {
                 matchedBoxIndex = i;
+
                 doWhenSumAndNumMatched();
+
                 set(i, 0);
             }
         }
@@ -104,20 +106,28 @@ public class NumberBoxDisplacer {
             randomNumListGenerator.clear();
             numberList.clear();
         }
-
     }
 
     public void draw(SpriteBatch batch) {
-        long timeGap = 1000 / 8;
         for (int i = 0; i < BOX_QUANTITY; i++) {
-            if (numbers[i] > 0){
+            if (numbers[i] > 0)
                 numberBoxes[i].draw(numbers[i], batch);
-            }
         }
+        drawAnimationWhenSumNumMatched(batch);
+    }
+
+    private void drawAnimationWhenSumNumMatched(SpriteBatch batch){
+        Animator animator = new Animator(){
+            @Override
+            public void renderEffect() {
+                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
+            }
+        };
         if (matchedBoxIndex>=0){
             timeHandler.updatePastedTime();
-            if (TimeUtils.millis() % (timeGap + timeGap) < timeGap)
-                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
+
+            animator.animateFlashy(8);
+
             if (timeHandler.getPastedTime()>1.2f){
                 timeHandler.resetPastedTime();
                 matchedBoxIndex-=matchedBoxIndex+1;
