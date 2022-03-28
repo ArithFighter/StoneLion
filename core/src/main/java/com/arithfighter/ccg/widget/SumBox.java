@@ -11,6 +11,7 @@ public class SumBox{
     private final Sprite sumDisplayBlock;
     private final SpriteWidget widget;
     private final Point point;
+    private final int warningCondition = 2;
     
     public SumBox(Texture texture){
         widget = new SpriteWidget(36);
@@ -20,6 +21,10 @@ public class SumBox{
         text = new Font(widget.getFontSize());
 
         sumDisplayBlock = new Sprite(texture);
+    }
+
+    public int getWarningCondition(){
+        return warningCondition;
     }
 
     public void setPosition(float x, float y){
@@ -50,7 +55,7 @@ public class SumBox{
     }
 
     public void changeColor(int condition){
-        if (condition<3)
+        if (condition<=warningCondition)
             sumDisplayBlock.setColor(Color.RED);
         else
             sumDisplayBlock.setColor(Color.TEAL);

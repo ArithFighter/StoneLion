@@ -1,6 +1,5 @@
 package com.arithfighter.ccg.entity;
 
-import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.widget.BoardArea;
 import com.arithfighter.ccg.widget.Button;
 import com.arithfighter.ccg.widget.SumBox;

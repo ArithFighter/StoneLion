@@ -7,7 +7,6 @@ import com.arithfighter.ccg.time.TimeHandler;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.LinkedList;
 

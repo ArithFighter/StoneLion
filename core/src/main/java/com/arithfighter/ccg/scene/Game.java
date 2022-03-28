@@ -13,6 +13,7 @@ public class Game {
     private final GameComponent gameComponent;
     private final GameDataAccessor dataAccessor;
     private final int characterQuantity = CharacterList.values().length;
+    private SpriteBatch batch;
 
     public Game(Texture[] textures, Texture[] cards){
         dataAccessor = new GameDataAccessor();
@@ -44,6 +45,10 @@ public class Game {
             };
     }
 
+    public void setBatch(SpriteBatch batch){
+        this.batch = batch;
+    }
+
     public boolean isReturnToMenu(){
         return gameComponent.isReturnToMenu();
     }
@@ -57,11 +62,11 @@ public class Game {
         gameComponent.update(mouseX, mouseY);
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(){
         gameComponent.draw(batch);
     }
 
-    public void drawData(SpriteBatch batch, int mouseX, int mouseY, int index){
+    public void drawData(int mouseX, int mouseY, int index){
         dataAccessor.draw(mouseX, mouseY, players[index].getEnergy(), batch);//for dev
     }
 

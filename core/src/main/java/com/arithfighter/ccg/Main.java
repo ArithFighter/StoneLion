@@ -90,12 +90,14 @@ public class Main extends ApplicationAdapter {
     private void drawGame() {
         batch.begin();
         if (gameState == GameState.MENU) {
-            characterMenu.draw(batch);
+            characterMenu.setBatch(batch);
+            characterMenu.draw();
         }
         if (gameState == GameState.GAME) {
+            game.setBatch(batch);
             game.update(cursorPos.getX(), cursorPos.getY());
-            game.draw(batch);
-            game.drawData(batch, cursorPos.getX(), cursorPos.getY(), characterMenu.getSelectIndex());
+            game.draw();
+            game.drawData(cursorPos.getX(), cursorPos.getY(), characterMenu.getSelectIndex());
         }
         batch.end();
     }

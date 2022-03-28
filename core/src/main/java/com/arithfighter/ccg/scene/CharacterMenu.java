@@ -13,6 +13,7 @@ public class CharacterMenu {
     private int selectIndex = 0;
     private final String[] names = {"Knight", "Rogue", "Hunter", "Paladin", "Warrior"};
     private boolean isGameStart = false;
+    private SpriteBatch batch;
 
     public CharacterMenu(Texture[] textures) {
         buttons = new Button[names.length];
@@ -27,6 +28,10 @@ public class CharacterMenu {
 
         selectionFont = new Font(36);
         selectionFont.setColor(Color.WHITE);
+    }
+
+    public void setBatch(SpriteBatch batch){
+        this.batch = batch;
     }
 
     private int getButtonX(int i) {
@@ -45,7 +50,7 @@ public class CharacterMenu {
         isGameStart = false;
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         for (int i = 0; i < buttons.length; i++)
             buttons[i].draw(batch, names[i]);
 
