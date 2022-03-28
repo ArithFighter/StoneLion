@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.GameComponent;
 import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.entity.GameDataAccessor;
@@ -15,12 +16,12 @@ public class Game {
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
 
-    public Game(Texture[] textures, Texture[] cards){
+    public Game(Texture[] textures, Texture[] cards, SoundManager soundManager){
         dataAccessor = new GameDataAccessor();
 
         players = new Player[characterQuantity];
 
-        gameComponent = new GameComponent(textures, dataAccessor);
+        gameComponent = new GameComponent(textures, dataAccessor, soundManager);
 
         addPlayers(textures, cards);
     }

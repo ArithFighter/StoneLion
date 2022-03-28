@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.entity;
 
+import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.widget.BoardArea;
 import com.arithfighter.ccg.widget.Button;
 import com.arithfighter.ccg.widget.SumBox;
@@ -18,13 +19,14 @@ public class GameComponent {
     private final Button returnButton;
     private boolean returnToMenuFlag = false;
 
-    public GameComponent(Texture[] textures, GameDataAccessor dataAccessor){
+    public GameComponent(Texture[] textures, GameDataAccessor dataAccessor, SoundManager soundManager){
         createBoardArea(textures);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
             public void doWhenSumAndNumMatched() {
                 dataAccessor.updateScore(1);
+                soundManager.playScoreSound();
             }
         };
 

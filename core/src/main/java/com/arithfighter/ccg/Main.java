@@ -65,13 +65,13 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards());
-
-        characterMenu = new CharacterMenu(assetProcessor.getTextures());
-
         soundManager = new SoundManager(assetProcessor.getSounds());
 
         musicManager = new MusicManager(assetProcessor.getMusics());
+
+        characterMenu = new CharacterMenu(assetProcessor.getTextures());
+
+        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), soundManager);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }

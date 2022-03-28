@@ -86,6 +86,6 @@ class NumBoxOperator{
     }
 
     private int getRandomNum(int max){
-        return (int)(Math.random() * (max + 1));
+        return (int)(Math.random() * (max + 1)-1);
     }
 }

@@ -38,7 +38,7 @@ public class FileLibrary {
 
     private final String[] soundFiles = {
             "sound/accept.ogg",
-            "sound/collected.ogg",
+            "sound/score.ogg",
             "sound/denied.ogg",
             "sound/select.ogg"
     };
