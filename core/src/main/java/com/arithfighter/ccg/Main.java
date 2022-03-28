@@ -95,11 +95,12 @@ public class Main extends ApplicationAdapter {
 
         game.setCurrentPlayerToGame(characterMenu.getSelectIndex());
 
-        if (characterMenu.isStart()) {
+        if (characterMenu.isGameStart()) {
             characterMenu.init();
             gameState = GameState.GAME;
         }
         if (game.isReturnToMenu()) {
+            soundManager.playReturnSound();
             game.init();
             gameState = GameState.MENU;
         }

@@ -12,7 +12,7 @@ public class CharacterMenu {
     private final Button[] buttons;
     private final Button startButton;
     private int selectIndex = 0;
-    private boolean isGameStart = false;
+    private boolean gameStart = false;
     private SpriteBatch batch;
 
     public CharacterMenu(Texture[] textures) {
@@ -35,7 +35,7 @@ public class CharacterMenu {
         return buttons[selectIndex].isActive();
     }
 
-    public boolean isStartButtonActive() {
+    public boolean isStartButtonActive(){
         return startButton.isActive();
     }
 
@@ -56,7 +56,7 @@ public class CharacterMenu {
     }
 
     public void init() {
-        isGameStart = false;
+        gameStart = false;
     }
 
     public void draw() {
@@ -78,10 +78,10 @@ public class CharacterMenu {
         return selectIndex;
     }
 
-    public boolean isStart() {
+    public boolean isGameStart() {
         if (startButton.isActive())
-            isGameStart = true;
-        return isGameStart;
+            gameStart = true;
+        return gameStart;
     }
 
     public void activateButton(int mouseX, int mouseY) {
