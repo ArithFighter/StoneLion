@@ -71,7 +71,11 @@ public class Main extends ApplicationAdapter {
 
         characterMenu = new CharacterMenu(assetProcessor.getTextures());
 
-        game = new Game(assetProcessor.getTextures(), assetProcessor.getCards(), soundManager);
+        game = new Game(
+                assetProcessor.getTextures(),
+                assetProcessor.getCards(),
+                soundManager
+        );
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -85,7 +89,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        soundManager.setVolume(0.8f);
+        soundManager.setVolume(0.6f);
 
         musicManager.setVolume(0.8f);
 

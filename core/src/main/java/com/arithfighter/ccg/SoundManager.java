@@ -1,35 +1,36 @@
 package com.arithfighter.ccg;
 
-import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager {
-    private final Music touchedSound;
-    private final Music acceptSound;
-    private final Music scoreSound;
+    private final Sound touchedSound;
+    private final Sound acceptSound;
+    private final Sound scoreSound;
+    private float volume;
 
-    public SoundManager(Music[] sounds){
+    public SoundManager(Sound[] sounds){
         acceptSound = sounds[0];
         scoreSound = sounds[1];
         touchedSound = sounds[3];
     }
 
     public void setVolume(float volume){
-        acceptSound.setVolume(volume);
-        touchedSound.setVolume(volume);
+        this.volume = volume;
     }
 
     public void playScoreSound(){
         scoreSound.stop();
-        scoreSound.play();
+        scoreSound.play(volume);
     }
 
     public void playAcceptSound(){
-        acceptSound.play();
+        acceptSound.stop();
+        acceptSound.play(volume);
     }
 
     public void playTouchedSound(){
         touchedSound.stop();
-        touchedSound.play();
+        touchedSound.play(volume);
     }
 
     public void dispose(){

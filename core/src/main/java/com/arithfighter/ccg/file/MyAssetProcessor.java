@@ -2,6 +2,7 @@ package com.arithfighter.ccg.file;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MyAssetProcessor {
@@ -42,7 +43,7 @@ public class MyAssetProcessor {
 
     private void loadSound(){
         for(String file: fileLibrary.getSoundFiles())
-            assetManager.load(file, Music.class);
+            assetManager.load(file, Sound.class);
     }
 
     public void update(int millis){
@@ -58,11 +59,11 @@ public class MyAssetProcessor {
     }
 
     public Music[] getMusics(){
-        return getAudios(fileLibrary.getMusicFiles());
+        return getMusics(fileLibrary.getMusicFiles());
     }
 
-    public Music[] getSounds(){
-        return getAudios(fileLibrary.getSoundFiles());
+    public Sound[] getSounds(){
+        return getSounds(fileLibrary.getSoundFiles());
     }
 
     private Texture[] getTextures(String[] files){
@@ -75,9 +76,19 @@ public class MyAssetProcessor {
         return textures;
     }
 
-    private Music[] getAudios(String[] files){
+    private Music[] getMusics(String[] files){
         int length = files.length;
         Music[] audios = new Music[length];
+
+        for (int i = 0; i < length; i++)
+            audios[i] = assetManager.get(files[i]);
+
+        return audios;
+    }
+
+    private Sound[] getSounds(String[] files){
+        int length = files.length;
+        Sound[] audios = new Sound[length];
 
         for (int i = 0; i < length; i++)
             audios[i] = assetManager.get(files[i]);
