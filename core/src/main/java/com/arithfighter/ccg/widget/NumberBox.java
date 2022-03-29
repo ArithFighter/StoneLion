@@ -3,49 +3,40 @@ package com.arithfighter.ccg.widget;
 import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBox{
     private final Font text;
-    private final Sprite box;
-    private final Widget widget;
-    private final Point point;
+    private final SpriteWidget widget;
 
     public NumberBox(Texture texture) {
-        widget = new Widget(32);
-        widget.setSize(texture, 3.5f);
-        point = widget.getPoint();
+        widget = new SpriteWidget(texture, 3.5f, 32);
 
         text = new Font(widget.getFontSize());
-
-        box = new Sprite(texture);
     }
 
     public void setPosition(float x, float y){
-        point.set(x,y);
+        widget.setPosition(x, y);
     }
 
     public float getWidth() {
-        return widget.getWidth();
+        return widget.getWidget().getWidth();
     }
 
     public float getHeight() {
-        return widget.getHeight();
+        return widget.getWidget().getHeight();
     }
 
     public void draw(SpriteBatch batch, int number) {
         setSprite();
 
-        box.draw(batch);
+        widget.draw(batch);
 
         addText(batch, number);
     }
 
     private void setSprite() {
-        box.setSize(widget.getWidth(), widget.getHeight());
-        box.setPosition(point.getX(), point.getY());
-        box.setColor(0, 0.9f, 0.9f, 1);
+        widget.getSprite().setColor(0, 0.9f, 0.9f, 1);
     }
 
     private void addText(SpriteBatch batch, int number) {

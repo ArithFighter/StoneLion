@@ -33,6 +33,10 @@ public class SpriteWidget {
         return sprite;
     }
 
+    public Widget getWidget(){
+        return widget;
+    }
+
     public int getFontSize(){
         return widget.getFontSize();
     }
