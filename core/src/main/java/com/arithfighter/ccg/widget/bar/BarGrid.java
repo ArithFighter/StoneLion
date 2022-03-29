@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid{
-    final Sprite grid;
+    private final Sprite grid;
     private final Widget widget;
     private final Point point;
 
