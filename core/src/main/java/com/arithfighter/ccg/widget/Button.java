@@ -8,33 +8,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button {
     private final Font font;
-    private final Sprite button;
-    private final Widget widget;
-    private final Point point;
+    private final SpriteWidget widget;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public Button(Texture texture, float scale){
-        widget = new Widget(22);
-        widget.setSize(texture, scale);
-        point = widget.getPoint();
+        widget = new SpriteWidget(texture, scale, 22);
 
         font = new Font(widget.getFontSize());
-
-        button = new Sprite(texture);
     }
 
     public void setPosition(float x, float y){
-        point.set(x,y);
-    }
-
-    private void setupButton(){
-        button.setSize(widget.getWidth(), widget.getHeight());
-        button.setPosition(point.getX(), point.getY());
+        widget.setPosition(x, y);
     }
 
     public void draw(SpriteBatch batch, String content){
-        setupButton();
         if (isActive())
             changeColor(batch, content);
         else
@@ -42,19 +30,19 @@ public class Button {
     }
 
     private void initialize(SpriteBatch batch, String content){
-        button.setColor(Color.WHITE);
+        widget.getSprite().setColor(Color.WHITE);
         font.setColor(Color.BLACK);
         show(batch, content);
     }
 
     private void changeColor(SpriteBatch batch, String content){
-        button.setColor(Color.ORANGE);
+        widget.getSprite().setColor(Color.ORANGE);
         font.setColor(Color.WHITE);
         show(batch, content);
     }
 
     private void show(SpriteBatch batch, String content){
-        button.draw(batch);
+        widget.draw(batch);
         font.draw(
                 batch,
                 content,
@@ -64,10 +52,13 @@ public class Button {
     }
 
     private boolean isOnButton(float x, float y){
+        Point point = widget.getPoint();
+        Sprite sprite = widget.getSprite();
+
         return x> point.getX()&&
-                x< point.getX()+ widget.getWidth()&&
+                x< point.getX()+ sprite.getWidth()&&
                 y> point.getY()&&
-                y< point.getY()+ widget.getHeight();
+                y< point.getY()+ sprite.getHeight();
     }
 
     public void activate(float x, float y){
