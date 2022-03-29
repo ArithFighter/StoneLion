@@ -25,6 +25,10 @@ public class SpriteWidget {
         sprite = new Sprite(texture);
     }
 
+    public Point getPoint(){
+        return point;
+    }
+
     public Sprite getSprite(){
         return sprite;
     }
@@ -50,7 +54,7 @@ public class SpriteWidget {
         point.set(x,y);
     }
 
-    public void drawSprite(SpriteBatch batch){
+    public void draw(SpriteBatch batch){
         setSprite();
         sprite.draw(batch);
     }

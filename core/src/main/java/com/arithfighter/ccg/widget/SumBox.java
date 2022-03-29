@@ -24,7 +24,7 @@ public class SumBox{
     }
 
     public void draw(int number, SpriteBatch batch){
-        widget.drawSprite(batch);
+        widget.draw(batch);
 
         drawText(number, batch);
     }
