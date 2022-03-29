@@ -3,27 +3,28 @@ package com.arithfighter.ccg.scene;
 import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.Button;
+import com.arithfighter.ccg.widget.PanelButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CharacterMenu {
     private final Font selectionFont;
-    private final Button[] buttons;
+    private final PanelButton[] buttons;
     private final Button startButton;
     private int selectIndex = 0;
     private enum GameReady {NEUTRAL, READY, START}
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
 
-    public CharacterMenu(Texture[] textures) {
+    public CharacterMenu(Texture[] textures, Texture[] panels) {
         int length = CharacterList.values().length;
-        buttons = new Button[length];
+        buttons = new PanelButton[length];
 
         ButtonPlacer placer = new ButtonPlacer();
 
         for (int i = 0; i < length; i++) {
-            buttons[i] = new Button(textures[6], 1.8f);
+            buttons[i] = new PanelButton(panels[i]);
             buttons[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
 
@@ -55,8 +56,7 @@ public class CharacterMenu {
 
         CharacterList[] characters = CharacterList.values();
 
-        for (int i = 0; i < buttons.length; i++)
-            buttons[i].draw(batch, characters[i].name());
+        for (PanelButton button : buttons) button.draw(batch);
 
         startButton.draw(batch, "Start");
 
@@ -85,23 +85,20 @@ public class CharacterMenu {
     }
 
     public void activateButton(int mouseX, int mouseY) {
-        for (Button button : buttons)
+        for (PanelButton button : buttons)
             button.activate(mouseX, mouseY);
 
         startButton.activate(mouseX, mouseY);
     }
 
     public void deactivateButton() {
-        for (Button button : buttons)
+        for (PanelButton button : buttons)
             button.deactivate();
 
         startButton.deactivate();
     }
 
     public void dispose() {
-        for (Button button : buttons)
-            button.dispose();
-
         startButton.dispose();
         selectionFont.dispose();
     }
@@ -114,7 +111,7 @@ class ButtonPlacer{
 
     public int getButtonY(int i) {
         int initY = 480;
-        int margin = 150;
+        int margin = 180;
         int row = 3;
 
         return i < row ? initY - i * margin : initY - (i - row) * margin;

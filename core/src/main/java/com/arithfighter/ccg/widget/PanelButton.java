@@ -14,7 +14,7 @@ public class PanelButton {
 
     public PanelButton(Texture texture){
         widget = new SpriteWidget();
-        widget.setSize(texture, 1.8f);
+        widget.setSize(texture, 0.8f);
         point = widget.getPoint();
 
         button = new Sprite(texture);
