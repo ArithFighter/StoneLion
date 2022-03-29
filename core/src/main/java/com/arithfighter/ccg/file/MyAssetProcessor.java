@@ -15,9 +15,11 @@ public class MyAssetProcessor {
     }
 
     public void load(){
-        loadTextures();
+        loadWidgets();
 
         loadCards();
+
+        loadPanels();
 
         loadMusic();
 
@@ -26,13 +28,18 @@ public class MyAssetProcessor {
         assetManager.finishLoading();
     }
 
-    private void loadTextures(){
-        for (String file : fileLibrary.getTextureFiles())
+    private void loadWidgets(){
+        for (String file : fileLibrary.getWidgetFiles())
             assetManager.load(file, Texture.class);
     }
 
     private void loadCards(){
         for(String file : fileLibrary.getCardFiles())
+            assetManager.load(file, Texture.class);
+    }
+
+    private void loadPanels(){
+        for(String file : fileLibrary.getPanelFiles())
             assetManager.load(file, Texture.class);
     }
 
@@ -50,12 +57,16 @@ public class MyAssetProcessor {
         assetManager.update(millis);
     }
 
-    public Texture[] getTextures() {
-        return getTextures(fileLibrary.getTextureFiles());
+    public Texture[] getWidgets() {
+        return getTextures(fileLibrary.getWidgetFiles());
     }
 
     public Texture[] getCards(){
         return getTextures(fileLibrary.getCardFiles());
+    }
+
+    public Texture[] getPanels(){
+        return getTextures(fileLibrary.getPanelFiles());
     }
 
     public Music[] getMusics(){
@@ -68,12 +79,12 @@ public class MyAssetProcessor {
 
     private Texture[] getTextures(String[] files){
         int length = files.length;
-        Texture[] textures = new Texture[length];
+        Texture[] array = new Texture[length];
 
         for (int i = 0; i < length; i++)
-            textures[i] = assetManager.get(files[i]);
+            array[i] = assetManager.get(files[i]);
 
-        return textures;
+        return array;
     }
 
     private Music[] getMusics(String[] files){

@@ -69,10 +69,10 @@ public class Main extends ApplicationAdapter {
 
         musicManager = new MusicManager(assetProcessor.getMusics());
 
-        characterMenu = new CharacterMenu(assetProcessor.getTextures());
+        characterMenu = new CharacterMenu(assetProcessor.getWidgets());
 
         game = new Game(
-                assetProcessor.getTextures(),
+                assetProcessor.getWidgets(),
                 assetProcessor.getCards(),
                 soundManager
         );
