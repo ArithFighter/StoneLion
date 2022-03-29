@@ -4,7 +4,7 @@ import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.Button;
 import com.arithfighter.ccg.widget.PanelButton;
-import com.arithfighter.ccg.widget.PanelHighLight;
+import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CharacterMenu {
     private final Font selectionFont;
     private final PanelButton[] buttons;
-    private final PanelHighLight highLight;
+    private final SpriteWidget highLight;
     private final Button startButton;
     private int selectIndex = 0;
     private enum GameReady {NEUTRAL, READY, START}
@@ -30,7 +30,7 @@ public class CharacterMenu {
             buttons[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
 
-        highLight = new PanelHighLight(textures[7]);
+        highLight = new SpriteWidget(textures[7], 1.8f);
 
         startButton = new Button(textures[6], 1.8f);
         startButton.setPosition(900, 120);
