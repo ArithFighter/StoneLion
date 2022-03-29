@@ -2,7 +2,6 @@ package com.arithfighter.ccg.widget;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelButton {
@@ -36,13 +35,7 @@ public class PanelButton {
     }
 
     private boolean isOnButton(float x, float y){
-        Point point = widget.getPoint();
-        Sprite sprite = widget.getSprite();
-
-        return x> point.getX()&&
-                x< point.getX()+ sprite.getWidth()&&
-                y> point.getY()&&
-                y< point.getY()+ sprite.getHeight();
+        return widget.isOnWidget(x,y);
     }
 
     public void activate(float x, float y){

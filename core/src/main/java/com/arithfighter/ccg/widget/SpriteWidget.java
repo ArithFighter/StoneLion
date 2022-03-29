@@ -62,4 +62,11 @@ public class SpriteWidget {
         setSprite();
         sprite.draw(batch);
     }
+
+    public boolean isOnWidget(float x, float y){
+        return x > point.getX()
+                && x < point.getX() + sprite.getWidth()
+                && y > point.getY()
+                && y < point.getY() + sprite.getHeight();
+    }
 }
