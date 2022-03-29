@@ -113,7 +113,7 @@ public class NumberBoxDisplacer {
     public void draw(SpriteBatch batch) {
         for (int i = 0; i < BOX_QUANTITY; i++) {
             if (numbers[i] > 0)
-                numberBoxes[i].draw(numbers[i], batch);
+                numberBoxes[i].draw(batch, numbers[i]);
         }
 
         animation.setBatch(batch);
@@ -162,7 +162,7 @@ class NumberBoxAnimation {
         animator = new Animator() {
             @Override
             public void renderEffect() {
-                numberBoxes[matchedBoxIndex].draw(numbers[matchedBoxIndex], batch);
+                numberBoxes[matchedBoxIndex].draw(batch, numbers[matchedBoxIndex]);
             }
         };
         timeHandler = new TimeHandler();

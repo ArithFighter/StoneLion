@@ -23,11 +23,11 @@ public class CharacterMenu {
         ButtonPlacer placer = new ButtonPlacer();
 
         for (int i = 0; i < length; i++) {
-            buttons[i] = new Button(textures[6]);
+            buttons[i] = new Button(textures[6], 1.8f);
             buttons[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
 
-        startButton = new Button(textures[6]);
+        startButton = new Button(textures[6], 1.8f);
         startButton.setPosition(900, 120);
 
         selectionFont = new Font(36);

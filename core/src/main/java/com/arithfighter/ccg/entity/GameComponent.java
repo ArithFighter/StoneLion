@@ -33,7 +33,7 @@ public class GameComponent {
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
 
-        returnButton = new Button(textures[6]);
+        returnButton = new Button(textures[6], 1.8f);
         returnButton.setPosition(1000, 600);
     }
 

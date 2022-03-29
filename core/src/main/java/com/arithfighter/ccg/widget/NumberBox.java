@@ -34,12 +34,12 @@ public class NumberBox{
         return widget.getHeight();
     }
 
-    public void draw(int number, SpriteBatch batch) {
+    public void draw(SpriteBatch batch, int number) {
         setSprite();
 
         box.draw(batch);
 
-        addText(number, batch);
+        addText(batch, number);
     }
 
     private void setSprite() {
@@ -48,7 +48,7 @@ public class NumberBox{
         box.setColor(0, 0.9f, 0.9f, 1);
     }
 
-    private void addText(int number, SpriteBatch batch) {
+    private void addText(SpriteBatch batch, int number) {
         String content = String.valueOf(number);
 
         float textX = widget.getCenterX(content);

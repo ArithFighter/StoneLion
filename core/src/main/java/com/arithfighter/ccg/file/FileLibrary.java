@@ -10,7 +10,6 @@ public class FileLibrary {
             "widget/white-block.png",
             "widget/Button1.png",
             "widget/Golden_Square.png",
-            "widget/HighLight.png"
     };
 
     private final String[] cardFiles = {

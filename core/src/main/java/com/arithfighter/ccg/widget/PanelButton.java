@@ -1,25 +1,21 @@
 package com.arithfighter.ccg.widget;
 
-import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Button {
-    private final Font font;
+public class PanelButton {
     private final Sprite button;
     private final SpriteWidget widget;
     private final Point point;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
-    public Button(Texture texture, float scale){
+    public PanelButton(Texture texture){
         widget = new SpriteWidget(22);
-        widget.setSize(texture, scale);
+        widget.setSize(texture, 1.8f);
         point = widget.getPoint();
-
-        font = new Font(widget.getFontSize());
 
         button = new Sprite(texture);
     }
@@ -33,34 +29,22 @@ public class Button {
         button.setPosition(point.getX(), point.getY());
     }
 
-    public void draw(SpriteBatch batch, String content){
+    public void draw(SpriteBatch batch){
         setupButton();
         if (isActive())
-            changeColor(batch, content);
+            changeColor(batch);
         else
-            initialize(batch, content);
+            initialize(batch);
     }
 
-    private void initialize(SpriteBatch batch, String content){
+    private void initialize(SpriteBatch batch){
         button.setColor(Color.WHITE);
-        font.setColor(Color.BLACK);
-        show(batch, content);
-    }
-
-    private void changeColor(SpriteBatch batch, String content){
-        button.setColor(Color.ORANGE);
-        font.setColor(Color.WHITE);
-        show(batch, content);
-    }
-
-    private void show(SpriteBatch batch, String content){
         button.draw(batch);
-        font.draw(
-                batch,
-                content,
-                widget.getCenterX(content),
-                widget.getCenterY()
-        );
+    }
+
+    private void changeColor(SpriteBatch batch){
+        button.setColor(Color.ORANGE);
+        button.draw(batch);
     }
 
     private boolean isOnButton(float x, float y){
@@ -81,9 +65,5 @@ public class Button {
 
     public void deactivate(){
         buttonState = State.OFF;
-    }
-
-    public void dispose(){
-        font.dispose();
     }
 }
