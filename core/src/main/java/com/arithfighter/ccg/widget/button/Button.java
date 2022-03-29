@@ -1,9 +1,9 @@
-package com.arithfighter.ccg.widget;
+package com.arithfighter.ccg.widget.button;
 
 import com.arithfighter.ccg.font.Font;
+import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button {

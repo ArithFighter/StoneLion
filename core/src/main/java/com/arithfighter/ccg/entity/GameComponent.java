@@ -2,7 +2,7 @@ package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.widget.BoardArea;
-import com.arithfighter.ccg.widget.Button;
+import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

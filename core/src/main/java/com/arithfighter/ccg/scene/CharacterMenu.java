@@ -2,8 +2,8 @@ package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.entity.CharacterList;
 import com.arithfighter.ccg.font.Font;
-import com.arithfighter.ccg.widget.Button;
-import com.arithfighter.ccg.widget.PanelButton;
+import com.arithfighter.ccg.widget.button.Button;
+import com.arithfighter.ccg.widget.button.PanelButton;
 import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,12 +61,11 @@ public class CharacterMenu {
         highLight.setPosition(placer.getButtonX(selectIndex)-22, placer.getButtonY(selectIndex)-20);
         highLight.draw(batch);
 
-        CharacterList[] characters = CharacterList.values();
-
         for (PanelButton button : buttons) button.draw(batch);
 
         startButton.draw(batch, "Start");
 
+        CharacterList[] characters = CharacterList.values();
         selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
     }
 
