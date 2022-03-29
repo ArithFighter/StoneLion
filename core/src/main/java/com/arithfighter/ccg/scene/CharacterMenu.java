@@ -59,7 +59,7 @@ public class CharacterMenu {
         handleStartButton();
 
         highLight.setPosition(placer.getButtonX(selectIndex)-22, placer.getButtonY(selectIndex)-20);
-        highLight.draw(batch);
+        highLight.drawSprite(batch);
 
         CharacterList[] characters = CharacterList.values();
 

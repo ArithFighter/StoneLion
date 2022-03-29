@@ -25,16 +25,32 @@ public class SpriteWidget {
         sprite = new Sprite(texture);
     }
 
+    public Sprite getSprite(){
+        return sprite;
+    }
+
+    public int getFontSize(){
+        return widget.getFontSize();
+    }
+
+    public float getCenterX(String content){
+        return widget.getCenterX(content);
+    }
+
+    public float getCenterY(){
+        return widget.getCenterY();
+    }
+
     private void setSprite(){
         sprite.setSize(widget.getWidth(), widget.getHeight());
         sprite.setPosition(point.getX(), point.getY());
     }
 
-    public void setPosition(int x, int y){
+    public void setPosition(float x, float y){
         point.set(x,y);
     }
 
-    public void draw(SpriteBatch batch){
+    public void drawSprite(SpriteBatch batch){
         setSprite();
         sprite.draw(batch);
     }

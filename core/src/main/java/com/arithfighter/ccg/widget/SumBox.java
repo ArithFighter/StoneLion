@@ -3,24 +3,16 @@ package com.arithfighter.ccg.widget;
 import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SumBox{
     private final Font text;
-    private final Sprite sumDisplayBlock;
-    private final Widget widget;
-    private final Point point;
+    private final SpriteWidget widget;
     private final int warningCondition = 2;
     
     public SumBox(Texture texture){
-        widget = new Widget(36);
-        widget.setSize(texture, 10);
-        point = widget.getPoint();
-        
+        widget = new SpriteWidget(texture,10, 36);
         text = new Font(widget.getFontSize());
-
-        sumDisplayBlock = new Sprite(texture);
     }
 
     public int getWarningCondition(){
@@ -28,18 +20,11 @@ public class SumBox{
     }
 
     public void setPosition(float x, float y){
-        point.set(x,y);
-    }
-
-    private void setSprite(){
-        sumDisplayBlock.setPosition(point.getX(), point.getY());
-        sumDisplayBlock.setSize(widget.getWidth(), widget.getHeight());
+        widget.setPosition(x,y);
     }
 
     public void draw(int number, SpriteBatch batch){
-        setSprite();
-
-        sumDisplayBlock.draw(batch);
+        widget.drawSprite(batch);
 
         drawText(number, batch);
     }
@@ -56,9 +41,9 @@ public class SumBox{
 
     public void changeColor(int condition){
         if (condition<=warningCondition)
-            sumDisplayBlock.setColor(Color.RED);
+            widget.getSprite().setColor(Color.RED);
         else
-            sumDisplayBlock.setColor(Color.TEAL);
+            widget.getSprite().setColor(Color.TEAL);
     }
 
     public void dispose(){
