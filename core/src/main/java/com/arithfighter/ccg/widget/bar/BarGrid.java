@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.widget.bar;
 
 import com.arithfighter.ccg.widget.Point;
-import com.arithfighter.ccg.widget.SpriteWidget;
+import com.arithfighter.ccg.widget.Widget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid{
     final Sprite grid;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
 
     public BarGrid(Texture texture){
-        widget = new SpriteWidget();
+        widget = new Widget();
         widget.setSize(texture, 0.8f);
         point = widget.getPoint();
 

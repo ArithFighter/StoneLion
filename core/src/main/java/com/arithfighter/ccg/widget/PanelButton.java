@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelButton {
     private final Sprite button;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public PanelButton(Texture texture){
-        widget = new SpriteWidget();
+        widget = new Widget();
         widget.setSize(texture, 0.8f);
         point = widget.getPoint();
 

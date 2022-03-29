@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SumBox{
     private final Font text;
     private final Sprite sumDisplayBlock;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
     private final int warningCondition = 2;
     
     public SumBox(Texture texture){
-        widget = new SpriteWidget(36);
+        widget = new Widget(36);
         widget.setSize(texture, 10);
         point = widget.getPoint();
         

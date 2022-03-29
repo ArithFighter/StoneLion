@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Button {
     private final Font font;
     private final Sprite button;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public Button(Texture texture, float scale){
-        widget = new SpriteWidget(22);
+        widget = new Widget(22);
         widget.setSize(texture, scale);
         point = widget.getPoint();
 

@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BoardArea {
     private final Sprite table;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
 
     public BoardArea(Texture texture){
-        widget = new SpriteWidget();
+        widget = new Widget();
         widget.setSize(texture, 3);
         point = widget.getPoint();
 

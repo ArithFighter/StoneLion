@@ -2,14 +2,16 @@ package com.arithfighter.ccg.widget;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class SpriteWidget extends Widget{
-    public SpriteWidget(){
+public class Widget extends Shape {
+    private int fontSize;
+
+    public Widget(){
         setPoint(new Point(0,0));
     }
 
-    public SpriteWidget(int fontSize){
+    public Widget(int fontSize){
         setPoint(new Point(0,0));
-        setFontSize(fontSize);
+        this.fontSize = fontSize;
     }
 
     public void setSize(Texture texture, float scale) {
@@ -22,22 +24,25 @@ public class SpriteWidget extends Widget{
     }
 
     public float getCenterX(String content) {
-        float midLength = getWidth() / 2 - content.length() * getFontSize() / 2f;
+        float midLength = getWidth() / 2 - content.length() * fontSize / 2f;
 
         return getPoint().getX() + midLength;
     }
 
     public float getCenterY() {
-        float midHeight = (getHeight() + getFontSize()) / 2;
+        float midHeight = (getHeight() + fontSize) / 2;
 
         return getPoint().getY() + midHeight;
     }
+
+    public int getFontSize(){
+        return fontSize;
+    }
 }
 
-class Widget {
+class Shape {
     private Point point;
     private float width, height;
-    private int fontSize;
 
     public void setPoint(Point point) {
         this.point = point;
@@ -51,10 +56,6 @@ class Widget {
         this.height = height;
     }
 
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-    }
-
     public Point getPoint() {
         return point;
     }
@@ -65,9 +66,5 @@ class Widget {
 
     public float getHeight() {
         return height;
-    }
-
-    public int getFontSize() {
-        return fontSize;
     }
 }

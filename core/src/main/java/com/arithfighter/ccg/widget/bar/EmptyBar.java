@@ -1,18 +1,18 @@
 package com.arithfighter.ccg.widget.bar;
 
 import com.arithfighter.ccg.widget.Point;
-import com.arithfighter.ccg.widget.SpriteWidget;
+import com.arithfighter.ccg.widget.Widget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EmptyBar{
     private final Sprite bar;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
 
     public EmptyBar(Texture texture){
-        widget = new SpriteWidget(23);
+        widget = new Widget(23);
         widget.setSize(texture, 8f);
         point = widget.getPoint();
 

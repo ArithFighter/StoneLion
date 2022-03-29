@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelHighLight {
     private final Sprite square;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
 
     public PanelHighLight(Texture texture){
-        widget = new SpriteWidget();
+        widget = new Widget();
         widget.setSize(texture, 1.8f);
         point = widget.getPoint();
 

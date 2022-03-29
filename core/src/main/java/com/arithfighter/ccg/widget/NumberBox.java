@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class NumberBox{
     private final Font text;
     private final Sprite box;
-    private final SpriteWidget widget;
+    private final Widget widget;
     private final Point point;
 
     public NumberBox(Texture texture) {
-        widget = new SpriteWidget(32);
+        widget = new Widget(32);
         widget.setSize(texture, 3.5f);
         point = widget.getPoint();
 
