@@ -2,15 +2,18 @@ package com.arithfighter.ccg.widget;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Widget extends Shape {
+public class Widget {
     private int fontSize;
+    private final Shape shape;
 
     public Widget(){
-        setPoint(new Point(0,0));
+        shape = new Shape();
+        shape.setPoint(new Point(0,0));
     }
 
     public Widget(int fontSize){
-        setPoint(new Point(0,0));
+        shape = new Shape();
+        shape.setPoint(new Point(0,0));
         this.fontSize = fontSize;
     }
 
@@ -18,21 +21,37 @@ public class Widget extends Shape {
         configSize(texture.getWidth(), texture.getHeight(), scale);
     }
 
+    public float getWidth(){
+        return shape.getWidth();
+    }
+
+    public float getHeight(){
+        return shape.getHeight();
+    }
+
+    public void setWidth(float width){
+        shape.setWidth(width);
+    }
+
+    public Point getPoint(){
+        return shape.getPoint();
+    }
+
     private void configSize(float width, float height, float scale){
-        setWidth(scale*width);
-        setHeight(scale*height);
+        shape.setWidth(scale*width);
+        shape.setHeight(scale*height);
     }
 
     public float getCenterX(String content) {
-        float midLength = getWidth() / 2 - content.length() * fontSize / 2f;
+        float midLength = shape.getWidth() / 2 - content.length() * fontSize / 2f;
 
-        return getPoint().getX() + midLength;
+        return shape.getPoint().getX() + midLength;
     }
 
     public float getCenterY() {
-        float midHeight = (getHeight() + fontSize) / 2;
+        float midHeight = (shape.getHeight() + fontSize) / 2;
 
-        return getPoint().getY() + midHeight;
+        return shape.getPoint().getY() + midHeight;
     }
 
     public int getFontSize(){

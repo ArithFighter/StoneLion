@@ -25,10 +25,6 @@ public class SpriteWidget {
         sprite = new Sprite(texture);
     }
 
-    public Point getPoint(){
-        return point;
-    }
-
     public Sprite getSprite(){
         return sprite;
     }
