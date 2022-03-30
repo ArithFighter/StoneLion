@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.SoundManager;
-import com.arithfighter.ccg.widget.BoardArea;
+import com.arithfighter.ccg.widget.CardLoader;
 import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class GameComponent {
-    private BoardArea boardArea;
+    private CardLoader cardLoader;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
@@ -42,7 +42,7 @@ public class GameComponent {
     }
 
     private void createBoardArea(Texture[] textures){
-        boardArea = new BoardArea(textures[1]) {
+        cardLoader = new CardLoader(textures[1]) {
             @Override
             public void initCardPosition() {
                 player.initHand();
@@ -53,7 +53,7 @@ public class GameComponent {
                 player.playCard();
             }
         };
-        boardArea.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
+        cardLoader.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
     }
 
     public void init(){
@@ -70,8 +70,8 @@ public class GameComponent {
         return player;
     }
 
-    public BoardArea getBoardArea(){
-        return boardArea;
+    public CardLoader getBoardArea(){
+        return cardLoader;
     }
 
     public Button getReturnButton(){
@@ -103,7 +103,7 @@ public class GameComponent {
     public void draw(SpriteBatch batch) {
         returnButton.draw(batch, "Return");
 
-        boardArea.draw(batch);
+        cardLoader.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 

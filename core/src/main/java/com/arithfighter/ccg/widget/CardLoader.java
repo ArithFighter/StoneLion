@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BoardArea {
+public class CardLoader {
     private final SpriteWidget widget;
 
-    public BoardArea(Texture texture){
+    public CardLoader(Texture texture){
         widget = new SpriteWidget(texture, 3);
 
         widget.getSprite().setColor(Color.BROWN);
@@ -21,8 +21,8 @@ public class BoardArea {
         widget.draw(batch);
     }
 
-    public final void playCardOnBoard(int mouseX, int mouseY) {
-        if (isOnBoard(mouseX, mouseY)) {
+    public final void playCardToLoader(int mouseX, int mouseY) {
+        if (isOnLoader(mouseX, mouseY)) {
             checkCardPlayed();
         }
         initCardPosition();
@@ -36,7 +36,7 @@ public class BoardArea {
 
     }
 
-    public boolean isOnBoard(float x, float y){
+    public boolean isOnLoader(float x, float y){
         return widget.isOnWidget(x,y);
     }
 }

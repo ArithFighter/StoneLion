@@ -84,7 +84,7 @@ public class Game {
     }
 
     public void touchUp(int mouseX, int mouseY){
-        gameComponent.getBoardArea().playCardOnBoard(mouseX, mouseY);
+        gameComponent.getBoardArea().playCardToLoader(mouseX, mouseY);
 
         gameComponent.getReturnButton().deactivate();
     }
