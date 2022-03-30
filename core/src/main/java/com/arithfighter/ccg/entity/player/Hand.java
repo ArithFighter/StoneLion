@@ -49,9 +49,9 @@ public class Hand {
         return getActiveCardIndex() == cards.length-1;
     }
 
-    public void checkTouchingCard(float x, float y) {
+    public void updateWhenTouchCard(float x, float y) {
         for (NumberCard card : cards)
-            card.checkTouchingCard(x, y);
+            card.updateWhenTouchCard(x, y);
     }
 
     public void activateCard(float x, float y) {

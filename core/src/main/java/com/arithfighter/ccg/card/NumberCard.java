@@ -47,7 +47,7 @@ public class NumberCard{
         sprite.draw(batch);
     }
 
-    public void checkTouchingCard(float x, float y) {
+    public void updateWhenTouchCard(float x, float y) {
         if (isOnCard(x, y)){
             playTouchedAnimation();
         }

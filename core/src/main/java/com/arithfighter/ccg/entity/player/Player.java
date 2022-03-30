@@ -49,8 +49,8 @@ public class Player {
         checkAutoResetCondition();
     }
 
-    public void checkCardIsTouched(int mouseX, int mouseY) {
-        hand.checkTouchingCard(mouseX, mouseY);
+    public void updateWhenTouchCard(int mouseX, int mouseY) {
+        hand.updateWhenTouchCard(mouseX, mouseY);
     }
 
     private void checkAutoResetCondition() {

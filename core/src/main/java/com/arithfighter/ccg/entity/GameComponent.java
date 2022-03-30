@@ -2,7 +2,7 @@ package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.player.Player;
-import com.arithfighter.ccg.widget.CardLoader;
+import com.arithfighter.ccg.widget.CardPlaceBasket;
 import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.ccg.WindowSetting.*;
 
 public class GameComponent {
-    private CardLoader cardLoader;
+    private final CardPlaceBasket cardPlaceBasket;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
@@ -21,7 +21,18 @@ public class GameComponent {
     private boolean returnToMenuFlag = false;
 
     public GameComponent(Texture[] textures, GameDataAccessor dataAccessor, SoundManager soundManager){
-        createBoardArea(textures);
+        cardPlaceBasket = new CardPlaceBasket(textures[1]) {
+            @Override
+            public void initCardPosition() {
+                player.initHand();
+            }
+
+            @Override
+            public void checkCardPlayed() {
+                player.playCard();
+            }
+        };
+        cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
             @Override
@@ -42,21 +53,6 @@ public class GameComponent {
         this.player = player;
     }
 
-    private void createBoardArea(Texture[] textures){
-        cardLoader = new CardLoader(textures[1]) {
-            @Override
-            public void initCardPosition() {
-                player.initHand();
-            }
-
-            @Override
-            public void checkCardPlayed() {
-                player.playCard();
-            }
-        };
-        cardLoader.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
-    }
-
     public void init(){
         returnToMenuFlag = false;
         numberBoxDisplacer.refresh();
@@ -71,8 +67,8 @@ public class GameComponent {
         return player;
     }
 
-    public CardLoader getBoardArea(){
-        return cardLoader;
+    public CardPlaceBasket getBoardArea(){
+        return cardPlaceBasket;
     }
 
     public Button getReturnButton(){
@@ -87,7 +83,7 @@ public class GameComponent {
         numberBoxDisplacer.update(player.getSum());
         numberBoxDisplacer.setBoxQuantity(99);
 
-        player.checkCardIsTouched(mouseX, mouseY);
+        player.updateWhenTouchCard(mouseX, mouseY);
 
         returnToMenuFlag = returnButton.isActive();
 
@@ -104,7 +100,7 @@ public class GameComponent {
     public void draw(SpriteBatch batch) {
         returnButton.draw(batch, "Return");
 
-        cardLoader.draw(batch);
+        cardPlaceBasket.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 
