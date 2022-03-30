@@ -2,7 +2,6 @@ package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.animate.Animator;
 import com.arithfighter.ccg.system.number.RandomNumListGenerator;
-import com.arithfighter.ccg.system.NumberListInspector;
 import com.arithfighter.ccg.time.TimeHandler;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -111,6 +110,31 @@ public class NumberBoxDisplacer {
 
     public void dispose() {
         drawer.dispose();
+    }
+}
+
+class NumberListInspector {
+    private int sumOfNumInspector = -1;
+    private boolean allNumAreZero = false;
+
+    public final void inspectNumberList(int[] numberList) {
+        checkEveryNumInListAreZero(numberList);
+        resetInspector();
+    }
+
+    private void resetInspector() {
+        sumOfNumInspector =-1;
+    }
+
+    private void checkEveryNumInListAreZero(int[] numberList) {
+        for (int number : numberList){
+            sumOfNumInspector += number;
+        }
+        allNumAreZero = sumOfNumInspector == -1;
+    }
+
+    public boolean isAllNumberAreZero(){
+        return allNumAreZero;
     }
 }
 
