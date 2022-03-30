@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final AutoResetHandler autoResetHandler;
+    private final CardLoadingHandler cardLoadingHandler;
     private final Recorder sumAccessor;
     private final EnergyBar energyBar;
     private final CharacterList character;
@@ -15,6 +15,7 @@ public class Player {
     private int energyGain;
 
     private enum SkillState {NEUTRAL, READY}
+
     private SkillState skillState = SkillState.NEUTRAL;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
@@ -22,7 +23,7 @@ public class Player {
 
         hand = new Hand(cards, character);
 
-        autoResetHandler = new AutoResetHandler();
+        cardLoadingHandler = new CardLoadingHandler();
 
         sumAccessor = new Recorder();
 
@@ -33,7 +34,7 @@ public class Player {
         setEnergyGain(character);
     }
 
-    private void setEnergyGain(CharacterList character){
+    private void setEnergyGain(CharacterList character) {
         //Rogue gain more energy than other characters when play card
         if (character == CharacterList.ROGUE)
             energyGain = 4;
@@ -41,9 +42,9 @@ public class Player {
             energyGain = 3;
     }
 
-    public void init(){
+    public void init() {
         sumAccessor.reset();
-        autoResetHandler.initialize();
+        cardLoadingHandler.initialize();
         energyRecorder.reset();
     }
 
@@ -63,14 +64,14 @@ public class Player {
         checkAutoResetCondition();
     }
 
-    public void checkCardIsTouched(int mouseX, int mouseY){
+    public void checkCardIsTouched(int mouseX, int mouseY) {
         hand.checkTouchingCard(mouseX, mouseY);
     }
 
     private void checkAutoResetCondition() {
-        if (autoResetHandler.isTimeToReset()) {
+        if (cardLoadingHandler.isFull()) {
             sumAccessor.reset();
-            autoResetHandler.initialize();
+            cardLoadingHandler.initialize();
             skillState = SkillState.NEUTRAL;
         }
     }
@@ -84,7 +85,7 @@ public class Player {
     }
 
     public final int getCondition() {
-        return autoResetHandler.getCondition();
+        return cardLoadingHandler.getCapacity();
     }
 
     public final void playCard() {
@@ -94,8 +95,8 @@ public class Player {
             if (energyRecorder.getRecord() < energyBar.getMax())
                 energyRecorder.update(energyGain);
 
-            if (hand.isResetCard())
-                checkResetCardPlay();
+            if (hand.isResettingCard())
+                checkResettingCardPlay();
             else
                 checkNormalCardPlayed();
         }
@@ -111,17 +112,17 @@ public class Player {
 
         sumAccessor.update(hand.getCardNumber());
 
-        autoResetHandler.update();
+        cardLoadingHandler.update();
     }
 
-    private void checkResetCardPlay() {
+    private void checkResettingCardPlay() {
         if (isSkillReady()) {
             castSkill(character);
             energyRecorder.reset();
-            autoResetHandler.initialize();
+            cardLoadingHandler.initialize();
             skillState = SkillState.NEUTRAL;
         } else {
-            doWhenResetCardPlay();
+            doWhenResettingCardPlay();
         }
     }
 
@@ -133,10 +134,13 @@ public class Player {
     public void castSkill(CharacterList character) {
     }
 
-    private void doWhenResetCardPlay() {
+    private void doWhenResettingCardPlay() {
+        //when resetting card played means sum reset, then add a number to sum.
         sumAccessor.reset();
         sumAccessor.update(hand.getCardNumber());
-        autoResetHandler.update();
+        //playing resetting card count as a card, thus Auto-reset handler initializes then update.
+        cardLoadingHandler.initialize();
+        cardLoadingHandler.update();
         skillState = SkillState.READY;
     }
 
@@ -150,23 +154,23 @@ public class Player {
     }
 }
 
-class AutoResetHandler {
-    private final static int initCondition = 6;
-    private int condition = initCondition;
+class CardLoadingHandler {
+    private final static int initCapacity = 6;
+    private int capacity = initCapacity;
 
-    public int getCondition(){
-        return condition;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void update(){
-        condition--;
+    public void update() {
+        capacity--;
     }
 
-    public void initialize(){
-        condition = initCondition;
+    public void initialize() {
+        capacity = initCapacity;
     }
 
-    public boolean isTimeToReset(){
-        return condition == 0;
+    public boolean isFull() {
+        return capacity == 0;
     }
 }

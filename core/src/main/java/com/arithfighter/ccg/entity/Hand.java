@@ -45,7 +45,7 @@ public class Hand {
         return cards[getActiveCardIndex()].getNumber();
     }
 
-    public boolean isResetCard() {
+    public boolean isResettingCard() {
         return getActiveCardIndex() == cards.length-1;
     }
 
