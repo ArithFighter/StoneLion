@@ -57,7 +57,8 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        energyBar.draw(batch, energyRecorder.getRecord());
+        energyBar.setEnergy(energyRecorder.getRecord());
+        energyBar.draw(batch);
 
         hand.draw(batch);
 
@@ -92,7 +93,7 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
 
-            if (energyRecorder.getRecord() < energyBar.getMax())
+            if (energyBar.isNotFull())
                 energyRecorder.update(energyGain);
 
             if (hand.isResettingCard())

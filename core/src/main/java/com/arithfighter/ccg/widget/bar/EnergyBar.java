@@ -9,6 +9,7 @@ public class EnergyBar {
     private final BarGrid barGrid;
     private final Font maxSign;
     private static final int maxEnergy = 30;
+    private int energy;
 
     public EnergyBar(Texture[] textures){
         int barX = 40;
@@ -27,16 +28,17 @@ public class EnergyBar {
         return maxEnergy;
     }
 
-    private void update(int energy){
-        barGrid.updateWidth((emptyBar.getWidth()-71)* energy / maxEnergy);
+    public void setEnergy(int value){
+        if (value<=maxEnergy)
+            energy = value;
     }
 
-    public void draw(SpriteBatch batch, int energy){
-        if (energy>=maxEnergy)
-            energy = maxEnergy;
+    public void draw(SpriteBatch batch){
         barGrid.draw(batch);
         emptyBar.draw(batch);
-        update(energy);
+
+        barGrid.updateWidth((emptyBar.getWidth()-71)* energy / maxEnergy);
+
         drawMaxSign(energy, batch);
     }
 
@@ -49,6 +51,10 @@ public class EnergyBar {
                     emptyBar.getHeight()/2
             );
         }
+    }
+
+    public boolean isNotFull(){
+        return energy<maxEnergy;
     }
 
     public void dispose(){
