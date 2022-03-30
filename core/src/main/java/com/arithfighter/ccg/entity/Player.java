@@ -9,17 +9,13 @@ public class Player {
     private final Hand hand;
     private final CardLoadingHandler cardLoadingHandler;
     private final Recorder sumAccessor;
-    private final EnergyBar energyBar;
     private final CharacterList character;
-    private final Recorder energyRecorder;
-    private int energyGain;
 
     private enum SkillState {NEUTRAL, READY}
 
     private SkillState skillState = SkillState.NEUTRAL;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
-        energyRecorder = new Recorder();
 
         hand = new Hand(cards, character);
 
@@ -27,19 +23,7 @@ public class Player {
 
         sumAccessor = new Recorder();
 
-        energyBar = new EnergyBar(textures);
-
         this.character = character;
-
-        setEnergyGain(character);
-    }
-
-    private void setEnergyGain(CharacterList character) {
-        //Rogue gain more energy than other characters when play card
-        if (character == CharacterList.ROGUE)
-            energyGain = 4;
-        else
-            energyGain = 3;
     }
 
     public void init() {
@@ -57,9 +41,6 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        energyBar.setEnergy(energyRecorder.getRecord());
-        energyBar.draw(batch);
-
         hand.draw(batch);
 
         checkAutoResetCondition();
@@ -93,8 +74,7 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
 
-            if (energyBar.isNotFull())
-                energyRecorder.update(energyGain);
+
 
             if (hand.isResettingCard())
                 checkResettingCardPlay();
@@ -147,11 +127,58 @@ public class Player {
 
     public final void dispose() {
         hand.dispose();
-        energyBar.dispose();
     }
 
     public final int getEnergy() {
         return energyRecorder.getRecord();
+    }
+}
+
+class PlayerEnergyBar{
+    private final EnergyBar energyBar;
+    private final Recorder energyRecorder;
+    private int energyGain;
+
+    public PlayerEnergyBar(Texture[] textures, CharacterList character){
+        energyRecorder = new Recorder();
+
+        energyBar = new EnergyBar(textures);
+
+        setEnergyGain(character);
+    }
+
+    private void setEnergyGain(CharacterList character) {
+        //Rogue gain more energy than other characters when play card
+        if (character == CharacterList.ROGUE)
+            energyGain = 4;
+        else
+            energyGain = 3;
+    }
+
+    public void reset(){
+        energyRecorder.reset();
+    }
+
+    public int getEnergy(){
+        return energyRecorder.getRecord();
+    }
+
+    public void update(){
+        if (energyBar.isNotFull())
+                energyRecorder.update(energyGain);
+    }
+
+    public void draw(SpriteBatch batch){
+        energyBar.setEnergy(energyRecorder.getRecord());
+        energyBar.draw(batch);
+    }
+
+    public boolean isMaxEnergy(){
+        return energyRecorder.getRecord() >= energyBar.getMax();
+    }
+
+    public void dispose(){
+        energyBar.dispose();
     }
 }
 
