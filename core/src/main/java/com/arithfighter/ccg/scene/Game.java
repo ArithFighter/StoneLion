@@ -126,14 +126,14 @@ class SkillHandler {
     }
 
     private void increaseAllNonZeroValueByOne(){
-        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
             if (getNumberBoxValue(i)>0)
                 numberBoxDisplacer.set(i, getNumberBoxValue(i) + 1);
         }
     }
 
     private void reduceAllNonZeroValueByOne(){
-        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
             if (getNumberBoxValue(i)>0)
                 numberBoxDisplacer.set(i, getNumberBoxValue(i) - 1);
         }
@@ -164,7 +164,7 @@ class IndexPicker {
     public int getRandomNonZeroValueIndex(){
         ArrayList<Integer> indexList = new ArrayList<>();
 
-        for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
+        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
             if (numberBoxDisplacer.getNumberBoxValue(i)>0)
                 indexList.add(i);
         }

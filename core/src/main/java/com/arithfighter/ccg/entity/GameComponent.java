@@ -84,6 +84,7 @@ public class GameComponent {
 
     public void update(int mouseX, int mouseY){
         numberBoxDisplacer.update(player.getSum());
+        numberBoxDisplacer.setBoxQuantity(99);
 
         player.checkCardIsTouched(mouseX, mouseY);
 

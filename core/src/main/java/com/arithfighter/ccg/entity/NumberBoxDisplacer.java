@@ -15,30 +15,30 @@ import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
     private final NumberBox[] numberBoxes;
-    private final static int BOX_QUANTITY = 9;
-    private final int[] numbers = new int[BOX_QUANTITY];
+    private final static int MAX_QUANTITY = 9;
+    private final int[] numbers = new int[MAX_QUANTITY];
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
 
     public NumberBoxDisplacer(Texture texture) {
-        numberBoxes = new NumberBox[BOX_QUANTITY];
+        numberBoxes = new NumberBox[MAX_QUANTITY];
 
         createNumberBoxes(texture);
 
-        randomNumListGenerator = new RandomNumListGenerator(BOX_QUANTITY);
+        randomNumListGenerator = new RandomNumListGenerator(MAX_QUANTITY);
 
         animation = new NumberBoxAnimation(numberBoxes);
     }
 
-    public int getNumberBoxQuantity() {
-        return BOX_QUANTITY;
+    public int getMaxQuantity() {
+        return MAX_QUANTITY;
     }
 
     private void createNumberBoxes(Texture texture) {
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
 
-        for (int i = 0; i < BOX_QUANTITY; i++) {
+        for (int i = 0; i < MAX_QUANTITY; i++) {
             numberBoxes[i] = new NumberBox(texture);
             numberBoxes[i].setPosition(
                     numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
@@ -57,8 +57,8 @@ public class NumberBoxDisplacer {
     }
 
     public void set(int index, int value) {
-        if (index > BOX_QUANTITY)
-            index = BOX_QUANTITY;
+        if (index > MAX_QUANTITY)
+            index = MAX_QUANTITY;
 
         if (index < 0)
             index = 0;
@@ -76,17 +76,26 @@ public class NumberBoxDisplacer {
         animation.setNumbers(numbers);
     }
 
+    public void setBoxQuantity(int boxQuantity) {
+        if (boxQuantity>MAX_QUANTITY)
+            boxQuantity = MAX_QUANTITY;
+
+        if (numberList.size() > 0)
+            for (int i = 0; i < MAX_QUANTITY - boxQuantity; i++)
+                set(i, 0);
+    }
+
     private void updateNumbers() {
-        if (numberList.size() < BOX_QUANTITY)
+        if (numberList.size() < MAX_QUANTITY)
             numberList.addAll(randomNumListGenerator.getNumbers());
 
-        for (int i = 0; i < BOX_QUANTITY; i++)
+        for (int i = 0; i < MAX_QUANTITY; i++)
             numbers[i] = numberList.get(i);
     }
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (sum == numbers[i] && numbers[i] > 0) {
+            if (sum == numbers[i] && numbers[i] > 0 && numberList.size() > 0) {
                 animation.setMatchedBoxIndex(i);
 
                 doWhenSumAndNumMatched();
@@ -111,7 +120,7 @@ public class NumberBoxDisplacer {
     }
 
     public void draw(SpriteBatch batch) {
-        for (int i = 0; i < BOX_QUANTITY; i++) {
+        for (int i = 0; i < MAX_QUANTITY; i++) {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(batch, numbers[i]);
         }
@@ -168,11 +177,11 @@ class NumberBoxAnimation {
         timeHandler = new TimeHandler();
     }
 
-    public void setNumbers(int[] numbers){
+    public void setNumbers(int[] numbers) {
         this.numbers = numbers;
     }
 
-    public void setBatch(SpriteBatch batch){
+    public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }
 
@@ -194,7 +203,7 @@ class NumberBoxAnimation {
         }
     }
 
-    private void init(){
+    private void init() {
         timeHandler.resetPastedTime();
         matchedBoxIndex -= matchedBoxIndex + 1;
     }
