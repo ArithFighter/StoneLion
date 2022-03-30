@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final CardLoadingHandler cardLoadingHandler;
+    private final CapacityManager capacityManager;
     private final Recorder sumAccessor;
     private final CharacterList character;
     private final PlayerEnergyBar energyBar;
@@ -20,7 +20,7 @@ public class Player {
 
         hand = new Hand(cards, character);
 
-        cardLoadingHandler = new CardLoadingHandler();
+        capacityManager = new CapacityManager();
 
         sumAccessor = new Recorder();
 
@@ -29,7 +29,7 @@ public class Player {
 
     public void init() {
         sumAccessor.reset();
-        cardLoadingHandler.initialize();
+        capacityManager.initialize();
         energyBar.reset();
     }
 
@@ -46,17 +46,17 @@ public class Player {
 
         hand.draw(batch);
 
-        checkAutoResetCondition();
+        checkCapacity();
     }
 
     public void updateWhenTouchCard(int mouseX, int mouseY) {
         hand.updateWhenTouchCard(mouseX, mouseY);
     }
 
-    private void checkAutoResetCondition() {
-        if (cardLoadingHandler.isFull()) {
+    private void checkCapacity() {
+        if (capacityManager.isFull()) {
             sumAccessor.reset();
-            cardLoadingHandler.initialize();
+            capacityManager.initialize();
             skillState = SkillState.NEUTRAL;
         }
     }
@@ -70,7 +70,7 @@ public class Player {
     }
 
     public final int getCondition() {
-        return cardLoadingHandler.getCapacity();
+        return capacityManager.getCapacity();
     }
 
     public final void playCard() {
@@ -96,14 +96,13 @@ public class Player {
 
         sumAccessor.update(hand.getCardNumber());
 
-        cardLoadingHandler.update();
+        capacityManager.update();
     }
 
     private void checkResettingCardPlay() {
         if (isSkillReady()) {
             castSkill(character);
             energyBar.reset();
-            cardLoadingHandler.initialize();
             skillState = SkillState.NEUTRAL;
         } else {
             doWhenResettingCardPlay();
@@ -123,8 +122,8 @@ public class Player {
         sumAccessor.reset();
         sumAccessor.update(hand.getCardNumber());
         //playing resetting card count as a card, thus Auto-reset handler initializes then update.
-        cardLoadingHandler.initialize();
-        cardLoadingHandler.update();
+        capacityManager.initialize();
+        capacityManager.update();
         skillState = SkillState.READY;
     }
 
@@ -138,7 +137,7 @@ public class Player {
     }
 }
 
-class CardLoadingHandler {
+class CapacityManager {
     private final static int initCapacity = 6;
     private int capacity = initCapacity;
 

@@ -23,10 +23,10 @@ public class Game {
 
         gameComponent = new GameComponent(textures, dataAccessor, soundManager);
 
-        addPlayers(textures, cards);
+        createPlayers(textures, cards);
     }
 
-    private void addPlayers(Texture[] textures, Texture[] cards) {
+    private void createPlayers(Texture[] textures, Texture[] cards) {
         SkillHandler skillHandler = new SkillHandler(gameComponent.getNumberBoxDisplacer());
 
         for (int i = 0; i < characterQuantity; i++)
