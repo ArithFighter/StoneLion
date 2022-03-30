@@ -52,8 +52,8 @@ public class NumberBoxDisplacer {
         numberList.clear();
     }
 
-    public LinkedList<Integer> getNumberList() {
-        return numberList;
+    public int getNumberBoxValue(int index) {
+        return numberList.get(index);
     }
 
     public void set(int index, int value) {

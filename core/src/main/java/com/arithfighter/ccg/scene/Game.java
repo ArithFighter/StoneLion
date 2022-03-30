@@ -176,7 +176,7 @@ class NumBoxOperator{
     }
 
     public int getNumberBoxValue(int i){
-        return numberBoxDisplacer.getNumberList().get(i);
+        return numberBoxDisplacer.getNumberBoxValue(i);
     }
 
     private int getRandomNum(int range){
