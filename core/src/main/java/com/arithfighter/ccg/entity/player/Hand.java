@@ -12,7 +12,7 @@ public class Hand {
     public Hand(Texture[] textures, CharacterList character) {
         texturesExtractor = new CardTexturesExtractor(textures);
 
-        cards = new NumberCard[texturesExtractor.getCardTextures(character).length];
+        cards = new NumberCard[character.getTextureMap().length];
 
         createCardList(character);
     }
@@ -27,7 +27,7 @@ public class Hand {
                     initX + i * getPadding(cardSet),
                     initY,
                     cardSet[i],
-                    character.numberSet[i]
+                    character.getNumberSet()[i]
             );
     }
 
@@ -90,7 +90,7 @@ public class Hand {
 class CardTexturesExtractor {
     private final Texture[] cardTextures;
     private final CharacterList[] characters = CharacterList.values();
-    private final int quantity = characters[0].numberSet.length;
+    private final int quantity = characters[0].getTextureMap().length;
 
     public CardTexturesExtractor(Texture[] cardTextures) {
         this.cardTextures = cardTextures;
@@ -102,7 +102,7 @@ class CardTexturesExtractor {
         for (CharacterList character : characters)
             if (player == character) {
                 for (int j = 0; j < quantity; j++)
-                    cardSet[j] = cardTextures[character.textureMap[j]];
+                    cardSet[j] = cardTextures[character.getTextureMap()[j]];
             }
 
         return cardSet;

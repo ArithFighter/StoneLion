@@ -16,4 +16,12 @@ public enum CharacterList {
         this.numberSet = numberSet;
         this.textureMap = textureMap;
     }
+
+    public int[] getNumberSet() {
+        return numberSet;
+    }
+
+    public int[] getTextureMap() {
+        return textureMap;
+    }
 }
