@@ -3,18 +3,27 @@ package com.arithfighter.ccg.widget;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Widget {
+    private Point point;
     private int fontSize;
     private final Shape shape;
 
     public Widget(){
         shape = new Shape();
-        shape.setPoint(new Point(0,0));
+        setPoint(new Point(0,0));
     }
 
     public Widget(int fontSize){
         shape = new Shape();
-        shape.setPoint(new Point(0,0));
+        setPoint(new Point(0,0));
         this.fontSize = fontSize;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public void setSize(Texture texture, float scale) {
@@ -33,10 +42,6 @@ public class Widget {
         shape.setWidth(width);
     }
 
-    public Point getPoint(){
-        return shape.getPoint();
-    }
-
     private void configSize(float width, float height, float scale){
         shape.setWidth(scale*width);
         shape.setHeight(scale*height);
@@ -45,13 +50,13 @@ public class Widget {
     public float getCenterX(String content) {
         float midLength = shape.getWidth() / 2 - content.length() * fontSize / 2f;
 
-        return shape.getPoint().getX() + midLength;
+        return point.getX() + midLength;
     }
 
     public float getCenterY() {
         float midHeight = (shape.getHeight() + fontSize) / 2;
 
-        return shape.getPoint().getY() + midHeight;
+        return point.getY() + midHeight;
     }
 
     public int getFontSize(){
