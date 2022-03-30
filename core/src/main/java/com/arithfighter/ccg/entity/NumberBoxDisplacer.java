@@ -14,37 +14,27 @@ import static com.arithfighter.ccg.WindowSetting.GRID_X;
 import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
-    private final NumberBox[] numberBoxes;
-    private final static int MAX_QUANTITY = 9;
-    private final int[] numbers = new int[MAX_QUANTITY];
+    private final NumberBoxDrawer drawer;
+    private final int maxQuantity;
+    private final int[] numbers;
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
 
     public NumberBoxDisplacer(Texture texture) {
-        numberBoxes = new NumberBox[MAX_QUANTITY];
+        drawer = new NumberBoxDrawer(texture);
+        
+        maxQuantity = drawer.getMaxQuantity();
+        
+        numbers = new int[maxQuantity];
 
-        createNumberBoxes(texture);
+        randomNumListGenerator = new RandomNumListGenerator(maxQuantity);
 
-        randomNumListGenerator = new RandomNumListGenerator(MAX_QUANTITY);
-
-        animation = new NumberBoxAnimation(numberBoxes);
+        animation = new NumberBoxAnimation(drawer.getNumberBoxes());
     }
 
     public int getMaxQuantity() {
-        return MAX_QUANTITY;
-    }
-
-    private void createNumberBoxes(Texture texture) {
-        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
-
-        for (int i = 0; i < MAX_QUANTITY; i++) {
-            numberBoxes[i] = new NumberBox(texture);
-            numberBoxes[i].setPosition(
-                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
-            );
-        }
+        return maxQuantity;
     }
 
     public void refresh() {
@@ -57,13 +47,10 @@ public class NumberBoxDisplacer {
     }
 
     public void set(int index, int value) {
-        if (index > MAX_QUANTITY)
-            index = MAX_QUANTITY;
-
-        if (index < 0)
-            index = 0;
-
-        numberList.set(index, value);
+        if (index>=0){
+            int i = Math.min(index, maxQuantity);
+            numberList.set(i, value);
+        }
     }
 
     public void update(int sum) {
@@ -77,19 +64,18 @@ public class NumberBoxDisplacer {
     }
 
     public void setBoxQuantity(int boxQuantity) {
-        if (boxQuantity>MAX_QUANTITY)
-            boxQuantity = MAX_QUANTITY;
+        int quantity = Math.min(boxQuantity, maxQuantity);
 
         if (numberList.size() > 0)
-            for (int i = 0; i < MAX_QUANTITY - boxQuantity; i++)
+            for (int i = 0; i < maxQuantity - quantity; i++)
                 set(i, 0);
     }
 
     private void updateNumbers() {
-        if (numberList.size() < MAX_QUANTITY)
+        if (numberList.size() < maxQuantity)
             numberList.addAll(randomNumListGenerator.getNumbers());
 
-        for (int i = 0; i < MAX_QUANTITY; i++)
+        for (int i = 0; i < maxQuantity; i++)
             numbers[i] = numberList.get(i);
     }
 
@@ -120,16 +106,51 @@ public class NumberBoxDisplacer {
     }
 
     public void draw(SpriteBatch batch) {
-        for (int i = 0; i < MAX_QUANTITY; i++) {
-            if (numbers[i] > 0)
-                numberBoxes[i].draw(batch, numbers[i]);
-        }
+        drawer.draw(batch, numbers);
 
         animation.setBatch(batch);
         animation.draw();
     }
 
     public void dispose() {
+        drawer.dispose();
+    }
+}
+
+class NumberBoxDrawer{
+    private final NumberBox[] numberBoxes;
+    private final static int maxQuantity = 9;
+    
+    public NumberBoxDrawer(Texture texture){
+        numberBoxes = new NumberBox[maxQuantity];
+        
+        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
+
+        for (int i = 0; i < maxQuantity; i++) {
+            numberBoxes[i] = new NumberBox(texture);
+            numberBoxes[i].setPosition(
+                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
+                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
+            );
+        }
+    }
+    
+    public int getMaxQuantity(){
+        return maxQuantity;
+    }
+    
+    public NumberBox[] getNumberBoxes(){
+        return numberBoxes;
+    }
+    
+    public void draw(SpriteBatch batch, int[] numbers){
+        for (int i = 0; i < maxQuantity; i++) {
+            if (numbers[i] > 0)
+                numberBoxes[i].draw(batch, numbers[i]);
+        }
+    }
+    
+    public void dispose(){
         for (NumberBox numberBox : numberBoxes)
             numberBox.dispose();
     }
