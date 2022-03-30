@@ -10,12 +10,14 @@ public class Player {
     private final CardLoadingHandler cardLoadingHandler;
     private final Recorder sumAccessor;
     private final CharacterList character;
+    private final PlayerEnergyBar energyBar;
 
     private enum SkillState {NEUTRAL, READY}
 
     private SkillState skillState = SkillState.NEUTRAL;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
+        energyBar = new PlayerEnergyBar(textures, character);
 
         hand = new Hand(cards, character);
 
@@ -29,7 +31,7 @@ public class Player {
     public void init() {
         sumAccessor.reset();
         cardLoadingHandler.initialize();
-        energyRecorder.reset();
+        energyBar.reset();
     }
 
     public final void activateCard(int mouseX, int mouseY) {
@@ -41,6 +43,8 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
+        energyBar.draw(batch);
+
         hand.draw(batch);
 
         checkAutoResetCondition();
@@ -74,7 +78,7 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
 
-
+            energyBar.update();
 
             if (hand.isResettingCard())
                 checkResettingCardPlay();
@@ -99,7 +103,7 @@ public class Player {
     private void checkResettingCardPlay() {
         if (isSkillReady()) {
             castSkill(character);
-            energyRecorder.reset();
+            energyBar.reset();
             cardLoadingHandler.initialize();
             skillState = SkillState.NEUTRAL;
         } else {
@@ -109,7 +113,7 @@ public class Player {
 
     private boolean isSkillReady() {
         return skillState == SkillState.READY &&
-                energyRecorder.getRecord() >= energyBar.getMax();
+                energyBar.isMaxEnergy();
     }
 
     public void castSkill(CharacterList character) {
@@ -127,10 +131,11 @@ public class Player {
 
     public final void dispose() {
         hand.dispose();
+        energyBar.dispose();
     }
 
     public final int getEnergy() {
-        return energyRecorder.getRecord();
+        return energyBar.getEnergy();
     }
 }
 

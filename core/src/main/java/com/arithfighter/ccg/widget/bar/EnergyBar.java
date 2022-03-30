@@ -29,8 +29,7 @@ public class EnergyBar {
     }
 
     public void setEnergy(int value){
-        if (value<=maxEnergy)
-            energy = value;
+        energy = Math.min(value, maxEnergy);
     }
 
     public void draw(SpriteBatch batch){
