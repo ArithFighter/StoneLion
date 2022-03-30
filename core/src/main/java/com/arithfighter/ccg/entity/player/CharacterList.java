@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.entity;
+package com.arithfighter.ccg.entity.player;
 
 import com.arithfighter.ccg.system.number.RandomNumProducer;
 

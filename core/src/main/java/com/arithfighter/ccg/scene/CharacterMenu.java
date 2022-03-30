@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.scene;
 
-import com.arithfighter.ccg.entity.CharacterList;
+import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.button.PanelButton;

@@ -1,6 +1,7 @@
 package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.SoundManager;
+import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.widget.CardLoader;
 import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.SumBox;

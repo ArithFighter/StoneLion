@@ -2,6 +2,8 @@ package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.*;
+import com.arithfighter.ccg.entity.player.CharacterList;
+import com.arithfighter.ccg.entity.player.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
