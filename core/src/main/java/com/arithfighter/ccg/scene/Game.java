@@ -97,13 +97,12 @@ public class Game {
 }
 
 class SkillHandler {
-    NumberBoxDisplacer numberBoxDisplacer;
-    NumBoxOperator operator;
+    private final NumberBoxDisplacer numberBoxDisplacer;
+    private final IndexPicker indexPicker;
 
     public SkillHandler(NumberBoxDisplacer numberBoxDisplacer){
         this.numberBoxDisplacer = numberBoxDisplacer;
-
-        operator = new NumBoxOperator(this.numberBoxDisplacer);
+        indexPicker = new IndexPicker(numberBoxDisplacer);
     }
 
     public void cast(CharacterList character){
@@ -118,7 +117,7 @@ class SkillHandler {
                 reduceAllNonZeroValueByOne();
                 break;
             case PALADIN:
-                replaceOneNonZeroValue(31);
+                replaceOneNonZeroValue(30);
                 break;
             case WARRIOR:
                 increaseAllNonZeroValueByOne();
@@ -128,33 +127,37 @@ class SkillHandler {
 
     private void increaseAllNonZeroValueByOne(){
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
-            if (operator.isValueBiggerThanZero(i))
-                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) + 1);
+            if (getNumberBoxValue(i)>0)
+                numberBoxDisplacer.set(i, getNumberBoxValue(i) + 1);
         }
     }
 
     private void reduceAllNonZeroValueByOne(){
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
-            if (operator.isValueBiggerThanZero(i))
-                numberBoxDisplacer.set(i, operator.getNumberBoxValue(i) - 1);
+            if (getNumberBoxValue(i)>0)
+                numberBoxDisplacer.set(i, getNumberBoxValue(i) - 1);
         }
     }
 
     private void increaseOneNonZeroValueBySix(){
-        int index = operator.getRandomNonZeroValueIndex();
-        numberBoxDisplacer.set(index, operator.getNumberBoxValue(index)+6);
+        int index = indexPicker.getRandomNonZeroValueIndex();
+        numberBoxDisplacer.set(index, getNumberBoxValue(index)+6);
     }
 
     private void replaceOneNonZeroValue(int value){
-        int index = operator.getRandomNonZeroValueIndex();
+        int index = indexPicker.getRandomNonZeroValueIndex();
         numberBoxDisplacer.set(index, value);
+    }
+
+    public int getNumberBoxValue(int i){
+        return numberBoxDisplacer.getNumberBoxValue(i);
     }
 }
 
-class NumBoxOperator{
-    NumberBoxDisplacer numberBoxDisplacer;
+class IndexPicker {
+    private final NumberBoxDisplacer numberBoxDisplacer;
 
-    public NumBoxOperator(NumberBoxDisplacer numberBoxDisplacer){
+    public IndexPicker(NumberBoxDisplacer numberBoxDisplacer){
         this.numberBoxDisplacer = numberBoxDisplacer;
     }
 
@@ -162,7 +165,7 @@ class NumBoxOperator{
         ArrayList<Integer> indexList = new ArrayList<>();
 
         for (int i = 0; i < numberBoxDisplacer.getNumberBoxQuantity(); i++){
-            if (isValueBiggerThanZero(i))
+            if (numberBoxDisplacer.getNumberBoxValue(i)>0)
                 indexList.add(i);
         }
 
@@ -171,15 +174,8 @@ class NumBoxOperator{
         return indexList.get(indexPick);
     }
 
-    public boolean isValueBiggerThanZero(int i){
-        return getNumberBoxValue(i) > 0;
-    }
-
-    public int getNumberBoxValue(int i){
-        return numberBoxDisplacer.getNumberBoxValue(i);
-    }
 
     private int getRandomNum(int range){
-        return (int)(Math.random() * (range + 1) - 1);
+        return (int)(Math.random() * (range + 1)-1);
     }
 }
