@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Game {
     private final Player[] players;
     private final GameComponent gameComponent;
+    private final PauseMenu pauseMenu;
     private final GameDataAccessor dataAccessor;
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
@@ -22,6 +23,8 @@ public class Game {
         players = new Player[characterQuantity];
 
         gameComponent = new GameComponent(textures, dataAccessor, soundManager);
+
+        pauseMenu = new PauseMenu(textures);
 
         createPlayers(textures, cards);
     }
@@ -51,19 +54,24 @@ public class Game {
     }
 
     public boolean isReturnToMenu(){
-        return gameComponent.isReturnToMainMenu();
+        return pauseMenu.isReturnToMainMenu();
     }
 
     public void init(){
         gameComponent.init();
+        pauseMenu.init();
         dataAccessor.resetRecorder();
     }
 
     public void update(int mouseX, int mouseY){
+        pauseMenu.update();
+
         gameComponent.update(mouseX, mouseY);
     }
 
     public void draw(){
+        pauseMenu.draw(batch);
+
         gameComponent.draw(batch);
     }
 
@@ -77,6 +85,8 @@ public class Game {
 
     public void touchDown(int mouseX, int mouseY){
         gameComponent.touchDown(mouseX, mouseY);
+
+        pauseMenu.touchDown(mouseX,mouseY);
     }
 
     public void touchDragged(int mouseX, int mouseY){
@@ -85,11 +95,14 @@ public class Game {
 
     public void touchUp(int mouseX, int mouseY){
         gameComponent.touchUp(mouseX, mouseY);
+
+        pauseMenu.touchUp();
     }
 
     public void dispose(){
         dataAccessor.dispose();
         gameComponent.dispose();
+        pauseMenu.dispose();
         for (Player player : players) player.dispose();
     }
 }

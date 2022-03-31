@@ -3,7 +3,6 @@ package com.arithfighter.ccg.entity;
 import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.widget.CardPlaceBasket;
-import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +16,6 @@ public class GameComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private final PauseMenu pauseMenu;
 
     public GameComponent(Texture[] textures, GameDataAccessor dataAccessor, SoundManager soundManager){
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
@@ -43,8 +41,6 @@ public class GameComponent {
 
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
-
-        pauseMenu = new PauseMenu(textures);
     }
 
     public void setPlayer(Player player){
@@ -52,7 +48,6 @@ public class GameComponent {
     }
 
     public void init(){
-        pauseMenu.init();
         numberBoxDisplacer.refresh();
         player.init();
     }
@@ -61,17 +56,11 @@ public class GameComponent {
         return numberBoxDisplacer;
     }
 
-    public boolean isReturnToMainMenu(){
-        return pauseMenu.isReturnToMainMenu();
-    }
-
     public void update(int mouseX, int mouseY){
         numberBoxDisplacer.update(player.getSum());
         numberBoxDisplacer.setBoxQuantity(99);
 
         player.updateWhenTouchCard(mouseX, mouseY);
-
-        pauseMenu.update();
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -84,8 +73,6 @@ public class GameComponent {
     }
 
     public void draw(SpriteBatch batch) {
-        pauseMenu.draw(batch);
-
         cardPlaceBasket.draw(batch);
 
         numberBoxDisplacer.draw(batch);
@@ -98,8 +85,6 @@ public class GameComponent {
 
     public void touchDown(int mouseX, int mouseY){
         player.activateCard(mouseX, mouseY);
-
-        pauseMenu.touchDown(mouseX,mouseY);
     }
 
     public void touchDragged(int mouseX, int mouseY){
@@ -108,51 +93,10 @@ public class GameComponent {
 
     public void touchUp(int mouseX, int mouseY){
         cardPlaceBasket.playCardToBasket(mouseX, mouseY);
-
-        pauseMenu.touchUp();
     }
 
     public void dispose(){
         numberBoxDisplacer.dispose();
         sumBox.dispose();
-        pauseMenu.dispose();
-    }
-}
-
-class PauseMenu{
-    private final Button returnButton;
-    private boolean isReturnToMainMenu = false;
-
-    public PauseMenu(Texture[] textures){
-        returnButton = new Button(textures[6], 1.8f);
-        returnButton.setPosition(1000, 600);
-    }
-
-    public void draw(SpriteBatch batch){
-        returnButton.draw(batch, "Return");
-    }
-
-    public void update(){
-        isReturnToMainMenu = returnButton.isActive();
-    }
-
-    public void init(){
-        isReturnToMainMenu = false;
-    }
-
-    public boolean isReturnToMainMenu(){
-        return isReturnToMainMenu;
-    }
-
-    public void touchDown(float x, float y){
-        returnButton.activate(x,y);
-    }
-
-    public void touchUp(){
-        returnButton.deactivate();
-    }
-
-    public void dispose(){
-        returnButton.dispose();
     }
 }
