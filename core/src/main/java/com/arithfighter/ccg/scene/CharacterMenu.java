@@ -21,12 +21,9 @@ public class CharacterMenu {
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
     private final ButtonPlacer placer = new ButtonPlacer();
-    private final TimeHandler timeHandler;
-    private final Mask[] masks;
+    private final MaskAnimation animation;
 
     public CharacterMenu(Texture[] textures, Texture[] panels) {
-        timeHandler = new TimeHandler();
-
         int length = CharacterList.values().length;
         buttons = new PanelButton[length];
 
@@ -43,11 +40,7 @@ public class CharacterMenu {
         selectionFont = new Font(36);
         selectionFont.setColor(Color.WHITE);
 
-        masks = new Mask[buttons.length];
-        for (int i = 0; i< buttons.length;i++){
-            masks[i] = new Mask(textures[5], 3);
-            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
-        }
+        animation = new MaskAnimation(textures[5], buttons.length);
     }
 
     public boolean isCharButtonActive() {
@@ -79,10 +72,7 @@ public class CharacterMenu {
         CharacterList[] characters = CharacterList.values();
         selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
-        timeHandler.updatePastedTime();
-        if (timeHandler.getPastedTime()<1.8f)
-            for (Mask mask:masks)
-                mask.draw(batch);
+        animation.draw(batch);
     }
 
     private void handleStartButton(){
@@ -123,6 +113,31 @@ public class CharacterMenu {
     public void dispose() {
         startButton.dispose();
         selectionFont.dispose();
+    }
+}
+
+class MaskAnimation{
+    private final TimeHandler timeHandler;
+    private final Mask[] masks;
+
+    public MaskAnimation(Texture texture, int length){
+        timeHandler = new TimeHandler();
+
+        ButtonPlacer placer = new ButtonPlacer();
+
+        masks = new Mask[length];
+        for (int i = 0; i< length;i++){
+            masks[i] = new Mask(texture, 3);
+            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
+        }
+    }
+
+    public void draw(SpriteBatch batch){
+        timeHandler.updatePastedTime();
+        for (int i = 0; i< masks.length;i++){
+            if (timeHandler.getPastedTime()<0.5f*i)
+                masks[i].draw(batch);
+        }
     }
 }
 
