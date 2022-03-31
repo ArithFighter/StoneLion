@@ -51,7 +51,7 @@ public class Game {
     }
 
     public boolean isReturnToMenu(){
-        return gameComponent.isReturnToMenu();
+        return gameComponent.isReturnToMainMenu();
     }
 
     public void init(){

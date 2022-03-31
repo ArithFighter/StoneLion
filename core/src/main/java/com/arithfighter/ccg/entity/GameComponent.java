@@ -17,8 +17,7 @@ public class GameComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private final Button returnButton;
-    private boolean returnToMenuFlag = false;
+    private final PauseMenu pauseMenu;
 
     public GameComponent(Texture[] textures, GameDataAccessor dataAccessor, SoundManager soundManager){
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
@@ -45,8 +44,7 @@ public class GameComponent {
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
 
-        returnButton = new Button(textures[6], 1.8f);
-        returnButton.setPosition(1000, 600);
+        pauseMenu = new PauseMenu(textures);
     }
 
     public void setPlayer(Player player){
@@ -54,7 +52,7 @@ public class GameComponent {
     }
 
     public void init(){
-        returnToMenuFlag = false;
+        pauseMenu.init();
         numberBoxDisplacer.refresh();
         player.init();
     }
@@ -63,8 +61,8 @@ public class GameComponent {
         return numberBoxDisplacer;
     }
 
-    public boolean isReturnToMenu(){
-        return returnToMenuFlag;
+    public boolean isReturnToMainMenu(){
+        return pauseMenu.isReturnToMainMenu();
     }
 
     public void update(int mouseX, int mouseY){
@@ -73,7 +71,7 @@ public class GameComponent {
 
         player.updateWhenTouchCard(mouseX, mouseY);
 
-        returnToMenuFlag = returnButton.isActive();
+        pauseMenu.update();
 
         //This is for test, will remove in future version
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -86,7 +84,7 @@ public class GameComponent {
     }
 
     public void draw(SpriteBatch batch) {
-        returnButton.draw(batch, "Return");
+        pauseMenu.draw(batch);
 
         cardPlaceBasket.draw(batch);
 
@@ -101,7 +99,7 @@ public class GameComponent {
     public void touchDown(int mouseX, int mouseY){
         player.activateCard(mouseX, mouseY);
 
-        returnButton.activate(mouseX, mouseY);
+        pauseMenu.touchDown(mouseX,mouseY);
     }
 
     public void touchDragged(int mouseX, int mouseY){
@@ -111,19 +109,19 @@ public class GameComponent {
     public void touchUp(int mouseX, int mouseY){
         cardPlaceBasket.playCardToBasket(mouseX, mouseY);
 
-        returnButton.deactivate();
+        pauseMenu.touchUp();
     }
 
     public void dispose(){
         numberBoxDisplacer.dispose();
         sumBox.dispose();
-        returnButton.dispose();
+        pauseMenu.dispose();
     }
 }
 
 class PauseMenu{
     private final Button returnButton;
-    private boolean isReturnToMenu = false;
+    private boolean isReturnToMainMenu = false;
 
     public PauseMenu(Texture[] textures){
         returnButton = new Button(textures[6], 1.8f);
@@ -135,15 +133,15 @@ class PauseMenu{
     }
 
     public void update(){
-        isReturnToMenu = returnButton.isActive();
+        isReturnToMainMenu = returnButton.isActive();
     }
 
     public void init(){
-        isReturnToMenu = false;
+        isReturnToMainMenu = false;
     }
 
-    public boolean isReturnToMenu(){
-        return isReturnToMenu;
+    public boolean isReturnToMainMenu(){
+        return isReturnToMainMenu;
     }
 
     public void touchDown(float x, float y){
