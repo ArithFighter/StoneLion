@@ -71,24 +71,20 @@ public class Game {
         dataAccessor.draw(mouseX, mouseY, players[index].getEnergy(), batch);//for dev
     }
 
-    public void setCurrentPlayerToGame(int i){
+    public void setSelectedPlayerToGame(int i){
         gameComponent.setPlayer(players[i]);
     }
 
     public void touchDown(int mouseX, int mouseY){
-        gameComponent.getPlayer().activateCard(mouseX, mouseY);
-
-        gameComponent.getReturnButton().activate(mouseX, mouseY);
+        gameComponent.touchDown(mouseX, mouseY);
     }
 
     public void touchDragged(int mouseX, int mouseY){
-        gameComponent.getPlayer().updateWhenDrag(mouseX, mouseY);
+        gameComponent.touchDragged(mouseX, mouseY);
     }
 
     public void touchUp(int mouseX, int mouseY){
-        gameComponent.getBoardArea().playCardToBasket(mouseX, mouseY);
-
-        gameComponent.getReturnButton().deactivate();
+        gameComponent.touchUp(mouseX, mouseY);
     }
 
     public void dispose(){

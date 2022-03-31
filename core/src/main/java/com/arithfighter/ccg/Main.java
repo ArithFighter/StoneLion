@@ -93,7 +93,7 @@ public class Main extends ApplicationAdapter {
 
         musicManager.setVolume(0.8f);
 
-        game.setCurrentPlayerToGame(characterMenu.getSelectIndex());
+        game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
 
         if (characterMenu.isGameStart()) {
             characterMenu.init();

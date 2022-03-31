@@ -63,18 +63,6 @@ public class GameComponent {
         return numberBoxDisplacer;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public CardPlaceBasket getBoardArea(){
-        return cardPlaceBasket;
-    }
-
-    public Button getReturnButton(){
-        return returnButton;
-    }
-
     public boolean isReturnToMenu(){
         return returnToMenuFlag;
     }
@@ -110,9 +98,63 @@ public class GameComponent {
         player.draw(batch);
     }
 
+    public void touchDown(int mouseX, int mouseY){
+        player.activateCard(mouseX, mouseY);
+
+        returnButton.activate(mouseX, mouseY);
+    }
+
+    public void touchDragged(int mouseX, int mouseY){
+        player.updateWhenDrag(mouseX, mouseY);
+    }
+
+    public void touchUp(int mouseX, int mouseY){
+        cardPlaceBasket.playCardToBasket(mouseX, mouseY);
+
+        returnButton.deactivate();
+    }
+
     public void dispose(){
         numberBoxDisplacer.dispose();
         sumBox.dispose();
+        returnButton.dispose();
+    }
+}
+
+class PauseMenu{
+    private final Button returnButton;
+    private boolean isReturnToMenu = false;
+
+    public PauseMenu(Texture[] textures){
+        returnButton = new Button(textures[6], 1.8f);
+        returnButton.setPosition(1000, 600);
+    }
+
+    public void draw(SpriteBatch batch){
+        returnButton.draw(batch, "Return");
+    }
+
+    public void update(){
+        isReturnToMenu = returnButton.isActive();
+    }
+
+    public void init(){
+        isReturnToMenu = false;
+    }
+
+    public boolean isReturnToMenu(){
+        return isReturnToMenu;
+    }
+
+    public void touchDown(float x, float y){
+        returnButton.activate(x,y);
+    }
+
+    public void touchUp(){
+        returnButton.deactivate();
+    }
+
+    public void dispose(){
         returnButton.dispose();
     }
 }
