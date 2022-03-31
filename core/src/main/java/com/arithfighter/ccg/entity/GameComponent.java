@@ -4,8 +4,6 @@ import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.widget.CardPlaceBasket;
 import com.arithfighter.ccg.widget.SumBox;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -61,15 +59,6 @@ public class GameComponent {
         numberBoxDisplacer.setBoxQuantity(99);
 
         player.updateWhenTouchCard(mouseX, mouseY);
-
-        //This is for test, will remove in future version
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            refresh();
-        }
-    }
-
-    private void refresh(){
-        numberBoxDisplacer.refresh();
     }
 
     public void draw(SpriteBatch batch) {

@@ -110,19 +110,26 @@ public class Main extends ApplicationAdapter {
 
     private void drawGame() {
         batch.begin();
-        if (gameState == GameState.MENU) {
-            musicManager.playMenuMusic();
-            characterMenu.setBatch(batch);
-            characterMenu.draw();
-        }
-        if (gameState == GameState.GAME) {
-            musicManager.playTheme();
-            game.setBatch(batch);
-            game.update(cursorPos.getX(), cursorPos.getY());
-            game.draw();
-            game.drawData(cursorPos.getX(), cursorPos.getY(), characterMenu.getSelectIndex());
-        }
+        switchScene();
         batch.end();
+    }
+
+    private void switchScene() {
+        switch (gameState) {
+            case MENU:
+                musicManager.playMenuMusic();
+                characterMenu.setBatch(batch);
+                characterMenu.draw();
+                break;
+            case GAME:
+                musicManager.playTheme();
+                game.setBatch(batch);
+                game.setCursorPos(cursorPos);
+                game.update();
+                game.draw();
+                game.drawData(characterMenu.getSelectIndex());
+                break;
+        }
     }
 
     @Override

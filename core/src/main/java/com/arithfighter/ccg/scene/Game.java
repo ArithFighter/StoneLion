@@ -4,6 +4,9 @@ import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.entity.player.Player;
+import com.arithfighter.ccg.system.CursorPositionAccessor;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,10 +17,13 @@ public class Game {
     private final GameComponent gameComponent;
     private final PauseMenu pauseMenu;
     private final GameDataAccessor dataAccessor;
+    private CursorPositionAccessor cursorPos;
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
 
     public Game(Texture[] textures, Texture[] cards, SoundManager soundManager){
+        cursorPos = new CursorPositionAccessor();
+
         dataAccessor = new GameDataAccessor();
 
         players = new Player[characterQuantity];
@@ -53,6 +59,10 @@ public class Game {
         this.batch = batch;
     }
 
+    public void setCursorPos(CursorPositionAccessor cursorPos){
+        this.cursorPos = cursorPos;
+    }
+
     public boolean isReturnToMenu(){
         return pauseMenu.isReturnToMainMenu();
     }
@@ -63,10 +73,20 @@ public class Game {
         dataAccessor.resetRecorder();
     }
 
-    public void update(int mouseX, int mouseY){
+    public void update(){
         pauseMenu.update();
 
-        gameComponent.update(mouseX, mouseY);
+        gameComponent.update(cursorPos.getX(), cursorPos.getY());
+
+        //This is for developer, will remove in open version
+        manualReset();
+    }
+
+    private void manualReset(){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            gameComponent.init();
+            dataAccessor.resetRecorder();
+        }
     }
 
     public void draw(){
@@ -75,8 +95,8 @@ public class Game {
         gameComponent.draw(batch);
     }
 
-    public void drawData(int mouseX, int mouseY, int index){
-        dataAccessor.draw(mouseX, mouseY, players[index].getEnergy(), batch);//for dev
+    public void drawData(int index){
+        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
     }
 
     public void setSelectedPlayerToGame(int i){
