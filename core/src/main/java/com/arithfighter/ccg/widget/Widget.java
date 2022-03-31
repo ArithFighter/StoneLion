@@ -1,5 +1,7 @@
 package com.arithfighter.ccg.widget;
 
+import com.arithfighter.ccg.pojo.Point;
+import com.arithfighter.ccg.pojo.Shape;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Widget {

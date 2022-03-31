@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.card;
 
-import com.arithfighter.ccg.widget.Point;
+import com.arithfighter.ccg.pojo.Point;
 
 public class RawCard {
     private Point initPoint;

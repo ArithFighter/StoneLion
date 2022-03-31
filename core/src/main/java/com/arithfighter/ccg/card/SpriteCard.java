@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.card;
 
-import com.arithfighter.ccg.widget.Point;
+import com.arithfighter.ccg.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 
 public class SpriteCard extends RawCard{

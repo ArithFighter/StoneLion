@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.entity;
 
-import com.arithfighter.ccg.system.Recorder;
+import com.arithfighter.ccg.pojo.Recorder;
 import com.arithfighter.ccg.font.Font;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

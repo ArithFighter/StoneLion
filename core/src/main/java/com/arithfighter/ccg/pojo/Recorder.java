@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.system;
+package com.arithfighter.ccg.pojo;
 
 public class Recorder {
     private int record = 0;

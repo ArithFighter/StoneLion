@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.entity.player;
 
-import com.arithfighter.ccg.system.Recorder;
+import com.arithfighter.ccg.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

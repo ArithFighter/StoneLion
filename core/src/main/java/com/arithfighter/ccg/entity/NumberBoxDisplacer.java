@@ -1,7 +1,7 @@
 package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.animate.Animator;
-import com.arithfighter.ccg.system.number.RandomNumListGenerator;
+import com.arithfighter.ccg.system.RandomNumListGenerator;
 import com.arithfighter.ccg.time.TimeHandler;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;

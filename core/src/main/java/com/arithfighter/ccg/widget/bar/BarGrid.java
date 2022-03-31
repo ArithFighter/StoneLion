@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.widget.bar;
 
-import com.arithfighter.ccg.widget.Point;
+import com.arithfighter.ccg.pojo.Point;
 import com.arithfighter.ccg.widget.Widget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

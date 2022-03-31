@@ -1,4 +1,4 @@
-package com.arithfighter.ccg.widget;
+package com.arithfighter.ccg.pojo;
 
 public class Point {
     private float x;

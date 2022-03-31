@@ -1,4 +1,6 @@
-package com.arithfighter.ccg.system.number;
+package com.arithfighter.ccg.system;
+
+import com.arithfighter.ccg.pojo.RandomNumProducer;
 
 import java.util.HashSet;
 import java.util.LinkedList;
