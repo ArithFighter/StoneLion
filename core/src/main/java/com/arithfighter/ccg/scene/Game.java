@@ -4,7 +4,7 @@ import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.entity.player.Player;
-import com.arithfighter.ccg.system.CursorPositionAccessor;
+import com.arithfighter.ccg.CursorPositionAccessor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;

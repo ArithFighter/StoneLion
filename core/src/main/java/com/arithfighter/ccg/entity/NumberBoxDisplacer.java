@@ -1,13 +1,15 @@
 package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.animate.Animator;
-import com.arithfighter.ccg.system.RandomNumListGenerator;
+import com.arithfighter.ccg.pojo.GameNumProducer;
 import com.arithfighter.ccg.time.TimeHandler;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 public class NumberBoxDisplacer {
     private final NumberBoxDrawer drawer;
@@ -110,6 +112,49 @@ public class NumberBoxDisplacer {
 
     public void dispose() {
         drawer.dispose();
+    }
+}
+
+class RandomNumListGenerator {
+    private final int maxQuantity;
+    private final LinkedList<Integer> numberList = new LinkedList<>();
+    private final HashSet<Integer> numberSet = new HashSet<>();
+
+    public RandomNumListGenerator(int maxQuantity){
+        this.maxQuantity = maxQuantity;
+    }
+
+    public void clear(){
+        numberList.clear();
+        numberSet.clear();
+    }
+
+    public List<Integer> getNumbers() {
+        addNumbersToList();
+
+        return numberList;
+    }
+
+    private void addNumbersToList() {
+        if (numberList.size() < maxQuantity) {
+            addNumberUntilEqualToQuantity(maxQuantity);
+
+            numberList.addAll(numberSet);
+        }
+    }
+
+    private void addNumberUntilEqualToQuantity(int quantity) {
+        addRandomNumberToSet(quantity);
+
+        while (numberSet.size() < quantity)
+            addNumberUntilEqualToQuantity(quantity - numberSet.size());
+    }
+
+    private void addRandomNumberToSet(int quantity) {
+        GameNumProducer rnp = new GameNumProducer();
+
+        for (int i = 0; i < quantity; i++)
+            numberSet.add(rnp.getRandomNum());
     }
 }
 

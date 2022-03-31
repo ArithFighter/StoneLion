@@ -3,7 +3,6 @@ package com.arithfighter.ccg;
 import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.CharacterMenu;
 import com.arithfighter.ccg.scene.Game;
-import com.arithfighter.ccg.system.CursorPositionAccessor;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
