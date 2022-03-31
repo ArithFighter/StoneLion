@@ -2,6 +2,8 @@ package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.font.Font;
+import com.arithfighter.ccg.time.TimeHandler;
+import com.arithfighter.ccg.widget.Mask;
 import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.button.PanelButton;
 import com.arithfighter.ccg.widget.SpriteWidget;
@@ -19,11 +21,14 @@ public class CharacterMenu {
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
     private final ButtonPlacer placer = new ButtonPlacer();
+    private final TimeHandler timeHandler;
+    private final Mask[] masks;
 
     public CharacterMenu(Texture[] textures, Texture[] panels) {
+        timeHandler = new TimeHandler();
+
         int length = CharacterList.values().length;
         buttons = new PanelButton[length];
-
 
         for (int i = 0; i < length; i++) {
             buttons[i] = new PanelButton(panels[i]);
@@ -37,6 +42,12 @@ public class CharacterMenu {
 
         selectionFont = new Font(36);
         selectionFont.setColor(Color.WHITE);
+
+        masks = new Mask[buttons.length];
+        for (int i = 0; i< buttons.length;i++){
+            masks[i] = new Mask(textures[5], 3);
+            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
+        }
     }
 
     public boolean isCharButtonActive() {
@@ -67,6 +78,11 @@ public class CharacterMenu {
 
         CharacterList[] characters = CharacterList.values();
         selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
+
+        timeHandler.updatePastedTime();
+        if (timeHandler.getPastedTime()<1.8f)
+            for (Mask mask:masks)
+                mask.draw(batch);
     }
 
     private void handleStartButton(){
