@@ -31,11 +31,21 @@ public class NumberBoxDisplacer {
         
         numbers = new int[maxQuantity];
 
+        NumberBoxPlacer placer = new NumberBoxPlacer();
+
+        Mask[] masks = new Mask[maxQuantity];
+        for (int i = 0; i< maxQuantity;i++){
+            masks[i] = new Mask(textures[5], 2.4f);
+            masks[i].setPosition(
+                    placer.getNumberBoxX(i, masks[i].getWidth()),
+                    placer.getNumberBoxY(i, masks[i].getHeight()));
+        }
+
         randomNumListGenerator = new RandomNumListGenerator(maxQuantity);
 
         animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
-        maskAnimation = new MaskAnimation(textures[5], maxQuantity);
+        maskAnimation = new MaskAnimation(masks);
     }
 
     public int getMaxQuantity() {
@@ -237,49 +247,6 @@ class NumberBoxAnimation {
     private void init() {
         timeHandler.resetPastedTime();
         matchedBoxIndex -= matchedBoxIndex + 1;
-    }
-}
-
-class MaskAnimation{
-    private final TimeHandler timeHandler;
-    private final Mask[] masks;
-
-    public MaskAnimation(Texture texture, int length){
-        timeHandler = new TimeHandler();
-
-        NumberBoxPlacer placer = new NumberBoxPlacer();
-
-        masks = new Mask[length];
-        for (int i = 0; i< length;i++){
-            masks[i] = new Mask(texture, 2.4f);
-            masks[i].setPosition(
-                    placer.getNumberBoxX(i, masks[i].getWidth()),
-                    placer.getNumberBoxY(i, masks[i].getHeight()));
-        }
-    }
-
-    public void draw(SpriteBatch batch){
-        float drawSpeed = 0.2f;
-        timeHandler.updatePastedTime();
-
-        for (int i = 0; i< masks.length;i++){
-            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
-                masks[i].draw(batch);
-        }
-    }
-
-    public void debug(SpriteBatch batch){
-        float drawSpeed = 0.2f;
-        timeHandler.updatePastedTime();
-
-        for (int i = 0; i< masks.length;i++){
-            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
-                masks[i].debug(batch);
-        }
-    }
-
-    public void init(){
-        timeHandler.resetPastedTime();
     }
 }
 
