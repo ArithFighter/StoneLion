@@ -41,7 +41,7 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (characterMenu.isCharButtonActive())
+            if (characterMenu.isPanelButtonActive())
                 soundManager.playTouchedSound();
 
             if (characterMenu.isStartButtonActive())
