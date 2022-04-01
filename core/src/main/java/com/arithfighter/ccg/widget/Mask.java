@@ -15,6 +15,14 @@ public class Mask {
         widget.setPosition(x,y);
     }
 
+    public float getWidth(){
+        return widget.getWidget().getWidth();
+    }
+
+    public float getHeight(){
+        return widget.getWidget().getHeight();
+    }
+
     public void draw(SpriteBatch batch){
         widget.getSprite().setColor(Color.BLACK);
         widget.draw(batch);

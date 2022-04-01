@@ -3,6 +3,7 @@ package com.arithfighter.ccg.entity;
 import com.arithfighter.ccg.animate.Animator;
 import com.arithfighter.ccg.pojo.GameNumProducer;
 import com.arithfighter.ccg.time.TimeHandler;
+import com.arithfighter.ccg.widget.Mask;
 import com.arithfighter.ccg.widget.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.arithfighter.ccg.WindowSetting.GRID_X;
+import static com.arithfighter.ccg.WindowSetting.GRID_Y;
+
 public class NumberBoxDisplacer {
     private final NumberBoxDrawer drawer;
     private final int maxQuantity;
@@ -18,9 +22,10 @@ public class NumberBoxDisplacer {
     private final RandomNumListGenerator randomNumListGenerator;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
+    private final MaskAnimation maskAnimation;
 
-    public NumberBoxDisplacer(Texture texture) {
-        drawer = new NumberBoxDrawer(texture);
+    public NumberBoxDisplacer(Texture[] textures) {
+        drawer = new NumberBoxDrawer(textures[3]);
         
         maxQuantity = drawer.getMaxQuantity();
         
@@ -29,6 +34,8 @@ public class NumberBoxDisplacer {
         randomNumListGenerator = new RandomNumListGenerator(maxQuantity);
 
         animation = new NumberBoxAnimation(drawer.getNumberBoxes());
+
+        maskAnimation = new MaskAnimation(textures[5], maxQuantity);
     }
 
     public int getMaxQuantity() {
@@ -38,6 +45,7 @@ public class NumberBoxDisplacer {
     public void refresh() {
         randomNumListGenerator.clear();
         numberList.clear();
+        maskAnimation.init();
     }
 
     public int getNumberBoxValue(int index) {
@@ -108,6 +116,8 @@ public class NumberBoxDisplacer {
 
         animation.setBatch(batch);
         animation.draw();
+
+        maskAnimation.draw(batch);
     }
 
     public void dispose() {
@@ -229,5 +239,112 @@ class NumberBoxAnimation {
     private void init() {
         timeHandler.resetPastedTime();
         matchedBoxIndex -= matchedBoxIndex + 1;
+    }
+}
+
+class MaskAnimation{
+    private final TimeHandler timeHandler;
+    private final Mask[] masks;
+
+    public MaskAnimation(Texture texture, int length){
+        timeHandler = new TimeHandler();
+
+        NumberBoxPlacer placer = new NumberBoxPlacer();
+
+        masks = new Mask[length];
+        for (int i = 0; i< length;i++){
+            masks[i] = new Mask(texture, 2.4f);
+            masks[i].setPosition(
+                    placer.getNumberBoxX(i, masks[i].getWidth()),
+                    placer.getNumberBoxY(i, masks[i].getHeight()));
+        }
+    }
+
+    public void draw(SpriteBatch batch){
+        float drawSpeed = 0.2f;
+        timeHandler.updatePastedTime();
+
+        for (int i = 0; i< masks.length;i++){
+            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
+                masks[i].draw(batch);
+        }
+    }
+
+    public void debug(SpriteBatch batch){
+        float drawSpeed = 0.2f;
+        timeHandler.updatePastedTime();
+
+        for (int i = 0; i< masks.length;i++){
+            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
+                masks[i].debug(batch);
+        }
+    }
+
+    public void init(){
+        timeHandler.resetPastedTime();
+    }
+}
+
+class NumberBoxDrawer{
+    private final NumberBox[] numberBoxes;
+    private final static int maxQuantity = 9;
+
+    public NumberBoxDrawer(Texture texture){
+        numberBoxes = new NumberBox[maxQuantity];
+
+        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
+
+        for (int i = 0; i < maxQuantity; i++) {
+            numberBoxes[i] = new NumberBox(texture);
+            numberBoxes[i].setPosition(
+                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
+                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
+            );
+        }
+    }
+
+    public int getMaxQuantity(){
+        return maxQuantity;
+    }
+
+    public NumberBox[] getNumberBoxes(){
+        return numberBoxes;
+    }
+
+    public void draw(SpriteBatch batch, int[] numbers){
+        for (int i = 0; i < maxQuantity; i++) {
+            if (numbers[i] > 0)
+                numberBoxes[i].draw(batch, numbers[i]);
+        }
+    }
+
+    public void dispose(){
+        for (NumberBox numberBox : numberBoxes)
+            numberBox.dispose();
+    }
+}
+
+class NumberBoxPlacer {
+    private final float initX = GRID_X * 9.5f;
+    private final float initY = GRID_Y * 5;
+    private final float margin = GRID_X;
+
+    public float getNumberBoxX(int i, float width) {
+        float x = initX;
+
+        for (int j = 0; j < 3; j++)
+            if (i % 3 == j) x += (margin + width) * j;
+
+        return x;
+    }
+
+    public float getNumberBoxY(int i, float height) {
+        float y = initY;
+
+        for (int j = 0; j < 5; j++)
+            if (i / 3 == j)
+                y += (margin + height) * j;
+
+        return y;
     }
 }

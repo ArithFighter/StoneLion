@@ -29,7 +29,7 @@ public class GameComponent {
         };
         cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures[3]) {
+        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
             public void doWhenSumAndNumMatched() {
                 dataAccessor.updateScore(1);
