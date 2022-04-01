@@ -17,14 +17,14 @@ public class Game {
     private final Player[] players;
     private final GameComponent gameComponent;
     private final PauseMenu pauseMenu;
-    private final GameDataAccessor dataAccessor;
+    private final GameDataDisplacer dataAccessor;
     private CursorPositionAccessor cursorPos;
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
 
     public Game(Texture[] textures, Texture[] cards, SoundManager soundManager){
-        dataAccessor = new GameDataAccessor();
+        dataAccessor = new GameDataDisplacer();
 
         players = new Player[characterQuantity];
 

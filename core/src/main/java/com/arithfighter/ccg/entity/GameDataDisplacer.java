@@ -5,13 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameDataAccessor {
+public class GameDataDisplacer {
     private final Font font;
     private int cardPlayTimes;
     private int score;
     private final int fontSize = 16;
 
-    public GameDataAccessor(){
+    public GameDataDisplacer(){
         font = new Font(fontSize);
         font.setColor(Color.WHITE);
     }
