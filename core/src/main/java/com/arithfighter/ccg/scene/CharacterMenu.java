@@ -15,7 +15,6 @@ public class CharacterMenu {
     private final Font selectionFont;
     private final SpriteWidget highLight;
     private final Button startButton;
-    private int selectIndex = 0;
     private enum GameReady {NEUTRAL, READY, START}
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
@@ -36,8 +35,6 @@ public class CharacterMenu {
         selectionFont = new Font(36);
         selectionFont.setColor(Color.WHITE);
 
-        ButtonPlacer placer = new ButtonPlacer();
-
         Mask[] masks = new Mask[panelQuantity];
         for (int i = 0; i< panelQuantity; i++){
             masks[i] = new Mask(textures[5], 3f);
@@ -51,7 +48,7 @@ public class CharacterMenu {
     }
 
     public boolean isPanelButtonActive() {
-        return buttonProducer.isPanelButtonActive(selectIndex);
+        return buttonProducer.isPanelButtonActive();
     }
 
     public boolean isStartButtonActive(){
@@ -70,7 +67,8 @@ public class CharacterMenu {
     public void draw() {
         handleStartButton();
 
-        highLight.setPosition(placer.getButtonX(selectIndex)-22, placer.getButtonY(selectIndex)-20);
+        int index = buttonProducer.getActiveButtonIndex();
+        highLight.setPosition(placer.getButtonX(index)-22, placer.getButtonY(index)-20);
         highLight.draw(batch);
 
         buttonProducer.draw(batch);
@@ -80,7 +78,7 @@ public class CharacterMenu {
         CharacterList[] characters = CharacterList.values();
         selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
-        animation.draw(batch);
+        animation.draw(batch, 0.1f);
     }
 
     private void handleStartButton(){
@@ -93,8 +91,7 @@ public class CharacterMenu {
     }
 
     public int getSelectIndex() {
-        selectIndex = buttonProducer.getActiveButtonIndex();
-        return selectIndex;
+        return buttonProducer.getActiveButtonIndex();
     }
 
     public boolean isGameStart() {
@@ -121,6 +118,7 @@ public class CharacterMenu {
 
 class PanelButtonProducer {
     private final PanelButton[] buttons;
+    private int selectedIndex;
 
     public PanelButtonProducer(Texture[] panels, int length){
         buttons = new PanelButton[length];
@@ -133,8 +131,8 @@ class PanelButtonProducer {
         }
     }
 
-    public boolean isPanelButtonActive(int index) {
-        return buttons[index].isActive();
+    public boolean isPanelButtonActive() {
+        return buttons[selectedIndex].isActive();
     }
 
     public void draw(SpriteBatch batch){
@@ -142,12 +140,11 @@ class PanelButtonProducer {
     }
 
     public int getActiveButtonIndex(){
-        int index = 0;
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].isActive())
-                index = i;
+                selectedIndex = i;
         }
-        return index;
+        return selectedIndex;
     }
 
     public void activate(int mouseX, int mouseY){

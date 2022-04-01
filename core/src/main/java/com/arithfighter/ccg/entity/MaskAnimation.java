@@ -8,33 +8,31 @@ public class MaskAnimation {
     private final TimeHandler timeHandler;
     private final Mask[] masks;
 
-    public MaskAnimation(Mask[] masks){
+    public MaskAnimation(Mask[] masks) {
         timeHandler = new TimeHandler();
 
         this.masks = masks;
     }
 
-    public void draw(SpriteBatch batch){
-        float drawSpeed = 0.2f;
+    public void draw(SpriteBatch batch, float speed) {
         timeHandler.updatePastedTime();
 
-        for (int i = 0; i< masks.length;i++){
-            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
+        for (int i = 0; i < masks.length; i++) {
+            if (timeHandler.getPastedTime() - speed < speed * i)
                 masks[i].draw(batch);
         }
     }
 
-    public void debug(SpriteBatch batch){
-        float drawSpeed = 0.2f;
+    public void debug(SpriteBatch batch, float speed) {
         timeHandler.updatePastedTime();
 
-        for (int i = 0; i< masks.length;i++){
-            if (timeHandler.getPastedTime()-drawSpeed<drawSpeed*i)
+        for (int i = 0; i < masks.length; i++) {
+            if (timeHandler.getPastedTime() - speed < speed * i)
                 masks[i].debug(batch);
         }
     }
 
-    public void init(){
+    public void init() {
         timeHandler.resetPastedTime();
     }
 }

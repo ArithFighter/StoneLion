@@ -126,7 +126,7 @@ public class NumberBoxDisplacer {
         animation.setBatch(batch);
         animation.draw();
 
-        maskAnimation.draw(batch);
+        maskAnimation.draw(batch, 0.1f);
     }
 
     public void dispose() {
