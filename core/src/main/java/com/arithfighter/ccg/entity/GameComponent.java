@@ -46,7 +46,7 @@ public class GameComponent {
     }
 
     public void init(){
-        numberBoxDisplacer.refresh();
+        numberBoxDisplacer.init();
         player.init();
     }
 

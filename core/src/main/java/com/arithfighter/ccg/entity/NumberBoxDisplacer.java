@@ -16,7 +16,7 @@ import static com.arithfighter.ccg.WindowSetting.GRID_X;
 import static com.arithfighter.ccg.WindowSetting.GRID_Y;
 
 public class NumberBoxDisplacer {
-    private final NumberBoxDrawer drawer;
+    private final NumberBoxProducer numberBoxProducer;
     private final int maxQuantity;
     private final int[] numbers;
     private final RandomNumListGenerator randomNumListGenerator;
@@ -25,15 +25,15 @@ public class NumberBoxDisplacer {
     private final MaskAnimation maskAnimation;
 
     public NumberBoxDisplacer(Texture[] textures) {
-        drawer = new NumberBoxDrawer(textures[3]);
+        numberBoxProducer = new NumberBoxProducer(textures[3]);
         
-        maxQuantity = drawer.getMaxQuantity();
+        maxQuantity = numberBoxProducer.getMaxQuantity();
         
         numbers = new int[maxQuantity];
 
         randomNumListGenerator = new RandomNumListGenerator(maxQuantity);
 
-        animation = new NumberBoxAnimation(drawer.getNumberBoxes());
+        animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
         maskAnimation = new MaskAnimation(textures[5], maxQuantity);
     }
@@ -42,7 +42,7 @@ public class NumberBoxDisplacer {
         return maxQuantity;
     }
 
-    public void refresh() {
+    public void init() {
         randomNumListGenerator.clear();
         numberList.clear();
         maskAnimation.init();
@@ -106,13 +106,12 @@ public class NumberBoxDisplacer {
         numberListInspector.inspectNumberList(numbers);
 
         if (numberListInspector.isAllNumberAreZero()) {
-            randomNumListGenerator.clear();
-            numberList.clear();
+            init();
         }
     }
 
     public void draw(SpriteBatch batch) {
-        drawer.draw(batch, numbers);
+        numberBoxProducer.draw(batch, numbers);
 
         animation.setBatch(batch);
         animation.draw();
@@ -121,7 +120,7 @@ public class NumberBoxDisplacer {
     }
 
     public void dispose() {
-        drawer.dispose();
+        numberBoxProducer.dispose();
     }
 }
 
@@ -141,7 +140,6 @@ class RandomNumListGenerator {
 
     public List<Integer> getNumbers() {
         addNumbersToList();
-
         return numberList;
     }
 
@@ -285,11 +283,11 @@ class MaskAnimation{
     }
 }
 
-class NumberBoxDrawer{
+class NumberBoxProducer {
     private final NumberBox[] numberBoxes;
     private final static int maxQuantity = 9;
 
-    public NumberBoxDrawer(Texture texture){
+    public NumberBoxProducer(Texture texture){
         numberBoxes = new NumberBox[maxQuantity];
 
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
