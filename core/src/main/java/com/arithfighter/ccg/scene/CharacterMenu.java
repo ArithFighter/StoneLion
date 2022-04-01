@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CharacterMenu {
-    private final Font selectionFont;
+    private final Font characterName;
     private final SpriteWidget highLight;
     private final Button startButton;
     private enum GameReady {NEUTRAL, READY, START}
@@ -32,8 +32,8 @@ public class CharacterMenu {
         startButton = new Button(textures[6], 1.8f);
         startButton.setPosition(900, 120);
 
-        selectionFont = new Font(36);
-        selectionFont.setColor(Color.WHITE);
+        characterName = new Font(36);
+        characterName.setColor(Color.WHITE);
 
         Mask[] masks = new Mask[panelQuantity];
         for (int i = 0; i< panelQuantity; i++){
@@ -76,7 +76,7 @@ public class CharacterMenu {
         startButton.draw(batch, "Start");
 
         CharacterList[] characters = CharacterList.values();
-        selectionFont.draw(batch, characters[getSelectIndex()].name(), 900, 500);
+        characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
     }
@@ -112,7 +112,7 @@ public class CharacterMenu {
 
     public void dispose() {
         startButton.dispose();
-        selectionFont.dispose();
+        characterName.dispose();
     }
 }
 

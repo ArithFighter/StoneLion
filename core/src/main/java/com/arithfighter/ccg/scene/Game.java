@@ -5,6 +5,7 @@ import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.CursorPositionAccessor;
+import com.arithfighter.ccg.pojo.Recorder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,15 +21,14 @@ public class Game {
     private CursorPositionAccessor cursorPos;
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
+    private final Recorder playRecord = new Recorder();
 
     public Game(Texture[] textures, Texture[] cards, SoundManager soundManager){
-        cursorPos = new CursorPositionAccessor();
-
         dataAccessor = new GameDataAccessor();
 
         players = new Player[characterQuantity];
 
-        gameComponent = new GameComponent(textures, dataAccessor, soundManager);
+        gameComponent = new GameComponent(textures, soundManager);
 
         pauseMenu = new PauseMenu(textures);
 
@@ -45,7 +45,7 @@ public class Game {
                     CharacterList.values()[i]) {
                 @Override
                 public void doWhenCardPlayed() {
-                    dataAccessor.updatePlayTimes();
+                    playRecord.update(1);
                 }
 
                 @Override
@@ -68,9 +68,9 @@ public class Game {
     }
 
     public void init(){
+        playRecord.reset();
         gameComponent.init();
         pauseMenu.init();
-        dataAccessor.resetRecorder();
     }
 
     public void update(){
@@ -84,8 +84,8 @@ public class Game {
 
     private void manualReset(){
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            playRecord.reset();
             gameComponent.init();
-            dataAccessor.resetRecorder();
         }
     }
 
@@ -96,6 +96,8 @@ public class Game {
     }
 
     public void drawData(int index){
+        dataAccessor.setCardPlayTimes(playRecord.getRecord());
+        dataAccessor.setScore(gameComponent.getScore());
         dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
     }
 

@@ -2,6 +2,7 @@ package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.player.Player;
+import com.arithfighter.ccg.pojo.Recorder;
 import com.arithfighter.ccg.widget.CardPlaceBasket;
 import com.arithfighter.ccg.widget.SumBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,8 +15,9 @@ public class GameComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
+    private final Recorder scoreRecord = new Recorder();
 
-    public GameComponent(Texture[] textures, GameDataAccessor dataAccessor, SoundManager soundManager){
+    public GameComponent(Texture[] textures, SoundManager soundManager){
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
             public void initCardPosition() {
@@ -32,7 +34,7 @@ public class GameComponent {
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
             public void doWhenSumAndNumMatched() {
-                dataAccessor.updateScore(1);
+                scoreRecord.update(1);
                 soundManager.playScoreSound();
             }
         };
@@ -41,11 +43,16 @@ public class GameComponent {
         sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
     }
 
+    public int getScore(){
+        return scoreRecord.getRecord();
+    }
+
     public void setPlayer(Player player){
         this.player = player;
     }
 
     public void init(){
+        scoreRecord.reset();
         numberBoxDisplacer.init();
         player.init();
     }

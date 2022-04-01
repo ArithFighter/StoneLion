@@ -18,15 +18,15 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private CharacterMenu characterMenu;
     private Game game;
-    private enum GameState {MENU, GAME}
-    private GameState gameState = GameState.MENU;
+    private enum GameScene {MENU, GAME}
+    private GameScene gameScene = GameScene.MENU;
     private SoundManager soundManager;
     private MusicManager musicManager;
 
     private final InputAdapter mouseAdapter = new InputAdapter() {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            if (gameState == GameState.MENU)
+            if (gameScene == GameScene.MENU)
                 characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
 
             game.touchDown(cursorPos.getX(), cursorPos.getY());
@@ -94,15 +94,7 @@ public class Main extends ApplicationAdapter {
 
         game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
 
-        if (characterMenu.isGameStart()) {
-            characterMenu.init();
-            gameState = GameState.GAME;
-        }
-        if (game.isReturnToMenu()) {
-            soundManager.playReturnSound();
-            game.init();
-            gameState = GameState.MENU;
-        }
+        controlScene();
 
         drawGame();
     }
@@ -113,8 +105,20 @@ public class Main extends ApplicationAdapter {
         batch.end();
     }
 
+    private void controlScene(){
+        if (characterMenu.isGameStart()) {
+            characterMenu.init();
+            gameScene = GameScene.GAME;
+        }
+        if (game.isReturnToMenu()) {
+            soundManager.playReturnSound();
+            game.init();
+            gameScene = GameScene.MENU;
+        }
+    }
+
     private void switchScene() {
-        switch (gameState) {
+        switch (gameScene) {
             case MENU:
                 musicManager.playMenuMusic();
                 characterMenu.setBatch(batch);
