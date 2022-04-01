@@ -56,6 +56,7 @@ public class CharacterMenu {
     }
 
     public void init() {
+        animation.init();
         gameReady = GameReady.NEUTRAL;
     }
 
@@ -127,17 +128,23 @@ class MaskAnimation{
 
         masks = new Mask[length];
         for (int i = 0; i< length;i++){
-            masks[i] = new Mask(texture, 3);
+            masks[i] = new Mask(texture, 3f);
             masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
     }
 
     public void draw(SpriteBatch batch){
+        float drawSpeed = 0.2f;
         timeHandler.updatePastedTime();
+
         for (int i = 0; i< masks.length;i++){
-            if (timeHandler.getPastedTime()<0.5f*i)
+            if (timeHandler.getPastedTime()<drawSpeed*i)
                 masks[i].draw(batch);
         }
+    }
+
+    public void init(){
+        timeHandler.resetPastedTime();
     }
 }
 
