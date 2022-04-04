@@ -5,6 +5,7 @@ import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.CursorPositionAccessor;
+import com.arithfighter.ccg.pojo.GameNumProducer;
 import com.arithfighter.ccg.pojo.Recorder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,7 +24,7 @@ public class Game {
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
 
-    public Game(Texture[] textures, Texture[] cards, SoundManager soundManager){
+    public Game(Texture[] textures, Texture[] cards, SoundManager soundManager) {
         dataAccessor = new GameDataDisplacer();
 
         players = new Player[characterQuantity];
@@ -55,25 +56,25 @@ public class Game {
             };
     }
 
-    public void setBatch(SpriteBatch batch){
+    public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }
 
-    public void setCursorPos(CursorPositionAccessor cursorPos){
+    public void setCursorPos(CursorPositionAccessor cursorPos) {
         this.cursorPos = cursorPos;
     }
 
-    public boolean isReturnToMenu(){
+    public boolean isReturnToMenu() {
         return pauseMenu.isReturnToMainMenu();
     }
 
-    public void init(){
+    public void init() {
         playRecord.reset();
         gameComponent.init();
         pauseMenu.init();
     }
 
-    public void update(){
+    public void update() {
         pauseMenu.update();
 
         gameComponent.update(cursorPos.getX(), cursorPos.getY());
@@ -82,46 +83,46 @@ public class Game {
         manualReset();
     }
 
-    private void manualReset(){
+    private void manualReset() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             playRecord.reset();
             gameComponent.init();
         }
     }
 
-    public void draw(){
+    public void draw() {
         pauseMenu.draw(batch);
 
         gameComponent.draw(batch);
     }
 
-    public void drawData(int index){
+    public void drawData(int index) {
         dataAccessor.setCardPlayTimes(playRecord.getRecord());
         dataAccessor.setScore(gameComponent.getScore());
         dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
     }
 
-    public void setSelectedPlayerToGame(int i){
+    public void setSelectedPlayerToGame(int i) {
         gameComponent.setPlayer(players[i]);
     }
 
-    public void touchDown(int mouseX, int mouseY){
+    public void touchDown(int mouseX, int mouseY) {
         gameComponent.touchDown(mouseX, mouseY);
 
-        pauseMenu.touchDown(mouseX,mouseY);
+        pauseMenu.touchDown(mouseX, mouseY);
     }
 
-    public void touchDragged(int mouseX, int mouseY){
+    public void touchDragged(int mouseX, int mouseY) {
         gameComponent.touchDragged(mouseX, mouseY);
     }
 
-    public void touchUp(int mouseX, int mouseY){
+    public void touchUp(int mouseX, int mouseY) {
         gameComponent.touchUp(mouseX, mouseY);
 
         pauseMenu.touchUp();
     }
 
-    public void dispose(){
+    public void dispose() {
         dataAccessor.dispose();
         gameComponent.dispose();
         pauseMenu.dispose();
@@ -133,56 +134,46 @@ class SkillHandler {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private final IndexPicker indexPicker;
 
-    public SkillHandler(NumberBoxDisplacer numberBoxDisplacer){
+    public SkillHandler(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
         indexPicker = new IndexPicker(numberBoxDisplacer);
     }
 
-    public void cast(CharacterList character){
+    public void cast(CharacterList character) {
         switch (character) {
             case KNIGHT:
-                increaseOneNonZeroValueBySix();
+                replaceOneNonZeroValue(9);
                 break;
             case ROGUE:
                 replaceOneNonZeroValue(16);
                 break;
             case HUNTER:
-                reduceAllNonZeroValueByOne();
+                replaceOneNonZeroValue(14);
                 break;
             case PALADIN:
-                replaceOneNonZeroValue(30);
+                replaceOneNonZeroValue(22);
                 break;
             case WARRIOR:
-                increaseAllNonZeroValueByOne();
+                increaseAllValueByFour();
                 break;
         }
     }
 
-    private void increaseAllNonZeroValueByOne(){
-        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
-            if (getNumberBoxValue(i)>0)
-                numberBoxDisplacer.set(i, getNumberBoxValue(i) + 1);
+    private void increaseAllValueByFour() {
+        int gain = 4;
+        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
+            if (getNumberBoxValue(i) > 0 &&
+                    getNumberBoxValue(i) < new GameNumProducer().getMax()-gain)
+                numberBoxDisplacer.set(i, getNumberBoxValue(i) + gain);
         }
     }
 
-    private void reduceAllNonZeroValueByOne(){
-        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
-            if (getNumberBoxValue(i)>0)
-                numberBoxDisplacer.set(i, getNumberBoxValue(i) - 1);
-        }
-    }
-
-    private void increaseOneNonZeroValueBySix(){
-        int index = indexPicker.getRandomNonZeroValueIndex();
-        numberBoxDisplacer.set(index, getNumberBoxValue(index)+6);
-    }
-
-    private void replaceOneNonZeroValue(int value){
+    private void replaceOneNonZeroValue(int value) {
         int index = indexPicker.getRandomNonZeroValueIndex();
         numberBoxDisplacer.set(index, value);
     }
 
-    public int getNumberBoxValue(int i){
+    public int getNumberBoxValue(int i) {
         return numberBoxDisplacer.getNumberBoxValue(i);
     }
 }
@@ -190,15 +181,15 @@ class SkillHandler {
 class IndexPicker {
     private final NumberBoxDisplacer numberBoxDisplacer;
 
-    public IndexPicker(NumberBoxDisplacer numberBoxDisplacer){
+    public IndexPicker(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
     }
 
-    public int getRandomNonZeroValueIndex(){
+    public int getRandomNonZeroValueIndex() {
         ArrayList<Integer> indexList = new ArrayList<>();
 
-        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++){
-            if (numberBoxDisplacer.getNumberBoxValue(i)>0)
+        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
+            if (numberBoxDisplacer.getNumberBoxValue(i) > 0)
                 indexList.add(i);
         }
 
@@ -208,7 +199,7 @@ class IndexPicker {
     }
 
 
-    private int getRandomNum(int range){
-        return (int)(Math.random() * (range + 1)-1);
+    private int getRandomNum(int range) {
+        return (int) (Math.random() * (range + 1) - 1);
     }
 }
