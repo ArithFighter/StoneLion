@@ -138,7 +138,7 @@ public class Player {
 }
 
 class CapacityManager {
-    private final static int initCapacity = 6;
+    private final static int initCapacity = 7;
     private int capacity = initCapacity;
 
     public int getCapacity() {
