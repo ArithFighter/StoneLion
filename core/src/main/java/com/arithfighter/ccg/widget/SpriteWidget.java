@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SpriteWidget implements VisibleWidget, DetectableWidget{
+public class SpriteWidget
+        implements VisibleWidget, DetectableWidget, FontWidget{
     private final Sprite sprite;
     private final Widget widget;
     private final Point point;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBox{
     private final Font text;
-    private final SpriteWidget widget;
+    private final FontWidget widget;
 
     public NumberBox(Texture texture) {
         widget = new SpriteWidget(texture, 3.5f, 32);

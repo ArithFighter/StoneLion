@@ -7,16 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SumBox{
     private final Font text;
-    private final SpriteWidget widget;
-    private final int warningCondition = 2;
-    
+    private final FontWidget widget;
+
     public SumBox(Texture texture){
         widget = new SpriteWidget(texture,10, 36);
         text = new Font(widget.getFontSize());
-    }
-
-    public int getWarningCondition(){
-        return warningCondition;
     }
 
     public void setPosition(float x, float y){
@@ -40,7 +35,8 @@ public class SumBox{
     }
 
     public void changeColor(int condition){
-        if (condition<=warningCondition)
+        int warningCondition = 2;
+        if (condition<= warningCondition)
             widget.getSprite().setColor(Color.RED);
         else
             widget.getSprite().setColor(Color.TEAL);
