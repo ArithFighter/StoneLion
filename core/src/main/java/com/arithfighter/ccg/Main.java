@@ -27,7 +27,7 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if (gameScene == GameScene.MENU)
-                characterMenu.activateButton(cursorPos.getX(), cursorPos.getY());
+                characterMenu.touchDown(cursorPos.getX(), cursorPos.getY());
 
             game.touchDown(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -35,7 +35,7 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            characterMenu.deactivateButton();
+            characterMenu.touchDragged();
 
             game.touchDragged(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -43,13 +43,7 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (characterMenu.isPanelButtonActive())
-                soundManager.playTouchedSound();
-
-            if (characterMenu.isStartButtonActive())
-                soundManager.playAcceptSound();
-
-            characterMenu.deactivateButton();
+            characterMenu.touchUp();
 
             game.touchUp(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -70,7 +64,11 @@ public class Main extends ApplicationAdapter {
 
         musicManager = new MusicManager(assetProcessor.getMusics());
 
-        characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels());
+        characterMenu = new CharacterMenu(
+                assetProcessor.getWidgets(),
+                assetProcessor.getPanels(),
+                soundManager
+        );
 
         game = new Game(
                 assetProcessor.getWidgets(),

@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.SoundManager;
 import com.arithfighter.ccg.entity.MaskAnimation;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.font.Font;
@@ -15,14 +16,19 @@ public class CharacterMenu {
     private final Font characterName;
     private final SpriteWidget highLight;
     private final Button startButton;
+
     private enum GameReady {NEUTRAL, READY, START}
+
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
     private final ButtonPlacer placer = new ButtonPlacer();
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
+    private final SoundManager soundManager;
 
-    public CharacterMenu(Texture[] textures, Texture[] panels) {
+    public CharacterMenu(Texture[] textures, Texture[] panels, SoundManager soundManager) {
+        this.soundManager = soundManager;
+
         int panelQuantity = CharacterList.values().length;
 
         buttonProducer = new PanelButtonProducer(panels, panelQuantity);
@@ -36,7 +42,7 @@ public class CharacterMenu {
         characterName.setColor(Color.WHITE);
 
         Mask[] masks = new Mask[panelQuantity];
-        for (int i = 0; i< panelQuantity; i++){
+        for (int i = 0; i < panelQuantity; i++) {
             masks[i] = new Mask(textures[5], 3f);
             masks[i].setPosition(
                     placer.getButtonX(i),
@@ -51,7 +57,7 @@ public class CharacterMenu {
         return buttonProducer.isPanelButtonActive();
     }
 
-    public boolean isStartButtonActive(){
+    public boolean isStartButtonActive() {
         return startButton.isActive();
     }
 
@@ -68,7 +74,7 @@ public class CharacterMenu {
         handleStartButton();
 
         int index = buttonProducer.getActiveButtonIndex();
-        highLight.setPosition(placer.getButtonX(index)-22, placer.getButtonY(index)-20);
+        highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
         highLight.draw(batch);
 
         buttonProducer.draw(batch);
@@ -81,10 +87,10 @@ public class CharacterMenu {
         animation.draw(batch, 0.1f);
     }
 
-    private void handleStartButton(){
+    private void handleStartButton() {
         if (startButton.isActive())
             gameReady = GameReady.READY;
-        else{
+        else {
             if (gameReady == GameReady.READY)
                 gameReady = GameReady.START;
         }
@@ -98,13 +104,30 @@ public class CharacterMenu {
         return gameReady == GameReady.START;
     }
 
-    public void activateButton(int mouseX, int mouseY) {
+    public void touchDown(int mouseX, int mouseY) {
+        activateButton(mouseX, mouseY);
+    }
+
+    public void touchDragged() {
+        deactivateButton();
+    }
+
+    public void touchUp() {
+        if (isPanelButtonActive())
+            soundManager.playTouchedSound();
+
+        if (isStartButtonActive())
+            soundManager.playAcceptSound();
+        deactivateButton();
+    }
+
+    private void activateButton(int mouseX, int mouseY) {
         buttonProducer.activate(mouseX, mouseY);
 
         startButton.activate(mouseX, mouseY);
     }
 
-    public void deactivateButton() {
+    private void deactivateButton() {
         buttonProducer.deactivate();
 
         startButton.deactivate();
@@ -120,7 +143,7 @@ class PanelButtonProducer {
     private final PanelButton[] buttons;
     private int selectedIndex;
 
-    public PanelButtonProducer(Texture[] panels, int length){
+    public PanelButtonProducer(Texture[] panels, int length) {
         buttons = new PanelButton[length];
 
         ButtonPlacer placer = new ButtonPlacer();
@@ -135,11 +158,11 @@ class PanelButtonProducer {
         return buttons[selectedIndex].isActive();
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         for (PanelButton button : buttons) button.draw(batch);
     }
 
-    public int getActiveButtonIndex(){
+    public int getActiveButtonIndex() {
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].isActive())
                 selectedIndex = i;
@@ -147,16 +170,16 @@ class PanelButtonProducer {
         return selectedIndex;
     }
 
-    public void activate(int mouseX, int mouseY){
+    public void activate(int mouseX, int mouseY) {
         for (PanelButton button : buttons) button.activate(mouseX, mouseY);
     }
 
-    public void deactivate(){
+    public void deactivate() {
         for (PanelButton button : buttons) button.deactivate();
     }
 }
 
-class ButtonPlacer{
+class ButtonPlacer {
     public int getButtonX(int i) {
         return i < 3 ? 200 : 500;
     }
