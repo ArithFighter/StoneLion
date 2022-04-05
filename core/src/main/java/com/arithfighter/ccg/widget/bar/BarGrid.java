@@ -1,45 +1,35 @@
 package com.arithfighter.ccg.widget.bar;
 
-import com.arithfighter.ccg.pojo.Point;
-import com.arithfighter.ccg.widget.Widget;
+import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid{
-    private final Sprite grid;
-    private final Widget widget;
-    private final Point point;
+    private final SpriteWidget widget;
 
     public BarGrid(Texture texture){
-        widget = new Widget();
-        widget.setSize(texture, 0.8f);
-        point = widget.getPoint();
-
-        grid = new Sprite(texture);
-        grid.setColor(Color.SKY);
+        widget = new SpriteWidget(texture, 0.8f);
+        widget.getSprite().setColor(Color.SKY);
     }
 
     public float getWidth(){
-        return widget.getWidth();
+        return widget.getWidget().getWidth();
     }
 
     public float getHeight(){
-        return widget.getHeight();
+        return widget.getWidget().getHeight();
     }
 
     public void setPosition(float x, float y){
-        point.set(x, y);
+        widget.setPosition(x, y);
     }
 
     public void updateWidth(float width){
-        widget.setWidth(width);
+        widget.updateWidth(width);
     }
 
     public void draw(SpriteBatch batch) {
-        grid.setPosition(point.getX(), point.getY());
-        grid.setSize(widget.getWidth(), widget.getHeight());
-        grid.draw(batch);
+        widget.draw(batch);
     }
 }

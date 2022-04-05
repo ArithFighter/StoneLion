@@ -27,6 +27,10 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
         sprite = new Sprite(texture);
     }
 
+    public void updateWidth(float width){
+        widget.setWidth(width);
+    }
+
     public Sprite getSprite(){
         return sprite;
     }

@@ -1,11 +1,12 @@
 package com.arithfighter.ccg.widget.bar;
 
 import com.arithfighter.ccg.widget.SpriteWidget;
+import com.arithfighter.ccg.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EmptyBar{
-    private final SpriteWidget widget;
+    private final VisibleWidget widget;
 
     public EmptyBar(Texture texture){
         widget = new SpriteWidget(texture,8,23);
