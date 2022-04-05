@@ -35,6 +35,8 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
+            characterMenu.deactivateButton();
+
             game.touchDragged(cursorPos.getX(), cursorPos.getY());
             return true;
         }
@@ -120,19 +122,27 @@ public class Main extends ApplicationAdapter {
     private void switchScene() {
         switch (gameScene) {
             case MENU:
-                musicManager.playMenuMusic();
-                characterMenu.setBatch(batch);
-                characterMenu.draw();
+                renderMenu();
                 break;
             case GAME:
-                musicManager.playTheme();
-                game.setBatch(batch);
-                game.setCursorPos(cursorPos);
-                game.update();
-                game.draw();
-                game.drawData(characterMenu.getSelectIndex());
+                renderGame();
                 break;
         }
+    }
+
+    private void renderMenu(){
+        musicManager.playMenuMusic();
+        characterMenu.setBatch(batch);
+        characterMenu.draw();
+    }
+
+    private void renderGame(){
+        musicManager.playTheme();
+        game.setBatch(batch);
+        game.setCursorPos(cursorPos);
+        game.update();
+        game.draw();
+        game.drawData(characterMenu.getSelectIndex());
     }
 
     @Override
