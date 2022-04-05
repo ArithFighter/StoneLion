@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.scene;
 
-import com.arithfighter.ccg.SoundManager;
+import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.*;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.entity.player.Player;

@@ -1,6 +1,6 @@
 package com.arithfighter.ccg.scene;
 
-import com.arithfighter.ccg.SoundManager;
+import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.MaskAnimation;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.font.Font;
@@ -21,7 +21,7 @@ public class CharacterMenu {
 
     private GameReady gameReady = GameReady.NEUTRAL;
     private SpriteBatch batch;
-    private final ButtonPlacer placer = new ButtonPlacer();
+    private final PanelButtonPlacer placer = new PanelButtonPlacer();
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
@@ -51,14 +51,6 @@ public class CharacterMenu {
         }
 
         animation = new MaskAnimation(masks);
-    }
-
-    public boolean isPanelButtonActive() {
-        return buttonProducer.isPanelButtonActive();
-    }
-
-    public boolean isStartButtonActive() {
-        return startButton.isActive();
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -113,11 +105,12 @@ public class CharacterMenu {
     }
 
     public void touchUp() {
-        if (isPanelButtonActive())
+        if (buttonProducer.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (isStartButtonActive())
+        if (startButton.isActive())
             soundManager.playAcceptSound();
+
         deactivateButton();
     }
 
@@ -146,7 +139,7 @@ class PanelButtonProducer {
     public PanelButtonProducer(Texture[] panels, int length) {
         buttons = new PanelButton[length];
 
-        ButtonPlacer placer = new ButtonPlacer();
+        PanelButtonPlacer placer = new PanelButtonPlacer();
 
         for (int i = 0; i < length; i++) {
             buttons[i] = new PanelButton(panels[i]);
@@ -154,7 +147,7 @@ class PanelButtonProducer {
         }
     }
 
-    public boolean isPanelButtonActive() {
+    public boolean isButtonActive() {
         return buttons[selectedIndex].isActive();
     }
 
@@ -179,7 +172,7 @@ class PanelButtonProducer {
     }
 }
 
-class ButtonPlacer {
+class PanelButtonPlacer {
     public int getButtonX(int i) {
         return i < 3 ? 200 : 500;
     }

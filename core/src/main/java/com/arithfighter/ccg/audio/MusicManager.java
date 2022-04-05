@@ -1,4 +1,4 @@
-package com.arithfighter.ccg;
+package com.arithfighter.ccg.audio;
 
 import com.badlogic.gdx.audio.Music;
 

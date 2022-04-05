@@ -1,5 +1,7 @@
 package com.arithfighter.ccg;
 
+import com.arithfighter.ccg.audio.MusicManager;
+import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.CharacterMenu;
 import com.arithfighter.ccg.scene.Game;
