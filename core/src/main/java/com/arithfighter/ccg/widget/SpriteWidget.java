@@ -10,11 +10,14 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
     private final Sprite sprite;
     private final Widget widget;
     private final Point point;
+    private int fontSize;
 
     public SpriteWidget(Texture texture, float scale, int fontSize){
-        widget = new Widget(fontSize);
+        widget = new Widget();
         widget.setSize(texture, scale);
         point = widget.getPoint();
+
+        this.fontSize = fontSize;
 
         sprite = new Sprite(texture);
     }
@@ -39,16 +42,20 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
         return widget;
     }
 
+    public float getCenterX(String content) {
+        float midLength = widget.getWidth() / 2 - content.length() * fontSize / 2f;
+
+        return point.getX() + midLength;
+    }
+
+    public float getCenterY() {
+        float midHeight = (widget.getHeight() + fontSize) / 2;
+
+        return point.getY() + midHeight;
+    }
+
     public int getFontSize(){
-        return widget.getFontSize();
-    }
-
-    public float getCenterX(String content){
-        return widget.getCenterX(content);
-    }
-
-    public float getCenterY(){
-        return widget.getCenterY();
+        return fontSize;
     }
 
     private void setSprite(){
