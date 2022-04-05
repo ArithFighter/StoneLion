@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Mask {
-    private final SpriteWidget widget;
+    private final VisibleWidget widget;
 
     public Mask(Texture texture, float scale){
         widget = new SpriteWidget(texture, scale);
