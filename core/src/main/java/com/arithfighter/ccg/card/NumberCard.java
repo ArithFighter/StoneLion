@@ -91,7 +91,7 @@ public class NumberCard{
     public void initCard() {
         point.set(initPoint.getX(), initPoint.getY());
 
-        stateManager.setInactive();
+        stateManager.deactivate();
 
         sprite.setSize(shape.getWidth(), shape.getHeight());
     }
@@ -115,5 +115,22 @@ public class NumberCard{
                 x < point.getX() + shape.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
                 y < point.getY() + shape.getHeight() + tolerance;
+    }
+}
+
+class StateManager {
+    private enum State {ACTIVE, INACTIVE}
+    private State state = State.INACTIVE;
+
+    public void deactivate(){
+        state = State.INACTIVE;
+    }
+
+    public void activate(){
+        state = State.ACTIVE;
+    }
+
+    public boolean isActive(){
+        return state == State.ACTIVE;
     }
 }
