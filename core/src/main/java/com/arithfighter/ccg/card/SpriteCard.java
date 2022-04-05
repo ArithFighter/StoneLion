@@ -8,16 +8,14 @@ public class SpriteCard{
     private final RawCard rawCard;
 
     public SpriteCard(float initX, float initY){
-        rawCard = new RawCard();
-        rawCard.setInitPoint(new Point(initX,initY));
-        rawCard.setPoint(new Point(initX,initY));
+        rawCard = new RawCard(initX, initY);
     }
 
     public void setSize(Texture texture, float scale){
-        configSize(texture.getWidth(), texture.getHeight(), scale);
+        setShape(texture.getWidth(), texture.getHeight(), scale);
     }
 
-    private void configSize(float width, float height, float scale){
+    private void setShape(float width, float height, float scale){
         Shape shape = new Shape();
         shape.setWidth(width*scale);
         shape.setHeight(height*scale);
