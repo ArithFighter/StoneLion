@@ -1,12 +1,13 @@
 package com.arithfighter.ccg.widget.bar;
 
+import com.arithfighter.ccg.widget.FlexibleWidget;
 import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BarGrid{
-    private final SpriteWidget widget;
+    private final FlexibleWidget widget;
 
     public BarGrid(Texture texture){
         widget = new SpriteWidget(texture, 0.8f);
