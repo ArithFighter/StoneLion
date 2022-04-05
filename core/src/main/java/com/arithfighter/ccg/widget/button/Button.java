@@ -1,6 +1,7 @@
 package com.arithfighter.ccg.widget.button;
 
 import com.arithfighter.ccg.font.Font;
+import com.arithfighter.ccg.widget.DetectableFontWidget;
 import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button {
     private final Font font;
-    private final SpriteWidget widget;
+    private final DetectableFontWidget widget;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 

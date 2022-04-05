@@ -1,12 +1,13 @@
 package com.arithfighter.ccg.widget.button;
 
+import com.arithfighter.ccg.widget.DetectableWidget;
 import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelButton {
-    private final SpriteWidget widget;
+    private final DetectableWidget widget;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
