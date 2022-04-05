@@ -1,13 +1,14 @@
 package com.arithfighter.ccg.card;
 
 import com.arithfighter.ccg.pojo.Point;
+import com.arithfighter.ccg.pojo.Shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard{
-    private final SpriteCard card;
+    private final Shape shape;
     private final Sprite sprite;
     private final int number;
     private final StateManager stateManager = new StateManager();
@@ -15,17 +16,18 @@ public class NumberCard{
     private final Point point;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        card = new SpriteCard(initX, initY);
+        SpriteCard card = new SpriteCard(initX, initY);
         card.setSize(texture, 1.8f);
         
         initPoint = card.getInitPoint();
         point = card.getPoint();
 
         this.number = number;
+        shape = card.getShape();
 
         sprite = new Sprite(texture);
         sprite.setPosition(point.getX(), point.getY());
-        sprite.setSize(card.getWidth(), card.getHeight());
+        sprite.setSize(shape.getWidth(), shape.getHeight());
     }
 
     public int getNumber(){
@@ -33,7 +35,7 @@ public class NumberCard{
     }
 
     public float getWidth() {
-        return card.getWidth();
+        return shape.getWidth();
     }
 
     public void draw(SpriteBatch batch) {
@@ -42,7 +44,7 @@ public class NumberCard{
         sprite.setPosition(point.getX(), point.getY());
 
         if (stateManager.isActive())
-            sprite.setSize(card.getWidth()*1.2f, card.getHeight()*1.2f);
+            sprite.setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
 
         sprite.draw(batch);
     }
@@ -63,8 +65,8 @@ public class NumberCard{
     }
 
     private void checkOutOfWindow() {
-        float limitX = Gdx.graphics.getWidth() - card.getWidth();
-        float limitY = Gdx.graphics.getHeight() - card.getHeight();
+        float limitX = Gdx.graphics.getWidth() - shape.getWidth();
+        float limitY = Gdx.graphics.getHeight() - shape.getHeight();
 
         point.set(updateWhenOutOfWindow(point.getX(), limitX),
                 updateWhenOutOfWindow(point.getY(), limitY));
@@ -83,7 +85,7 @@ public class NumberCard{
 
     public void updateWhenDrag(float x, float y) {
         if (stateManager.isActive())
-            point.set(x - card.getWidth() / 2, y - card.getHeight() / 2);
+            point.set(x - shape.getWidth() / 2, y - shape.getHeight() / 2);
     }
 
     public void initCard() {
@@ -91,7 +93,7 @@ public class NumberCard{
 
         stateManager.setInactive();
 
-        sprite.setSize(card.getWidth(), card.getHeight());
+        sprite.setSize(shape.getWidth(), shape.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
@@ -110,8 +112,8 @@ public class NumberCard{
             tolerance*=4;
         }
         return x > point.getX() - tolerance &&
-                x < point.getX() + card.getWidth() + tolerance &&
+                x < point.getX() + shape.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
-                y < point.getY() + card.getHeight() + tolerance;
+                y < point.getY() + shape.getHeight() + tolerance;
     }
 }

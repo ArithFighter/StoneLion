@@ -1,12 +1,16 @@
 package com.arithfighter.ccg.card;
 
 import com.arithfighter.ccg.pojo.Point;
+import com.arithfighter.ccg.pojo.Shape;
 import com.badlogic.gdx.graphics.Texture;
 
-public class SpriteCard extends RawCard{
+public class SpriteCard{
+    private final RawCard rawCard;
+
     public SpriteCard(float initX, float initY){
-        setInitPoint(new Point(initX,initY));
-        setPoint(new Point(initX,initY));
+        rawCard = new RawCard();
+        rawCard.setInitPoint(new Point(initX,initY));
+        rawCard.setPoint(new Point(initX,initY));
     }
 
     public void setSize(Texture texture, float scale){
@@ -14,7 +18,21 @@ public class SpriteCard extends RawCard{
     }
 
     private void configSize(float width, float height, float scale){
-        setWidth(scale*width);
-        setHeight(scale*height);
+        Shape shape = new Shape();
+        shape.setWidth(width*scale);
+        shape.setHeight(height*scale);
+        rawCard.setShape(shape);
+    }
+
+    public Point getInitPoint(){
+        return rawCard.getInitPoint();
+    }
+
+    public Point getPoint(){
+        return rawCard.getPoint();
+    }
+
+    public Shape getShape(){
+        return rawCard.getShape();
     }
 }

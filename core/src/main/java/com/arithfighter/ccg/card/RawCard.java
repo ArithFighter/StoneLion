@@ -1,11 +1,12 @@
 package com.arithfighter.ccg.card;
 
 import com.arithfighter.ccg.pojo.Point;
+import com.arithfighter.ccg.pojo.Shape;
 
 public class RawCard {
     private Point initPoint;
     private Point point;
-    private float width, height;
+    private Shape shape;
 
     public void setInitPoint(Point initPoint) {
         this.initPoint = initPoint;
@@ -13,14 +14,6 @@ public class RawCard {
 
     public void setPoint(Point point) {
         this.point = point;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
     }
 
     public Point getInitPoint() {
@@ -31,11 +24,11 @@ public class RawCard {
         return point;
     }
 
-    public float getWidth() {
-        return width;
+    public void setShape(Shape shape){
+        this.shape = shape;
     }
 
-    public float getHeight() {
-        return height;
+    public Shape getShape(){
+        return shape;
     }
 }

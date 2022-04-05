@@ -3,6 +3,15 @@ package com.arithfighter.ccg.pojo;
 public class Shape {
     private float width, height;
 
+    public Shape(){
+
+    }
+
+    public Shape(float width, float height){
+        this.width = width;
+        this.height = height;
+    }
+
     public void setWidth(float width) {
         this.width = width;
     }
