@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CardPlaceBasket {
-    private final SpriteWidget widget;
+    private final DetectableWidget widget;
 
     public CardPlaceBasket(Texture texture){
         widget = new SpriteWidget(texture, 3);
