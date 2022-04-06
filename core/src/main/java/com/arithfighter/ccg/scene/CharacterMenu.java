@@ -15,12 +15,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CharacterMenu {
     private final Font characterName;
     private final SpriteWidget highLight;
-    private final Button startButton;
     private final Button optionButton;
-
-    private enum SceneChange {NEUTRAL, READY, START}
-
-    private SceneChange sceneChange = SceneChange.NEUTRAL;
+    private final SceneControlButton startButton;
     private SpriteBatch batch;
     private final PanelButtonPlacer placer = new PanelButtonPlacer();
     private final MaskAnimation animation;
@@ -36,8 +32,8 @@ public class CharacterMenu {
 
         highLight = new SpriteWidget(textures[7], 1.8f);
 
-        startButton = new Button(textures[6], 1.8f);
-        startButton.setPosition(900, 120);
+        startButton = new SceneControlButton(textures[6], 1.8f);
+        startButton.getButton().setPosition(900, 120);
 
         optionButton = new Button(textures[6], 1.8f);
         optionButton.setPosition(1000,600);
@@ -63,11 +59,11 @@ public class CharacterMenu {
 
     public void init() {
         animation.init();
-        sceneChange = SceneChange.NEUTRAL;
+        startButton.init();
     }
 
     public void draw() {
-        handleStartButton();
+        startButton.handleScene();
 
         int index = buttonProducer.getActiveButtonIndex();
         highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
@@ -75,7 +71,7 @@ public class CharacterMenu {
 
         buttonProducer.draw(batch);
 
-        startButton.draw(batch, "Start");
+        startButton.getButton().draw(batch, "Start");
 
         optionButton.draw(batch, "Option");
 
@@ -84,22 +80,12 @@ public class CharacterMenu {
 
         animation.draw(batch, 0.1f);
     }
-
-    private void handleStartButton() {
-        if (startButton.isActive())
-            sceneChange = SceneChange.READY;
-        else {
-            if (sceneChange == SceneChange.READY)
-                sceneChange = SceneChange.START;
-        }
-    }
-
     public int getSelectIndex() {
         return buttonProducer.getActiveButtonIndex();
     }
 
     public boolean isGameStart() {
-        return sceneChange == SceneChange.START;
+        return startButton.isStart();
     }
 
     public void touchDown(int mouseX, int mouseY) {
@@ -117,7 +103,7 @@ public class CharacterMenu {
         if (optionButton.isActive())
             soundManager.playAcceptSound();
 
-        if (startButton.isActive())
+        if (startButton.getButton().isActive())
             soundManager.playAcceptSound();
 
         deactivateButton();
@@ -128,7 +114,7 @@ public class CharacterMenu {
 
         optionButton.activate(mouseX, mouseY);
 
-        startButton.activate(mouseX, mouseY);
+        startButton.getButton().activate(mouseX, mouseY);
     }
 
     private void deactivateButton() {
@@ -136,11 +122,11 @@ public class CharacterMenu {
 
         optionButton.deactivate();
 
-        startButton.deactivate();
+        startButton.getButton().deactivate();
     }
 
     public void dispose() {
-        startButton.dispose();
+        startButton.getButton().dispose();
         characterName.dispose();
     }
 }
@@ -196,5 +182,36 @@ class PanelButtonPlacer {
         int row = 3;
 
         return i < row ? initY - i * margin : initY - (i - row) * margin;
+    }
+}
+
+class SceneControlButton{
+    private enum SceneChange {NEUTRAL, READY, START}
+    private SceneChange sceneChange = SceneChange.NEUTRAL;
+    private final Button button;
+
+    public SceneControlButton(Texture texture, float scale){
+        button = new Button(texture, scale);
+    }
+
+    public Button getButton(){
+        return button;
+    }
+
+    public void handleScene() {
+        if (button.isActive())
+            sceneChange = SceneChange.READY;
+        else {
+            if (sceneChange == SceneChange.READY)
+                sceneChange = SceneChange.START;
+        }
+    }
+
+    public boolean isStart(){
+        return sceneChange == SceneChange.START;
+    }
+
+    public void init(){
+        sceneChange = SceneChange.NEUTRAL;
     }
 }
