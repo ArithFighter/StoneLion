@@ -3,17 +3,25 @@ package com.arithfighter.ccg.entity;
 import com.arithfighter.ccg.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Pool;
 
 public class PauseMenu {
+    private final Pool<Button> buttonPool;
     private final Button returnButton;
     private boolean isReturnToMainMenu = false;
 
     public PauseMenu(Texture[] textures) {
-        returnButton = new Button(textures[6], 1.8f);
-        returnButton.setPosition(1000, 600);
+        buttonPool = new Pool<Button>() {
+            @Override
+            protected Button newObject() {
+                return new Button(textures[6], 1.8f);
+            }
+        };
+        returnButton = buttonPool.obtain();
     }
 
     public void draw(SpriteBatch batch) {
+        returnButton.setPosition(1000, 600);
         returnButton.draw(batch, "Return");
     }
 
@@ -23,6 +31,7 @@ public class PauseMenu {
 
     public void init() {
         isReturnToMainMenu = false;
+        buttonPool.free(returnButton);
     }
 
     public boolean isReturnToMainMenu() {

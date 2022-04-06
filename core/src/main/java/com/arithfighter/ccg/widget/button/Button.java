@@ -6,10 +6,17 @@ import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Pool;
 
-public class Button {
+public class Button implements Pool.Poolable{
     private final Font font;
     private final DetectableFontWidget widget;
+
+    @Override
+    public void reset() {
+
+    }
+
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 

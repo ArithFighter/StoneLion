@@ -173,7 +173,7 @@ class SkillHandler {
         numberBoxDisplacer.set(index, value);
     }
 
-    public int getNumberBoxValue(int i) {
+    private int getNumberBoxValue(int i) {
         return numberBoxDisplacer.getNumberBoxValue(i);
     }
 }
