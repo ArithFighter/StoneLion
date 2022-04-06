@@ -59,6 +59,7 @@ public class CharacterMenu {
 
     public void init() {
         animation.init();
+        optionButton.init();
         startButton.init();
     }
 

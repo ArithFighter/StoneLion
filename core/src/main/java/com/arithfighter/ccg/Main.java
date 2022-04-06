@@ -5,6 +5,7 @@ import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.CharacterMenu;
 import com.arithfighter.ccg.scene.Game;
+import com.arithfighter.ccg.scene.OptionMenu;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -20,7 +21,8 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private CharacterMenu characterMenu;
     private Game game;
-    private enum GameScene {MENU, GAME}
+    private OptionMenu optionMenu;
+    private enum GameScene {MENU, GAME, OPTION}
     private GameScene gameScene = GameScene.MENU;
     private SoundManager soundManager;
     private MusicManager musicManager;
@@ -31,6 +33,9 @@ public class Main extends ApplicationAdapter {
             if (gameScene == GameScene.MENU)
                 characterMenu.touchDown(cursorPos.getX(), cursorPos.getY());
 
+            if (gameScene == GameScene.OPTION)
+                optionMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+
             game.touchDown(cursorPos.getX(), cursorPos.getY());
             return true;
         }
@@ -39,6 +44,8 @@ public class Main extends ApplicationAdapter {
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             characterMenu.touchDragged();
 
+            optionMenu.touchDragged();
+
             game.touchDragged(cursorPos.getX(), cursorPos.getY());
             return true;
         }
@@ -46,6 +53,8 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             characterMenu.touchUp();
+
+            optionMenu.touchUp();
 
             game.touchUp(cursorPos.getX(), cursorPos.getY());
             return true;
@@ -77,6 +86,8 @@ public class Main extends ApplicationAdapter {
                 assetProcessor.getCards(),
                 soundManager
         );
+
+        optionMenu = new OptionMenu(assetProcessor.getWidgets());
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -112,6 +123,14 @@ public class Main extends ApplicationAdapter {
             characterMenu.init();
             gameScene = GameScene.GAME;
         }
+        if (characterMenu.isOpenOption()){
+            characterMenu.init();
+            gameScene = GameScene.OPTION;
+        }
+        if (optionMenu.isReturnToMainMenu()){
+            optionMenu.init();
+            gameScene = GameScene.MENU;
+        }
         if (game.isReturnToMenu()) {
             soundManager.playReturnSound();
             game.init();
@@ -126,6 +145,10 @@ public class Main extends ApplicationAdapter {
                 break;
             case GAME:
                 renderGame();
+                break;
+            case OPTION:
+                optionMenu.update();
+                optionMenu.draw(batch);
                 break;
         }
     }
