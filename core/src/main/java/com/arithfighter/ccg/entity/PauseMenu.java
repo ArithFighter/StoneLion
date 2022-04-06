@@ -1,44 +1,45 @@
 package com.arithfighter.ccg.entity;
 
-import com.arithfighter.ccg.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Pool;
 
 public class PauseMenu {
-    private final Button returnButton;
-    private boolean isReturnToMainMenu = false;
+    private final SceneControlButton returnButton;
 
     public PauseMenu(Texture[] textures) {
-        returnButton = new Button(textures[6], 1.8f);
-        returnButton.setPosition(1000, 600);
+        returnButton = new SceneControlButton(textures[6], 1.8f);
+        returnButton.getButton().setPosition(1000, 600);
     }
 
     public void draw(SpriteBatch batch) {
-        returnButton.draw(batch, "Return");
+        returnButton.getButton().draw(batch, "Return");
     }
 
     public void update() {
-        isReturnToMainMenu = returnButton.isActive();
+        returnButton.handleScene();
     }
 
     public void init() {
-        isReturnToMainMenu = false;
+        returnButton.init();
     }
 
     public boolean isReturnToMainMenu() {
-        return isReturnToMainMenu;
+        return returnButton.isStart();
     }
 
     public void touchDown(float x, float y) {
-        returnButton.activate(x, y);
+        returnButton.getButton().activate(x, y);
+    }
+
+    public void touchDragged(){
+        returnButton.getButton().deactivate();
     }
 
     public void touchUp() {
-        returnButton.deactivate();
+        returnButton.getButton().deactivate();
     }
 
     public void dispose() {
-        returnButton.dispose();
+        returnButton.getButton().dispose();
     }
 }

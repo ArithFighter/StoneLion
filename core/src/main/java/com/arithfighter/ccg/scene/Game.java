@@ -114,6 +114,8 @@ public class Game {
 
     public void touchDragged(int mouseX, int mouseY) {
         gameComponent.touchDragged(mouseX, mouseY);
+
+        pauseMenu.touchDragged();
     }
 
     public void touchUp(int mouseX, int mouseY) {
