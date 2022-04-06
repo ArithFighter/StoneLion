@@ -103,7 +103,7 @@ public class Main extends ApplicationAdapter {
 
         soundManager.setVolume(optionMenu.getSoundVolume()/10f);
 
-        musicManager.setVolume(0.8f);
+        musicManager.setVolume(optionMenu.getMusicVolume()/8f);
 
         game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
 
