@@ -2,10 +2,10 @@ package com.arithfighter.ccg.scene;
 
 import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.MaskAnimation;
+import com.arithfighter.ccg.entity.SceneControlButton;
 import com.arithfighter.ccg.entity.player.CharacterList;
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.widget.Mask;
-import com.arithfighter.ccg.widget.button.Button;
 import com.arithfighter.ccg.widget.button.PanelButton;
 import com.arithfighter.ccg.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CharacterMenu {
     private final Font characterName;
     private final SpriteWidget highLight;
-    private final Button optionButton;
+    private final SceneControlButton optionButton;
     private final SceneControlButton startButton;
     private SpriteBatch batch;
     private final PanelButtonPlacer placer = new PanelButtonPlacer();
@@ -35,8 +35,8 @@ public class CharacterMenu {
         startButton = new SceneControlButton(textures[6], 1.8f);
         startButton.getButton().setPosition(900, 120);
 
-        optionButton = new Button(textures[6], 1.8f);
-        optionButton.setPosition(1000,600);
+        optionButton = new SceneControlButton(textures[6], 1.8f);
+        optionButton.getButton().setPosition(1000,600);
 
         characterName = new Font(36);
         characterName.setColor(Color.WHITE);
@@ -63,6 +63,7 @@ public class CharacterMenu {
     }
 
     public void draw() {
+        optionButton.handleScene();
         startButton.handleScene();
 
         int index = buttonProducer.getActiveButtonIndex();
@@ -73,7 +74,7 @@ public class CharacterMenu {
 
         startButton.getButton().draw(batch, "Start");
 
-        optionButton.draw(batch, "Option");
+        optionButton.getButton().draw(batch, "Option");
 
         CharacterList[] characters = CharacterList.values();
         characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
@@ -88,6 +89,10 @@ public class CharacterMenu {
         return startButton.isStart();
     }
 
+    public boolean isOpenOption(){
+        return optionButton.isStart();
+    }
+
     public void touchDown(int mouseX, int mouseY) {
         activateButton(mouseX, mouseY);
     }
@@ -100,7 +105,7 @@ public class CharacterMenu {
         if (buttonProducer.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (optionButton.isActive())
+        if (optionButton.getButton().isActive())
             soundManager.playAcceptSound();
 
         if (startButton.getButton().isActive())
@@ -112,7 +117,7 @@ public class CharacterMenu {
     private void activateButton(int mouseX, int mouseY) {
         buttonProducer.activate(mouseX, mouseY);
 
-        optionButton.activate(mouseX, mouseY);
+        optionButton.getButton().activate(mouseX, mouseY);
 
         startButton.getButton().activate(mouseX, mouseY);
     }
@@ -120,13 +125,14 @@ public class CharacterMenu {
     private void deactivateButton() {
         buttonProducer.deactivate();
 
-        optionButton.deactivate();
+        optionButton.getButton().deactivate();
 
         startButton.getButton().deactivate();
     }
 
     public void dispose() {
         startButton.getButton().dispose();
+        optionButton.getButton().dispose();
         characterName.dispose();
     }
 }
@@ -182,36 +188,5 @@ class PanelButtonPlacer {
         int row = 3;
 
         return i < row ? initY - i * margin : initY - (i - row) * margin;
-    }
-}
-
-class SceneControlButton{
-    private enum SceneChange {NEUTRAL, READY, START}
-    private SceneChange sceneChange = SceneChange.NEUTRAL;
-    private final Button button;
-
-    public SceneControlButton(Texture texture, float scale){
-        button = new Button(texture, scale);
-    }
-
-    public Button getButton(){
-        return button;
-    }
-
-    public void handleScene() {
-        if (button.isActive())
-            sceneChange = SceneChange.READY;
-        else {
-            if (sceneChange == SceneChange.READY)
-                sceneChange = SceneChange.START;
-        }
-    }
-
-    public boolean isStart(){
-        return sceneChange == SceneChange.START;
-    }
-
-    public void init(){
-        sceneChange = SceneChange.NEUTRAL;
     }
 }
