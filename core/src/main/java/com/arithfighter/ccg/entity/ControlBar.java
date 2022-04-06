@@ -2,31 +2,28 @@ package com.arithfighter.ccg.entity;
 
 import com.arithfighter.ccg.font.Font;
 import com.arithfighter.ccg.pojo.Point;
-import com.arithfighter.ccg.widget.FlexibleWidget;
 import com.arithfighter.ccg.widget.SpriteWidget;
+import com.arithfighter.ccg.widget.VisibleWidget;
 import com.arithfighter.ccg.widget.Widget;
 import com.arithfighter.ccg.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ControlBar {
-    private final FlexibleWidget bar;
+    private final VisibleWidget[] grids;
     private final Font font;
     private final Button leftArrow;
     private final Button rightArrow;
-    private final float initWidth;
-    private final int maxValue = 10;
+    private final int maxValue = 8;
     private int value;
     private final int fontSize;
-    private boolean isControlAvailable = false;
 
     public ControlBar(Texture[] textures){
-        bar = new SpriteWidget(textures[5], 0.5f);
-
+        grids = new VisibleWidget[maxValue];
+        for (int i = 0; i< grids.length;i++){
+            grids[i] = new SpriteWidget(textures[5], 0.5f);
+        }
         value = maxValue;
-
-        initWidth = bar.getWidget().getWidth()* maxValue;
-        bar.updateWidth(initWidth);
 
         leftArrow = new Button(textures[8], 0.8f);
 
@@ -37,33 +34,33 @@ public class ControlBar {
     }
 
     public void setPosition(int x, int y){
-        bar.setPosition(x,y);
+        for (int i = 0; i< grids.length;i++){
+            grids[i].setPosition(x+grids[i].getWidget().getWidth()*i+10*i, y);
+        }
     }
 
     public void draw(SpriteBatch batch, String content){
-        bar.draw(batch);
+        for (int i =0;i<value;i++)
+            grids[i].draw(batch);
 
-        Widget widget = bar.getWidget();
+        Widget widget = grids[0].getWidget();
         Point point = widget.getPoint();
         font.draw(batch, content, point.getX()-content.length()*fontSize-50, point.getY()+fontSize/2f);
 
         leftArrow.setPosition(point.getX()-50, point.getY());
         leftArrow.draw(batch, "");
 
-        rightArrow.setPosition(point.getX()+initWidth+10, point.getY());
+        rightArrow.setPosition(point.getX()+(widget.getWidth()+10) * grids.length, point.getY());
         rightArrow.draw(batch,"");
     }
 
     public void update(){
         if (value<=0)
-            value = 1;
-        if (leftArrow.isActive() && value>0){
+            value = 0;
+        if (leftArrow.isActive() && value>=0)
             value-=1;
-        }
-        if (rightArrow.isActive() && value< maxValue){
+        if (rightArrow.isActive() && value< maxValue)
             value+=1;
-        }
-        bar.updateWidth(initWidth*value/ maxValue);
     }
 
     public void activate(float x, float y){
