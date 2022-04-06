@@ -6,22 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Pool;
 
 public class PauseMenu {
-    private final Pool<Button> buttonPool;
     private final Button returnButton;
     private boolean isReturnToMainMenu = false;
 
     public PauseMenu(Texture[] textures) {
-        buttonPool = new Pool<Button>() {
-            @Override
-            protected Button newObject() {
-                return new Button(textures[6], 1.8f);
-            }
-        };
-        returnButton = buttonPool.obtain();
+        returnButton = new Button(textures[6], 1.8f);
+        returnButton.setPosition(1000, 600);
     }
 
     public void draw(SpriteBatch batch) {
-        returnButton.setPosition(1000, 600);
         returnButton.draw(batch, "Return");
     }
 
@@ -31,7 +24,6 @@ public class PauseMenu {
 
     public void init() {
         isReturnToMainMenu = false;
-        buttonPool.free(returnButton);
     }
 
     public boolean isReturnToMainMenu() {
