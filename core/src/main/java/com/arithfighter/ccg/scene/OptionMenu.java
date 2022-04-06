@@ -22,6 +22,7 @@ public class OptionMenu {
     }
 
     public void update() {
+        soundControl.update();
         returnButton.handleScene();
     }
 

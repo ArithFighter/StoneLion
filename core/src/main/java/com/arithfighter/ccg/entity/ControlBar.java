@@ -15,15 +15,17 @@ public class ControlBar {
     private final Button leftArrow;
     private final Button rightArrow;
     private final float initWidth;
-    private final int initValue;
+    private final int maxValue = 10;
+    private int value;
     private final int fontSize;
+    private boolean isControlAvailable = false;
 
     public ControlBar(Texture[] textures){
-        bar = new SpriteWidget(textures[5], 0.8f);
+        bar = new SpriteWidget(textures[5], 0.5f);
 
-        initValue = 10;
+        value = maxValue;
 
-        initWidth = bar.getWidget().getWidth()*initValue;
+        initWidth = bar.getWidget().getWidth()* maxValue;
         bar.updateWidth(initWidth);
 
         leftArrow = new Button(textures[8], 0.8f);
@@ -39,30 +41,29 @@ public class ControlBar {
     }
 
     public void draw(SpriteBatch batch, String content){
-        updateWidth();
-
         bar.draw(batch);
 
         Widget widget = bar.getWidget();
         Point point = widget.getPoint();
-        font.draw(batch, content, point.getX()-content.length()*fontSize-30, point.getY()+fontSize/2f);
+        font.draw(batch, content, point.getX()-content.length()*fontSize-50, point.getY()+fontSize/2f);
 
-        leftArrow.setPosition(point.getX()-30, point.getY());
+        leftArrow.setPosition(point.getX()-50, point.getY());
         leftArrow.draw(batch, "");
 
         rightArrow.setPosition(point.getX()+initWidth+10, point.getY());
         rightArrow.draw(batch,"");
     }
 
-    private void updateWidth(){
-        Widget widget = bar.getWidget();
-        float speed = 0.1f;
-        if (leftArrow.isActive() && widget.getWidth()>0){
-            widget.setWidth(widget.getWidth()-initWidth/initValue*speed);
+    public void update(){
+        if (value<=0)
+            value = 1;
+        if (leftArrow.isActive() && value>0){
+            value-=1;
         }
-        if (rightArrow.isActive() && widget.getWidth()<initWidth){
-            widget.setWidth(widget.getWidth()+initWidth/initValue*speed);
+        if (rightArrow.isActive() && value< maxValue){
+            value+=1;
         }
+        bar.updateWidth(initWidth*value/ maxValue);
     }
 
     public void activate(float x, float y){
