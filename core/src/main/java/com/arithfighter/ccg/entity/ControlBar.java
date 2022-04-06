@@ -14,9 +14,10 @@ public class ControlBar {
     private final Font font;
     private final Button leftArrow;
     private final Button rightArrow;
-    private final int maxValue = 8;
+    private final int maxValue = 6;
     private int value;
     private final int fontSize;
+    private boolean buttonLock = true;
 
     public ControlBar(Texture[] textures){
         grids = new VisibleWidget[maxValue];
@@ -31,6 +32,10 @@ public class ControlBar {
 
         fontSize = 25;
         font = new Font(fontSize);
+    }
+
+    public int getValue(){
+        return value;
     }
 
     public void setPosition(int x, int y){
@@ -57,10 +62,13 @@ public class ControlBar {
     public void update(){
         if (value<=0)
             value = 0;
-        if (leftArrow.isActive() && value>=0)
-            value-=1;
-        if (rightArrow.isActive() && value< maxValue)
-            value+=1;
+        if (buttonLock){
+            if (leftArrow.isActive() && value>=0)
+                value-=1;
+            if (rightArrow.isActive() && value< maxValue)
+                value+=1;
+        }
+        buttonLock = !leftArrow.isActive() && !rightArrow.isActive();
     }
 
     public void activate(float x, float y){

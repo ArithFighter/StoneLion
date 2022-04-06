@@ -16,6 +16,11 @@ public class OptionMenu {
         soundControl = new ControlBar(textures);
         soundControl.setPosition(500,600);
     }
+
+    public int getSoundVolume(){
+        return soundControl.getValue();
+    }
+
     public void draw(SpriteBatch batch) {
         soundControl.draw(batch, "Sound");
         returnButton.getButton().draw(batch, "Return");

@@ -101,7 +101,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        soundManager.setVolume(0.6f);
+        soundManager.setVolume(optionMenu.getSoundVolume()/10f);
 
         musicManager.setVolume(0.8f);
 
