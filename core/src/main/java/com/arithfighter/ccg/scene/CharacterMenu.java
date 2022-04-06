@@ -16,10 +16,11 @@ public class CharacterMenu {
     private final Font characterName;
     private final SpriteWidget highLight;
     private final Button startButton;
+    private final Button optionButton;
 
-    private enum GameReady {NEUTRAL, READY, START}
+    private enum SceneChange {NEUTRAL, READY, START}
 
-    private GameReady gameReady = GameReady.NEUTRAL;
+    private SceneChange sceneChange = SceneChange.NEUTRAL;
     private SpriteBatch batch;
     private final PanelButtonPlacer placer = new PanelButtonPlacer();
     private final MaskAnimation animation;
@@ -37,6 +38,9 @@ public class CharacterMenu {
 
         startButton = new Button(textures[6], 1.8f);
         startButton.setPosition(900, 120);
+
+        optionButton = new Button(textures[6], 1.8f);
+        optionButton.setPosition(1000,600);
 
         characterName = new Font(36);
         characterName.setColor(Color.WHITE);
@@ -59,7 +63,7 @@ public class CharacterMenu {
 
     public void init() {
         animation.init();
-        gameReady = GameReady.NEUTRAL;
+        sceneChange = SceneChange.NEUTRAL;
     }
 
     public void draw() {
@@ -73,6 +77,8 @@ public class CharacterMenu {
 
         startButton.draw(batch, "Start");
 
+        optionButton.draw(batch, "Option");
+
         CharacterList[] characters = CharacterList.values();
         characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
@@ -81,10 +87,10 @@ public class CharacterMenu {
 
     private void handleStartButton() {
         if (startButton.isActive())
-            gameReady = GameReady.READY;
+            sceneChange = SceneChange.READY;
         else {
-            if (gameReady == GameReady.READY)
-                gameReady = GameReady.START;
+            if (sceneChange == SceneChange.READY)
+                sceneChange = SceneChange.START;
         }
     }
 
@@ -93,7 +99,7 @@ public class CharacterMenu {
     }
 
     public boolean isGameStart() {
-        return gameReady == GameReady.START;
+        return sceneChange == SceneChange.START;
     }
 
     public void touchDown(int mouseX, int mouseY) {
@@ -108,6 +114,9 @@ public class CharacterMenu {
         if (buttonProducer.isButtonActive())
             soundManager.playTouchedSound();
 
+        if (optionButton.isActive())
+            soundManager.playAcceptSound();
+
         if (startButton.isActive())
             soundManager.playAcceptSound();
 
@@ -117,11 +126,15 @@ public class CharacterMenu {
     private void activateButton(int mouseX, int mouseY) {
         buttonProducer.activate(mouseX, mouseY);
 
+        optionButton.activate(mouseX, mouseY);
+
         startButton.activate(mouseX, mouseY);
     }
 
     private void deactivateButton() {
         buttonProducer.deactivate();
+
+        optionButton.deactivate();
 
         startButton.deactivate();
     }
