@@ -31,7 +31,7 @@ public class Main extends ApplicationAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if (gameScene == GameScene.MENU)
-                characterMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+                characterMenu.touchDown();
 
             if (gameScene == GameScene.OPTION)
                 optionMenu.touchDown(cursorPos.getX(), cursorPos.getY());
@@ -80,6 +80,8 @@ public class Main extends ApplicationAdapter {
                 assetProcessor.getPanels(),
                 soundManager
         );
+        characterMenu.setCursorPos(cursorPos);
+        characterMenu.setBatch(batch);
 
         game = new Game(
                 assetProcessor.getWidgets(),
@@ -158,7 +160,6 @@ public class Main extends ApplicationAdapter {
 
     private void renderMenu(){
         musicManager.playMenuMusic();
-        characterMenu.setBatch(batch);
         characterMenu.draw();
     }
 

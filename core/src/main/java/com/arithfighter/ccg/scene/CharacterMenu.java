@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.CursorPositionAccessor;
 import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.MaskAnimation;
 import com.arithfighter.ccg.entity.SceneControlButton;
@@ -22,6 +23,7 @@ public class CharacterMenu {
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
+    private CursorPositionAccessor cursorPos;
 
     public CharacterMenu(Texture[] textures, Texture[] panels, SoundManager soundManager) {
         this.soundManager = soundManager;
@@ -36,7 +38,7 @@ public class CharacterMenu {
         startButton.getButton().setPosition(900, 120);
 
         optionButton = new SceneControlButton(textures[6], 1.8f);
-        optionButton.getButton().setPosition(1000,600);
+        optionButton.getButton().setPosition(1000, 600);
 
         characterName = new Font(36);
         characterName.setColor(Color.WHITE);
@@ -51,6 +53,10 @@ public class CharacterMenu {
         }
 
         animation = new MaskAnimation(masks);
+    }
+
+    public void setCursorPos(CursorPositionAccessor cursorPos) {
+        this.cursorPos = cursorPos;
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -82,6 +88,7 @@ public class CharacterMenu {
 
         animation.draw(batch, 0.1f);
     }
+
     public int getSelectIndex() {
         return buttonProducer.getActiveButtonIndex();
     }
@@ -90,12 +97,16 @@ public class CharacterMenu {
         return startButton.isStart();
     }
 
-    public boolean isOpenOption(){
+    public boolean isOpenOption() {
         return optionButton.isStart();
     }
 
-    public void touchDown(int mouseX, int mouseY) {
-        activateButton(mouseX, mouseY);
+    public void touchDown() {
+        buttonProducer.activate(cursorPos.getX(), cursorPos.getY());
+
+        optionButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+
+        startButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
     }
 
     public void touchDragged() {
@@ -113,14 +124,6 @@ public class CharacterMenu {
             soundManager.playAcceptSound();
 
         deactivateButton();
-    }
-
-    private void activateButton(int mouseX, int mouseY) {
-        buttonProducer.activate(mouseX, mouseY);
-
-        optionButton.getButton().activate(mouseX, mouseY);
-
-        startButton.getButton().activate(mouseX, mouseY);
     }
 
     private void deactivateButton() {
