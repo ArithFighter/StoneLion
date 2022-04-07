@@ -17,11 +17,11 @@ public class MyAssetProcessor {
     }
 
     public void load(){
-        loadWidgets();
+        loadTextures(fileLibrary.getWidgetFiles());
 
-        loadCards();
+        loadTextures(fileLibrary.getCardFiles());
 
-        loadPanels();
+        loadTextures(fileLibrary.getPanelFiles());
 
         loadMusic();
 
@@ -30,18 +30,8 @@ public class MyAssetProcessor {
         assetManager.finishLoading();
     }
 
-    private void loadWidgets(){
-        for (String file : fileLibrary.getWidgetFiles())
-            assetManager.load(file, Texture.class);
-    }
-
-    private void loadCards(){
-        for(String file : fileLibrary.getCardFiles())
-            assetManager.load(file, Texture.class);
-    }
-
-    private void loadPanels(){
-        for(String file : fileLibrary.getPanelFiles())
+    private void loadTextures(String[] files){
+         for (String file : files)
             assetManager.load(file, Texture.class);
     }
 
