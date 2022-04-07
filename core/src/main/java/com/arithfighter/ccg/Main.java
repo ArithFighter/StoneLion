@@ -87,7 +87,7 @@ public class Main extends ApplicationAdapter {
                 soundManager
         );
 
-        optionMenu = new OptionMenu(assetProcessor.getWidgets());
+        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -147,6 +147,7 @@ public class Main extends ApplicationAdapter {
                 renderGame();
                 break;
             case OPTION:
+                musicManager.playMenuMusic();
                 optionMenu.update();
                 optionMenu.draw(batch);
                 break;

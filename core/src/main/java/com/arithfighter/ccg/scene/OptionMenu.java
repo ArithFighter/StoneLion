@@ -1,5 +1,6 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.ControlBar;
 import com.arithfighter.ccg.entity.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,8 +10,11 @@ public class OptionMenu {
     private final SceneControlButton returnButton;
     private final ControlBar soundControl;
     private final ControlBar musicControl;
+    private final SoundManager soundManager;
 
-    public OptionMenu(Texture[] textures){
+    public OptionMenu(Texture[] textures, SoundManager soundManager){
+        this.soundManager = soundManager;
+
         returnButton = new SceneControlButton(textures[6], 1.8f);
         returnButton.getButton().setPosition(500,120);
 
@@ -62,6 +66,12 @@ public class OptionMenu {
     }
 
     public void touchUp() {
+        if (soundControl.isButtonActive()|| musicControl.isButtonActive())
+            soundManager.playTouchedSound();
+
+        if (returnButton.getButton().isActive())
+            soundManager.playAcceptSound();
+
         soundControl.deactivate();
         musicControl.deactivate();
         returnButton.getButton().deactivate();

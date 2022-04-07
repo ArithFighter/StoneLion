@@ -34,6 +34,10 @@ public class ControlBar {
         font = new Font(fontSize);
     }
 
+    public boolean isButtonActive(){
+        return arrows.isLeftActive()||arrows.isRightActive();
+    }
+
     public int getValue() {
         return valueHolder.getValue();
     }
