@@ -36,7 +36,7 @@ public class Main extends ApplicationAdapter {
             if (gameScene == GameScene.OPTION)
                 optionMenu.touchDown(cursorPos.getX(), cursorPos.getY());
 
-            game.touchDown(cursorPos.getX(), cursorPos.getY());
+            game.touchDown();
             return true;
         }
 
@@ -46,7 +46,7 @@ public class Main extends ApplicationAdapter {
 
             optionMenu.touchDragged();
 
-            game.touchDragged(cursorPos.getX(), cursorPos.getY());
+            game.touchDragged();
             return true;
         }
 
@@ -56,7 +56,7 @@ public class Main extends ApplicationAdapter {
 
             optionMenu.touchUp();
 
-            game.touchUp(cursorPos.getX(), cursorPos.getY());
+            game.touchUp();
             return true;
         }
     };
@@ -86,6 +86,8 @@ public class Main extends ApplicationAdapter {
                 assetProcessor.getCards(),
                 soundManager
         );
+        game.setCursorPos(cursorPos);
+        game.setBatch(batch);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
@@ -162,8 +164,6 @@ public class Main extends ApplicationAdapter {
 
     private void renderGame(){
         musicManager.playTheme();
-        game.setBatch(batch);
-        game.setCursorPos(cursorPos);
         game.update();
         game.draw();
         game.drawData(characterMenu.getSelectIndex());

@@ -106,20 +106,20 @@ public class Game {
         gameComponent.setPlayer(players[i]);
     }
 
-    public void touchDown(int mouseX, int mouseY) {
-        gameComponent.touchDown(mouseX, mouseY);
+    public void touchDown() {
+        gameComponent.touchDown(cursorPos.getX(), cursorPos.getY());
 
-        pauseMenu.touchDown(mouseX, mouseY);
+        pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
     }
 
-    public void touchDragged(int mouseX, int mouseY) {
-        gameComponent.touchDragged(mouseX, mouseY);
+    public void touchDragged() {
+        gameComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchDragged();
     }
 
-    public void touchUp(int mouseX, int mouseY) {
-        gameComponent.touchUp(mouseX, mouseY);
+    public void touchUp() {
+        gameComponent.touchUp(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchUp();
     }
