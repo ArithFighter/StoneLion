@@ -1,16 +1,19 @@
 package com.arithfighter.ccg.scene;
 
+import com.arithfighter.ccg.CursorPositionAccessor;
 import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.entity.ControlBar;
 import com.arithfighter.ccg.entity.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class OptionMenu {
+public class OptionMenu implements SceneEvent, MouseEvent{
     private final SceneControlButton returnButton;
     private final ControlBar soundControl;
     private final ControlBar musicControl;
     private final SoundManager soundManager;
+    private SpriteBatch batch;
+    private CursorPositionAccessor cursorPos;
 
     public OptionMenu(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
@@ -33,7 +36,7 @@ public class OptionMenu {
         return musicControl.getValue();
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         soundControl.draw(batch);
         musicControl.draw(batch);
         returnButton.getButton().draw(batch, "Return");
@@ -45,6 +48,16 @@ public class OptionMenu {
         returnButton.handleScene();
     }
 
+    @Override
+    public void setCursorPos(CursorPositionAccessor cursorPos) {
+        this.cursorPos = cursorPos;
+    }
+
+    @Override
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
     public void init() {
         returnButton.init();
     }
@@ -53,10 +66,10 @@ public class OptionMenu {
         return returnButton.isStart();
     }
 
-    public void touchDown(float x, float y) {
-        soundControl.activate(x,y);
-        musicControl.activate(x, y);
-        returnButton.getButton().activate(x, y);
+    public void touchDown() {
+        soundControl.activate(cursorPos.getX(), cursorPos.getY());
+        musicControl.activate(cursorPos.getX(), cursorPos.getY());
+        returnButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
     }
 
     public void touchDragged(){

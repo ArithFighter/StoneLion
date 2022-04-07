@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements SceneEvent, MouseEvent{
     private final Player[] players;
     private final GameComponent gameComponent;
     private final PauseMenu pauseMenu;

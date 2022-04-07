@@ -34,7 +34,7 @@ public class Main extends ApplicationAdapter {
                 characterMenu.touchDown();
 
             if (gameScene == GameScene.OPTION)
-                optionMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+                optionMenu.touchDown();
 
             game.touchDown();
             return true;
@@ -92,6 +92,8 @@ public class Main extends ApplicationAdapter {
         game.setBatch(batch);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+        optionMenu.setCursorPos(cursorPos);
+        optionMenu.setBatch(batch);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -159,7 +161,7 @@ public class Main extends ApplicationAdapter {
     private void renderOptionMenu(){
         musicManager.playMenuMusic();
         optionMenu.update();
-        optionMenu.draw(batch);
+        optionMenu.draw();
     }
 
     private void renderMenu(){
