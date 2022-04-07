@@ -14,10 +14,10 @@ public class OptionMenu {
         returnButton = new SceneControlButton(textures[6], 1.8f);
         returnButton.getButton().setPosition(500,120);
 
-        soundControl = new ControlBar(textures);
+        soundControl = new ControlBar(textures, "Sound");
         soundControl.setPosition(500,600);
 
-        musicControl = new ControlBar(textures);
+        musicControl = new ControlBar(textures, "Music");
         musicControl.setPosition(500,400);
     }
 
@@ -30,8 +30,8 @@ public class OptionMenu {
     }
 
     public void draw(SpriteBatch batch) {
-        soundControl.draw(batch, "Sound");
-        musicControl.draw(batch, "Music");
+        soundControl.draw(batch);
+        musicControl.draw(batch);
         returnButton.getButton().draw(batch, "Return");
     }
 
