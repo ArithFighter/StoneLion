@@ -1,12 +1,16 @@
 package com.arithfighter.ccg.entity;
 
+import com.arithfighter.ccg.audio.SoundManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
     private final SceneControlButton returnButton;
+    private final SoundManager soundManager;
 
-    public PauseMenu(Texture[] textures) {
+    public PauseMenu(Texture[] textures, SoundManager soundManager) {
+        this.soundManager = soundManager;
+
         returnButton = new SceneControlButton(textures[6], 1.8f);
         returnButton.getButton().setPosition(1000, 600);
     }
@@ -36,6 +40,9 @@ public class PauseMenu {
     }
 
     public void touchUp() {
+        if (returnButton.getButton().isActive())
+            soundManager.playReturnSound();
+
         returnButton.getButton().deactivate();
     }
 

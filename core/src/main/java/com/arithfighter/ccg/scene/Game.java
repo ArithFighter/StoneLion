@@ -31,7 +31,7 @@ public class Game implements SceneEvent, MouseEvent{
 
         gameComponent = new GameComponent(textures, soundManager);
 
-        pauseMenu = new PauseMenu(textures);
+        pauseMenu = new PauseMenu(textures, soundManager);
 
         createPlayers(textures, cards);
     }

@@ -5,6 +5,7 @@ import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.CharacterMenu;
 import com.arithfighter.ccg.scene.Game;
+import com.arithfighter.ccg.scene.GameScene;
 import com.arithfighter.ccg.scene.OptionMenu;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -22,7 +23,6 @@ public class Main extends ApplicationAdapter {
     private CharacterMenu characterMenu;
     private Game game;
     private OptionMenu optionMenu;
-    private enum GameScene {MENU, GAME, OPTION}
     private GameScene gameScene = GameScene.MENU;
     private SoundManager soundManager;
     private MusicManager musicManager;
@@ -138,7 +138,6 @@ public class Main extends ApplicationAdapter {
             gameScene = GameScene.MENU;
         }
         if (game.isReturnToMenu()) {
-            soundManager.playReturnSound();
             game.init();
             gameScene = GameScene.MENU;
         }

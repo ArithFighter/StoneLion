@@ -83,7 +83,7 @@ public class OptionMenu implements SceneEvent, MouseEvent{
             soundManager.playTouchedSound();
 
         if (returnButton.getButton().isActive())
-            soundManager.playAcceptSound();
+            soundManager.playReturnSound();
 
         soundControl.deactivate();
         musicControl.deactivate();
