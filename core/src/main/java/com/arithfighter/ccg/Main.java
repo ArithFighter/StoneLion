@@ -151,15 +151,20 @@ public class Main extends ApplicationAdapter {
                 renderGame();
                 break;
             case OPTION:
-                musicManager.playMenuMusic();
-                optionMenu.update();
-                optionMenu.draw(batch);
+                renderOptionMenu();
                 break;
         }
     }
 
+    private void renderOptionMenu(){
+        musicManager.playMenuMusic();
+        optionMenu.update();
+        optionMenu.draw(batch);
+    }
+
     private void renderMenu(){
         musicManager.playMenuMusic();
+        characterMenu.update();
         characterMenu.draw();
     }
 

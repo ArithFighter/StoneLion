@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CharacterMenu {
+public class CharacterMenu implements SceneEvent, MouseEvent{
     private final Font characterName;
     private final SpriteWidget highLight;
     private final SceneControlButton optionButton;
@@ -69,10 +69,12 @@ public class CharacterMenu {
         startButton.init();
     }
 
-    public void draw() {
+    public void update(){
         optionButton.handleScene();
         startButton.handleScene();
+    }
 
+    public void draw() {
         int index = buttonProducer.getActiveButtonIndex();
         highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
         highLight.draw(batch);
