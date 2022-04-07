@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 public class MyAssetProcessor {
     private final AssetManager assetManager;
     private final FileLibrary fileLibrary;
+    private final AssetAccessor accessor;
 
     public MyAssetProcessor(){
         assetManager = new AssetManager();
         fileLibrary = new FileLibrary();
+        accessor = new AssetAccessor(assetManager);
     }
 
     public void load(){
@@ -58,26 +60,38 @@ public class MyAssetProcessor {
     }
 
     public Texture[] getWidgets() {
-        return getTextures(fileLibrary.getWidgetFiles());
+        return accessor.getTextures(fileLibrary.getWidgetFiles());
     }
 
     public Texture[] getCards(){
-        return getTextures(fileLibrary.getCardFiles());
+        return accessor.getTextures(fileLibrary.getCardFiles());
     }
 
     public Texture[] getPanels(){
-        return getTextures(fileLibrary.getPanelFiles());
+        return accessor.getTextures(fileLibrary.getPanelFiles());
     }
 
     public Music[] getMusics(){
-        return getMusics(fileLibrary.getMusicFiles());
+        return accessor.getMusics(fileLibrary.getMusicFiles());
     }
 
     public Sound[] getSounds(){
-        return getSounds(fileLibrary.getSoundFiles());
+        return accessor.getSounds(fileLibrary.getSoundFiles());
     }
 
-    private Texture[] getTextures(String[] files){
+    public void dispose(){
+        assetManager.dispose();
+    }
+}
+
+class AssetAccessor{
+    private final AssetManager assetManager;
+
+    public AssetAccessor(AssetManager assetManager){
+        this.assetManager = assetManager;
+    }
+
+    public Texture[] getTextures(String[] files){
         int length = files.length;
         Texture[] array = new Texture[length];
 
@@ -87,7 +101,7 @@ public class MyAssetProcessor {
         return array;
     }
 
-    private Music[] getMusics(String[] files){
+    public Music[] getMusics(String[] files){
         int length = files.length;
         Music[] audios = new Music[length];
 
@@ -97,7 +111,7 @@ public class MyAssetProcessor {
         return audios;
     }
 
-    private Sound[] getSounds(String[] files){
+    public Sound[] getSounds(String[] files){
         int length = files.length;
         Sound[] audios = new Sound[length];
 
@@ -105,9 +119,5 @@ public class MyAssetProcessor {
             audios[i] = assetManager.get(files[i]);
 
         return audios;
-    }
-
-    public void dispose(){
-        assetManager.dispose();
     }
 }
