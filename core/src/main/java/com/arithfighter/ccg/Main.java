@@ -23,40 +23,7 @@ public class Main extends ApplicationAdapter {
     private GameScene gameScene = GameScene.MENU;
     private SoundManager soundManager;
     private MusicManager musicManager;
-
-    private final InputAdapter mouseAdapter = new InputAdapter() {
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            if (gameScene == GameScene.MENU)
-                characterMenu.touchDown();
-
-            if (gameScene == GameScene.OPTION)
-                optionMenu.touchDown();
-
-            game.touchDown();
-            return true;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            characterMenu.touchDragged();
-
-            optionMenu.touchDragged();
-
-            game.touchDragged();
-            return true;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            characterMenu.touchUp();
-
-            optionMenu.touchUp();
-
-            game.touchUp();
-            return true;
-        }
-    };
+    private MouseAdapter mouseAdapter;
 
     @Override
     public void create() {
@@ -92,6 +59,14 @@ public class Main extends ApplicationAdapter {
         optionMenu.setCursorPos(cursorPos);
         optionMenu.setBatch(batch);
 
+        MouseEvent[] mouseEvents = new MouseEvent[]{
+                characterMenu,
+                game,
+                optionMenu
+        };
+
+        mouseAdapter = new MouseAdapter(mouseEvents);
+
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
@@ -109,6 +84,8 @@ public class Main extends ApplicationAdapter {
         musicManager.setVolume(optionMenu.getMusicVolume() / 8f);
 
         game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
+
+        mouseAdapter.setGameScene(gameScene);
 
         controlScene();
 
