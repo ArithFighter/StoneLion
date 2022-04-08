@@ -62,7 +62,13 @@ public class Main extends ApplicationAdapter {
 
         controlScene();
 
+        switchMusic();
+
         drawGame();
+
+        //show game data for development
+        if (gameScene == GameScene.GAME)
+            sceneBuilder.getGame().drawData(sceneBuilder.getCharacterMenu().getSelectIndex());
     }
 
     private void drawGame() {
@@ -91,33 +97,18 @@ public class Main extends ApplicationAdapter {
     }
 
     private void switchScene() {
-        switch (gameScene) {
-            case MENU:
-                renderMenu();
-                break;
-            case GAME:
-                renderGame();
-                break;
-            case OPTION:
-                renderOptionMenu();
-                break;
+        for (int i = 0;i<GameScene.values().length;i++){
+            if (gameScene == GameScene.values()[i])
+                sceneBuilder.renderScene(i);
         }
     }
 
-    private void renderOptionMenu() {
-        musicManager.playMenuMusic();
-        sceneBuilder.renderScene(2);
-    }
+    public void switchMusic(){
+        if (gameScene == GameScene.MENU || gameScene == GameScene.OPTION)
+            musicManager.playMenuMusic();
 
-    private void renderMenu() {
-        musicManager.playMenuMusic();
-        sceneBuilder.renderScene(0);
-    }
-
-    private void renderGame() {
-        musicManager.playTheme();
-        sceneBuilder.renderScene(1);
-        sceneBuilder.getGame().drawData(sceneBuilder.getCharacterMenu().getSelectIndex());
+        if (gameScene == GameScene.GAME)
+            musicManager.playTheme();
     }
 
     @Override

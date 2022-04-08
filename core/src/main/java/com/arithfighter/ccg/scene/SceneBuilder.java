@@ -17,17 +17,11 @@ public class SceneBuilder {
                         SpriteBatch batch,
                         CursorPositionAccessor cursorPos
     ){
-        characterMenu = new CharacterMenu(
-                assetProcessor.getWidgets(),
-                assetProcessor.getPanels(),
-                soundManager
-        );
+        characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
+                soundManager);
 
-        game = new Game(
-                assetProcessor.getWidgets(),
-                assetProcessor.getCards(),
-                soundManager
-        );
+        game = new Game(assetProcessor.getWidgets(), assetProcessor.getCards(),
+                soundManager);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
