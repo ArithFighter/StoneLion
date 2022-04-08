@@ -6,7 +6,6 @@ import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -163,41 +162,5 @@ public class Main extends ApplicationAdapter {
         soundManager.dispose();
 
         musicManager.dispose();
-    }
-}
-
-class MouseAdapter extends InputAdapter {
-    private final MouseEvent[] mouseEvents;
-    private GameScene gameScene;
-
-    public MouseAdapter(MouseEvent[] mouseEvents) {
-        this.mouseEvents = mouseEvents;
-    }
-
-    public void setGameScene(GameScene gameScene){
-        this.gameScene = gameScene;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        for (int i =0; i<GameScene.values().length;i++){
-            if (gameScene == GameScene.values()[i])
-                mouseEvents[i].touchDown();
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        for (MouseEvent mouseEvent:mouseEvents)
-            mouseEvent.touchDragged();
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        for (MouseEvent mouseEvent:mouseEvents)
-            mouseEvent.touchUp();
-        return true;
     }
 }
