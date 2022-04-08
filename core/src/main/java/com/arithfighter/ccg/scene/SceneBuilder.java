@@ -6,6 +6,9 @@ import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder {
+    private final CharacterMenu characterMenu;
+    private final Game game;
+    private final OptionMenu optionMenu;
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
@@ -14,19 +17,19 @@ public class SceneBuilder {
                         SpriteBatch batch,
                         CursorPositionAccessor cursorPos
     ){
-        CharacterMenu characterMenu = new CharacterMenu(
+        characterMenu = new CharacterMenu(
                 assetProcessor.getWidgets(),
                 assetProcessor.getPanels(),
                 soundManager
         );
 
-        Game game = new Game(
+        game = new Game(
                 assetProcessor.getWidgets(),
                 assetProcessor.getCards(),
                 soundManager
         );
 
-        OptionMenu optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
         mouseEvents = new MouseEvent[]{
                 characterMenu,
@@ -52,6 +55,23 @@ public class SceneBuilder {
 
     public SceneEvent[] getSceneEvents(){
         return sceneEvents;
+    }
+
+    public void renderScene(int index){
+        sceneEvents[index].update();
+        sceneEvents[index].draw();
+    }
+
+    public CharacterMenu getCharacterMenu() {
+        return characterMenu;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public OptionMenu getOptionMenu() {
+        return optionMenu;
     }
 
     public void dispose(){

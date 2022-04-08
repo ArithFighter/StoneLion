@@ -16,9 +16,7 @@ public class Main extends ApplicationAdapter {
     private MyAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private CharacterMenu characterMenu;
-    private Game game;
-    private OptionMenu optionMenu;
+    private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.MENU;
     private SoundManager soundManager;
     private MusicManager musicManager;
@@ -38,33 +36,9 @@ public class Main extends ApplicationAdapter {
 
         musicManager = new MusicManager(assetProcessor.getMusics());
 
-        characterMenu = new CharacterMenu(
-                assetProcessor.getWidgets(),
-                assetProcessor.getPanels(),
-                soundManager
-        );
-        characterMenu.setCursorPos(cursorPos);
-        characterMenu.setBatch(batch);
+        sceneBuilder = new SceneBuilder(assetProcessor,soundManager,batch,cursorPos);
 
-        game = new Game(
-                assetProcessor.getWidgets(),
-                assetProcessor.getCards(),
-                soundManager
-        );
-        game.setCursorPos(cursorPos);
-        game.setBatch(batch);
-
-        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
-        optionMenu.setCursorPos(cursorPos);
-        optionMenu.setBatch(batch);
-
-        MouseEvent[] mouseEvents = new MouseEvent[]{
-                characterMenu,
-                game,
-                optionMenu
-        };
-
-        mouseAdapter = new MouseAdapter(mouseEvents);
+        mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -78,11 +52,11 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        soundManager.setVolume(optionMenu.getSoundVolume() / 10f);
+        soundManager.setVolume(sceneBuilder.getOptionMenu().getSoundVolume() / 10f);
 
-        musicManager.setVolume(optionMenu.getMusicVolume() / 8f);
+        musicManager.setVolume(sceneBuilder.getOptionMenu().getMusicVolume() / 8f);
 
-        game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
+        sceneBuilder.getGame().setSelectedPlayerToGame(sceneBuilder.getCharacterMenu().getSelectIndex());
 
         mouseAdapter.setGameScene(gameScene);
 
@@ -98,20 +72,20 @@ public class Main extends ApplicationAdapter {
     }
 
     private void controlScene() {
-        if (characterMenu.isGameStart()) {
-            characterMenu.init();
+        if (sceneBuilder.getCharacterMenu().isGameStart()) {
+            sceneBuilder.getSceneEvents()[0].init();
             gameScene = GameScene.GAME;
         }
-        if (characterMenu.isOpenOption()) {
-            characterMenu.init();
+        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
+            sceneBuilder.getSceneEvents()[0].init();
             gameScene = GameScene.OPTION;
         }
-        if (optionMenu.isReturnToMainMenu()) {
-            optionMenu.init();
+        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
+            sceneBuilder.getSceneEvents()[2].init();
             gameScene = GameScene.MENU;
         }
-        if (game.isReturnToMenu()) {
-            game.init();
+        if (sceneBuilder.getGame().isReturnToMenu()) {
+            sceneBuilder.getSceneEvents()[1].init();
             gameScene = GameScene.MENU;
         }
     }
@@ -132,21 +106,18 @@ public class Main extends ApplicationAdapter {
 
     private void renderOptionMenu() {
         musicManager.playMenuMusic();
-        optionMenu.update();
-        optionMenu.draw();
+        sceneBuilder.renderScene(2);
     }
 
     private void renderMenu() {
         musicManager.playMenuMusic();
-        characterMenu.update();
-        characterMenu.draw();
+        sceneBuilder.renderScene(0);
     }
 
     private void renderGame() {
         musicManager.playTheme();
-        game.update();
-        game.draw();
-        game.drawData(characterMenu.getSelectIndex());
+        sceneBuilder.renderScene(1);
+        sceneBuilder.getGame().drawData(sceneBuilder.getCharacterMenu().getSelectIndex());
     }
 
     @Override
@@ -155,9 +126,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.dispose();
 
-        game.dispose();
-
-        characterMenu.dispose();
+        sceneBuilder.dispose();
 
         soundManager.dispose();
 
