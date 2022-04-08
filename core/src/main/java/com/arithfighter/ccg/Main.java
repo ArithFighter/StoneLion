@@ -3,10 +3,7 @@ package com.arithfighter.ccg;
 import com.arithfighter.ccg.audio.MusicManager;
 import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.file.MyAssetProcessor;
-import com.arithfighter.ccg.scene.CharacterMenu;
-import com.arithfighter.ccg.scene.Game;
-import com.arithfighter.ccg.scene.GameScene;
-import com.arithfighter.ccg.scene.OptionMenu;
+import com.arithfighter.ccg.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -107,9 +104,9 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        soundManager.setVolume(optionMenu.getSoundVolume()/10f);
+        soundManager.setVolume(optionMenu.getSoundVolume() / 10f);
 
-        musicManager.setVolume(optionMenu.getMusicVolume()/8f);
+        musicManager.setVolume(optionMenu.getMusicVolume() / 8f);
 
         game.setSelectedPlayerToGame(characterMenu.getSelectIndex());
 
@@ -124,16 +121,16 @@ public class Main extends ApplicationAdapter {
         batch.end();
     }
 
-    private void controlScene(){
+    private void controlScene() {
         if (characterMenu.isGameStart()) {
             characterMenu.init();
             gameScene = GameScene.GAME;
         }
-        if (characterMenu.isOpenOption()){
+        if (characterMenu.isOpenOption()) {
             characterMenu.init();
             gameScene = GameScene.OPTION;
         }
-        if (optionMenu.isReturnToMainMenu()){
+        if (optionMenu.isReturnToMainMenu()) {
             optionMenu.init();
             gameScene = GameScene.MENU;
         }
@@ -157,19 +154,19 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-    private void renderOptionMenu(){
+    private void renderOptionMenu() {
         musicManager.playMenuMusic();
         optionMenu.update();
         optionMenu.draw();
     }
 
-    private void renderMenu(){
+    private void renderMenu() {
         musicManager.playMenuMusic();
         characterMenu.update();
         characterMenu.draw();
     }
 
-    private void renderGame(){
+    private void renderGame() {
         musicManager.playTheme();
         game.update();
         game.draw();
@@ -189,5 +186,41 @@ public class Main extends ApplicationAdapter {
         soundManager.dispose();
 
         musicManager.dispose();
+    }
+}
+
+class MouseAdapter extends InputAdapter {
+    private final MouseEvent[] mouseEvents;
+    private GameScene gameScene;
+
+    public MouseAdapter(MouseEvent[] mouseEvents) {
+        this.mouseEvents = mouseEvents;
+    }
+
+    public void setGameScene(GameScene gameScene){
+        this.gameScene = gameScene;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        for (int i =0; i<GameScene.values().length;i++){
+            if (gameScene == GameScene.values()[i])
+                mouseEvents[i].touchDown();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        for (MouseEvent mouseEvent:mouseEvents)
+            mouseEvent.touchDragged();
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        for (MouseEvent mouseEvent:mouseEvents)
+            mouseEvent.touchUp();
+        return true;
     }
 }
