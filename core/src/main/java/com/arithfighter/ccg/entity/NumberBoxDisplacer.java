@@ -169,10 +169,10 @@ class RandomNumListGenerator {
     }
 
     private void addRandomNumberToSet(int quantity) {
-        GameNumProducer rnp = new GameNumProducer();
+        GameNumProducer gnp = new GameNumProducer();
 
         for (int i = 0; i < quantity; i++)
-            numberSet.add(rnp.getRandomNum());
+            numberSet.add(gnp.getRandomNum());
     }
 }
 

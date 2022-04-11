@@ -78,16 +78,6 @@ public class Stage implements SceneEvent, MouseEvent{
         pauseMenu.update();
 
         stageComponent.update(cursorPos.getX(), cursorPos.getY());
-
-        //This is for developer, will remove in open version
-        manualReset();
-    }
-
-    private void manualReset() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            playRecord.reset();
-            stageComponent.init();
-        }
     }
 
     public void draw() {
@@ -163,6 +153,7 @@ class SkillHandler {
 
     private void increaseAllValueByFour() {
         int gain = 4;
+
         for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
             if (getNumberBoxValue(i) > 0 &&
                     getNumberBoxValue(i) < new GameNumProducer().getMax()-gain)
@@ -172,6 +163,7 @@ class SkillHandler {
 
     private void replaceOneNonZeroValue(int value) {
         int index = indexPicker.getRandomNonZeroValueIndex();
+
         numberBoxDisplacer.set(index, value);
     }
 

@@ -6,6 +6,7 @@ import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.arithfighter.ccg.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -75,6 +76,16 @@ public class Main extends ApplicationAdapter {
         switchMusic();
 
         drawGame();
+
+        //This is for developer, will remove in launched version
+        manualReset();
+    }
+
+    private void manualReset() {
+        if (gameScene == GameScene.Stage){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R))
+                sceneBuilder.getStage().init();
+        }
     }
 
     private void drawGame() {
