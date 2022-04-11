@@ -7,8 +7,6 @@ import com.arithfighter.ccg.entity.player.Player;
 import com.arithfighter.ccg.CursorPositionAccessor;
 import com.arithfighter.ccg.pojo.GameNumProducer;
 import com.arithfighter.ccg.pojo.Recorder;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 
 public class Stage implements SceneEvent, MouseEvent{
     private final Player[] players;
-    private final StageComponent stageComponent;
+    private final GamePlayComponent gamePlayComponent;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataAccessor;
     private CursorPositionAccessor cursorPos;
@@ -29,7 +27,7 @@ public class Stage implements SceneEvent, MouseEvent{
 
         players = new Player[characterQuantity];
 
-        stageComponent = new StageComponent(textures, soundManager);
+        gamePlayComponent = new GamePlayComponent(textures, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
@@ -37,7 +35,7 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     private void createPlayers(Texture[] textures, Texture[] cards) {
-        SkillHandler skillHandler = new SkillHandler(stageComponent.getNumberBoxDisplacer());
+        SkillHandler skillHandler = new SkillHandler(gamePlayComponent.getNumberBoxDisplacer());
 
         for (int i = 0; i < characterQuantity; i++)
             players[i] = new Player(
@@ -70,53 +68,53 @@ public class Stage implements SceneEvent, MouseEvent{
 
     public void init() {
         playRecord.reset();
-        stageComponent.init();
+        gamePlayComponent.init();
         pauseMenu.init();
     }
 
     public void update() {
         pauseMenu.update();
 
-        stageComponent.update(cursorPos.getX(), cursorPos.getY());
+        gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
     }
 
     public void draw() {
         pauseMenu.draw(batch);
 
-        stageComponent.draw(batch);
+        gamePlayComponent.draw(batch);
     }
 
     public void drawData(int index) {
         dataAccessor.setCardPlayTimes(playRecord.getRecord());
-        dataAccessor.setScore(stageComponent.getScore());
+        dataAccessor.setScore(gamePlayComponent.getScore());
         dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
     }
 
     public void setSelectedPlayerToGame(int i) {
-        stageComponent.setPlayer(players[i]);
+        gamePlayComponent.setPlayer(players[i]);
     }
 
     public void touchDown() {
-        stageComponent.touchDown(cursorPos.getX(), cursorPos.getY());
+        gamePlayComponent.touchDown(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
     }
 
     public void touchDragged() {
-        stageComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
+        gamePlayComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchDragged();
     }
 
     public void touchUp() {
-        stageComponent.touchUp(cursorPos.getX(), cursorPos.getY());
+        gamePlayComponent.touchUp(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchUp();
     }
 
     public void dispose() {
         dataAccessor.dispose();
-        stageComponent.dispose();
+        gamePlayComponent.dispose();
         pauseMenu.dispose();
         for (Player player : players) player.dispose();
     }

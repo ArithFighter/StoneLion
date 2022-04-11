@@ -10,14 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.arithfighter.ccg.WindowSetting.*;
 
-public class StageComponent {
+public class GamePlayComponent {
     private final CardPlaceBasket cardPlaceBasket;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
     private final Recorder scoreRecord = new Recorder();
 
-    public StageComponent(Texture[] textures, SoundManager soundManager){
+    public GamePlayComponent(Texture[] textures, SoundManager soundManager){
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
             public void initCardPosition() {
@@ -63,6 +63,7 @@ public class StageComponent {
 
     public void update(int mouseX, int mouseY){
         numberBoxDisplacer.update(player.getSum());
+
         numberBoxDisplacer.setBoxQuantity(99);
 
         player.updateWhenTouchCard(mouseX, mouseY);
