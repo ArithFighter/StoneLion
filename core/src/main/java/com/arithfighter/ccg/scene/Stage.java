@@ -137,7 +137,7 @@ class SkillHandler {
                 replaceOneNonZeroValue(9);
                 break;
             case ROGUE:
-                replaceOneNonZeroValue(16);
+                replaceOneNonZeroValue(8);
                 break;
             case HUNTER:
                 replaceOneNonZeroValue(14);
