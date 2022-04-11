@@ -21,6 +21,7 @@ public class Main extends ApplicationAdapter {
     private SoundManager soundManager;
     private MusicManager musicManager;
     private MouseAdapter mouseAdapter;
+    private int selectedCharacterIndex = 0;
 
     @Override
     public void create() {
@@ -52,11 +53,16 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        soundManager.setVolume(sceneBuilder.getOptionMenu().getSoundVolume() / 10f);
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+        float soundVolume = optionMenu.getSoundVolume() / 10f;
+        soundManager.setVolume(soundVolume);
 
-        musicManager.setVolume(sceneBuilder.getOptionMenu().getMusicVolume() / 8f);
+        float musicVolume = optionMenu.getMusicVolume() / 8f;
+        musicManager.setVolume(musicVolume);
 
-        sceneBuilder.getGame().setSelectedPlayerToGame(sceneBuilder.getCharacterMenu().getSelectIndex());
+        selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
+
+        sceneBuilder.getGame().setSelectedPlayerToGame(selectedCharacterIndex);
 
         mouseAdapter.setGameScene(gameScene);
 
@@ -65,38 +71,48 @@ public class Main extends ApplicationAdapter {
         switchMusic();
 
         drawGame();
-
-        //show game data for development
-        if (gameScene == GameScene.GAME)
-            sceneBuilder.getGame().drawData(sceneBuilder.getCharacterMenu().getSelectIndex());
     }
 
     private void drawGame() {
         batch.begin();
-        switchScene();
+
+        drawScene();
+
+        //show game data for development
+        if (gameScene == GameScene.GAME)
+            sceneBuilder.getGame().drawData(selectedCharacterIndex);
+
         batch.end();
     }
 
     private void controlScene() {
-        if (sceneBuilder.getCharacterMenu().isGameStart()) {
-            sceneBuilder.getSceneEvents()[0].init();
+        boolean[] isChangeScene = {
+                sceneBuilder.getCharacterMenu().isGameStart(),
+                sceneBuilder.getCharacterMenu().isOpenOption(),
+                sceneBuilder.getGame().isReturnToMenu(),
+                sceneBuilder.getOptionMenu().isReturnToMainMenu()
+        };
+        SceneEvent[] sceneEvents = sceneBuilder.getSceneEvents();
+
+        if (isChangeScene[0]) {
             gameScene = GameScene.GAME;
+            sceneEvents[0].init();
         }
-        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
-            sceneBuilder.getSceneEvents()[0].init();
+        if (isChangeScene[1]) {
             gameScene = GameScene.OPTION;
+            sceneEvents[0].init();
         }
-        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
-            sceneBuilder.getSceneEvents()[2].init();
+        if (isChangeScene[2]) {
             gameScene = GameScene.MENU;
+            sceneEvents[1].init();
         }
-        if (sceneBuilder.getGame().isReturnToMenu()) {
-            sceneBuilder.getSceneEvents()[1].init();
+        if (isChangeScene[3]) {
             gameScene = GameScene.MENU;
+            sceneEvents[2].init();
         }
     }
 
-    private void switchScene() {
+    private void drawScene() {
         for (int i = 0;i<GameScene.values().length;i++){
             if (gameScene == GameScene.values()[i])
                 sceneBuilder.renderScene(i);
