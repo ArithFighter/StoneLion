@@ -14,9 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
-public class Game implements SceneEvent, MouseEvent{
+public class Stage implements SceneEvent, MouseEvent{
     private final Player[] players;
-    private final GameComponent gameComponent;
+    private final StageComponent stageComponent;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataAccessor;
     private CursorPositionAccessor cursorPos;
@@ -24,12 +24,12 @@ public class Game implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
 
-    public Game(Texture[] textures, Texture[] cards, SoundManager soundManager) {
+    public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
         dataAccessor = new GameDataDisplacer();
 
         players = new Player[characterQuantity];
 
-        gameComponent = new GameComponent(textures, soundManager);
+        stageComponent = new StageComponent(textures, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
@@ -37,7 +37,7 @@ public class Game implements SceneEvent, MouseEvent{
     }
 
     private void createPlayers(Texture[] textures, Texture[] cards) {
-        SkillHandler skillHandler = new SkillHandler(gameComponent.getNumberBoxDisplacer());
+        SkillHandler skillHandler = new SkillHandler(stageComponent.getNumberBoxDisplacer());
 
         for (int i = 0; i < characterQuantity; i++)
             players[i] = new Player(
@@ -70,14 +70,14 @@ public class Game implements SceneEvent, MouseEvent{
 
     public void init() {
         playRecord.reset();
-        gameComponent.init();
+        stageComponent.init();
         pauseMenu.init();
     }
 
     public void update() {
         pauseMenu.update();
 
-        gameComponent.update(cursorPos.getX(), cursorPos.getY());
+        stageComponent.update(cursorPos.getX(), cursorPos.getY());
 
         //This is for developer, will remove in open version
         manualReset();
@@ -86,47 +86,47 @@ public class Game implements SceneEvent, MouseEvent{
     private void manualReset() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             playRecord.reset();
-            gameComponent.init();
+            stageComponent.init();
         }
     }
 
     public void draw() {
         pauseMenu.draw(batch);
 
-        gameComponent.draw(batch);
+        stageComponent.draw(batch);
     }
 
     public void drawData(int index) {
         dataAccessor.setCardPlayTimes(playRecord.getRecord());
-        dataAccessor.setScore(gameComponent.getScore());
+        dataAccessor.setScore(stageComponent.getScore());
         dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
     }
 
     public void setSelectedPlayerToGame(int i) {
-        gameComponent.setPlayer(players[i]);
+        stageComponent.setPlayer(players[i]);
     }
 
     public void touchDown() {
-        gameComponent.touchDown(cursorPos.getX(), cursorPos.getY());
+        stageComponent.touchDown(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
     }
 
     public void touchDragged() {
-        gameComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
+        stageComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchDragged();
     }
 
     public void touchUp() {
-        gameComponent.touchUp(cursorPos.getX(), cursorPos.getY());
+        stageComponent.touchUp(cursorPos.getX(), cursorPos.getY());
 
         pauseMenu.touchUp();
     }
 
     public void dispose() {
         dataAccessor.dispose();
-        gameComponent.dispose();
+        stageComponent.dispose();
         pauseMenu.dispose();
         for (Player player : players) player.dispose();
     }

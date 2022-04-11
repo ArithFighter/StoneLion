@@ -37,7 +37,11 @@ public class Main extends ApplicationAdapter {
 
         musicManager = new MusicManager(assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(assetProcessor,soundManager,batch,cursorPos);
+        sceneBuilder = new SceneBuilder(assetProcessor,soundManager);
+
+        sceneBuilder.setBatch(batch);
+
+        sceneBuilder.setCursorPos(cursorPos);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
@@ -62,7 +66,7 @@ public class Main extends ApplicationAdapter {
 
         selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
 
-        sceneBuilder.getGame().setSelectedPlayerToGame(selectedCharacterIndex);
+        sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
 
         mouseAdapter.setGameScene(gameScene);
 
@@ -79,8 +83,8 @@ public class Main extends ApplicationAdapter {
         drawScene();
 
         //show game data for development
-        if (gameScene == GameScene.GAME)
-            sceneBuilder.getGame().drawData(selectedCharacterIndex);
+        if (gameScene == GameScene.Stage)
+            sceneBuilder.getStage().drawData(selectedCharacterIndex);
 
         batch.end();
     }
@@ -89,13 +93,13 @@ public class Main extends ApplicationAdapter {
         boolean[] isChangeScene = {
                 sceneBuilder.getCharacterMenu().isGameStart(),
                 sceneBuilder.getCharacterMenu().isOpenOption(),
-                sceneBuilder.getGame().isReturnToMenu(),
+                sceneBuilder.getStage().isReturnToMenu(),
                 sceneBuilder.getOptionMenu().isReturnToMainMenu()
         };
         SceneEvent[] sceneEvents = sceneBuilder.getSceneEvents();
 
         if (isChangeScene[0]) {
-            gameScene = GameScene.GAME;
+            gameScene = GameScene.Stage;
             sceneEvents[0].init();
         }
         if (isChangeScene[1]) {
@@ -123,7 +127,7 @@ public class Main extends ApplicationAdapter {
         if (gameScene == GameScene.MENU || gameScene == GameScene.OPTION)
             musicManager.playMenuMusic();
 
-        if (gameScene == GameScene.GAME)
+        if (gameScene == GameScene.Stage)
             musicManager.playTheme();
     }
 

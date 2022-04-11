@@ -7,38 +7,41 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder {
     private final CharacterMenu characterMenu;
-    private final Game game;
+    private final Stage stage;
     private final OptionMenu optionMenu;
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
-    public SceneBuilder(MyAssetProcessor assetProcessor,
-                        SoundManager soundManager,
-                        SpriteBatch batch,
-                        CursorPositionAccessor cursorPos
-    ){
+    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
                 soundManager);
 
-        game = new Game(assetProcessor.getWidgets(), assetProcessor.getCards(),
+        stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
                 soundManager);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
         mouseEvents = new MouseEvent[]{
                 characterMenu,
-                game,
+                stage,
                 optionMenu
         };
 
         sceneEvents = new SceneEvent[]{
                 characterMenu,
-                game,
+                stage,
                 optionMenu
         };
+    }
 
+    public void setBatch(SpriteBatch batch){
         for (SceneEvent sceneEvent:sceneEvents){
             sceneEvent.setBatch(batch);
+        }
+    }
+
+    public void setCursorPos(CursorPositionAccessor cursorPos){
+        for (SceneEvent sceneEvent:sceneEvents){
             sceneEvent.setCursorPos(cursorPos);
         }
     }
@@ -60,8 +63,8 @@ public class SceneBuilder {
         return characterMenu;
     }
 
-    public Game getGame() {
-        return game;
+    public Stage getStage() {
+        return stage;
     }
 
     public OptionMenu getOptionMenu() {
