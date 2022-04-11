@@ -61,10 +61,12 @@ public class GamePlayComponent {
         return numberBoxDisplacer;
     }
 
+    public void setNumberQuantity(int quantity){
+        numberBoxDisplacer.setBoxQuantity(quantity);
+    }
+
     public void update(int mouseX, int mouseY){
         numberBoxDisplacer.update(player.getSum());
-
-        numberBoxDisplacer.setBoxQuantity(99);
 
         player.updateWhenTouchCard(mouseX, mouseY);
     }

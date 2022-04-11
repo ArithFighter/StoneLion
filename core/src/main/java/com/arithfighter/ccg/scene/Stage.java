@@ -75,6 +75,8 @@ public class Stage implements SceneEvent, MouseEvent{
     public void update() {
         pauseMenu.update();
 
+        gamePlayComponent.setNumberQuantity(6);
+
         gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
     }
 
