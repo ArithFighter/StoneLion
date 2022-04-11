@@ -195,13 +195,13 @@ class IndexPicker {
                 indexList.add(i);
         }
 
-        int indexPick = getRandomNum(indexList.size());
+        int indexPick = getRandomNum(indexList.size()-1);
 
         return indexList.get(indexPick);
     }
 
 
     private int getRandomNum(int range) {
-        return (int) (Math.random() * (range + 1) - 1);
+        return (int) (Math.random() * (range + 1));
     }
 }
