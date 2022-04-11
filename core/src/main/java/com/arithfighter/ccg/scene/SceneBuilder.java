@@ -5,32 +5,23 @@ import com.arithfighter.ccg.audio.SoundManager;
 import com.arithfighter.ccg.file.MyAssetProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SceneBuilder {
-    private final CharacterMenu characterMenu;
-    private final Stage stage;
-    private final OptionMenu optionMenu;
+public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
     public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager){
-        characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
-                soundManager);
-
-        stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
-                soundManager);
-
-        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+        super(assetProcessor, soundManager);
 
         mouseEvents = new MouseEvent[]{
-                characterMenu,
-                stage,
-                optionMenu
+                getCharacterMenu(),
+                getStage(),
+                getOptionMenu()
         };
 
         sceneEvents = new SceneEvent[]{
-                characterMenu,
-                stage,
-                optionMenu
+                getCharacterMenu(),
+                getStage(),
+                getOptionMenu()
         };
     }
 
@@ -59,6 +50,27 @@ public class SceneBuilder {
         sceneEvents[index].draw();
     }
 
+    public void dispose(){
+        for (SceneEvent sceneEvent:sceneEvents)
+            sceneEvent.dispose();
+    }
+}
+
+class SceneCollection{
+    private final CharacterMenu characterMenu;
+    private final Stage stage;
+    private final OptionMenu optionMenu;
+
+    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
+        characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
+                soundManager);
+
+        stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
+                soundManager);
+
+        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+    }
+
     public CharacterMenu getCharacterMenu() {
         return characterMenu;
     }
@@ -69,10 +81,5 @@ public class SceneBuilder {
 
     public OptionMenu getOptionMenu() {
         return optionMenu;
-    }
-
-    public void dispose(){
-        for (SceneEvent sceneEvent:sceneEvents)
-            sceneEvent.dispose();
     }
 }
