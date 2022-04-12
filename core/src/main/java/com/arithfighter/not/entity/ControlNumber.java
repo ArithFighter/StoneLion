@@ -37,18 +37,16 @@ public class ControlNumber {
 
     public void setPosition(int x, int y) {
         Point point = new Point();
-        int margin = 20;
-
-        point.set(x-margin,y+margin);
+        point.set(x,y);
 
         arrows.setPoint(point);
     }
 
     public void draw(SpriteBatch batch){
         String content = String.valueOf(valueHolder.getValue());
-        int width = fontSize*3;
+        int width = fontSize*6;
 
-        number.draw(batch, content, arrows.getPoint().getX()+width/2f, arrows.getPoint().getY());
+        number.draw(batch, content, arrows.getPoint().getX()+width/2f, arrows.getPoint().getY()+fontSize);
 
         arrows.drawLeftArrow(batch);
         arrows.drawRightArrow(batch, width);
