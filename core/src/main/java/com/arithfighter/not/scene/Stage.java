@@ -7,6 +7,7 @@ import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.pojo.GameNumProducer;
 import com.arithfighter.not.pojo.Recorder;
+import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,20 +17,24 @@ public class Stage implements SceneEvent, MouseEvent{
     private final Player[] players;
     private final GamePlayComponent gamePlayComponent;
     private final PauseMenu pauseMenu;
-    private final GameDataDisplacer dataAccessor;
+    private final GameDataDisplacer dataDisplacer;
     private CursorPositionAccessor cursorPos;
+    private final TokenHolder tokenHolder;
     private final int characterQuantity = CharacterList.values().length;
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
-        dataAccessor = new GameDataDisplacer();
+        dataDisplacer = new GameDataDisplacer();
 
         players = new Player[characterQuantity];
 
         gamePlayComponent = new GamePlayComponent(textures, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
+
+        int initToken = 10;
+        tokenHolder = new TokenHolder(initToken);
 
         createPlayers(textures, cards);
     }
@@ -87,9 +92,13 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void drawData(int index) {
-        dataAccessor.setCardPlayTimes(playRecord.getRecord());
-        dataAccessor.setScore(gamePlayComponent.getScore());
-        dataAccessor.draw(cursorPos.getX(), cursorPos.getY(), players[index].getEnergy(), batch);//for dev
+        //for dev
+        dataDisplacer.setCardPlayTimes(playRecord.getRecord());
+        dataDisplacer.setScore(gamePlayComponent.getScore());
+        dataDisplacer.setEnergy(players[index].getEnergy());
+        dataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
+        dataDisplacer.setToken(tokenHolder.getToken());
+        dataDisplacer.draw(batch);
     }
 
     public void setSelectedPlayerToGame(int i) {
@@ -115,7 +124,7 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void dispose() {
-        dataAccessor.dispose();
+        dataDisplacer.dispose();
         gamePlayComponent.dispose();
         pauseMenu.dispose();
         for (Player player : players) player.dispose();
