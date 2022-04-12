@@ -2,7 +2,6 @@ package com.arithfighter.not;
 
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.entity.ControlNumber;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -23,7 +22,6 @@ public class Main extends ApplicationAdapter {
     private SoundManager soundManager;
     private MusicManager musicManager;
     private MouseAdapter mouseAdapter;
-    private ControlNumber controlNumber;
     private int selectedCharacterIndex = 0;
 
     @Override
@@ -47,10 +45,6 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setCursorPos(cursorPos);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
-
-        controlNumber = new ControlNumber(assetProcessor.getWidgets());
-        controlNumber.setInitValue(30);
-        controlNumber.setPosition(100,150);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -97,9 +91,7 @@ public class Main extends ApplicationAdapter {
     private void drawGame() {
         batch.begin();
 
-        controlNumber.draw(batch);
-
-//        drawScene();
+        drawScene();
 
         //show game data for development
         if (gameScene == GameScene.Stage)
@@ -161,7 +153,5 @@ public class Main extends ApplicationAdapter {
         soundManager.dispose();
 
         musicManager.dispose();
-
-        controlNumber.dispose();
     }
 }
