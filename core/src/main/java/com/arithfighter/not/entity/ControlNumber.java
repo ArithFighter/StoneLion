@@ -13,7 +13,6 @@ public class ControlNumber {
     private final int fontSize;
     private boolean isButtonLock = false;
     private final ValueHolder valueHolder;
-    private int initValue;
 
     public ControlNumber(Texture[] textures) {
         valueHolder = new ValueHolder();
@@ -22,6 +21,10 @@ public class ControlNumber {
 
         fontSize = 25;
         number = new Font(fontSize);
+    }
+
+    public void setInitValue(int value){
+        valueHolder.setMAX_VALUE(value);
     }
 
     public boolean isButtonActive(){
@@ -34,11 +37,22 @@ public class ControlNumber {
 
     public void setPosition(int x, int y) {
         Point point = new Point();
-        point.set(x,y);
+        int margin = 20;
+
+        point.set(x-margin,y+margin);
+
         arrows.setPoint(point);
     }
 
+    public void draw(SpriteBatch batch){
+        String content = String.valueOf(valueHolder.getValue());
+        int width = fontSize*3;
 
+        number.draw(batch, content, arrows.getPoint().getX()+width/2f, arrows.getPoint().getY());
+
+        arrows.drawLeftArrow(batch);
+        arrows.drawRightArrow(batch, width);
+    }
 
     public void update() {
         int i = valueHolder.getValue();

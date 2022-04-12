@@ -9,12 +9,12 @@ public class ValueHolder {
     }
 
     public ValueHolder(int max) {
-        MAX_VALUE = max;
-        value = MAX_VALUE;
+        setMAX_VALUE(max);
     }
 
     public void setMAX_VALUE(int max){
         MAX_VALUE = max;
+        value = MAX_VALUE;
     }
 
     public int getValue() {

@@ -20,13 +20,17 @@ public class ArrowButtons {
         this.point = point;
     }
 
+    public Point getPoint(){
+        return point;
+    }
+
     public void drawLeftArrow(SpriteBatch batch) {
         leftArrow.setPosition(point.getX(), point.getY());
         leftArrow.draw(batch, "");
     }
 
-    public void drawRightArrow(SpriteBatch batch, float barWidth) {
-        rightArrow.setPosition(point.getX() + barWidth, point.getY());
+    public void drawRightArrow(SpriteBatch batch, float width) {
+        rightArrow.setPosition(point.getX() + width, point.getY());
         rightArrow.draw(batch, "");
     }
 
