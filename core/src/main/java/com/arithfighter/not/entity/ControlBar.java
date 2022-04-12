@@ -60,8 +60,11 @@ public class ControlBar {
         Point point = widget.getPoint();
 
         font.draw(batch, content, point.getX() - content.length() * fontSize - 50, point.getY() + fontSize / 2f);
-        arrows.drawLeftArrow(batch, point.getX() - 50, point.getY());
-        arrows.drawRightArrow(batch, point.getX(), point.getY(), (widget.getWidth() + 10) * grids.length);
+
+        arrows.setPoint(point);
+
+        arrows.drawLeftArrow(batch);
+        arrows.drawRightArrow(batch, (widget.getWidth() + 10) * grids.length);
     }
 
     public void update() {
@@ -94,6 +97,7 @@ public class ControlBar {
 class ButtonProducer {
     private final Button leftArrow;
     private final Button rightArrow;
+    private Point point;
 
     public ButtonProducer(Texture[] textures, float scale) {
         leftArrow = new Button(textures[8], scale);
@@ -101,13 +105,17 @@ class ButtonProducer {
         rightArrow = new Button(textures[9], scale);
     }
 
-    public void drawLeftArrow(SpriteBatch batch, float x, float y) {
-        leftArrow.setPosition(x, y);
+    public void setPoint(Point point){
+        this.point = point;
+    }
+
+    public void drawLeftArrow(SpriteBatch batch) {
+        leftArrow.setPosition(point.getX()-50, point.getY());
         leftArrow.draw(batch, "");
     }
 
-    public void drawRightArrow(SpriteBatch batch, float x, float y, float barWidth) {
-        rightArrow.setPosition(x + barWidth, y);
+    public void drawRightArrow(SpriteBatch batch, float barWidth) {
+        rightArrow.setPosition(point.getX() + barWidth, point.getY());
         rightArrow.draw(batch, "");
     }
 
