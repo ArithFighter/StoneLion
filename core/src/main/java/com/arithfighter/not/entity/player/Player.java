@@ -121,7 +121,7 @@ public class Player {
         //when resetting card played means sum reset, then add a number to sum.
         sumAccessor.reset();
         sumAccessor.update(hand.getCardNumber());
-        //playing resetting card count as a card, thus Auto-reset handler initializes then update.
+        //playing resetting card count as a card, thus capacityManager initializes then update.
         capacityManager.initialize();
         capacityManager.update();
         skillState = SkillState.READY;
