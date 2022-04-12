@@ -2,17 +2,18 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.ValueHolder;
+import com.arithfighter.not.widget.ArrowButtons;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.Widget;
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ControlBar {
     private final VisibleWidget[] grids;
     private final Font font;
-    private final ButtonProducer arrows;
+    private final ArrowButtons arrows;
     private final int fontSize;
     private boolean isButtonLock = false;
     private final ValueHolder valueHolder;
@@ -21,14 +22,15 @@ public class ControlBar {
     public ControlBar(Texture[] textures, String content) {
         this.content = content;
 
-        valueHolder = new ValueHolder();
+        int max = 6;
+        valueHolder = new ValueHolder(max);
 
         grids = new VisibleWidget[valueHolder.getMaxValue()];
 
         for (int i = 0; i < grids.length; i++)
             grids[i] = new SpriteWidget(textures[5], 0.5f);
 
-        arrows = new ButtonProducer(textures, 0.8f);
+        arrows = new ArrowButtons(textures, 0.8f);
 
         fontSize = 25;
         font = new Font(fontSize);
@@ -94,80 +96,3 @@ public class ControlBar {
     }
 }
 
-class ButtonProducer {
-    private final Button leftArrow;
-    private final Button rightArrow;
-    private Point point;
-
-    public ButtonProducer(Texture[] textures, float scale) {
-        leftArrow = new Button(textures[8], scale);
-
-        rightArrow = new Button(textures[9], scale);
-    }
-
-    public void setPoint(Point point){
-        this.point = point;
-    }
-
-    public void drawLeftArrow(SpriteBatch batch) {
-        leftArrow.setPosition(point.getX()-50, point.getY());
-        leftArrow.draw(batch, "");
-    }
-
-    public void drawRightArrow(SpriteBatch batch, float barWidth) {
-        rightArrow.setPosition(point.getX() + barWidth, point.getY());
-        rightArrow.draw(batch, "");
-    }
-
-    public boolean isLeftActive() {
-        return leftArrow.isActive();
-    }
-
-    public boolean isRightActive() {
-        return rightArrow.isActive();
-    }
-
-    public void activate(float x, float y) {
-        leftArrow.activate(x, y);
-        rightArrow.activate(x, y);
-    }
-
-    public void deactivate() {
-        leftArrow.deactivate();
-        rightArrow.deactivate();
-    }
-
-    public void dispose() {
-        leftArrow.dispose();
-        rightArrow.dispose();
-    }
-}
-
-class ValueHolder {
-    private final int MAX_VALUE = 6;
-    private int value;
-
-    public ValueHolder() {
-        value = MAX_VALUE;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public int getMaxValue() {
-        return MAX_VALUE;
-    }
-
-    public void updateValue() {
-        value = Math.max(0, value);
-    }
-
-    public void decreaseValue() {
-        value -= 1;
-    }
-
-    public void increaseValue() {
-        value += 1;
-    }
-}
