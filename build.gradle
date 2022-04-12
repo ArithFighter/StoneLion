@@ -26,7 +26,7 @@ configure(subprojects) {
 
 subprojects {
 	version = '0.0.1'
-	ext.appName = 'COUNTER-card-game'
+	ext.appName = 'Numbers on Table'
 	repositories {
 		mavenLocal()
 		mavenCentral()
@@ -36,4 +36,4 @@ subprojects {
 	}
 }
 
-eclipse.project.name = 'COUNTER-card-game' + '-parent'
+eclipse.project.name = 'Numbers-on-Table' + '-parent'
