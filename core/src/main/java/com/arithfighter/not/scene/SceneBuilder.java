@@ -14,12 +14,14 @@ public class SceneBuilder extends SceneCollection{
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
+                getBetScreen(),
                 getStage(),
                 getOptionMenu()
         };
 
         sceneEvents = new SceneEvent[]{
                 getCharacterMenu(),
+                getBetScreen(),
                 getStage(),
                 getOptionMenu()
         };
@@ -60,6 +62,7 @@ class SceneCollection{
     private final CharacterMenu characterMenu;
     private final Stage stage;
     private final OptionMenu optionMenu;
+    private final BetScreen betScreen;
 
     public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
@@ -69,6 +72,8 @@ class SceneCollection{
                 soundManager);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+
+        betScreen = new BetScreen(assetProcessor.getWidgets());
     }
 
     public CharacterMenu getCharacterMenu() {
@@ -81,5 +86,9 @@ class SceneCollection{
 
     public OptionMenu getOptionMenu() {
         return optionMenu;
+    }
+
+    public BetScreen getBetScreen(){
+        return betScreen;
     }
 }

@@ -82,7 +82,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void manualReset() {
-        if (gameScene == GameScene.Stage){
+        if (gameScene == GameScene.STAGE){
             if (Gdx.input.isKeyJustPressed(Input.Keys.R))
                 sceneBuilder.getStage().init();
         }
@@ -94,36 +94,32 @@ public class Main extends ApplicationAdapter {
         drawScene();
 
         //show game data for development
-        if (gameScene == GameScene.Stage)
+        if (gameScene == GameScene.STAGE)
             sceneBuilder.getStage().drawData(selectedCharacterIndex);
 
         batch.end();
     }
 
     private void controlScene() {
-        boolean[] isChangeScene = {
-                sceneBuilder.getCharacterMenu().isGameStart(),
-                sceneBuilder.getCharacterMenu().isOpenOption(),
-                sceneBuilder.getStage().isReturnToMenu(),
-                sceneBuilder.getOptionMenu().isReturnToMainMenu()
-        };
-        SceneEvent[] sceneEvents = sceneBuilder.getSceneEvents();
-
-        if (isChangeScene[0]) {
-            gameScene = GameScene.Stage;
-            sceneEvents[0].init();
+        if (sceneBuilder.getCharacterMenu().isGameStart()) {
+            gameScene = GameScene.BET;
+            sceneBuilder.getCharacterMenu().init();
         }
-        if (isChangeScene[1]) {
+        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
             gameScene = GameScene.OPTION;
-            sceneEvents[0].init();
+            sceneBuilder.getCharacterMenu().init();
         }
-        if (isChangeScene[2]) {
-            gameScene = GameScene.MENU;
-            sceneEvents[1].init();
+        if (sceneBuilder.getBetScreen().isStartGame()){
+            gameScene = GameScene.STAGE;
+            sceneBuilder.getBetScreen().init();
         }
-        if (isChangeScene[3]) {
+        if (sceneBuilder.getStage().isReturnToMenu()) {
             gameScene = GameScene.MENU;
-            sceneEvents[2].init();
+            sceneBuilder.getStage().init();
+        }
+        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
+            gameScene = GameScene.MENU;
+            sceneBuilder.getOptionMenu().init();
         }
     }
 
@@ -138,7 +134,7 @@ public class Main extends ApplicationAdapter {
         if (gameScene == GameScene.MENU || gameScene == GameScene.OPTION)
             musicManager.playMenuMusic();
 
-        if (gameScene == GameScene.Stage)
+        if (gameScene == GameScene.STAGE)
             musicManager.playTheme();
     }
 
