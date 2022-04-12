@@ -63,10 +63,11 @@ public class ControlBar {
 
         font.draw(batch, content, point.getX() - content.length() * fontSize - 50, point.getY() + fontSize / 2f);
 
-        arrows.setPoint(point);
+        Point arrowPoint = new Point(point.getX()-50, point.getY());
+        arrows.setPoint(arrowPoint);
 
         arrows.drawLeftArrow(batch);
-        arrows.drawRightArrow(batch, (widget.getWidth() + 10) * grids.length);
+        arrows.drawRightArrow(batch, (widget.getWidth() + 20) * grids.length);
     }
 
     public void update() {
@@ -95,4 +96,3 @@ public class ControlBar {
         arrows.dispose();
     }
 }
-

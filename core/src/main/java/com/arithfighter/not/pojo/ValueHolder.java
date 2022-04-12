@@ -1,12 +1,20 @@
 package com.arithfighter.not.pojo;
 
 public class ValueHolder {
-    private final int MAX_VALUE;
+    private int MAX_VALUE;
     private int value;
+
+    public ValueHolder(){
+
+    }
 
     public ValueHolder(int max) {
         MAX_VALUE = max;
         value = MAX_VALUE;
+    }
+
+    public void setMAX_VALUE(int max){
+        MAX_VALUE = max;
     }
 
     public int getValue() {

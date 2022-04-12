@@ -21,7 +21,7 @@ public class ArrowButtons {
     }
 
     public void drawLeftArrow(SpriteBatch batch) {
-        leftArrow.setPosition(point.getX() - 50, point.getY());
+        leftArrow.setPosition(point.getX(), point.getY());
         leftArrow.draw(batch, "");
     }
 
