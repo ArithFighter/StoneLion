@@ -61,22 +61,13 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-        float soundVolume = optionMenu.getSoundVolume() / 10f;
-        soundManager.setVolume(soundVolume);
+        setAudioVolume();
 
-        float musicVolume = optionMenu.getMusicVolume() / 8f;
-        musicManager.setVolume(musicVolume);
-
-        selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
-
-        sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
+        setSelectedCharacter();
 
         mouseAdapter.setGameScene(gameScene);
 
-        sceneController.updateScene();
-
-        gameScene = sceneController.getGameScene();
+        updateScene();
 
         switchMusic();
 
@@ -84,6 +75,27 @@ public class Main extends ApplicationAdapter {
 
         //This is for developer, will remove in launched version
         manualReset();
+    }
+
+    private void setSelectedCharacter(){
+        selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
+
+        sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
+    }
+
+    private void updateScene(){
+        sceneController.updateScene();
+
+        gameScene = sceneController.getGameScene();
+    }
+
+    private void setAudioVolume(){
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+        float soundVolume = optionMenu.getSoundVolume() / 10f;
+        soundManager.setVolume(soundVolume);
+
+        float musicVolume = optionMenu.getMusicVolume() / 8f;
+        musicManager.setVolume(musicVolume);
     }
 
     private void manualReset() {
@@ -103,29 +115,6 @@ public class Main extends ApplicationAdapter {
             sceneBuilder.getStage().drawData(selectedCharacterIndex);
 
         batch.end();
-    }
-
-    private void controlScene() {
-        if (sceneBuilder.getCharacterMenu().isGameStart()) {
-            gameScene = GameScene.BET;
-            sceneBuilder.getCharacterMenu().init();
-        }
-        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
-            gameScene = GameScene.OPTION;
-            sceneBuilder.getCharacterMenu().init();
-        }
-        if (sceneBuilder.getBetScreen().isStartGame()) {
-            gameScene = GameScene.STAGE;
-            sceneBuilder.getBetScreen().init();
-        }
-        if (sceneBuilder.getStage().isReturnToMenu()) {
-            gameScene = GameScene.MENU;
-            sceneBuilder.getStage().init();
-        }
-        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
-            gameScene = GameScene.MENU;
-            sceneBuilder.getOptionMenu().init();
-        }
     }
 
     private void drawScene() {
@@ -156,41 +145,5 @@ public class Main extends ApplicationAdapter {
         soundManager.dispose();
 
         musicManager.dispose();
-    }
-}
-
-class SceneController{
-    private final SceneBuilder sceneBuilder;
-    private GameScene gameScene = GameScene.MENU;
-
-    public SceneController(SceneBuilder sceneBuilder){
-        this.sceneBuilder = sceneBuilder;
-    }
-
-    public GameScene getGameScene(){
-        return gameScene;
-    }
-
-    public void updateScene() {
-        if (sceneBuilder.getCharacterMenu().isGameStart()) {
-            gameScene = GameScene.BET;
-            sceneBuilder.getCharacterMenu().init();
-        }
-        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
-            gameScene = GameScene.OPTION;
-            sceneBuilder.getCharacterMenu().init();
-        }
-        if (sceneBuilder.getBetScreen().isStartGame()) {
-            gameScene = GameScene.STAGE;
-            sceneBuilder.getBetScreen().init();
-        }
-        if (sceneBuilder.getStage().isReturnToMenu()) {
-            gameScene = GameScene.MENU;
-            sceneBuilder.getStage().init();
-        }
-        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
-            gameScene = GameScene.MENU;
-            sceneBuilder.getOptionMenu().init();
-        }
     }
 }
