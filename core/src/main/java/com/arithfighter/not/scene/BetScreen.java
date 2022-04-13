@@ -16,14 +16,12 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private final SceneControlButton startButton;
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
-    private final int initTokens = 30;
     private final SoundManager soundManager;
 
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
 
         tokenBet = new ControlNumber(textures);
-        tokenBet.setInitValue(initTokens);
         tokenBet.setPosition(500,300);
 
         startButton = new SceneControlButton(textures[6], 2f);
@@ -36,8 +34,8 @@ public class BetScreen implements SceneEvent, MouseEvent{
         betMessage.setColor(Color.WHITE);
     }
 
-    public int getInitTokens(){
-        return initTokens;
+    public void setToken(int value){
+        tokenBet.setInitValue(value);
     }
 
     public boolean isStartGame(){
@@ -83,7 +81,6 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void init() {
-        tokenBet.setInitValue(initTokens);
         startButton.init();
     }
 
