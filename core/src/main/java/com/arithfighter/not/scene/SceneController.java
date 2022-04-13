@@ -13,6 +13,9 @@ public class SceneController {
     }
 
     public void updateScene() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+
         if (sceneBuilder.getCharacterMenu().isGameStart()) {
             gameScene = GameScene.BET;
             sceneBuilder.getBetScreen().setToken(sceneBuilder.getStage().getTokens());
@@ -24,6 +27,7 @@ public class SceneController {
         }
         if (sceneBuilder.getBetScreen().isStartGame()) {
             gameScene = GameScene.STAGE;
+            sceneBuilder.getStage().setNumberBoxQuantity(sceneBuilder.getBetScreen().getNumberBoxQuantity());
             sceneBuilder.getBetScreen().init();
         }
         if (sceneBuilder.getStage().isReturnToMenu()) {

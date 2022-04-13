@@ -24,6 +24,7 @@ public class Stage implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
     private final int initTokens = 10;
+    private int numberBoxQuantity = 99;
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
         dataDisplacer = new GameDataDisplacer();
@@ -82,10 +83,14 @@ public class Stage implements SceneEvent, MouseEvent{
         pauseMenu.init();
     }
 
+    public void setNumberBoxQuantity(int quantity){
+        numberBoxQuantity = quantity;
+    }
+
     public void update() {
         pauseMenu.update();
 
-        gamePlayComponent.setNumberQuantity(6);
+        gamePlayComponent.setNumberQuantity(numberBoxQuantity);
 
         gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
     }

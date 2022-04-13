@@ -17,6 +17,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
     private final SoundManager soundManager;
+    private final int numberBoxQuantity = 3;
 
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
@@ -32,6 +33,10 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
         betMessage = new Font(30);
         betMessage.setColor(Color.WHITE);
+    }
+
+    public int getNumberBoxQuantity(){
+        return numberBoxQuantity;
     }
 
     public void setToken(int value){
@@ -92,7 +97,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void draw() {
-        numberMessage.draw(batch, "N Random Number", 400,600);
+        numberMessage.draw(batch, numberBoxQuantity +" Numbers", 400,600);
 
         betMessage.draw(batch, "please bet", 400,400);
 
