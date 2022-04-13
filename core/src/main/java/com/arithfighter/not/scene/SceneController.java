@@ -13,30 +13,32 @@ public class SceneController {
     }
 
     public void updateScene() {
-        Stage stage = sceneBuilder.getStage();
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
         BetScreen betScreen = sceneBuilder.getBetScreen();
+        Stage stage = sceneBuilder.getStage();
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
-        if (sceneBuilder.getCharacterMenu().isGameStart()) {
+        if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
-            sceneBuilder.getBetScreen().setToken(sceneBuilder.getStage().getTokens());
-            sceneBuilder.getCharacterMenu().init();
+            betScreen.setToken(stage.getTokens());
+            characterMenu.init();
         }
-        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
+        if (characterMenu.isOpenOption()) {
             gameScene = GameScene.OPTION;
-            sceneBuilder.getCharacterMenu().init();
+            characterMenu.init();
         }
-        if (sceneBuilder.getBetScreen().isStartGame()) {
+        if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
-            sceneBuilder.getStage().setNumberBoxQuantity(sceneBuilder.getBetScreen().getNumberBoxQuantity());
-            sceneBuilder.getBetScreen().init();
+            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
+            betScreen.init();
         }
-        if (sceneBuilder.getStage().isReturnToMenu()) {
+        if (stage.isReturnToMenu()) {
             gameScene = GameScene.MENU;
-            sceneBuilder.getStage().init();
+            stage.init();
         }
-        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
+        if (optionMenu.isReturnToMainMenu()) {
             gameScene = GameScene.MENU;
-            sceneBuilder.getOptionMenu().init();
+            optionMenu.init();
         }
     }
 }
