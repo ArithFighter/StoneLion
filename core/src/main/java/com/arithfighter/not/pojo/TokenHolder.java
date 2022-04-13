@@ -1,10 +1,19 @@
 package com.arithfighter.not.pojo;
 
 public class TokenHolder {
-    private final int initToken;
+    private int initToken;
     private int token;
 
+    public TokenHolder(){
+
+    }
+
     public TokenHolder(int initToken) {
+        this.initToken = initToken;
+        token = this.initToken;
+    }
+
+    public void setInitToken(int initToken){
         this.initToken = initToken;
         token = this.initToken;
     }

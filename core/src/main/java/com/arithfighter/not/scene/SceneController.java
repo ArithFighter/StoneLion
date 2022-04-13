@@ -23,6 +23,7 @@ public class SceneController {
         }
         if (sceneBuilder.getBetScreen().isStartGame()) {
             gameScene = GameScene.STAGE;
+            sceneBuilder.getStage().setInitToken(sceneBuilder.getBetScreen().getInitTokens());
             sceneBuilder.getBetScreen().init();
         }
         if (sceneBuilder.getStage().isReturnToMenu()) {

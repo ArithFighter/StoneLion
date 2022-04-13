@@ -33,8 +33,7 @@ public class Stage implements SceneEvent, MouseEvent{
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        int initToken = 10;
-        tokenHolder = new TokenHolder(initToken);
+        tokenHolder = new TokenHolder();
 
         createPlayers(textures, cards);
     }
@@ -57,6 +56,10 @@ public class Stage implements SceneEvent, MouseEvent{
                     skillHandler.cast(character);
                 }
             };
+    }
+
+    public void setInitToken(int initToken){
+        tokenHolder.setInitToken(initToken);
     }
 
     public void setBatch(SpriteBatch batch) {
