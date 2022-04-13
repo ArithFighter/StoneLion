@@ -73,7 +73,7 @@ class SceneCollection{
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
-        betScreen = new BetScreen(assetProcessor.getWidgets());
+        betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
     }
 
     public CharacterMenu getCharacterMenu() {

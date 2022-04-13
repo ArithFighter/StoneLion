@@ -1,25 +1,35 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.ControlNumber;
 import com.arithfighter.not.entity.SceneControlButton;
+import com.arithfighter.not.font.Font;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BetScreen implements SceneEvent, MouseEvent{
+    private final Font message;
     private final ControlNumber tokenBet;
     private final SceneControlButton startButton;
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
     private final int initValue = 30;
+    private final SoundManager soundManager;
 
-    public BetScreen(Texture[] textures){
+    public BetScreen(Texture[] textures, SoundManager soundManager){
+        this.soundManager = soundManager;
+
         tokenBet = new ControlNumber(textures);
         tokenBet.setInitValue(initValue);
-        tokenBet.setPosition(500,500);
+        tokenBet.setPosition(500,350);
 
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000,150);
+
+        message = new Font(40);
+        message.setColor(Color.WHITE);
     }
 
     public boolean isStartGame(){
@@ -42,6 +52,12 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void touchUp() {
+        if (tokenBet.isButtonActive())
+            soundManager.playTouchedSound();
+
+        if (startButton.getButton().isActive())
+            soundManager.playAcceptSound();
+
         tokenBet.deactivate();
 
         startButton.getButton().deactivate();
@@ -72,6 +88,8 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void draw() {
+        message.draw(batch, "N Random Number", 400,500);
+
         tokenBet.draw(batch);
 
         startButton.getButton().draw(batch, "Start");
@@ -79,6 +97,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void dispose() {
+        message.dispose();
         tokenBet.dispose();
     }
 }
