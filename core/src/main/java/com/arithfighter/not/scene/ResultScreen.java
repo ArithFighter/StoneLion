@@ -7,14 +7,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Result implements SceneEvent, MouseEvent{
+public class ResultScreen implements SceneEvent, MouseEvent{
     private final Font winOrLost;
     private final SceneControlButton continueButton;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
 
-    public Result(Texture[] textures){
+    public ResultScreen(Texture[] textures){
         continueButton = new SceneControlButton(textures[6], 2);
+        continueButton.getButton().setPosition(600,150);
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
@@ -55,9 +56,13 @@ public class Result implements SceneEvent, MouseEvent{
 
     }
 
+    public boolean isContinue(){
+        return continueButton.isStart();
+    }
+
     @Override
     public void draw() {
-        winOrLost.draw(batch, "You win", 600,450);
+        winOrLost.draw(batch, "You win", 600,500);
 
         continueButton.getButton().draw(batch, "continue");
     }

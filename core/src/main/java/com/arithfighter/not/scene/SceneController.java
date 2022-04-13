@@ -17,6 +17,7 @@ public class SceneController {
         BetScreen betScreen = sceneBuilder.getBetScreen();
         Stage stage = sceneBuilder.getStage();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
@@ -35,6 +36,10 @@ public class SceneController {
         if (stage.isReturnToMenu()) {
             gameScene = GameScene.MENU;
             stage.init();
+        }
+        if (resultScreen.isContinue()){
+            gameScene = GameScene.STAGE;
+            resultScreen.init();
         }
         if (optionMenu.isReturnToMainMenu()) {
             gameScene = GameScene.MENU;

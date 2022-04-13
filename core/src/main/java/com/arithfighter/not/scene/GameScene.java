@@ -4,5 +4,6 @@ public enum GameScene {
     MENU,
     BET,
     STAGE,
+    RESULT,
     OPTION
 }

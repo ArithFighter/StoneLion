@@ -16,6 +16,7 @@ public class SceneBuilder extends SceneCollection{
                 getCharacterMenu(),
                 getBetScreen(),
                 getStage(),
+                getResultScreen(),
                 getOptionMenu()
         };
 
@@ -23,6 +24,7 @@ public class SceneBuilder extends SceneCollection{
                 getCharacterMenu(),
                 getBetScreen(),
                 getStage(),
+                getResultScreen(),
                 getOptionMenu()
         };
     }
@@ -43,10 +45,6 @@ public class SceneBuilder extends SceneCollection{
         return mouseEvents;
     }
 
-    public SceneEvent[] getSceneEvents(){
-        return sceneEvents;
-    }
-
     public void renderScene(int index){
         sceneEvents[index].update();
         sceneEvents[index].draw();
@@ -63,6 +61,7 @@ class SceneCollection{
     private final Stage stage;
     private final OptionMenu optionMenu;
     private final BetScreen betScreen;
+    private final ResultScreen resultScreen;
 
     public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
@@ -74,6 +73,8 @@ class SceneCollection{
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
         betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
+
+        resultScreen = new ResultScreen(assetProcessor.getWidgets());
     }
 
     public CharacterMenu getCharacterMenu() {
@@ -90,5 +91,9 @@ class SceneCollection{
 
     public BetScreen getBetScreen(){
         return betScreen;
+    }
+
+    public ResultScreen getResultScreen(){
+        return resultScreen;
     }
 }
