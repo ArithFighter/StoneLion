@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ResultScreen implements SceneEvent, MouseEvent{
     private final Font winOrLost;
+    private final Font tokenMessage;
     private final SceneControlButton continueButton;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
+    private int remainingTokens;
 
     public ResultScreen(Texture[] textures){
         continueButton = new SceneControlButton(textures[6], 2);
@@ -19,6 +21,13 @@ public class ResultScreen implements SceneEvent, MouseEvent{
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
+
+        tokenMessage = new Font(32);
+        tokenMessage.setColor(Color.WHITE);
+    }
+
+    public void setRemainingTokens(int tokens){
+        remainingTokens = tokens;
     }
 
     @Override
@@ -64,12 +73,15 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     public void draw() {
         winOrLost.draw(batch, "You win", 600,500);
 
+        tokenMessage.draw(batch, remainingTokens+" Tokens remain", 600,400);
+
         continueButton.getButton().draw(batch, "continue");
     }
 
     @Override
     public void dispose() {
         winOrLost.dispose();
+        tokenMessage.dispose();
         continueButton.dispose();
     }
 }

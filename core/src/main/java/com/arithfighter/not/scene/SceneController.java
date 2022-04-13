@@ -39,6 +39,7 @@ public class SceneController {
         }
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
+            resultScreen.setRemainingTokens(stage.getTokens());
             stage.init();
         }
         if (resultScreen.isContinue()){

@@ -69,7 +69,7 @@ public class Main extends ApplicationAdapter {
 
         updateScene();
 
-        switchMusic();
+        playBackgroundMusic();
 
         drawGame();
 
@@ -124,7 +124,7 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-    public void switchMusic() {
+    public void playBackgroundMusic() {
         if (gameScene == GameScene.MENU ||
                 gameScene == GameScene.OPTION ||
                 gameScene == GameScene.BET)
