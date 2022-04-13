@@ -111,5 +111,6 @@ public class BetScreen implements SceneEvent, MouseEvent{
         betMessage.dispose();
         numberMessage.dispose();
         tokenBet.dispose();
+        startButton.dispose();
     }
 }

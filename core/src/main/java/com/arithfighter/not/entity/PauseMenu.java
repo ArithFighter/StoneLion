@@ -47,6 +47,6 @@ public class PauseMenu {
     }
 
     public void dispose() {
-        returnButton.getButton().dispose();
+        returnButton.dispose();
     }
 }
