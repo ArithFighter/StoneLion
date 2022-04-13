@@ -20,7 +20,7 @@ public class PauseMenu {
     }
 
     public void update() {
-        returnButton.handleScene();
+        returnButton.update();
     }
 
     public void init() {

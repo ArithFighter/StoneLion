@@ -45,7 +45,7 @@ public class OptionMenu implements SceneEvent, MouseEvent{
     public void update() {
         soundControl.update();
         musicControl.update();
-        returnButton.handleScene();
+        returnButton.update();
     }
 
     @Override

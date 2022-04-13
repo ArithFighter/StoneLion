@@ -70,8 +70,8 @@ public class CharacterMenu implements SceneEvent, MouseEvent{
     }
 
     public void update(){
-        optionButton.handleScene();
-        startButton.handleScene();
+        optionButton.update();
+        startButton.update();
     }
 
     public void draw() {

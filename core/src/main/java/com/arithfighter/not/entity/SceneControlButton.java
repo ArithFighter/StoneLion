@@ -16,7 +16,7 @@ public class SceneControlButton{
         return button;
     }
 
-    public void handleScene() {
+    public void update() {
         if (button.isActive())
             sceneChange = SceneChange.READY;
         else {

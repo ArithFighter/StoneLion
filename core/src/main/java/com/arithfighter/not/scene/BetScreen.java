@@ -91,7 +91,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void update() {
-        startButton.handleScene();
+        startButton.update();
         tokenBet.update();
     }
 

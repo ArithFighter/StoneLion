@@ -23,17 +23,17 @@ public class ResultScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void touchDown() {
-
+        continueButton.getButton().activate(cursorPos.getX(),cursorPos.getY());
     }
 
     @Override
     public void touchDragged() {
-
+        continueButton.getButton().deactivate();
     }
 
     @Override
     public void touchUp() {
-
+        continueButton.getButton().deactivate();
     }
 
     @Override
@@ -48,12 +48,12 @@ public class ResultScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void init() {
-
+        continueButton.init();
     }
 
     @Override
     public void update() {
-
+        continueButton.update();
     }
 
     public boolean isContinue(){
