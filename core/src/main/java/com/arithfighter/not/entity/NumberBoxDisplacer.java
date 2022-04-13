@@ -23,6 +23,7 @@ public class NumberBoxDisplacer {
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
     private final MaskAnimation maskAnimation;
+    private boolean isAllNumZero = false;
 
     public NumberBoxDisplacer(Texture[] textures) {
         numberBoxProducer = new NumberBoxProducer(textures[3]);
@@ -48,6 +49,10 @@ public class NumberBoxDisplacer {
         maskAnimation = new MaskAnimation(masks);
     }
 
+    public boolean isAllNumZero(){
+        return isAllNumZero;
+    }
+
     public int getMaxQuantity() {
         return maxQuantity;
     }
@@ -56,6 +61,7 @@ public class NumberBoxDisplacer {
         randomNumListGenerator.clear();
         numberList.clear();
         maskAnimation.init();
+        isAllNumZero = false;
     }
 
     public int getNumberBoxValue(int index) {
@@ -116,7 +122,7 @@ public class NumberBoxDisplacer {
         numberListInspector.inspectNumberList(numbers);
 
         if (numberListInspector.isAllNumberAreZero()) {
-            init();
+            isAllNumZero = true;
         }
     }
 

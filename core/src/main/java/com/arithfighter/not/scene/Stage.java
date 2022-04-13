@@ -60,6 +60,10 @@ public class Stage implements SceneEvent, MouseEvent{
             };
     }
 
+    public boolean isAllNumZero(){
+        return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
+    }
+
     public int getTokens(){
         return tokenHolder.getToken();
     }

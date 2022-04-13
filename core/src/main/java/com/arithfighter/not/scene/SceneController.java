@@ -37,8 +37,12 @@ public class SceneController {
             gameScene = GameScene.MENU;
             stage.init();
         }
+        if (stage.isAllNumZero()){
+            gameScene = GameScene.RESULT;
+            stage.init();
+        }
         if (resultScreen.isContinue()){
-            gameScene = GameScene.STAGE;
+            gameScene = GameScene.BET;
             resultScreen.init();
         }
         if (optionMenu.isReturnToMainMenu()) {
