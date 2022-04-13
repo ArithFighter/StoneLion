@@ -23,6 +23,7 @@ public class Main extends ApplicationAdapter {
     private MusicManager musicManager;
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
+    private SceneController sceneController;
 
     @Override
     public void create() {
@@ -38,13 +39,15 @@ public class Main extends ApplicationAdapter {
 
         musicManager = new MusicManager(assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(assetProcessor,soundManager);
+        sceneBuilder = new SceneBuilder(assetProcessor, soundManager);
 
         sceneBuilder.setBatch(batch);
 
         sceneBuilder.setCursorPos(cursorPos);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
+
+        sceneController = new SceneController(sceneBuilder);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -71,7 +74,9 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.setGameScene(gameScene);
 
-        controlScene();
+        sceneController.updateScene();
+
+        gameScene = sceneController.getGameScene();
 
         switchMusic();
 
@@ -82,7 +87,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void manualReset() {
-        if (gameScene == GameScene.STAGE){
+        if (gameScene == GameScene.STAGE) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.R))
                 sceneBuilder.getStage().init();
         }
@@ -109,7 +114,7 @@ public class Main extends ApplicationAdapter {
             gameScene = GameScene.OPTION;
             sceneBuilder.getCharacterMenu().init();
         }
-        if (sceneBuilder.getBetScreen().isStartGame()){
+        if (sceneBuilder.getBetScreen().isStartGame()) {
             gameScene = GameScene.STAGE;
             sceneBuilder.getBetScreen().init();
         }
@@ -124,14 +129,16 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawScene() {
-        for (int i = 0;i<GameScene.values().length;i++){
+        for (int i = 0; i < GameScene.values().length; i++) {
             if (gameScene == GameScene.values()[i])
                 sceneBuilder.renderScene(i);
         }
     }
 
-    public void switchMusic(){
-        if (gameScene == GameScene.MENU || gameScene == GameScene.OPTION)
+    public void switchMusic() {
+        if (gameScene == GameScene.MENU ||
+                gameScene == GameScene.OPTION ||
+                gameScene == GameScene.BET)
             musicManager.playMenuMusic();
 
         if (gameScene == GameScene.STAGE)
@@ -149,5 +156,41 @@ public class Main extends ApplicationAdapter {
         soundManager.dispose();
 
         musicManager.dispose();
+    }
+}
+
+class SceneController{
+    private final SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.MENU;
+
+    public SceneController(SceneBuilder sceneBuilder){
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public GameScene getGameScene(){
+        return gameScene;
+    }
+
+    public void updateScene() {
+        if (sceneBuilder.getCharacterMenu().isGameStart()) {
+            gameScene = GameScene.BET;
+            sceneBuilder.getCharacterMenu().init();
+        }
+        if (sceneBuilder.getCharacterMenu().isOpenOption()) {
+            gameScene = GameScene.OPTION;
+            sceneBuilder.getCharacterMenu().init();
+        }
+        if (sceneBuilder.getBetScreen().isStartGame()) {
+            gameScene = GameScene.STAGE;
+            sceneBuilder.getBetScreen().init();
+        }
+        if (sceneBuilder.getStage().isReturnToMenu()) {
+            gameScene = GameScene.MENU;
+            sceneBuilder.getStage().init();
+        }
+        if (sceneBuilder.getOptionMenu().isReturnToMainMenu()) {
+            gameScene = GameScene.MENU;
+            sceneBuilder.getOptionMenu().init();
+        }
     }
 }
