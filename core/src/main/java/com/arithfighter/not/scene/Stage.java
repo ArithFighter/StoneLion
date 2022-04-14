@@ -60,6 +60,10 @@ public class Stage implements SceneEvent, MouseEvent{
             };
     }
 
+    public boolean isExceedCardLimit(int limit){
+        return playRecord.getRecord()>limit;
+    }
+
     public boolean isAllNumZero(){
         return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
     }

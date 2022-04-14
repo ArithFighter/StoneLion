@@ -42,6 +42,11 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokens());
             stage.init();
         }
+        if (stage.isExceedCardLimit(betScreen.getCardLimit())){
+            gameScene = GameScene.RESULT;
+            resultScreen.setRemainingTokens(stage.getTokens());
+            stage.init();
+        }
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
             resultScreen.init();
