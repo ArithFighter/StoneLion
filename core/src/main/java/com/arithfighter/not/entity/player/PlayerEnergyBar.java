@@ -21,9 +21,9 @@ public class PlayerEnergyBar {
     private void setEnergyGain(CharacterList character) {
         //Rogue gain more energy than other characters when play card
         if (character == CharacterList.ROGUE)
-            energyGain = 4;
+            energyGain = 5;
         else
-            energyGain = 3;
+            energyGain = 4;
     }
 
     public void reset() {
