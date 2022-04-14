@@ -99,7 +99,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
         startButton.update();
         tokenBet.update();
 
-        cardLimit = numberBoxQuantity*2-(int)(numberBoxQuantity*2/10+0.5f);
+        cardLimit = numberBoxQuantity*2+(int)(numberBoxQuantity*2/10+0.5f);
     }
 
     @Override

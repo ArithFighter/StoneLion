@@ -2,10 +2,13 @@ package com.arithfighter.not.scene;
 
 public class SceneController {
     private final SceneBuilder sceneBuilder;
-    private GameScene gameScene = GameScene.MENU;
+    private GameScene gameScene;
 
     public SceneController(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
+
+        gameScene = GameScene.MENU;
+        int xx =0;
     }
 
     public GameScene getGameScene() {
@@ -43,7 +46,7 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokens());
             stage.init();
         }
-        if (stage.isExceedCardLimit(betScreen.getCardLimit())){
+        if (stage.isExceedCardLimit(betScreen.getCardLimit())&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setWin(false);
             resultScreen.setRemainingTokens(stage.getTokens());

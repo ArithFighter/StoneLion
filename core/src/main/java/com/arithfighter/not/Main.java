@@ -18,7 +18,7 @@ public class Main extends ApplicationAdapter {
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private SceneBuilder sceneBuilder;
-    private GameScene gameScene = GameScene.MENU;
+    private GameScene gameScene;
     private SoundManager soundManager;
     private MusicManager musicManager;
     private MouseAdapter mouseAdapter;
@@ -27,6 +27,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        gameScene  = GameScene.MENU;
+
         assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
