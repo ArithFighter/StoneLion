@@ -14,7 +14,7 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private int remainingTokens;
-    private boolean isWin = false;
+    private ResultState state = ResultState.WIN;
 
     public ResultScreen(Texture[] textures){
         continueButton = new SceneControlButton(textures[6], 2);
@@ -27,8 +27,8 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         tokenMessage.setColor(Color.WHITE);
     }
 
-    public void setWin(boolean isWin){
-        this.isWin = isWin;
+    public void setState(ResultState state){
+        this.state = state;
     }
 
     public void setRemainingTokens(int tokens){
@@ -77,16 +77,22 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     @Override
     public void draw() {
         String message = "";
-        if (isWin)
-            message = "You Win";
-        else
-            message = "You Loose";
+        if (state == ResultState.WIN|| state == ResultState.LOOSE){
+            if (state == ResultState.WIN)
+                message = "You Win";
+            if (state == ResultState.LOOSE)
+                message = "You Loose";
 
-        winOrLost.draw(batch, message, 600,500);
+            winOrLost.draw(batch, message, 600,500);
 
-        tokenMessage.draw(batch, remainingTokens+" Tokens remain", 600,400);
+            tokenMessage.draw(batch, remainingTokens+" Tokens remain", 600,400);
 
-        continueButton.getButton().draw(batch, "continue");
+            continueButton.getButton().draw(batch, "continue");
+        }
+        if (state == ResultState.OVER){
+            message = "GAME OVER";
+            winOrLost.draw(batch, message, 600,500);
+        }
     }
 
     @Override

@@ -23,7 +23,7 @@ public class SceneController {
 
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
-            betScreen.setToken(stage.getTokens());
+            betScreen.setToken(stage.getTokenHolder().getToken());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -41,14 +41,14 @@ public class SceneController {
         }
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
-            resultScreen.setWin(true);
-            resultScreen.setRemainingTokens(stage.getTokens());
+            resultScreen.setState(ResultState.WIN);
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
         if (stage.isExceedCardLimit(betScreen.getCardLimit())&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
-            resultScreen.setWin(false);
-            resultScreen.setRemainingTokens(stage.getTokens());
+            resultScreen.setState(ResultState.LOOSE);
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
         if (resultScreen.isContinue()){

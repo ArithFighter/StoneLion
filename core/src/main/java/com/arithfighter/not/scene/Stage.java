@@ -43,8 +43,8 @@ public class Stage implements SceneEvent, MouseEvent{
         return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
     }
 
-    public int getTokens(){
-        return tokenHolder.getToken();
+    public TokenHolder getTokenHolder(){
+        return tokenHolder;
     }
 
     public void setBatch(SpriteBatch batch) {
