@@ -35,6 +35,10 @@ public class Stage implements SceneEvent, MouseEvent{
         playerCollection.setPlayRecord(playRecord);
     }
 
+    public boolean isNoTokens(){
+        return tokenHolder.getToken() == 0;
+    }
+
     public boolean isExceedCardLimit(int limit){
         return playRecord.getRecord()>=limit;
     }

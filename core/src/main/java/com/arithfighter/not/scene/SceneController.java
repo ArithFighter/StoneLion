@@ -76,6 +76,11 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
+        if (stage.isNoTokens()){
+            gameScene = GameScene.RESULT;
+            resultScreen.setState(ResultState.OVER);
+            stage.init();
+        }
     }
 
     private void manageBet(){
