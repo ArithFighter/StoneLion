@@ -6,9 +6,9 @@ public class MusicManager {
     private final Music menuMusic;
     private final Music gameTheme;
 
-    public MusicManager(Music[] musics){
-        menuMusic = musics[0];
-        gameTheme = musics[1];
+    public MusicManager(Music[] music){
+        menuMusic = music[0];
+        gameTheme = music[1];
     }
 
     public void setVolume(float volume){

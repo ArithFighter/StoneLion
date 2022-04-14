@@ -1,14 +1,12 @@
 package com.arithfighter.not;
 
+import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
-import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -131,42 +129,5 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.dispose();
 
         audioHandler.dispose();
-    }
-}
-
-class AudioHandler{
-    private final SoundManager soundManager;
-    private final MusicManager musicManager;
-    private OptionMenu optionMenu;
-
-    public AudioHandler(Sound[] sounds, Music[] music){
-        soundManager = new SoundManager(sounds);
-
-        musicManager = new MusicManager(music);
-    }
-
-    public void setOptionMenu(OptionMenu optionMenu){
-        this.optionMenu = optionMenu;
-    }
-
-    public SoundManager getSoundManager() {
-        return soundManager;
-    }
-
-    public MusicManager getMusicManager() {
-        return musicManager;
-    }
-
-    public void setAudioVolume(){
-        float soundVolume = optionMenu.getSoundVolume() / 10f;
-        soundManager.setVolume(soundVolume);
-
-        float musicVolume = optionMenu.getMusicVolume() / 8f;
-        musicManager.setVolume(musicVolume);
-    }
-
-    public void dispose(){
-        soundManager.dispose();
-        musicManager.dispose();
     }
 }
