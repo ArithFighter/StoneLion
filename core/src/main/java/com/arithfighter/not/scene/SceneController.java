@@ -1,13 +1,25 @@
 package com.arithfighter.not.scene;
 
 public class SceneController {
-    private final SceneBuilder sceneBuilder;
     private GameScene gameScene;
+    private final CharacterMenu characterMenu;
+    private final BetScreen betScreen;
+    private final Stage stage;
+    private final ResultScreen resultScreen;
+    private final OptionMenu optionMenu;
 
     public SceneController(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
-
         gameScene = GameScene.MENU;
+
+        characterMenu = sceneBuilder.getCharacterMenu();
+
+        betScreen = sceneBuilder.getBetScreen();
+
+        stage = sceneBuilder.getStage();
+
+        resultScreen = sceneBuilder.getResultScreen();
+
+        optionMenu = sceneBuilder.getOptionMenu();
     }
 
     public GameScene getGameScene() {
@@ -15,12 +27,18 @@ public class SceneController {
     }
 
     public void updateScene() {
-        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        Stage stage = sceneBuilder.getStage();
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+        manageMenu();
 
+        manageBet();
+
+        manageStage();
+
+        manageResult();
+
+        manageOption();
+    }
+
+    private void manageMenu(){
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
             betScreen.setToken(stage.getTokenHolder().getToken());
@@ -30,11 +48,16 @@ public class SceneController {
             gameScene = GameScene.OPTION;
             characterMenu.init();
         }
-        if (betScreen.isStartGame()) {
-            gameScene = GameScene.STAGE;
-            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
-            betScreen.init();
+    }
+
+    private void manageOption(){
+        if (optionMenu.isReturnToMainMenu()) {
+            gameScene = GameScene.MENU;
+            optionMenu.init();
         }
+    }
+
+    private void manageStage(){
         if (stage.isReturnToMenu()) {
             gameScene = GameScene.MENU;
             stage.init();
@@ -53,14 +76,21 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
+    }
+
+    private void manageBet(){
+        if (betScreen.isStartGame()) {
+            gameScene = GameScene.STAGE;
+            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
+            betScreen.init();
+        }
+    }
+
+    private void manageResult(){
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
             betScreen.setToken(stage.getTokenHolder().getToken());
             resultScreen.init();
-        }
-        if (optionMenu.isReturnToMainMenu()) {
-            gameScene = GameScene.MENU;
-            optionMenu.init();
         }
     }
 }
