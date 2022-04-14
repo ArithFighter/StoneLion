@@ -39,11 +39,13 @@ public class SceneController {
         }
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
+            resultScreen.setWin(true);
             resultScreen.setRemainingTokens(stage.getTokens());
             stage.init();
         }
         if (stage.isExceedCardLimit(betScreen.getCardLimit())){
             gameScene = GameScene.RESULT;
+            resultScreen.setWin(false);
             resultScreen.setRemainingTokens(stage.getTokens());
             stage.init();
         }
