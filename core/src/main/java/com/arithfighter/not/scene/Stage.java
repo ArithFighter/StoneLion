@@ -20,6 +20,7 @@ public class Stage implements SceneEvent, MouseEvent{
     private final Recorder playRecord = new Recorder();
     private int numberBoxQuantity = 99;
     private final int initTokens = 10;
+    private int cardLimit;
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
         dataDisplacer = new GameDataDisplacer();
@@ -35,12 +36,16 @@ public class Stage implements SceneEvent, MouseEvent{
         playerCollection.setPlayRecord(playRecord);
     }
 
+    public void setCardLimit(int limit){
+        cardLimit = limit;
+    }
+
     public boolean isNoTokens(){
         return tokenHolder.getToken() == 0;
     }
 
-    public boolean isExceedCardLimit(int limit){
-        return playRecord.getRecord()>=limit;
+    public boolean isExceedCardLimit(){
+        return playRecord.getRecord()>cardLimit;
     }
 
     public boolean isAllNumZero(){
@@ -98,6 +103,7 @@ public class Stage implements SceneEvent, MouseEvent{
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
         dataDisplacer.setToken(tokenHolder.getToken());
+        dataDisplacer.setCardLimit(cardLimit);
         dataDisplacer.draw(batch);
     }
 

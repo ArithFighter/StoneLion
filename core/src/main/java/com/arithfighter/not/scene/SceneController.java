@@ -69,7 +69,7 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
-        if (stage.isExceedCardLimit(betScreen.getCardLimit())&& gameScene == GameScene.STAGE){
+        if (stage.isExceedCardLimit()&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
             stage.getTokenHolder().lostToken(betScreen.getBet());
@@ -87,6 +87,7 @@ public class SceneController {
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
             stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
+            stage.setCardLimit(betScreen.getCardLimit());
             betScreen.init();
         }
     }

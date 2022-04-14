@@ -13,6 +13,7 @@ public class GameDataDisplacer {
     private int energy;
     private final Point cursorPoint = new Point();
     private int token;
+    private int cardLimit;
     private final int fontSize = 16;
 
     public GameDataDisplacer(){
@@ -40,6 +41,10 @@ public class GameDataDisplacer {
         this.token = token;
     }
 
+    public void setCardLimit(int cardLimit){
+        this.cardLimit = cardLimit;
+    }
+
     public void draw(SpriteBatch batch){
         String posText = "X: " + cursorPoint.getX() + " Y: " + cursorPoint.getY();
 
@@ -56,6 +61,9 @@ public class GameDataDisplacer {
 
         font.draw(batch, "Token: "+token, 0,
                 Gdx.graphics.getHeight()-fontSize*4.8f);
+
+        font.draw(batch, "CardLimit: "+cardLimit, 0,
+                Gdx.graphics.getHeight()-fontSize*6f);
     }
 
     public void dispose(){
