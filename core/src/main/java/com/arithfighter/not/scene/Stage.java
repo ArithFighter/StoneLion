@@ -18,7 +18,6 @@ public class Stage implements SceneEvent, MouseEvent{
     private final TokenHolder tokenHolder;
     private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
-    private final int initTokens = 10;
     private int numberBoxQuantity = 99;
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
@@ -28,6 +27,7 @@ public class Stage implements SceneEvent, MouseEvent{
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
+        int initTokens = 10;
         tokenHolder = new TokenHolder(initTokens);
 
         playerCollection = new PlayerCollection(textures, cards,
@@ -60,7 +60,6 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void init() {
-        tokenHolder.setInitToken(initTokens);
         playRecord.reset();
         gamePlayComponent.init();
         pauseMenu.init();

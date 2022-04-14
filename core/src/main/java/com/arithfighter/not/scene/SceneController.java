@@ -42,17 +42,20 @@ public class SceneController {
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.WIN);
+            stage.getTokenHolder().obtainToken(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
         if (stage.isExceedCardLimit(betScreen.getCardLimit())&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
+            stage.getTokenHolder().lostToken(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
             stage.init();
         }
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
+            betScreen.setToken(stage.getTokenHolder().getToken());
             resultScreen.init();
         }
         if (optionMenu.isReturnToMainMenu()) {

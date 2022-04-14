@@ -19,6 +19,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private final SoundManager soundManager;
     private final int numberBoxQuantity = 6;
     private int cardLimit;
+    private int initToken;
 
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
@@ -45,7 +46,12 @@ public class BetScreen implements SceneEvent, MouseEvent{
     }
 
     public void setToken(int value){
-        tokenBet.setInitValue(value);
+        initToken = value;
+        tokenBet.setInitValue(initToken);
+    }
+
+    public int getBet(){
+        return tokenBet.getValue();
     }
 
     public boolean isStartGame(){
@@ -99,10 +105,10 @@ public class BetScreen implements SceneEvent, MouseEvent{
         startButton.update();
         tokenBet.update();
 
-        int valueChange = 2;
+        int valueChange = initToken/5;
         tokenBet.setValueChange(valueChange);
 
-        cardLimit = numberBoxQuantity*2+(numberBoxQuantity*2/10+2);
+        cardLimit = numberBoxQuantity*2+(numberBoxQuantity*2/5);
     }
 
     @Override
