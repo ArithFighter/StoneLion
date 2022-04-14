@@ -7,6 +7,8 @@ import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -19,8 +21,7 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private SceneBuilder sceneBuilder;
     private GameScene gameScene;
-    private SoundManager soundManager;
-    private MusicManager musicManager;
+    private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
@@ -37,15 +38,15 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
-        soundManager = new SoundManager(assetProcessor.getSounds());
+        audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        musicManager = new MusicManager(assetProcessor.getMusics());
-
-        sceneBuilder = new SceneBuilder(assetProcessor, soundManager);
+        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager());
 
         sceneBuilder.setBatch(batch);
 
         sceneBuilder.setCursorPos(cursorPos);
+
+        audioHandler.setOptionMenu(sceneBuilder.getOptionMenu());
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
@@ -63,7 +64,7 @@ public class Main extends ApplicationAdapter {
 
         cursorPos.update();
 
-        setAudioVolume();
+        audioHandler.setAudioVolume();
 
         setSelectedCharacter();
 
@@ -91,15 +92,6 @@ public class Main extends ApplicationAdapter {
         gameScene = sceneController.getGameScene();
     }
 
-    private void setAudioVolume(){
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-        float soundVolume = optionMenu.getSoundVolume() / 10f;
-        soundManager.setVolume(soundVolume);
-
-        float musicVolume = optionMenu.getMusicVolume() / 8f;
-        musicManager.setVolume(musicVolume);
-    }
-
     private void manualReset() {
         if (gameScene == GameScene.STAGE) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.R))
@@ -110,7 +102,7 @@ public class Main extends ApplicationAdapter {
     private void drawGame() {
         batch.begin();
 
-        drawScene();
+        sceneBuilder.drawScene(gameScene);
 
         //show game data for development
         if (gameScene == GameScene.STAGE)
@@ -119,14 +111,8 @@ public class Main extends ApplicationAdapter {
         batch.end();
     }
 
-    private void drawScene() {
-        for (int i = 0; i < GameScene.values().length; i++) {
-            if (gameScene == GameScene.values()[i])
-                sceneBuilder.renderScene(i);
-        }
-    }
-
     public void playBackgroundMusic() {
+        MusicManager musicManager = audioHandler.getMusicManager();
         if (gameScene == GameScene.MENU ||
                 gameScene == GameScene.OPTION ||
                 gameScene == GameScene.BET)
@@ -144,8 +130,43 @@ public class Main extends ApplicationAdapter {
 
         sceneBuilder.dispose();
 
-        soundManager.dispose();
+        audioHandler.dispose();
+    }
+}
 
+class AudioHandler{
+    private final SoundManager soundManager;
+    private final MusicManager musicManager;
+    private OptionMenu optionMenu;
+
+    public AudioHandler(Sound[] sounds, Music[] music){
+        soundManager = new SoundManager(sounds);
+
+        musicManager = new MusicManager(music);
+    }
+
+    public void setOptionMenu(OptionMenu optionMenu){
+        this.optionMenu = optionMenu;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
+    }
+
+    public MusicManager getMusicManager() {
+        return musicManager;
+    }
+
+    public void setAudioVolume(){
+        float soundVolume = optionMenu.getSoundVolume() / 10f;
+        soundManager.setVolume(soundVolume);
+
+        float musicVolume = optionMenu.getMusicVolume() / 8f;
+        musicManager.setVolume(musicVolume);
+    }
+
+    public void dispose(){
+        soundManager.dispose();
         musicManager.dispose();
     }
 }

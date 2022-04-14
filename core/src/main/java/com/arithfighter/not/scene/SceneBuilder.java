@@ -45,9 +45,12 @@ public class SceneBuilder extends SceneCollection{
         return mouseEvents;
     }
 
-    public void renderScene(int index){
-        sceneEvents[index].update();
-        sceneEvents[index].draw();
+    public void drawScene(GameScene gameScene) {
+        for (int i = 0; i < GameScene.values().length; i++)
+            if (gameScene == GameScene.values()[i]){
+                sceneEvents[i].update();
+                sceneEvents[i].draw();
+            }
     }
 
     public void dispose(){
