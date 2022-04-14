@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 
 public class Stage implements SceneEvent, MouseEvent{
-    private final Players players;
+    private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
@@ -34,10 +34,9 @@ public class Stage implements SceneEvent, MouseEvent{
 
         tokenHolder = new TokenHolder(initTokens);
 
-        players = new Players(textures, cards);
-        players.setCharacterQuantity(CharacterList.values().length);
-        players.setPlayRecord(playRecord);
-        players.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
+        playerCollection = new PlayerCollection(textures, cards, CharacterList.values().length);
+        playerCollection.setPlayRecord(playRecord);
+        playerCollection.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
     }
 
     public boolean isExceedCardLimit(int limit){
@@ -93,14 +92,14 @@ public class Stage implements SceneEvent, MouseEvent{
         //for dev
         dataDisplacer.setCardPlayTimes(playRecord.getRecord());
         dataDisplacer.setScore(gamePlayComponent.getScore());
-        dataDisplacer.setEnergy(players.getPlayers()[index].getEnergy());
+        dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
         dataDisplacer.setToken(tokenHolder.getToken());
         dataDisplacer.draw(batch);
     }
 
     public void setSelectedPlayerToGame(int i) {
-        gamePlayComponent.setPlayer(players.getPlayers()[i]);
+        gamePlayComponent.setPlayer(playerCollection.getPlayers()[i]);
     }
 
     public void touchDown() {
@@ -125,17 +124,18 @@ public class Stage implements SceneEvent, MouseEvent{
         dataDisplacer.dispose();
         gamePlayComponent.dispose();
         pauseMenu.dispose();
-        players.dispose();
+        playerCollection.dispose();
     }
 }
 
-class Players{
+class PlayerCollection {
     private final Player[] players;
     private Recorder playRecord;
     private NumberBoxDisplacer numberBoxDisplacer;
-    private int characterQuantity;
+    private final int characterQuantity;
 
-    public Players(Texture[] textures, Texture[] cards){
+    public PlayerCollection(Texture[] textures, Texture[] cards, int characterQuantity){
+        this.characterQuantity = characterQuantity;
         players = new Player[characterQuantity];
         createPlayers(textures, cards);
     }
@@ -146,10 +146,6 @@ class Players{
 
     public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
-    }
-
-    public void setCharacterQuantity(int characterQuantity) {
-        this.characterQuantity = characterQuantity;
     }
 
     private void createPlayers(Texture[] textures, Texture[] cards) {
