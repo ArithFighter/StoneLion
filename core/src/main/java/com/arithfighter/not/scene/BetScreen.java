@@ -10,14 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BetScreen implements SceneEvent, MouseEvent{
-    private final Font numberMessage;
+    private final Font cardLimitMessage;
     private final Font betMessage;
     private final ControlNumber tokenBet;
     private final SceneControlButton startButton;
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
     private final SoundManager soundManager;
-    private final int numberBoxQuantity = 3;
+    private final int numberBoxQuantity = 6;
+    private int cardLimit;
 
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
@@ -28,11 +29,15 @@ public class BetScreen implements SceneEvent, MouseEvent{
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000,150);
 
-        numberMessage = new Font(40);
-        numberMessage.setColor(Color.WHITE);
+        cardLimitMessage = new Font(40);
+        cardLimitMessage.setColor(Color.WHITE);
 
         betMessage = new Font(30);
         betMessage.setColor(Color.WHITE);
+    }
+
+    public int getCardLimit(){
+        return cardLimit;
     }
 
     public int getNumberBoxQuantity(){
@@ -93,11 +98,13 @@ public class BetScreen implements SceneEvent, MouseEvent{
     public void update() {
         startButton.update();
         tokenBet.update();
+
+        cardLimit = numberBoxQuantity*2-(int)(numberBoxQuantity*2/10+0.5f);
     }
 
     @Override
     public void draw() {
-        numberMessage.draw(batch, numberBoxQuantity +" Numbers", 400,600);
+        cardLimitMessage.draw(batch, "card limit: "+ cardLimit, 400,600);
 
         betMessage.draw(batch, "please bet", 400,400);
 
@@ -109,7 +116,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
     @Override
     public void dispose() {
         betMessage.dispose();
-        numberMessage.dispose();
+        cardLimitMessage.dispose();
         tokenBet.dispose();
         startButton.dispose();
     }
