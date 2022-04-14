@@ -8,7 +8,6 @@ public class SceneController {
         this.sceneBuilder = sceneBuilder;
 
         gameScene = GameScene.MENU;
-        int xx =0;
     }
 
     public GameScene getGameScene() {

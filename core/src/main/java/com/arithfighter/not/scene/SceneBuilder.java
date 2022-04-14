@@ -36,8 +36,8 @@ public class SceneBuilder extends SceneCollection{
     }
 
     public void setCursorPos(CursorPositionAccessor cursorPos){
-        for (SceneEvent sceneEvent:sceneEvents){
-            sceneEvent.setCursorPos(cursorPos);
+        for (MouseEvent mouseEvent:mouseEvents){
+            mouseEvent.setCursorPos(cursorPos);
         }
     }
 
