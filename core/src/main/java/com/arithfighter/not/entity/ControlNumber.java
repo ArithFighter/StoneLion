@@ -13,6 +13,7 @@ public class ControlNumber {
     private final int fontSize;
     private boolean isButtonLock = false;
     private final ValueHolder valueHolder;
+    private int valueChange;
 
     public ControlNumber(Texture[] textures) {
         valueHolder = new ValueHolder();
@@ -21,6 +22,10 @@ public class ControlNumber {
 
         fontSize = 25;
         number = new Font(fontSize);
+    }
+
+    public void setValueChange(int i){
+        valueChange = i;
     }
 
     public void setInitValue(int value){
@@ -57,10 +62,10 @@ public class ControlNumber {
         valueHolder.updateValue();
 
         if (!isButtonLock) {
-            if (arrows.isLeftActive() && i >= 0)
-                valueHolder.decreaseValue();
+            if (arrows.isLeftActive() && i > 0)
+                valueHolder.decreaseValue(valueChange);
             if (arrows.isRightActive() && i < valueHolder.getMaxValue())
-                valueHolder.increaseValue();
+                valueHolder.increaseValue(valueChange);
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
     }

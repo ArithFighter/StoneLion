@@ -76,9 +76,9 @@ public class ControlBar {
 
         if (!isButtonLock) {
             if (arrows.isLeftActive() && i >= 0)
-                valueHolder.decreaseValue();
+                valueHolder.decreaseValue(1);
             if (arrows.isRightActive() && i < valueHolder.getMaxValue())
-                valueHolder.increaseValue();
+                valueHolder.increaseValue(1);
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
     }

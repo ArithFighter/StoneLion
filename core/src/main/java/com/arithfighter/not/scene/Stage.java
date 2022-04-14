@@ -30,9 +30,9 @@ public class Stage implements SceneEvent, MouseEvent{
 
         tokenHolder = new TokenHolder(initTokens);
 
-        playerCollection = new PlayerCollection(textures, cards, CharacterList.values().length);
+        playerCollection = new PlayerCollection(textures, cards,
+                CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
         playerCollection.setPlayRecord(playRecord);
-        playerCollection.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
     }
 
     public boolean isExceedCardLimit(int limit){

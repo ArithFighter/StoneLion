@@ -11,21 +11,19 @@ import java.util.ArrayList;
 public class PlayerCollection {
     private final Player[] players;
     private Recorder playRecord;
-    private NumberBoxDisplacer numberBoxDisplacer;
+    private final NumberBoxDisplacer numberBoxDisplacer;
     private final int characterQuantity;
 
-    public PlayerCollection(Texture[] textures, Texture[] cards, int characterQuantity) {
+    public PlayerCollection(Texture[] textures, Texture[] cards,
+                            int characterQuantity, NumberBoxDisplacer numberBoxDisplacer) {
         this.characterQuantity = characterQuantity;
         players = new Player[characterQuantity];
+        this.numberBoxDisplacer = numberBoxDisplacer;
         createPlayers(textures, cards);
     }
 
     public void setPlayRecord(Recorder playRecord) {
         this.playRecord = playRecord;
-    }
-
-    public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
-        this.numberBoxDisplacer = numberBoxDisplacer;
     }
 
     private void createPlayers(Texture[] textures, Texture[] cards) {

@@ -29,11 +29,11 @@ public class ValueHolder {
         value = Math.max(0, value);
     }
 
-    public void decreaseValue() {
-        value -= 1;
+    public void decreaseValue(int i) {
+        value -= i;
     }
 
-    public void increaseValue() {
-        value += 1;
+    public void increaseValue(int i) {
+        value += i;
     }
 }
