@@ -11,6 +11,7 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     private final Font winOrLost;
     private final Font tokenMessage;
     private final SceneControlButton continueButton;
+    private final SceneControlButton returnButton;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private int remainingTokens;
@@ -19,6 +20,9 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     public ResultScreen(Texture[] textures){
         continueButton = new SceneControlButton(textures[6], 2);
         continueButton.getButton().setPosition(600,150);
+
+        returnButton = new SceneControlButton(textures[6], 2);
+        returnButton.getButton().setPosition(600,150);
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
@@ -37,17 +41,29 @@ public class ResultScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void touchDown() {
-        continueButton.getButton().activate(cursorPos.getX(),cursorPos.getY());
+        if (state == ResultState.WIN|| state == ResultState.LOOSE)
+            continueButton.getButton().activate(cursorPos.getX(),cursorPos.getY());
+
+        if (state == ResultState.OVER)
+            returnButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
     }
 
     @Override
     public void touchDragged() {
-        continueButton.getButton().deactivate();
+        if (state == ResultState.WIN|| state == ResultState.LOOSE)
+            continueButton.getButton().deactivate();
+
+        if (state == ResultState.OVER)
+            returnButton.getButton().deactivate();
     }
 
     @Override
     public void touchUp() {
-        continueButton.getButton().deactivate();
+        if (state == ResultState.WIN|| state == ResultState.LOOSE)
+            continueButton.getButton().deactivate();
+
+        if (state == ResultState.OVER)
+            returnButton.getButton().deactivate();
     }
 
     @Override
@@ -63,15 +79,22 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     @Override
     public void init() {
         continueButton.init();
+        returnButton.init();
     }
 
     @Override
     public void update() {
         continueButton.update();
+
+        returnButton.update();
     }
 
     public boolean isContinue(){
         return continueButton.isStart();
+    }
+
+    public boolean isReturn(){
+        return returnButton.isStart();
     }
 
     @Override
@@ -92,6 +115,7 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         if (state == ResultState.OVER){
             message = "GAME OVER";
             winOrLost.draw(batch, message, 600,500);
+            returnButton.getButton().draw(batch, "Return");
         }
     }
 
@@ -100,5 +124,6 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         winOrLost.dispose();
         tokenMessage.dispose();
         continueButton.dispose();
+        returnButton.dispose();
     }
 }

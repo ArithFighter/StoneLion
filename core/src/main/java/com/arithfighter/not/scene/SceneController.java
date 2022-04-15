@@ -98,5 +98,10 @@ public class SceneController {
             betScreen.setToken(stage.getTokenHolder().getToken());
             resultScreen.init();
         }
+        if (resultScreen.isReturn()){
+            gameScene = GameScene.MENU;
+            resultScreen.init();
+            stage.setInitTokens();
+        }
     }
 }
