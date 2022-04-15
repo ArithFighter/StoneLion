@@ -7,21 +7,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard{
-    private final Shape shape;
     private final int number;
     private final StateManager stateManager = new StateManager();
+    private final Shape shape;
     private final Point initPoint;
     private final Point point;
     private final RawCard card;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        card = new RawCard(initX, initY,texture, 1.8f);
-        
-        initPoint = card.getInitPoint();
-        point = card.getPoint();
+        CardBuilder cardBuilder = new CardBuilder(initX, initY, texture);
+        shape = cardBuilder.getShape();
+        initPoint = cardBuilder.getInitPoint();
+        point = cardBuilder.getPoint();
+        card = cardBuilder.getCard();
 
         this.number = number;
-        shape = card.getShape();
     }
 
     public int getNumber(){
@@ -109,6 +109,37 @@ public class NumberCard{
                 x < point.getX() + shape.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
                 y < point.getY() + shape.getHeight() + tolerance;
+    }
+}
+
+class CardBuilder{
+    private final Shape shape;
+    private final Point initPoint;
+    private final Point point;
+    private final RawCard card;
+
+    public CardBuilder(float initX, float initY, Texture texture){
+        card = new RawCard(initX, initY, texture);
+        card.addShape(texture, 1.8f);
+        initPoint = card.getInitPoint();
+        point = card.getPoint();
+        shape = card.getShape();
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Point getInitPoint() {
+        return initPoint;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public RawCard getCard() {
+        return card;
     }
 }
 

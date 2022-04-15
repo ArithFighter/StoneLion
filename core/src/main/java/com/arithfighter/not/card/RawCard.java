@@ -11,14 +11,13 @@ public class RawCard {
     private Shape shape;
     private final Sprite sprite;
 
-    public RawCard(float initX, float initY, Texture texture, float scale){
+    public RawCard(float initX, float initY, Texture texture){
         initPoint = new Point(initX,initY);
         point = new Point(initX,initY);
         sprite = new Sprite(texture);
-        addShape(texture, scale);
     }
 
-    private void addShape(Texture texture, float scale){
+    public void addShape(Texture texture, float scale){
         setShape(texture.getWidth(), texture.getHeight(), scale);
     }
 
