@@ -17,7 +17,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
     private final SoundManager soundManager;
-    private final int numberBoxQuantity = 99;
+    private final int numberBoxQuantity = 9;
     private int cardLimit;
     private int initToken;
 
@@ -110,7 +110,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
         float betTokensProportion = (initToken-tokenBet.getValue())/(float)initToken;
 
-        cardLimit = (int) (betTokensProportion*numberBoxQuantity+1.4f*numberBoxQuantity);
+        cardLimit = (int) (betTokensProportion*numberBoxQuantity+1.6f*numberBoxQuantity);
     }
 
     @Override
