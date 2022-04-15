@@ -16,7 +16,7 @@ public class NumberCard{
     private final Point point;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        SpriteCard card = new SpriteCard(initX, initY);
+        RawCard card = new RawCard(initX, initY);
         card.setSize(texture, 1.8f);
         
         initPoint = card.getInitPoint();

@@ -29,7 +29,7 @@ public class MyAssetProcessor {
 
         assetManager.finishLoading();
     }
-
+    
     private void loadTextures(String[] files){
          for (String file : files)
             assetManager.load(file, Texture.class);

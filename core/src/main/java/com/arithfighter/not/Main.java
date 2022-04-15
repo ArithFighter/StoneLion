@@ -8,6 +8,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -26,7 +27,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        gameScene  = GameScene.MENU;
+        gameScene = GameScene.MENU;
 
         assetProcessor = new MyAssetProcessor();
 
@@ -78,13 +79,13 @@ public class Main extends ApplicationAdapter {
         manualReset();
     }
 
-    private void setSelectedCharacter(){
+    private void setSelectedCharacter() {
         selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
 
         sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
     }
 
-    private void updateScene(){
+    private void updateScene() {
         sceneController.updateScene();
 
         gameScene = sceneController.getGameScene();
