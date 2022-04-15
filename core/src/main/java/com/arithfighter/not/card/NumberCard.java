@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard{
     private final int number;
-    private final StateManager stateManager = new StateManager();
+    private boolean isCardActive = false;
     private final Shape shape;
     private final Point initPoint;
     private final Point point;
@@ -37,7 +37,7 @@ public class NumberCard{
 
         card.setSprite();
 
-        if (stateManager.isActive())
+        if (isCardActive)
             card.getSprite().setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
 
         card.getSprite().draw(batch);
@@ -78,37 +78,42 @@ public class NumberCard{
     }
 
     public void updateWhenDrag(float x, float y) {
-        if (stateManager.isActive())
+        if (isCardActive)
             point.set(x - shape.getWidth() / 2, y - shape.getHeight() / 2);
     }
 
     public void initCard() {
         point.set(initPoint.getX(), initPoint.getY());
 
-        stateManager.deactivate();
+        isCardActive = false;
 
         card.getSprite().setSize(shape.getWidth(), shape.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
-            stateManager.activate();
+            isCardActive =true;
     }
 
     public boolean isActive(){
-        return stateManager.isActive();
+        return isCardActive;
     }
 
     private boolean isOnCard(float x, float y) {
         int tolerance = 15;
 
-        if(stateManager.isActive()){
-            tolerance*=4;
-        }
+        tolerance = getCardActivationRange(tolerance);
+
         return x > point.getX() - tolerance &&
                 x < point.getX() + shape.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
                 y < point.getY() + shape.getHeight() + tolerance;
+    }
+
+    private int getCardActivationRange(int tolerance){
+        if(isCardActive)
+            tolerance*=4;
+        return tolerance;
     }
 }
 
@@ -140,22 +145,5 @@ class CardBuilder{
 
     public RawCard getCard() {
         return card;
-    }
-}
-
-class StateManager {
-    private enum State {ACTIVE, INACTIVE}
-    private State state = State.INACTIVE;
-
-    public void deactivate(){
-        state = State.INACTIVE;
-    }
-
-    public void activate(){
-        state = State.ACTIVE;
-    }
-
-    public boolean isActive(){
-        return state == State.ACTIVE;
     }
 }
