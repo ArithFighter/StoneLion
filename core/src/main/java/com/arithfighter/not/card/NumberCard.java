@@ -33,7 +33,8 @@ public class NumberCard{
     }
 
     public void draw(SpriteBatch batch) {
-        checkOutOfWindow();
+        point.set(updateWhenExceedX(point.getX()),
+                updateWhenExceedY(point.getY()));
 
         card.setSprite();
 
@@ -58,23 +59,26 @@ public class NumberCard{
             point.setY(point.getY()+speed);
     }
 
-    private void checkOutOfWindow() {
-        float limitX = Gdx.graphics.getWidth() - shape.getWidth();
-        float limitY = Gdx.graphics.getHeight() - shape.getHeight();
+    private float updateWhenExceedX(float current){
+        float rightX = Gdx.graphics.getWidth() - shape.getWidth();
+        int leftX = -45;
 
-        point.set(updateWhenOutOfWindow(point.getX(), limitX),
-                updateWhenOutOfWindow(point.getY(), limitY));
+        return getBetweenMaxNMin(current, rightX, leftX);
     }
 
-    private float updateWhenOutOfWindow(float current, float limit) {
-        int minimum = -45;
-        if (current > limit)
-            current = limit;
+    private float updateWhenExceedY(float current){
+        float topY = Gdx.graphics.getHeight() - shape.getHeight();
+        int bottomY = -45;
 
-        if (current < minimum)
-            current = minimum;
+        return getBetweenMaxNMin(current, topY, bottomY);
+    }
 
-        return current;
+    private float getBetweenMaxNMin(float value, float max, float min){
+        value = Math.min(value, max);
+
+        value = Math.max(value, min);
+
+        return value;
     }
 
     public void updateWhenDrag(float x, float y) {
