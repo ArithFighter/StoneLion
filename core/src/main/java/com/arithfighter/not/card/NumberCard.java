@@ -15,11 +15,11 @@ public class NumberCard{
     private final RawCard card;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        CardBuilder cardBuilder = new CardBuilder(initX, initY, texture);
-        shape = cardBuilder.getShape();
-        initPoint = cardBuilder.getInitPoint();
-        point = cardBuilder.getPoint();
-        card = cardBuilder.getCard();
+        card = new RawCard(initX, initY, texture);
+        card.addShape(texture, 1.8f);
+        initPoint = card.getInitPoint();
+        point = card.getPoint();
+        shape = card.getShape();
 
         this.number = number;
     }
@@ -33,8 +33,7 @@ public class NumberCard{
     }
 
     public void draw(SpriteBatch batch) {
-        point.set(updateWhenExceedX(point.getX()),
-                updateWhenExceedY(point.getY()));
+        setPointWhenOutOfScreen();
 
         card.setSprite();
 
@@ -42,6 +41,13 @@ public class NumberCard{
             card.getSprite().setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
 
         card.getSprite().draw(batch);
+    }
+
+    private void setPointWhenOutOfScreen(){
+        ScreenBorderInspector sbi = new ScreenBorderInspector(shape.getWidth(), shape.getHeight());
+
+        point.set(sbi.updateWhenExceedX(point.getX()),
+                sbi.updateWhenExceedY(point.getY()));
     }
 
     public void updateWhenTouchCard(float x, float y) {
@@ -57,28 +63,6 @@ public class NumberCard{
         float speed = 3;
         if (point.getY() < initPoint.getY() + movingDistance)
             point.setY(point.getY()+speed);
-    }
-
-    private float updateWhenExceedX(float current){
-        float rightX = Gdx.graphics.getWidth() - shape.getWidth();
-        int leftX = -45;
-
-        return getBetweenMaxNMin(current, rightX, leftX);
-    }
-
-    private float updateWhenExceedY(float current){
-        float topY = Gdx.graphics.getHeight() - shape.getHeight();
-        int bottomY = -45;
-
-        return getBetweenMaxNMin(current, topY, bottomY);
-    }
-
-    private float getBetweenMaxNMin(float value, float max, float min){
-        value = Math.min(value, max);
-
-        value = Math.max(value, min);
-
-        return value;
     }
 
     public void updateWhenDrag(float x, float y) {
@@ -121,33 +105,34 @@ public class NumberCard{
     }
 }
 
-class CardBuilder{
-    private final Shape shape;
-    private final Point initPoint;
-    private final Point point;
-    private final RawCard card;
+class ScreenBorderInspector{
+    private final float objectWidth;
+    private final float objectHeight;
 
-    public CardBuilder(float initX, float initY, Texture texture){
-        card = new RawCard(initX, initY, texture);
-        card.addShape(texture, 1.8f);
-        initPoint = card.getInitPoint();
-        point = card.getPoint();
-        shape = card.getShape();
+    public ScreenBorderInspector(float objectWidth, float objectHeight){
+        this.objectWidth = objectWidth;
+        this.objectHeight = objectHeight;
     }
 
-    public Shape getShape() {
-        return shape;
+    public float updateWhenExceedX(float current){
+        float rightX = Gdx.graphics.getWidth() - objectWidth;
+        int leftX = -45;
+
+        return getBetweenMaxNMin(current, rightX, leftX);
     }
 
-    public Point getInitPoint() {
-        return initPoint;
+    public float updateWhenExceedY(float current){
+        float topY = Gdx.graphics.getHeight() - objectHeight;
+        int bottomY = -45;
+
+        return getBetweenMaxNMin(current, topY, bottomY);
     }
 
-    public Point getPoint() {
-        return point;
-    }
+    private float getBetweenMaxNMin(float value, float max, float min){
+        value = Math.min(value, max);
 
-    public RawCard getCard() {
-        return card;
+        value = Math.max(value, min);
+
+        return value;
     }
 }
