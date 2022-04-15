@@ -4,30 +4,24 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard{
     private final Shape shape;
-    private final Sprite sprite;
     private final int number;
     private final StateManager stateManager = new StateManager();
     private final Point initPoint;
     private final Point point;
+    private final RawCard card;
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
-        RawCard card = new RawCard(initX, initY);
-        card.setSize(texture, 1.8f);
+        card = new RawCard(initX, initY,texture, 1.8f);
         
         initPoint = card.getInitPoint();
         point = card.getPoint();
 
         this.number = number;
         shape = card.getShape();
-
-        sprite = new Sprite(texture);
-        sprite.setPosition(point.getX(), point.getY());
-        sprite.setSize(shape.getWidth(), shape.getHeight());
     }
 
     public int getNumber(){
@@ -41,12 +35,12 @@ public class NumberCard{
     public void draw(SpriteBatch batch) {
         checkOutOfWindow();
 
-        sprite.setPosition(point.getX(), point.getY());
+        card.setSprite();
 
         if (stateManager.isActive())
-            sprite.setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
+            card.getSprite().setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
 
-        sprite.draw(batch);
+        card.getSprite().draw(batch);
     }
 
     public void updateWhenTouchCard(float x, float y) {
@@ -93,7 +87,7 @@ public class NumberCard{
 
         stateManager.deactivate();
 
-        sprite.setSize(shape.getWidth(), shape.getHeight());
+        card.getSprite().setSize(shape.getWidth(), shape.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
