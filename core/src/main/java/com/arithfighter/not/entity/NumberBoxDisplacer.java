@@ -19,7 +19,7 @@ public class NumberBoxDisplacer {
     private final NumberBoxProducer numberBoxProducer;
     private final int maxQuantity;
     private final int[] numbers;
-    private final RandomNumListGenerator randomNumListGenerator;
+    private final RandomNumListProducer randomNumListProducer;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
     private final MaskAnimation maskAnimation;
@@ -42,7 +42,7 @@ public class NumberBoxDisplacer {
                     placer.getNumberBoxY(i, masks[i].getHeight()));
         }
 
-        randomNumListGenerator = new RandomNumListGenerator(maxQuantity);
+        randomNumListProducer = new RandomNumListProducer(maxQuantity);
 
         animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
@@ -58,7 +58,7 @@ public class NumberBoxDisplacer {
     }
 
     public void init() {
-        randomNumListGenerator.clear();
+        randomNumListProducer.clear();
         numberList.clear();
         maskAnimation.init();
         isAllNumZero = false;
@@ -95,7 +95,7 @@ public class NumberBoxDisplacer {
 
     private void updateNumbers() {
         if (numberList.size() < maxQuantity)
-            numberList.addAll(randomNumListGenerator.getNumbers());
+            numberList.addAll(randomNumListProducer.getNumbers());
 
         for (int i = 0; i < maxQuantity; i++)
             numbers[i] = numberList.get(i);
@@ -140,18 +140,19 @@ public class NumberBoxDisplacer {
     }
 }
 
-class RandomNumListGenerator {
+class RandomNumListProducer {
     private final int maxQuantity;
     private final LinkedList<Integer> numberList = new LinkedList<>();
-    private final HashSet<Integer> numberSet = new HashSet<>();
+    private final NumberSetGenerator numberSetGenerator;
 
-    public RandomNumListGenerator(int maxQuantity){
+    public RandomNumListProducer(int maxQuantity){
         this.maxQuantity = maxQuantity;
+        numberSetGenerator = new NumberSetGenerator();
     }
 
     public void clear(){
         numberList.clear();
-        numberSet.clear();
+        numberSetGenerator.getNumberSet().clear();
     }
 
     public List<Integer> getNumbers() {
@@ -161,13 +162,21 @@ class RandomNumListGenerator {
 
     private void addNumbersToList() {
         if (numberList.size() < maxQuantity) {
-            addNumberUntilEqualToQuantity(maxQuantity);
+            numberSetGenerator.addNumberUntilEqualToQuantity(maxQuantity);
 
-            numberList.addAll(numberSet);
+            numberList.addAll(numberSetGenerator.getNumberSet());
         }
     }
+}
 
-    private void addNumberUntilEqualToQuantity(int quantity) {
+class NumberSetGenerator{
+    private final HashSet<Integer> numberSet = new HashSet<>();
+
+    public HashSet<Integer> getNumberSet(){
+        return numberSet;
+    }
+
+    public void addNumberUntilEqualToQuantity(int quantity) {
         addRandomNumberToSet(quantity);
 
         while (numberSet.size() < quantity)

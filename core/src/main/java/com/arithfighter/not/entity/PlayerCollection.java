@@ -57,11 +57,11 @@ public class PlayerCollection {
 
 class SkillHandler {
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private final IndexPicker indexPicker;
+    private final NumberBoxIndexPicker numberBoxIndexPicker;
 
     public SkillHandler(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
-        indexPicker = new IndexPicker(numberBoxDisplacer);
+        numberBoxIndexPicker = new NumberBoxIndexPicker(numberBoxDisplacer);
     }
 
     public void cast(CharacterList character) {
@@ -95,7 +95,7 @@ class SkillHandler {
     }
 
     private void replaceOneNonZeroValue(int value) {
-        int index = indexPicker.getRandomNonZeroValueIndex();
+        int index = numberBoxIndexPicker.getRandomNonZeroValueIndex();
 
         numberBoxDisplacer.set(index, value);
     }
@@ -105,10 +105,10 @@ class SkillHandler {
     }
 }
 
-class IndexPicker {
+class NumberBoxIndexPicker {
     private final NumberBoxDisplacer numberBoxDisplacer;
 
-    public IndexPicker(NumberBoxDisplacer numberBoxDisplacer) {
+    public NumberBoxIndexPicker(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
     }
 
