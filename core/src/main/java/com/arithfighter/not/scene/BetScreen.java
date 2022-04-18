@@ -108,9 +108,13 @@ public class BetScreen implements SceneEvent, MouseEvent{
         int valueChange = initToken/5;
         tokenBet.setValueChange(valueChange);
 
-        float betTokensProportion = (initToken-tokenBet.getValue())/(float)initToken;
+        cardLimit = calculateLimit();
+    }
 
-        cardLimit = (int) (betTokensProportion*numberBoxQuantity+1.6f*numberBoxQuantity);
+    private int calculateLimit(){
+        float betTokensProportion = tokenBet.getValue()/(float)initToken;
+
+        return (int) ((1.8f-betTokensProportion)*numberBoxQuantity+6);
     }
 
     @Override

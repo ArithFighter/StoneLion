@@ -37,7 +37,7 @@ public class Stage implements SceneEvent, MouseEvent{
                 CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
         playerCollection.setPlayRecord(playRecord);
 
-        pauseButton = new SceneControlButton(textures[6], 2);
+        pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000,600);
     }
 
