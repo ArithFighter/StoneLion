@@ -6,12 +6,14 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.TokenHolder;
+import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage implements SceneEvent, MouseEvent{
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
+    private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
     private CursorPositionAccessor cursorPos;
@@ -34,6 +36,9 @@ public class Stage implements SceneEvent, MouseEvent{
         playerCollection = new PlayerCollection(textures, cards,
                 CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
         playerCollection.setPlayRecord(playRecord);
+
+        pauseButton = new SceneControlButton(textures[6], 2);
+        pauseButton.getButton().setPosition(1000,600);
     }
 
     public void setCardLimit(int limit){
@@ -76,6 +81,7 @@ public class Stage implements SceneEvent, MouseEvent{
         playRecord.reset();
         gamePlayComponent.init();
         pauseMenu.init();
+        pauseButton.init();
     }
 
     public void setNumberBoxQuantity(int quantity){
@@ -83,6 +89,8 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void update() {
+        pauseButton.update();
+
         pauseMenu.update();
 
         gamePlayComponent.setNumberQuantity(numberBoxQuantity);
@@ -91,9 +99,12 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void draw() {
-        pauseMenu.draw(batch);
-
         gamePlayComponent.draw(batch);
+
+        if (pauseButton.isStart())
+            pauseMenu.draw(batch);
+        else
+            pauseButton.getButton().draw(batch, "Pause");
     }
 
     public void drawData(int index) {
@@ -114,19 +125,28 @@ public class Stage implements SceneEvent, MouseEvent{
     public void touchDown() {
         gamePlayComponent.touchDown(cursorPos.getX(), cursorPos.getY());
 
-        pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+        if (pauseButton.isStart())
+            pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+        else
+            pauseButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
     }
 
     public void touchDragged() {
         gamePlayComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
 
-        pauseMenu.touchDragged();
+        if (pauseButton.isStart())
+            pauseMenu.touchDragged();
+        else
+            pauseButton.getButton().deactivate();
     }
 
     public void touchUp() {
         gamePlayComponent.touchUp(cursorPos.getX(), cursorPos.getY());
 
-        pauseMenu.touchUp();
+        if (pauseButton.isStart())
+            pauseMenu.touchDragged();
+        else
+            pauseButton.getButton().deactivate();
     }
 
     public void dispose() {
@@ -134,5 +154,6 @@ public class Stage implements SceneEvent, MouseEvent{
         gamePlayComponent.dispose();
         pauseMenu.dispose();
         playerCollection.dispose();
+        pauseButton.dispose();
     }
 }

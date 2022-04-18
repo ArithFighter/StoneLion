@@ -12,7 +12,7 @@ public class PauseMenu {
         this.soundManager = soundManager;
 
         returnButton = new SceneControlButton(textures[6], 1.8f);
-        returnButton.getButton().setPosition(1000, 600);
+        returnButton.getButton().setPosition(600, 500);
     }
 
     public void draw(SpriteBatch batch) {
