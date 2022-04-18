@@ -2,6 +2,7 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.animate.Animator;
 import com.arithfighter.not.pojo.GameNumProducer;
+import com.arithfighter.not.pojo.RandomNumFactory;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
 import com.arithfighter.not.widget.NumberBox;
@@ -184,7 +185,7 @@ class NumberSetGenerator{
     }
 
     private void addRandomNumberToSet(int quantity) {
-        GameNumProducer gnp = new GameNumProducer();
+        RandomNumFactory gnp = new GameNumProducer();
 
         for (int i = 0; i < quantity; i++)
             numberSet.add(gnp.getRandomNum());
