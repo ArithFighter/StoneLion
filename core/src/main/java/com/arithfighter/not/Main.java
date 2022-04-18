@@ -109,7 +109,7 @@ public class Main extends ApplicationAdapter {
 
         sceneBuilder.drawScene(gameScene);
 
-        dialog.draw(batch, "test numbers on table");
+        dialog.draw(batch, "test numbers on table","this is a dialog");
 
         //show game data for development
         if (gameScene == GameScene.STAGE)
