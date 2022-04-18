@@ -3,7 +3,9 @@ package com.arithfighter.not;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.scene.*;
+import com.arithfighter.not.widget.Dialog;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -24,6 +26,7 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
+    private Dialog dialog;
 
     @Override
     public void create() {
@@ -52,6 +55,9 @@ public class Main extends ApplicationAdapter {
         sceneController = new SceneController(sceneBuilder);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+
+        dialog = new Dialog(assetProcessor.getWidgets());
+        dialog.setPoint(new Point(250,300));
     }
 
     @Override
@@ -103,6 +109,8 @@ public class Main extends ApplicationAdapter {
 
         sceneBuilder.drawScene(gameScene);
 
+        dialog.draw(batch, "test numbers on table");
+
         //show game data for development
         if (gameScene == GameScene.STAGE)
             sceneBuilder.getStage().drawData(selectedCharacterIndex);
@@ -130,5 +138,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.dispose();
 
         audioHandler.dispose();
+
+        dialog.dispose();
     }
 }
