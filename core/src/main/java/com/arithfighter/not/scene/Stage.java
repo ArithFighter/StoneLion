@@ -89,13 +89,20 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void update() {
-        pauseButton.update();
+        if (pauseButton.isStart()){
+            pauseMenu.update();
 
-        pauseMenu.update();
+            if (pauseMenu.isResume()){
+                pauseButton.init();
+                pauseMenu.init();
+            }
+        }else {
+            pauseButton.update();
 
-        gamePlayComponent.setNumberQuantity(numberBoxQuantity);
+            gamePlayComponent.setNumberQuantity(numberBoxQuantity);
 
-        gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
+            gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
+        }
     }
 
     public void draw() {
@@ -123,30 +130,30 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void touchDown() {
-        gamePlayComponent.touchDown(cursorPos.getX(), cursorPos.getY());
-
         if (pauseButton.isStart())
             pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
-        else
+        else{
             pauseButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+            gamePlayComponent.touchDown(cursorPos.getX(), cursorPos.getY());
+        }
     }
 
     public void touchDragged() {
-        gamePlayComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
-
         if (pauseButton.isStart())
             pauseMenu.touchDragged();
-        else
+        else{
             pauseButton.getButton().deactivate();
+            gamePlayComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
+        }
     }
 
     public void touchUp() {
-        gamePlayComponent.touchUp(cursorPos.getX(), cursorPos.getY());
-
         if (pauseButton.isStart())
-            pauseMenu.touchDragged();
-        else
+            pauseMenu.touchUp();
+        else{
             pauseButton.getButton().deactivate();
+            gamePlayComponent.touchUp(cursorPos.getX(), cursorPos.getY());
+        }
     }
 
     public void dispose() {
