@@ -26,6 +26,7 @@ public class NumberBoxDisplacer {
     private final NumberBoxAnimation animation;
     private final MaskAnimation maskAnimation;
     private boolean isAllNumZero = false;
+    private final RandomIndexPicker randomIndexPicker;
 
     public NumberBoxDisplacer(Texture[] textures) {
         numberBoxProducer = new NumberBoxProducer(textures[3]);
@@ -50,6 +51,8 @@ public class NumberBoxDisplacer {
         animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
         maskAnimation = new MaskAnimation(masks);
+
+        randomIndexPicker = new RandomIndexPicker(maxQuantity);
     }
 
     public boolean isAllNumZero(){
@@ -65,6 +68,7 @@ public class NumberBoxDisplacer {
         numberList.clear();
         maskAnimation.init();
         isAllNumZero = false;
+        randomIndexPicker.clear();
     }
 
     public int getNumberBoxValue(int index) {
@@ -73,7 +77,7 @@ public class NumberBoxDisplacer {
 
     public void set(int index, int value) {
         if (index>=0){
-            int i = Math.min(index, maxQuantity);
+            int i = Math.min(index, maxQuantity-1);
             numberList.set(i, value);
         }
     }
@@ -92,11 +96,11 @@ public class NumberBoxDisplacer {
         int quantity = Math.min(boxQuantity, maxQuantity);
         int zeroValueQuantity = maxQuantity-quantity;
 
-        int[] array = {0,2,4,8};
+        randomIndexPicker.setQuantity(zeroValueQuantity);
 
-        if (numberList.size() >0){
-            for (int i = 0; i < zeroValueQuantity; i++)
-                set(array[i], 0);
+        if (numberList.size() >= maxQuantity){
+            for (int i=0;i<zeroValueQuantity;i++)
+                set(randomIndexPicker.getIndexes().get(i), 0);
         }
     }
 
@@ -144,6 +148,28 @@ public class NumberBoxDisplacer {
 
     public void dispose() {
         numberBoxProducer.dispose();
+    }
+}
+
+class RandomIndexPicker{
+    RandomNumProducer randomNumProducer;
+    RandomNumListProducer randomNumListProducer;
+
+    public RandomIndexPicker(int size){
+        randomNumProducer = new RandomNumProducer(size-1, 0);
+        randomNumListProducer = new RandomNumListProducer(randomNumProducer);
+    }
+
+    public void setQuantity(int quantity){
+        randomNumListProducer.setMaxQuantity(quantity);
+    }
+
+    public List<Integer> getIndexes(){
+        return randomNumListProducer.getNumbers();
+    }
+
+    public void clear(){
+        randomNumListProducer.clear();
     }
 }
 
