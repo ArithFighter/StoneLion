@@ -3,6 +3,7 @@ package com.arithfighter.not.entity;
 import com.arithfighter.not.animate.Animator;
 import com.arithfighter.not.pojo.GameNumProducer;
 import com.arithfighter.not.pojo.RandomNumFactory;
+import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
 import com.arithfighter.not.widget.NumberBox;
@@ -43,7 +44,8 @@ public class NumberBoxDisplacer {
                     placer.getNumberBoxY(i, masks[i].getHeight()));
         }
 
-        randomNumListProducer = new RandomNumListProducer(maxQuantity);
+        randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
+        randomNumListProducer.setMaxQuantity(maxQuantity);
 
         animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
@@ -142,13 +144,20 @@ public class NumberBoxDisplacer {
 }
 
 class RandomNumListProducer {
-    private final int maxQuantity;
+    private int maxQuantity;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberSetGenerator numberSetGenerator;
 
-    public RandomNumListProducer(int maxQuantity){
+    public RandomNumListProducer(RandomNumProducer randomNumProducer){
+        numberSetGenerator = new NumberSetGenerator(randomNumProducer);
+    }
+
+    public RandomNumListProducer(GameNumProducer gameNumProducer){
+        numberSetGenerator = new NumberSetGenerator(gameNumProducer);
+    }
+
+    public void setMaxQuantity(int maxQuantity){
         this.maxQuantity = maxQuantity;
-        numberSetGenerator = new NumberSetGenerator();
     }
 
     public void clear(){
@@ -172,6 +181,15 @@ class RandomNumListProducer {
 
 class NumberSetGenerator{
     private final HashSet<Integer> numberSet = new HashSet<>();
+    private final RandomNumFactory randomNumFactory;
+
+    public NumberSetGenerator(GameNumProducer gameNumProducer){
+        randomNumFactory = gameNumProducer;
+    }
+
+    public NumberSetGenerator(RandomNumProducer randomNumProducer){
+        randomNumFactory = randomNumProducer;
+    }
 
     public HashSet<Integer> getNumberSet(){
         return numberSet;
@@ -185,10 +203,8 @@ class NumberSetGenerator{
     }
 
     private void addRandomNumberToSet(int quantity) {
-        RandomNumFactory gnp = new GameNumProducer();
-
         for (int i = 0; i < quantity; i++)
-            numberSet.add(gnp.getRandomNum());
+            numberSet.add(randomNumFactory.getRandomNum());
     }
 }
 
