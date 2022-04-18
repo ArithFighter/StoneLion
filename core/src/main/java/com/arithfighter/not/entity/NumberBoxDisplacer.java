@@ -90,10 +90,14 @@ public class NumberBoxDisplacer {
 
     public void setBoxQuantity(int boxQuantity) {
         int quantity = Math.min(boxQuantity, maxQuantity);
+        int zeroValueQuantity = maxQuantity-quantity;
 
-        if (numberList.size() > 0)
-            for (int i = 0; i < maxQuantity - quantity; i++)
-                set(i, 0);
+        int[] array = {0,2,4,8};
+
+        if (numberList.size() >0){
+            for (int i = 0; i < zeroValueQuantity; i++)
+                set(array[i], 0);
+        }
     }
 
     private void updateNumbers() {

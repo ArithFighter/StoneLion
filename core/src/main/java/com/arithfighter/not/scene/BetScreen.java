@@ -17,7 +17,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
     private final SoundManager soundManager;
-    private final int numberBoxQuantity = 9;
+    private final int numberBoxQuantity = 6;
     private int cardLimit;
     private int initToken;
 
