@@ -8,13 +8,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ResultScreen implements SceneEvent, MouseEvent{
+public class ResultScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private final Font winOrLost;
     private final Font tokenMessage;
     private final SceneControlButton continueButton;
-    private final SceneControlButton returnButton;
-    private CursorPositionAccessor cursorPos;
-    private SpriteBatch batch;
+    private final SceneControlButton quitButton;
     private int remainingTokens;
     private ResultState state = ResultState.WIN;
     private final TextProvider textProvider;
@@ -25,8 +23,8 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         continueButton = new SceneControlButton(textures[6], 2);
         continueButton.getButton().setPosition(600,150);
 
-        returnButton = new SceneControlButton(textures[6], 2);
-        returnButton.getButton().setPosition(600,150);
+        quitButton = new SceneControlButton(textures[6], 2);
+        quitButton.getButton().setPosition(600,150);
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
@@ -45,11 +43,15 @@ public class ResultScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void touchDown() {
+        CursorPositionAccessor cursorPos = getCursorPos();
+        float x = cursorPos.getX();
+        float y = cursorPos.getY();
+
         if (state == ResultState.WIN|| state == ResultState.LOOSE)
-            continueButton.getButton().activate(cursorPos.getX(),cursorPos.getY());
+            continueButton.getButton().activate(x,y);
 
         if (state == ResultState.OVER)
-            returnButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+            quitButton.getButton().activate(x, y);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class ResultScreen implements SceneEvent, MouseEvent{
             continueButton.getButton().deactivate();
 
         if (state == ResultState.OVER)
-            returnButton.getButton().deactivate();
+            quitButton.getButton().deactivate();
     }
 
     @Override
@@ -67,42 +69,33 @@ public class ResultScreen implements SceneEvent, MouseEvent{
             continueButton.getButton().deactivate();
 
         if (state == ResultState.OVER)
-            returnButton.getButton().deactivate();
-    }
-
-    @Override
-    public void setCursorPos(CursorPositionAccessor cursorPos) {
-        this.cursorPos = cursorPos;
-    }
-
-    @Override
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
+            quitButton.getButton().deactivate();
     }
 
     @Override
     public void init() {
         continueButton.init();
-        returnButton.init();
+        quitButton.init();
     }
 
     @Override
     public void update() {
         continueButton.update();
 
-        returnButton.update();
+        quitButton.update();
     }
 
     public boolean isContinue(){
         return continueButton.isStart();
     }
 
-    public boolean isReturn(){
-        return returnButton.isStart();
+    public boolean isQuit(){
+        return quitButton.isStart();
     }
 
     @Override
     public void draw() {
+        SpriteBatch batch = getBatch();
         String message = "";
         String[] texts = textProvider.getResultScreenTexts();
 
@@ -121,7 +114,7 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         if (state == ResultState.OVER){
             message = texts[4];
             winOrLost.draw(batch, message, 600,500);
-            returnButton.getButton().draw(batch, texts[5]);
+            quitButton.getButton().draw(batch, texts[5]);
         }
     }
 
@@ -130,6 +123,6 @@ public class ResultScreen implements SceneEvent, MouseEvent{
         winOrLost.dispose();
         tokenMessage.dispose();
         continueButton.dispose();
-        returnButton.dispose();
+        quitButton.dispose();
     }
 }

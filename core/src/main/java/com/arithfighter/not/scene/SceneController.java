@@ -58,9 +58,10 @@ public class SceneController {
     }
 
     private void manageStage(){
-        if (stage.isReturnToMenu()) {
+        if (stage.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
+            stage.setInitTokens();
         }
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
@@ -98,7 +99,7 @@ public class SceneController {
             betScreen.setToken(stage.getTokenHolder().getToken());
             resultScreen.init();
         }
-        if (resultScreen.isReturn()){
+        if (resultScreen.isQuit()){
             gameScene = GameScene.MENU;
             resultScreen.init();
             stage.setInitTokens();

@@ -3,6 +3,7 @@ package com.arithfighter.not.entity;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.GameNumProducer;
+import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -117,13 +118,9 @@ class NumberBoxPicker {
             if (numberBoxDisplacer.getNumberBoxValue(i) > 0)
                 indexList.add(i);
         }
-
-        int indexPick = getRandomNum(indexList.size() - 1);
+        RandomNumProducer rnp = new RandomNumProducer(indexList.size() - 1,0);
+        int indexPick = rnp.getRandomNum();
 
         return indexList.get(indexPick);
-    }
-
-    private int getRandomNum(int range) {
-        return (int) (Math.random() * (range + 1));
     }
 }

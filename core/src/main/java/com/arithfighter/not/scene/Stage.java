@@ -72,7 +72,7 @@ public class Stage implements SceneEvent, MouseEvent{
         this.cursorPos = cursorPos;
     }
 
-    public boolean isReturnToMenu() {
+    public boolean isQuit() {
         return pauseMenu.isReturnToMainMenu();
     }
 
