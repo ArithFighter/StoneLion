@@ -3,17 +3,11 @@ package com.arithfighter.not.audio;
 import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager {
-    private final Sound touching;
-    private final Sound accepting;
-    private final Sound scoring;
-    private final Sound returning;
+    private final Sound[] sounds;
     private float volume;
 
     public SoundManager(Sound[] sounds){
-        accepting = sounds[0];
-        scoring = sounds[1];
-        returning = sounds[2];
-        touching = sounds[3];
+        this.sounds = sounds;
     }
 
     public void setVolume(float volume){
@@ -21,26 +15,26 @@ public class SoundManager {
     }
 
     public void playReturnSound(){
-        returning.play(volume);
+        sounds[2].play(volume);
     }
 
     public void playScoreSound(){
-        scoring.stop();
-        scoring.play(volume);
+        sounds[1].stop();
+        sounds[1].play(volume);
     }
 
     public void playAcceptSound(){
-        accepting.stop();
-        accepting.play(volume);
+        sounds[0].stop();
+        sounds[0].play(volume);
     }
 
     public void playTouchedSound(){
-        touching.stop();
-        touching.play(volume);
+        sounds[3].stop();
+        sounds[3].play(volume);
     }
 
     public void dispose(){
-        accepting.dispose();
-        touching.dispose();
+        for (Sound sound:sounds)
+            sound.dispose();
     }
 }

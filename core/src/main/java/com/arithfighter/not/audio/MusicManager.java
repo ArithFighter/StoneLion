@@ -3,31 +3,29 @@ package com.arithfighter.not.audio;
 import com.badlogic.gdx.audio.Music;
 
 public class MusicManager {
-    private final Music menuMusic;
-    private final Music gameTheme;
+    private final Music[] music;
 
     public MusicManager(Music[] music){
-        menuMusic = music[0];
-        gameTheme = music[1];
+        this.music = music;
     }
 
     public void setVolume(float volume){
-        menuMusic.setVolume(volume);
-        gameTheme.setVolume(volume);
+        for(Music m: music)
+            m.setVolume(volume);
     }
 
     public void playMenuMusic(){
-        gameTheme.dispose();
-        menuMusic.play();
+        music[1].dispose();
+        music[0].play();
     }
 
     public void playTheme(){
-        menuMusic.dispose();
-        gameTheme.play();
+        music[0].dispose();
+        music[1].play();
     }
 
     public void dispose(){
-        menuMusic.dispose();
-        gameTheme.dispose();
+        for (Music m: music)
+            m.dispose();
     }
 }

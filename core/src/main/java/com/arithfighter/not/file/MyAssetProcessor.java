@@ -29,6 +29,10 @@ public class MyAssetProcessor {
 
         assetManager.finishLoading();
     }
+
+    public AssetManager getAssetManager(){
+        return assetManager;
+    }
     
     private void loadTextures(String[] files){
          for (String file : files)

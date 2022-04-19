@@ -3,10 +3,12 @@ package com.arithfighter.not;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -60,22 +62,24 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.update(17);
 
-        cursorPos.update();
+        if (assetProcessor.getAssetManager().update()){
+            cursorPos.update();
 
-        audioHandler.setAudioVolume();
+            audioHandler.setAudioVolume();
 
-        setSelectedCharacter();
+            setSelectedCharacter();
 
-        mouseAdapter.setGameScene(gameScene);
+            mouseAdapter.setGameScene(gameScene);
 
-        updateScene();
+            updateScene();
 
-        playBackgroundMusic();
+            playBackgroundMusic();
 
-        drawGame();
+            drawGame();
 
-        //This is for developer, will remove in launched version
-        manualReset();
+            //This is for developer, will remove in launched version
+            manualReset();
+        }
     }
 
     private void setSelectedCharacter() {
