@@ -5,6 +5,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.ControlNumber;
 import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,9 +21,12 @@ public class BetScreen implements SceneEvent, MouseEvent{
     private final int numberBoxQuantity = 6;
     private int cardLimit;
     private int initToken;
+    private final TextProvider textProvider;
 
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
+
+        textProvider = new TextProvider();
 
         tokenBet = new ControlNumber(textures);
         tokenBet.setPosition(500,300);
@@ -119,13 +123,15 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void draw() {
-        cardLimitMessage.draw(batch, "card limit: "+ cardLimit, 400,600);
+        String[] texts = textProvider.getBetScreenTexts();
 
-        betMessage.draw(batch, "please bet", 400,400);
+        cardLimitMessage.draw(batch, texts[0] + cardLimit, 400,600);
+
+        betMessage.draw(batch, texts[1], 400,400);
 
         tokenBet.draw(batch);
 
-        startButton.getButton().draw(batch, "Start");
+        startButton.getButton().draw(batch, texts[2]);
     }
 
     @Override
