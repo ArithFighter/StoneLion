@@ -57,26 +57,26 @@ public class PlayerCollection {
 
 class SkillHandler {
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private final NumberBoxIndexPicker numberBoxIndexPicker;
+    private final NumberBoxPicker numberBoxPicker;
 
     public SkillHandler(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
-        numberBoxIndexPicker = new NumberBoxIndexPicker(numberBoxDisplacer);
+        numberBoxPicker = new NumberBoxPicker(numberBoxDisplacer);
     }
 
     public void cast(CharacterList character) {
         switch (character) {
             case KNIGHT:
-                replaceOneNonZeroValue(9);
+                changeANumberBoxValue(9);
                 break;
             case ROGUE:
-                replaceOneNonZeroValue(8);
+                changeANumberBoxValue(8);
                 break;
             case HUNTER:
-                replaceOneNonZeroValue(14);
+                changeANumberBoxValue(14);
                 break;
             case PALADIN:
-                replaceOneNonZeroValue(22);
+                changeANumberBoxValue(22);
                 break;
             case WARRIOR:
                 increaseAllValueByFour();
@@ -94,10 +94,8 @@ class SkillHandler {
         }
     }
 
-    private void replaceOneNonZeroValue(int value) {
-        int index = numberBoxIndexPicker.getRandomNonZeroValueIndex();
-
-        numberBoxDisplacer.set(index, value);
+    private void changeANumberBoxValue(int value){
+        numberBoxDisplacer.set(numberBoxPicker.getRandomNonZeroValueIndex(), value);
     }
 
     private int getNumberBoxValue(int i) {
@@ -105,10 +103,10 @@ class SkillHandler {
     }
 }
 
-class NumberBoxIndexPicker {
+class NumberBoxPicker {
     private final NumberBoxDisplacer numberBoxDisplacer;
 
-    public NumberBoxIndexPicker(NumberBoxDisplacer numberBoxDisplacer) {
+    public NumberBoxPicker(NumberBoxDisplacer numberBoxDisplacer) {
         this.numberBoxDisplacer = numberBoxDisplacer;
     }
 
@@ -124,7 +122,6 @@ class NumberBoxIndexPicker {
 
         return indexList.get(indexPick);
     }
-
 
     private int getRandomNum(int range) {
         return (int) (Math.random() * (range + 1));

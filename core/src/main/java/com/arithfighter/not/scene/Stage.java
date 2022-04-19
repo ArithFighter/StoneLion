@@ -6,7 +6,6 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.TokenHolder;
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
