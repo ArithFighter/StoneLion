@@ -9,15 +9,13 @@ import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Stage implements SceneEvent, MouseEvent{
+public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
-    private CursorPositionAccessor cursorPos;
     private final TokenHolder tokenHolder;
-    private SpriteBatch batch;
     private final Recorder playRecord = new Recorder();
     private int numberBoxQuantity = 99;
     private final int initTokens = 10;
@@ -64,14 +62,6 @@ public class Stage implements SceneEvent, MouseEvent{
         tokenHolder.setInitToken(initTokens);
     }
 
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
-    public void setCursorPos(CursorPositionAccessor cursorPos) {
-        this.cursorPos = cursorPos;
-    }
-
     public boolean isQuit() {
         return pauseMenu.isReturnToMainMenu();
     }
@@ -100,11 +90,13 @@ public class Stage implements SceneEvent, MouseEvent{
 
             gamePlayComponent.setNumberQuantity(numberBoxQuantity);
 
-            gamePlayComponent.update(cursorPos.getX(), cursorPos.getY());
+            gamePlayComponent.update(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 
     public void draw() {
+        SpriteBatch batch = getBatch();
+
         gamePlayComponent.draw(batch);
 
         if (pauseButton.isStart())
@@ -118,10 +110,10 @@ public class Stage implements SceneEvent, MouseEvent{
         dataDisplacer.setCardPlayTimes(playRecord.getRecord());
         dataDisplacer.setScore(gamePlayComponent.getScore());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
-        dataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
+        dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
         dataDisplacer.setToken(tokenHolder.getToken());
         dataDisplacer.setCardLimit(cardLimit);
-        dataDisplacer.draw(batch);
+        dataDisplacer.draw(getBatch());
     }
 
     public void setSelectedPlayerToGame(int i) {
@@ -129,11 +121,15 @@ public class Stage implements SceneEvent, MouseEvent{
     }
 
     public void touchDown() {
+        CursorPositionAccessor cursorPos = getCursorPos();
+        int x = cursorPos.getX();
+        int y = cursorPos.getY();
+
         if (pauseButton.isStart())
-            pauseMenu.touchDown(cursorPos.getX(), cursorPos.getY());
+            pauseMenu.touchDown(x, y);
         else{
-            pauseButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
-            gamePlayComponent.touchDown(cursorPos.getX(), cursorPos.getY());
+            pauseButton.getButton().activate(x, y);
+            gamePlayComponent.touchDown(x, y);
         }
     }
 
@@ -142,7 +138,7 @@ public class Stage implements SceneEvent, MouseEvent{
             pauseMenu.touchDragged();
         else{
             pauseButton.getButton().deactivate();
-            gamePlayComponent.touchDragged(cursorPos.getX(), cursorPos.getY());
+            gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 
@@ -151,7 +147,7 @@ public class Stage implements SceneEvent, MouseEvent{
             pauseMenu.touchUp();
         else{
             pauseButton.getButton().deactivate();
-            gamePlayComponent.touchUp(cursorPos.getX(), cursorPos.getY());
+            gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 
