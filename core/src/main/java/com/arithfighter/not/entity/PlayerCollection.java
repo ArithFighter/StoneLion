@@ -90,7 +90,7 @@ class SkillHandler {
 
         for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
             if (getNumberBoxValue(i) > 0 &&
-                    getNumberBoxValue(i) < new GameNumProducer().getMax() - gain)
+                    getNumberBoxValue(i) < new GameNumProducer().getMaxNumber() - gain)
                 numberBoxDisplacer.set(i, getNumberBoxValue(i) + gain);
         }
     }

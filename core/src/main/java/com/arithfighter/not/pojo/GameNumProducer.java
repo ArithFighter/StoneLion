@@ -4,8 +4,12 @@ public class GameNumProducer implements RandomNumFactory{
     private static final int MAX_NUMBER = 30;
     private static final int MIN_NUMBER = 5;
 
-    public int getMax(){
+    public int getMaxNumber(){
         return MAX_NUMBER;
+    }
+
+    public int getMinNumber(){
+        return MIN_NUMBER;
     }
 
     public int getRandomNum(){

@@ -5,6 +5,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.ControlNumber;
 import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +17,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private final ControlNumber tokenBet;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
-    private final int numberBoxQuantity = 6;
+    private int numberBoxQuantity = 1;
     private int cardLimit;
     private int initToken;
     private final TextProvider textProvider;
@@ -93,6 +94,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
 
     @Override
     public void init() {
+        numberBoxQuantity = new RandomNumProducer(9,1).getRandomNum();
         startButton.init();
     }
 
@@ -110,7 +112,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private int calculateLimit(){
         float betTokensProportion = tokenBet.getValue()/(float)initToken;
 
-        return (int) ((1.8f-betTokensProportion)*numberBoxQuantity+6);
+        return (int) ((1.8f-betTokensProportion)*numberBoxQuantity+5);
     }
 
     @Override
