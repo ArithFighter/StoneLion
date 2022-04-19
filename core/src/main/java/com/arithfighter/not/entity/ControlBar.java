@@ -17,12 +17,8 @@ public class ControlBar {
     private final int fontSize;
     private boolean isButtonLock = false;
     private final ValueHolder valueHolder;
-    private final String content;
 
-    public ControlBar(Texture[] textures, String content) {
-        this.content = content;
-
-        int max = 6;
+    public ControlBar(Texture[] textures, int max) {
         valueHolder = new ValueHolder(max);
 
         grids = new VisibleWidget[valueHolder.getMaxValue()];
@@ -50,14 +46,14 @@ public class ControlBar {
         }
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, String content) {
         for (int i = 0; i < valueHolder.getValue(); i++)
             grids[i].draw(batch);
 
-        addComponent(batch);
+        addComponent(batch, content);
     }
 
-    private void addComponent(SpriteBatch batch) {
+    private void addComponent(SpriteBatch batch, String content) {
         Widget widget = grids[0].getWidget();
         Point point = widget.getPoint();
 

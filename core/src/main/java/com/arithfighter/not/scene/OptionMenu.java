@@ -4,6 +4,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.ControlBar;
 import com.arithfighter.not.entity.SceneControlButton;
+import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,17 +15,20 @@ public class OptionMenu implements SceneEvent, MouseEvent{
     private final SoundManager soundManager;
     private SpriteBatch batch;
     private CursorPositionAccessor cursorPos;
+    private final TextProvider textProvider;
 
     public OptionMenu(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
 
+        textProvider = new TextProvider();
+
         returnButton = new SceneControlButton(textures[6], 1.8f);
         returnButton.getButton().setPosition(500,120);
 
-        soundControl = new ControlBar(textures, "Sound");
+        soundControl = new ControlBar(textures, 6);
         soundControl.setPosition(500,600);
 
-        musicControl = new ControlBar(textures, "Music");
+        musicControl = new ControlBar(textures, 6);
         musicControl.setPosition(500,400);
     }
 
@@ -37,9 +41,11 @@ public class OptionMenu implements SceneEvent, MouseEvent{
     }
 
     public void draw() {
-        soundControl.draw(batch);
-        musicControl.draw(batch);
-        returnButton.getButton().draw(batch, "Return");
+        String[] texts = textProvider.getOptionMenuTexts();
+
+        soundControl.draw(batch,texts[0]);
+        musicControl.draw(batch,texts[1]);
+        returnButton.getButton().draw(batch, texts[2]);
     }
 
     public void update() {

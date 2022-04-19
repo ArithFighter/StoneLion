@@ -3,6 +3,7 @@ package com.arithfighter.not.scene;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,8 +17,11 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     private SpriteBatch batch;
     private int remainingTokens;
     private ResultState state = ResultState.WIN;
+    private final TextProvider textProvider;
 
     public ResultScreen(Texture[] textures){
+        textProvider = new TextProvider();
+
         continueButton = new SceneControlButton(textures[6], 2);
         continueButton.getButton().setPosition(600,150);
 
@@ -100,22 +104,24 @@ public class ResultScreen implements SceneEvent, MouseEvent{
     @Override
     public void draw() {
         String message = "";
+        String[] texts = textProvider.getResultScreenTexts();
+
         if (state == ResultState.WIN|| state == ResultState.LOOSE){
             if (state == ResultState.WIN)
-                message = "You Win";
+                message = texts[0];
             if (state == ResultState.LOOSE)
-                message = "You Loose";
+                message = texts[1];
 
             winOrLost.draw(batch, message, 600,500);
 
-            tokenMessage.draw(batch, remainingTokens+" Tokens remain", 600,400);
+            tokenMessage.draw(batch, remainingTokens+texts[2], 600,400);
 
-            continueButton.getButton().draw(batch, "continue");
+            continueButton.getButton().draw(batch, texts[3]);
         }
         if (state == ResultState.OVER){
-            message = "GAME OVER";
+            message = texts[4];
             winOrLost.draw(batch, message, 600,500);
-            returnButton.getButton().draw(batch, "Return");
+            returnButton.getButton().draw(batch, texts[5]);
         }
     }
 
