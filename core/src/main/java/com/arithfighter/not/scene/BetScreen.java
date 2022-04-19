@@ -10,13 +10,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BetScreen implements SceneEvent, MouseEvent{
+public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private final Font cardLimitMessage;
     private final Font betMessage;
     private final ControlNumber tokenBet;
     private final SceneControlButton startButton;
-    private SpriteBatch batch;
-    private CursorPositionAccessor cursorPos;
     private final SoundManager soundManager;
     private final int numberBoxQuantity = 6;
     private int cardLimit;
@@ -64,9 +62,13 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void touchDown() {
-        tokenBet.activate(cursorPos.getX(), cursorPos.getY());
+        CursorPositionAccessor cursorPos = getCursorPos();
+        int x = cursorPos.getX();
+        int y = cursorPos.getY();
 
-        startButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+        tokenBet.activate(x, y);
+
+        startButton.getButton().activate(x, y);
     }
 
     @Override
@@ -87,16 +89,6 @@ public class BetScreen implements SceneEvent, MouseEvent{
         tokenBet.deactivate();
 
         startButton.getButton().deactivate();
-    }
-
-    @Override
-    public void setCursorPos(CursorPositionAccessor cursorPos) {
-        this.cursorPos = cursorPos;
-    }
-
-    @Override
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
     }
 
     @Override
@@ -123,6 +115,7 @@ public class BetScreen implements SceneEvent, MouseEvent{
 
     @Override
     public void draw() {
+        SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
 
         cardLimitMessage.draw(batch, texts[0] + cardLimit, 400,600);

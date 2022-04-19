@@ -13,17 +13,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CharacterMenu implements SceneEvent, MouseEvent{
+public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent{
     private final Font characterName;
     private final SpriteWidget highLight;
     private final SceneControlButton optionButton;
     private final SceneControlButton startButton;
-    private SpriteBatch batch;
     private final PanelButtonPlacer placer = new PanelButtonPlacer();
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
-    private CursorPositionAccessor cursorPos;
 
     public CharacterMenu(Texture[] textures, Texture[] panels, SoundManager soundManager) {
         this.soundManager = soundManager;
@@ -55,14 +53,6 @@ public class CharacterMenu implements SceneEvent, MouseEvent{
         animation = new MaskAnimation(masks);
     }
 
-    public void setCursorPos(CursorPositionAccessor cursorPos) {
-        this.cursorPos = cursorPos;
-    }
-
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
     public void init() {
         animation.init();
         optionButton.init();
@@ -75,7 +65,9 @@ public class CharacterMenu implements SceneEvent, MouseEvent{
     }
 
     public void draw() {
+        SpriteBatch batch = getBatch();
         int index = buttonProducer.getActiveButtonIndex();
+
         highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
         highLight.draw(batch);
 
@@ -104,11 +96,15 @@ public class CharacterMenu implements SceneEvent, MouseEvent{
     }
 
     public void touchDown() {
-        buttonProducer.activate(cursorPos.getX(), cursorPos.getY());
+        CursorPositionAccessor cursorPos = getCursorPos();
+        int x = cursorPos.getX();
+        int y = cursorPos.getY();
 
-        optionButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+        buttonProducer.activate(x, y);
 
-        startButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+        optionButton.getButton().activate(x, y);
+
+        startButton.getButton().activate(x, y);
     }
 
     public void touchDragged() {

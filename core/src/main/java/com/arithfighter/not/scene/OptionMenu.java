@@ -8,13 +8,11 @@ import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class OptionMenu implements SceneEvent, MouseEvent{
+public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent{
     private final SceneControlButton returnButton;
     private final ControlBar soundControl;
     private final ControlBar musicControl;
     private final SoundManager soundManager;
-    private SpriteBatch batch;
-    private CursorPositionAccessor cursorPos;
     private final TextProvider textProvider;
 
     public OptionMenu(Texture[] textures, SoundManager soundManager){
@@ -42,6 +40,7 @@ public class OptionMenu implements SceneEvent, MouseEvent{
 
     public void draw() {
         String[] texts = textProvider.getOptionMenuTexts();
+        SpriteBatch batch = getBatch();
 
         soundControl.draw(batch,texts[0]);
         musicControl.draw(batch,texts[1]);
@@ -54,16 +53,6 @@ public class OptionMenu implements SceneEvent, MouseEvent{
         returnButton.update();
     }
 
-    @Override
-    public void setCursorPos(CursorPositionAccessor cursorPos) {
-        this.cursorPos = cursorPos;
-    }
-
-    @Override
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
     public void init() {
         returnButton.init();
     }
@@ -73,9 +62,13 @@ public class OptionMenu implements SceneEvent, MouseEvent{
     }
 
     public void touchDown() {
-        soundControl.activate(cursorPos.getX(), cursorPos.getY());
-        musicControl.activate(cursorPos.getX(), cursorPos.getY());
-        returnButton.getButton().activate(cursorPos.getX(), cursorPos.getY());
+        CursorPositionAccessor cursorPos = getCursorPos();
+        int x= cursorPos.getX();
+        int y = cursorPos.getY();
+
+        soundControl.activate(x, y);
+        musicControl.activate(x, y);
+        returnButton.getButton().activate(x, y);
     }
 
     public void touchDragged(){
