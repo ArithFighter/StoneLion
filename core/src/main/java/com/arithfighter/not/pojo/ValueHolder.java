@@ -1,7 +1,7 @@
 package com.arithfighter.not.pojo;
 
 public class ValueHolder {
-    private int MAX_VALUE;
+    private int initValue;
     private int value;
 
     public ValueHolder(){
@@ -9,20 +9,20 @@ public class ValueHolder {
     }
 
     public ValueHolder(int max) {
-        setMAX_VALUE(max);
+        setInitValue(max);
     }
 
-    public void setMAX_VALUE(int max){
-        MAX_VALUE = max;
-        value = MAX_VALUE;
+    public void setInitValue(int max){
+        initValue = max;
+        value = initValue;
     }
 
     public int getValue() {
         return value;
     }
 
-    public int getMaxValue() {
-        return MAX_VALUE;
+    public int getInitValue() {
+        return initValue;
     }
 
     public void updateValue() {

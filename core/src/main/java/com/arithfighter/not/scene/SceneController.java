@@ -41,7 +41,7 @@ public class SceneController {
     private void manageMenu(){
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
-            betScreen.setToken(stage.getTokenHolder().getToken());
+            betScreen.setToken(stage.getTokenHolder().getValue());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -72,15 +72,15 @@ public class SceneController {
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.WIN);
-            stage.getTokenHolder().obtainToken(betScreen.getBet());
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
+            stage.getTokenHolder().increaseValue(betScreen.getBet());
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
         }
         if (stage.isExceedCardLimit()&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
-            stage.getTokenHolder().lostToken(betScreen.getBet());
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getToken());
+            stage.getTokenHolder().decreaseValue(betScreen.getBet());
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
         }
         if (stage.isNoTokens()){
@@ -102,7 +102,7 @@ public class SceneController {
     private void manageResult(){
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
-            betScreen.setToken(stage.getTokenHolder().getToken());
+            betScreen.setToken(stage.getTokenHolder().getValue());
             resultScreen.init();
         }
         if (resultScreen.isQuit()){

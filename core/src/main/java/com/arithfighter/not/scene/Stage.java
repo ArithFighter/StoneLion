@@ -5,7 +5,7 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.pojo.Recorder;
-import com.arithfighter.not.pojo.TokenHolder;
+import com.arithfighter.not.pojo.ValueHolder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -15,7 +15,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
-    private final TokenHolder tokenHolder;
+    private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
     private int numberBoxQuantity;
     private final int initTokens = 10;
@@ -28,7 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        tokenHolder = new TokenHolder(initTokens);
+        tokenHolder = new ValueHolder(initTokens);
 
         playerCollection = new PlayerCollection(textures, cards,
                 CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
@@ -43,7 +43,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public boolean isNoTokens(){
-        return tokenHolder.getToken() == 0;
+        return tokenHolder.getValue() == 0;
     }
 
     public boolean isExceedCardLimit(){
@@ -54,12 +54,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
     }
 
-    public TokenHolder getTokenHolder(){
+    public ValueHolder getTokenHolder(){
         return tokenHolder;
     }
 
     public void setInitTokens(){
-        tokenHolder.setInitToken(initTokens);
+        tokenHolder.setInitValue(initTokens);
     }
 
     public boolean isOpenOption(){
@@ -119,7 +119,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         dataDisplacer.setScore(gamePlayComponent.getScore());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
-        dataDisplacer.setToken(tokenHolder.getToken());
+        dataDisplacer.setToken(tokenHolder.getValue());
         dataDisplacer.setCardLimit(cardLimit);
         dataDisplacer.draw(getBatch());
     }

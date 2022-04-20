@@ -21,7 +21,7 @@ public class ControlBar {
     public ControlBar(Texture[] textures, int max) {
         valueHolder = new ValueHolder(max);
 
-        grids = new VisibleWidget[valueHolder.getMaxValue()];
+        grids = new VisibleWidget[valueHolder.getInitValue()];
 
         for (int i = 0; i < grids.length; i++)
             grids[i] = new SpriteWidget(textures[5], 0.5f);
@@ -73,7 +73,7 @@ public class ControlBar {
         if (!isButtonLock) {
             if (arrows.isLeftActive() && i >= 0)
                 valueHolder.decreaseValue(1);
-            if (arrows.isRightActive() && i < valueHolder.getMaxValue())
+            if (arrows.isRightActive() && i < valueHolder.getInitValue())
                 valueHolder.increaseValue(1);
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
