@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SpriteWidget implements VisibleWidget, DetectableWidget,
         FontWidget, DetectableFontWidget, FlexibleWidget{
     private final Sprite sprite;
-    private final Widget widget;
+    private final RawWidget widget;
     private final Point point;
     private int fontSize;
 
     public SpriteWidget(Texture texture, float scale, int fontSize){
-        widget = new Widget();
+        widget = new RawWidget();
         widget.setSize(texture, scale);
         point = widget.getPoint();
 
@@ -23,7 +23,7 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
     }
 
     public SpriteWidget(Texture texture, float scale){
-        widget = new Widget();
+        widget = new RawWidget();
         widget.setSize(texture, scale);
         point = widget.getPoint();
 
@@ -38,7 +38,7 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
         return sprite;
     }
 
-    public Widget getWidget(){
+    public RawWidget getWidget(){
         return widget;
     }
 

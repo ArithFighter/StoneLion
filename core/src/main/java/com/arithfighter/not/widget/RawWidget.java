@@ -4,11 +4,11 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Shape;
 import com.badlogic.gdx.graphics.Texture;
 
-public class Widget {
+public class RawWidget {
     private Point point;
     private final Shape shape;
 
-    public Widget(){
+    public RawWidget(){
         shape = new Shape();
         setPoint(new Point(0,0));
     }

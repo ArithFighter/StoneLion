@@ -3,10 +3,6 @@ package com.arithfighter.not.widget;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.ValueHolder;
-import com.arithfighter.not.widget.ArrowButtons;
-import com.arithfighter.not.widget.SpriteWidget;
-import com.arithfighter.not.widget.VisibleWidget;
-import com.arithfighter.not.widget.Widget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -54,7 +50,7 @@ public class ControlBar {
     }
 
     private void addComponent(SpriteBatch batch, String content) {
-        Widget widget = grids[0].getWidget();
+        RawWidget widget = grids[0].getWidget();
         Point point = widget.getPoint();
 
         font.draw(batch, content, point.getX() - content.length() * fontSize - 50, point.getY() + fontSize / 2f);
