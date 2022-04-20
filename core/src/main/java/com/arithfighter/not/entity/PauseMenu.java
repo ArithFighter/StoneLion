@@ -72,8 +72,7 @@ public class PauseMenu {
 
     public void touchDown(float x, float y) {
         if (buttons.getQuit().isStart()){
-            dialog.getYesButton().getButton().activate(x, y);
-            dialog.getNoButton().getButton().activate(x, y);
+            dialog.activate(x, y);
         }else {
             for (SceneControlButton button:buttons.getButtons())
                 button.getButton().activate(x, y);
@@ -82,8 +81,7 @@ public class PauseMenu {
 
     public void touchDragged(){
         if (buttons.getQuit().isStart()){
-            dialog.getYesButton().getButton().deactivate();
-            dialog.getNoButton().getButton().deactivate();
+            dialog.deactivate();
         }else {
             for (SceneControlButton button:buttons.getButtons())
                 button.getButton().deactivate();
@@ -92,14 +90,12 @@ public class PauseMenu {
 
     public void touchUp() {
         if (buttons.getQuit().isStart()){
-            dialog.getYesButton().getButton().deactivate();
-            dialog.getNoButton().getButton().deactivate();
+            dialog.deactivate();
         }else {
             for (int i =0;i<buttons.getButtons().length;i++){
                 if (buttons.getButtons()[i].getButton().isActive())
                     soundManager.playAcceptSound();
             }
-
             for (SceneControlButton button:buttons.getButtons())
                 button.getButton().deactivate();
         }

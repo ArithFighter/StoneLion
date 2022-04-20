@@ -3,7 +3,6 @@ package com.arithfighter.not.widget;
 import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -66,6 +65,16 @@ public class Dialog {
 
     public SceneControlButton getNoButton() {
         return noButton;
+    }
+
+    public void activate(float x, float y){
+        yesButton.getButton().activate(x, y);
+        noButton.getButton().activate(x, y);
+    }
+
+    public void deactivate(){
+        yesButton.getButton().deactivate();
+        noButton.getButton().deactivate();
     }
 
     public void dispose(){
