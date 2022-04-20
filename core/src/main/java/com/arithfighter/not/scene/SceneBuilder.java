@@ -45,10 +45,16 @@ public class SceneBuilder extends SceneCollection{
         return mouseEvents;
     }
 
-    public void drawScene(GameScene gameScene) {
+    public void updateScene(GameScene gameScene){
         for (int i = 0; i < GameScene.values().length; i++)
             if (gameScene == GameScene.values()[i]){
                 sceneEvents[i].update();
+            }
+    }
+
+    public void drawScene(GameScene gameScene) {
+        for (int i = 0; i < GameScene.values().length; i++)
+            if (gameScene == GameScene.values()[i]){
                 sceneEvents[i].draw();
             }
     }

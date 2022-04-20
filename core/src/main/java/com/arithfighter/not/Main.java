@@ -75,6 +75,8 @@ public class Main extends ApplicationAdapter {
 
             playBackgroundMusic();
 
+            sceneBuilder.updateScene(gameScene);
+
             drawGame();
 
             //This is for developer, will remove in launched version
