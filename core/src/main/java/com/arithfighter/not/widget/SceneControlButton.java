@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity;
+package com.arithfighter.not.widget;
 
 import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;

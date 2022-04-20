@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.entity.SceneControlButton;
+import com.arithfighter.not.widget.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Color;

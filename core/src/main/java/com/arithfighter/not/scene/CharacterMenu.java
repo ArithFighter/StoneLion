@@ -3,7 +3,7 @@ package com.arithfighter.not.scene;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
-import com.arithfighter.not.entity.SceneControlButton;
+import com.arithfighter.not.widget.SceneControlButton;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.Mask;

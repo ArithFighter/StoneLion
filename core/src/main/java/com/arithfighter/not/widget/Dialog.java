@@ -1,6 +1,5 @@
 package com.arithfighter.not.widget;
 
-import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Color;

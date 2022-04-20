@@ -4,6 +4,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.Dialog;
+import com.arithfighter.not.widget.SceneControlButton;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.button.Button;
