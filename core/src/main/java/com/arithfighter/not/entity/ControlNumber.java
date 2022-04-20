@@ -12,12 +12,10 @@ public class ControlNumber {
     private final ArrowButtons arrows;
     private final int fontSize;
     private boolean isButtonLock = false;
-    private final ValueHolder valueHolder;
+    private ValueHolder valueHolder;
     private int valueChange;
 
     public ControlNumber(Texture[] textures) {
-        valueHolder = new ValueHolder();
-
         arrows = new ArrowButtons(textures, 0.8f);
 
         fontSize = 25;
@@ -28,16 +26,12 @@ public class ControlNumber {
         valueChange = i;
     }
 
-    public void setInitValue(int value){
-        valueHolder.setMAX_VALUE(value);
-    }
-
     public boolean isButtonActive(){
         return arrows.isLeftActive()||arrows.isRightActive();
     }
 
-    public int getValue() {
-        return valueHolder.getValue();
+    public void setValueHolder(ValueHolder valueHolder){
+        this.valueHolder = valueHolder;
     }
 
     public void setPosition(int x, int y) {

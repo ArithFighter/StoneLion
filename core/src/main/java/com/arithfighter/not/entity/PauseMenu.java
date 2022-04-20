@@ -6,6 +6,7 @@ import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.Dialog;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
+import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -33,8 +34,10 @@ public class PauseMenu {
     public void draw(SpriteBatch batch) {
         background.draw(batch);
 
-        for (int i =0; i<buttons.getButtons().length;i++)
-            buttons.getButtons()[i].getButton().draw(batch, textProvider.getPauseMenuTexts()[i]);
+        for (int i =0; i<buttons.getButtons().length;i++){
+            Button b = buttons.getButtons()[i].getButton();
+            b.draw(batch, textProvider.getPauseMenuTexts()[i]);
+        }
 
         if (buttons.getQuit().isStart())
             dialog.draw(batch, textProvider.getPauseMenuTexts()[3], textProvider.getPauseMenuTexts()[4]);
@@ -94,12 +97,18 @@ public class PauseMenu {
         if (buttons.getQuit().isStart()){
             dialog.deactivate();
         }else {
-            for (int i =0;i<buttons.getButtons().length;i++){
-                if (buttons.getButtons()[i].getButton().isActive())
-                    soundManager.playAcceptSound();
-            }
+            playSound();
+
             for (SceneControlButton button:buttons.getButtons())
                 button.getButton().deactivate();
+        }
+    }
+
+    private void playSound(){
+        for (int i =0;i<buttons.getButtons().length;i++){
+            Button b = buttons.getButtons()[i].getButton();
+            if (b.isActive())
+                soundManager.playAcceptSound();
         }
     }
 

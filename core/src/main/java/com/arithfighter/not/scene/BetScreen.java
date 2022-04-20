@@ -7,6 +7,7 @@ import com.arithfighter.not.entity.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.pojo.TextProvider;
+import com.arithfighter.not.pojo.ValueHolder;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private final Font cardLimitMessage;
     private final Font betMessage;
     private final ControlNumber tokenBet;
+    private final ValueHolder tokenHolder;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
     private int numberBoxQuantity = 1;
@@ -25,10 +27,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     public BetScreen(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
 
+        tokenHolder = new ValueHolder();
+
         textProvider = new TextProvider();
 
         tokenBet = new ControlNumber(textures);
         tokenBet.setPosition(500,300);
+        tokenBet.setValueHolder(tokenHolder);
 
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000,150);
@@ -50,11 +55,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
 
     public void setToken(int value){
         initToken = value;
-        tokenBet.setInitValue(initToken);
+        tokenHolder.setMAX_VALUE(initToken);
     }
 
     public int getBet(){
-        return tokenBet.getValue();
+        return tokenHolder.getValue();
     }
 
     public boolean isStartGame(){
@@ -110,7 +115,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     private int calculateLimit(){
-        float betTokensProportion = tokenBet.getValue()/(float)initToken;
+        float betTokensProportion = tokenHolder.getValue()/(float)initToken;
 
         return (int) ((1.8f-betTokensProportion)*numberBoxQuantity+5);
     }
