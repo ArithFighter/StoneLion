@@ -62,8 +62,16 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         tokenHolder.setInitToken(initTokens);
     }
 
+    public boolean isOpenOption(){
+        return pauseMenu.isOpenOption();
+    }
+
     public boolean isQuit() {
         return pauseMenu.isReturnToMainMenu();
+    }
+
+    public void initPauseMenu(){
+        pauseMenu.init();
     }
 
     public void init() {

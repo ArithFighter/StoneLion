@@ -9,25 +9,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent{
-    private final SceneControlButton returnButton;
+    private final SceneControlButton leaveButton;
     private final ControlBar soundControl;
     private final ControlBar musicControl;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
+    private GameScene sceneTemp;
 
     public OptionMenu(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
 
         textProvider = new TextProvider();
 
-        returnButton = new SceneControlButton(textures[6], 1.8f);
-        returnButton.getButton().setPosition(500,120);
+        leaveButton = new SceneControlButton(textures[6], 1.8f);
+        leaveButton.getButton().setPosition(500,120);
 
         soundControl = new ControlBar(textures, 6);
         soundControl.setPosition(500,600);
 
         musicControl = new ControlBar(textures, 6);
         musicControl.setPosition(500,400);
+    }
+
+    public GameScene getSceneTemp(){
+        return sceneTemp;
+    }
+
+    public void setSceneTemp(GameScene scene){
+        sceneTemp = scene;
     }
 
     public int getSoundVolume(){
@@ -44,21 +53,21 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         soundControl.draw(batch,texts[0]);
         musicControl.draw(batch,texts[1]);
-        returnButton.getButton().draw(batch, texts[2]);
+        leaveButton.getButton().draw(batch, texts[2]);
     }
 
     public void update() {
         soundControl.update();
         musicControl.update();
-        returnButton.update();
+        leaveButton.update();
     }
 
     public void init() {
-        returnButton.init();
+        leaveButton.init();
     }
 
-    public boolean isReturnToMainMenu() {
-        return returnButton.isStart();
+    public boolean isLeaving() {
+        return leaveButton.isStart();
     }
 
     public void touchDown() {
@@ -68,30 +77,30 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         soundControl.activate(x, y);
         musicControl.activate(x, y);
-        returnButton.getButton().activate(x, y);
+        leaveButton.getButton().activate(x, y);
     }
 
     public void touchDragged(){
         soundControl.deactivate();
         musicControl.deactivate();
-        returnButton.getButton().deactivate();
+        leaveButton.getButton().deactivate();
     }
 
     public void touchUp() {
         if (soundControl.isButtonActive()|| musicControl.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (returnButton.getButton().isActive())
+        if (leaveButton.getButton().isActive())
             soundManager.playReturnSound();
 
         soundControl.deactivate();
         musicControl.deactivate();
-        returnButton.getButton().deactivate();
+        leaveButton.getButton().deactivate();
     }
 
     public void dispose() {
         soundControl.dispose();
         musicControl.dispose();
-        returnButton.getButton().dispose();
+        leaveButton.getButton().dispose();
     }
 }

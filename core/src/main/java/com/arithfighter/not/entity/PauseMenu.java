@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PauseMenu {
     private final SceneControlButton quitButton;
     private final SceneControlButton resumeButton;
+    private final SceneControlButton optionButton;
     private final Dialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
@@ -19,7 +20,10 @@ public class PauseMenu {
         this.soundManager = soundManager;
 
         resumeButton = new SceneControlButton(textures[6], 1.8f);
-        resumeButton.getButton().setPosition(540,450);
+        resumeButton.getButton().setPosition(540,550);
+
+        optionButton = new SceneControlButton(textures[6], 1.8f);
+        optionButton.getButton().setPosition(540,400);
 
         quitButton = new SceneControlButton(textures[6], 1.8f);
         quitButton.getButton().setPosition(540, 250);
@@ -35,6 +39,8 @@ public class PauseMenu {
         background.draw(batch);
 
         resumeButton.getButton().draw(batch, "Resume");
+
+        optionButton.getButton().draw(batch, "Option");
 
         quitButton.getButton().draw(batch, "Quit");
 
@@ -52,12 +58,14 @@ public class PauseMenu {
             }
         } else {
             resumeButton.update();
+            optionButton.update();
             quitButton.update();
         }
     }
 
     public void init() {
         resumeButton.init();
+        optionButton.init();
         quitButton.init();
         dialog.init();
     }
@@ -70,12 +78,17 @@ public class PauseMenu {
         return resumeButton.isStart();
     }
 
+    public boolean isOpenOption(){
+        return optionButton.isStart();
+    }
+
     public void touchDown(float x, float y) {
         if (quitButton.isStart()){
             dialog.getYesButton().getButton().activate(x, y);
             dialog.getNoButton().getButton().activate(x, y);
         }else {
             resumeButton.getButton().activate(x, y);
+            optionButton.getButton().activate(x, y);
             quitButton.getButton().activate(x, y);
         }
     }
@@ -86,6 +99,7 @@ public class PauseMenu {
             dialog.getNoButton().getButton().deactivate();
         }else {
             resumeButton.getButton().deactivate();
+            optionButton.getButton().deactivate();
             quitButton.getButton().deactivate();
         }
     }
@@ -100,6 +114,8 @@ public class PauseMenu {
 
             resumeButton.getButton().deactivate();
 
+            optionButton.getButton().deactivate();
+
             if (quitButton.getButton().isActive())
                 soundManager.playAcceptSound();
 
@@ -108,6 +124,7 @@ public class PauseMenu {
     }
 
     public void dispose() {
+        optionButton.dispose();
         quitButton.dispose();
         resumeButton.dispose();
         dialog.dispose();

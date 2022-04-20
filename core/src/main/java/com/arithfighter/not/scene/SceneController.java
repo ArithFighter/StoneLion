@@ -46,13 +46,14 @@ public class SceneController {
         }
         if (characterMenu.isOpenOption()) {
             gameScene = GameScene.OPTION;
+            optionMenu.setSceneTemp(GameScene.MENU);
             characterMenu.init();
         }
     }
 
     private void manageOption(){
-        if (optionMenu.isReturnToMainMenu()) {
-            gameScene = GameScene.MENU;
+        if (optionMenu.isLeaving()) {
+            gameScene = optionMenu.getSceneTemp();
             optionMenu.init();
         }
     }
@@ -62,6 +63,11 @@ public class SceneController {
             gameScene = GameScene.MENU;
             stage.init();
             stage.setInitTokens();
+        }
+        if (stage.isOpenOption()){
+            gameScene = GameScene.OPTION;
+            optionMenu.setSceneTemp(GameScene.STAGE);
+            stage.initPauseMenu();
         }
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
