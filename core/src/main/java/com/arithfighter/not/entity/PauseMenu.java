@@ -2,10 +2,10 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.Dialog;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,10 +14,12 @@ public class PauseMenu {
     private final Dialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
-    private final String[] texts = {"Quit","Option","Resume"};
+    private final TextProvider textProvider;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
+
+        textProvider = new TextProvider();
 
         buttons = new ButtonProducer(textures);
 
@@ -32,10 +34,10 @@ public class PauseMenu {
         background.draw(batch);
 
         for (int i =0; i<buttons.getButtons().length;i++)
-            buttons.getButtons()[i].getButton().draw(batch, texts[i]);
+            buttons.getButtons()[i].getButton().draw(batch, textProvider.getPauseMenuTexts()[i]);
 
         if (buttons.getQuit().isStart())
-            dialog.draw(batch, "the game progress will", "be lose. Are you sure?");
+            dialog.draw(batch, textProvider.getPauseMenuTexts()[3], textProvider.getPauseMenuTexts()[4]);
     }
 
     public void update() {

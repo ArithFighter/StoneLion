@@ -22,6 +22,18 @@ public class TextProvider {
             "Quit"
     };
 
+    private final String[] pauseMenuTexts = {
+            "Quit",
+            "Option",
+            "Resume",
+            "the game progress will",
+            "be lose. Are you sure?"
+    };
+
+    public String[] getPauseMenuTexts() {
+        return pauseMenuTexts;
+    }
+
     public String[] getBetScreenTexts() {
         return betScreenTexts;
     }
