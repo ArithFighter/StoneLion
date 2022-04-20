@@ -28,7 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        tokenHolder = new ValueHolder(100);
+        tokenHolder = new ValueHolder(999);
 
         playerCollection = new PlayerCollection(textures, cards,
                 CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
