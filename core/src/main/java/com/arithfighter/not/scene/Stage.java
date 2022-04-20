@@ -17,7 +17,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final GameDataDisplacer dataDisplacer;
     private final TokenHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
-    private int numberBoxQuantity = 99;
+    private int numberBoxQuantity;
     private final int initTokens = 10;
     private int cardLimit;
 

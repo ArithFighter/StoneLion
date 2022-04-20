@@ -5,28 +5,21 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.Dialog;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
+import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
-    private final SceneControlButton quitButton;
-    private final SceneControlButton resumeButton;
-    private final SceneControlButton optionButton;
+    private final ButtonProducer buttons;
     private final Dialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
+    private final String[] texts = {"Quit","Option","Resume"};
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
 
-        resumeButton = new SceneControlButton(textures[6], 1.8f);
-        resumeButton.getButton().setPosition(540,550);
-
-        optionButton = new SceneControlButton(textures[6], 1.8f);
-        optionButton.getButton().setPosition(540,400);
-
-        quitButton = new SceneControlButton(textures[6], 1.8f);
-        quitButton.getButton().setPosition(540, 250);
+        buttons = new ButtonProducer(textures);
 
         dialog = new Dialog(textures);
         dialog.setPoint(new Point(500,300));
@@ -38,35 +31,30 @@ public class PauseMenu {
     public void draw(SpriteBatch batch) {
         background.draw(batch);
 
-        resumeButton.getButton().draw(batch, "Resume");
+        for (int i =0; i<buttons.getButtons().length;i++)
+            buttons.getButtons()[i].getButton().draw(batch, texts[i]);
 
-        optionButton.getButton().draw(batch, "Option");
-
-        quitButton.getButton().draw(batch, "Quit");
-
-        if (quitButton.isStart())
+        if (buttons.getQuit().isStart())
             dialog.draw(batch, "the game progress will", "be lose. Are you sure?");
     }
 
     public void update() {
-        if (quitButton.isStart()){
+        if (buttons.getQuit().isStart()){
             dialog.update();
 
             if (dialog.getNoButton().isStart()){
-                quitButton.init();
+                buttons.getQuit().init();
                 dialog.init();
             }
         } else {
-            resumeButton.update();
-            optionButton.update();
-            quitButton.update();
+            for (SceneControlButton button:buttons.getButtons())
+                button.update();
         }
     }
 
     public void init() {
-        resumeButton.init();
-        optionButton.init();
-        quitButton.init();
+        for (SceneControlButton button:buttons.getButtons())
+                button.init();
         dialog.init();
     }
 
@@ -75,58 +63,80 @@ public class PauseMenu {
     }
 
     public boolean isResume(){
-        return resumeButton.isStart();
+        return buttons.getResume().isStart();
     }
 
     public boolean isOpenOption(){
-        return optionButton.isStart();
+        return buttons.getOption().isStart();
     }
 
     public void touchDown(float x, float y) {
-        if (quitButton.isStart()){
+        if (buttons.getQuit().isStart()){
             dialog.getYesButton().getButton().activate(x, y);
             dialog.getNoButton().getButton().activate(x, y);
         }else {
-            resumeButton.getButton().activate(x, y);
-            optionButton.getButton().activate(x, y);
-            quitButton.getButton().activate(x, y);
+            for (SceneControlButton button:buttons.getButtons())
+                button.getButton().activate(x, y);
         }
     }
 
     public void touchDragged(){
-        if (quitButton.isStart()){
+        if (buttons.getQuit().isStart()){
             dialog.getYesButton().getButton().deactivate();
             dialog.getNoButton().getButton().deactivate();
         }else {
-            resumeButton.getButton().deactivate();
-            optionButton.getButton().deactivate();
-            quitButton.getButton().deactivate();
+            for (SceneControlButton button:buttons.getButtons())
+                button.getButton().deactivate();
         }
     }
 
     public void touchUp() {
-        if (quitButton.isStart()){
+        if (buttons.getQuit().isStart()){
             dialog.getYesButton().getButton().deactivate();
             dialog.getNoButton().getButton().deactivate();
         }else {
-            if (resumeButton.getButton().isActive())
-                soundManager.playReturnSound();
+            for (int i =0;i<buttons.getButtons().length;i++){
+                if (buttons.getButtons()[i].getButton().isActive())
+                    soundManager.playAcceptSound();
+            }
 
-            resumeButton.getButton().deactivate();
-
-            optionButton.getButton().deactivate();
-
-            if (quitButton.getButton().isActive())
-                soundManager.playAcceptSound();
-
-            quitButton.getButton().deactivate();
+            for (SceneControlButton button:buttons.getButtons())
+                button.getButton().deactivate();
         }
     }
 
     public void dispose() {
-        optionButton.dispose();
-        quitButton.dispose();
-        resumeButton.dispose();
+        for (SceneControlButton button:buttons.getButtons())
+                button.dispose();
         dialog.dispose();
+    }
+}
+
+class ButtonProducer{
+    private final SceneControlButton[] buttons;
+
+    public ButtonProducer(Texture[] textures){
+        buttons = new SceneControlButton[3];
+
+        for (int i =0; i< buttons.length;i++){
+            buttons[i] = new SceneControlButton(textures[6], 1.8f);
+            buttons[i].getButton().setPosition(540,250+150*i);
+        }
+    }
+
+    public SceneControlButton[] getButtons(){
+        return buttons;
+    }
+
+    public SceneControlButton getResume(){
+        return buttons[2];
+    }
+
+    public SceneControlButton getOption(){
+        return buttons[1];
+    }
+
+    public SceneControlButton getQuit(){
+        return buttons[0];
     }
 }
