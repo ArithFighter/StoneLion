@@ -19,7 +19,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
     private int numberBoxQuantity;
-    private final int initTokens = 100;
     private int cardLimit;
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
@@ -29,7 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        tokenHolder = new ValueHolder(initTokens);
+        tokenHolder = new ValueHolder(100);
 
         playerCollection = new PlayerCollection(textures, cards,
                 CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
@@ -59,7 +58,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         return tokenHolder;
     }
 
-    public void setInitTokens(){
+    public void setInitTokens(int initTokens){
         tokenHolder.setInitValue(initTokens);
     }
 

@@ -7,6 +7,7 @@ public class SceneController {
     private final Stage stage;
     private final ResultScreen resultScreen;
     private final OptionMenu optionMenu;
+    private final int initTokens = 100;
 
     public SceneController(SceneBuilder sceneBuilder) {
         gameScene = GameScene.MENU;
@@ -41,6 +42,7 @@ public class SceneController {
     private void manageMenu(){
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
+            stage.setInitTokens(initTokens);
             betScreen.setToken(stage.getTokenHolder().getValue());
             characterMenu.init();
         }
@@ -62,7 +64,7 @@ public class SceneController {
         if (stage.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
-            stage.setInitTokens();
+            stage.setInitTokens(initTokens);
         }
         if (stage.isOpenOption()){
             gameScene = GameScene.OPTION;
@@ -108,7 +110,7 @@ public class SceneController {
         if (resultScreen.isQuit()){
             gameScene = GameScene.MENU;
             resultScreen.init();
-            stage.setInitTokens();
+            stage.setInitTokens(initTokens);
         }
     }
 }

@@ -8,13 +8,13 @@ public class ValueHolder {
 
     }
 
-    public ValueHolder(int max) {
-        setInitValue(max);
+    public ValueHolder(int initValue) {
+        setInitValue(initValue);
     }
 
-    public void setInitValue(int max){
-        initValue = max;
-        value = initValue;
+    public void setInitValue(int initValue){
+        this.initValue = initValue;
+        value = this.initValue;
     }
 
     public int getValue() {
