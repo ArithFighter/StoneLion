@@ -19,7 +19,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
     private int numberBoxQuantity;
-    private final int initTokens = 10;
+    private final int initTokens = 100;
     private int cardLimit;
 
     public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {

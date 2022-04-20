@@ -42,9 +42,9 @@ public class ControlNumber {
 
     public void draw(SpriteBatch batch){
         String content = String.valueOf(valueHolder.getValue());
-        int width = fontSize*6;
+        int width = fontSize*9;
 
-        number.draw(batch, content, arrows.getPoint().getX()+width/2f, arrows.getPoint().getY()+fontSize);
+        number.draw(batch, content, arrows.getPoint().getX()+(width-content.length()*fontSize)/2f, arrows.getPoint().getY()+fontSize);
 
         arrows.drawLeftArrow(batch);
         arrows.drawRightArrow(batch, width);
