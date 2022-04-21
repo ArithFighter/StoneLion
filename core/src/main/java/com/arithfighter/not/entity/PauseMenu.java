@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.Dialog;
@@ -8,6 +9,7 @@ import com.arithfighter.not.widget.SceneControlButton;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.button.Button;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,6 +19,7 @@ public class PauseMenu {
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
+    private final MessageDisplacer messageDisplacer;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
@@ -30,6 +33,8 @@ public class PauseMenu {
 
         background = new SpriteWidget(textures[1], 5f);
         background.setPosition(500,200);
+
+        messageDisplacer = new MessageDisplacer(textures);
     }
 
     public void draw(SpriteBatch batch) {
@@ -42,6 +47,8 @@ public class PauseMenu {
 
         if (buttons.getQuit().isStart())
             dialog.draw(batch, textProvider.getPauseMenuTexts()[3], textProvider.getPauseMenuTexts()[4]);
+
+        messageDisplacer.draw(batch);
     }
 
     public void update() {
@@ -117,6 +124,7 @@ public class PauseMenu {
         for (SceneControlButton button:buttons.getButtons())
                 button.dispose();
         dialog.dispose();
+        messageDisplacer.dispose();
     }
 }
 
@@ -146,5 +154,56 @@ class ButtonProducer{
 
     public SceneControlButton getQuit(){
         return buttons[0];
+    }
+}
+
+class MessageDisplacer{
+    private final Font[] texts;
+    private final VisibleWidget background;
+    private int stages;
+    private int wins;
+    private int loses;
+    private int tokens;
+
+    public MessageDisplacer(Texture[] textures){
+        texts = new Font[4];
+
+        for (int i = 0; i< texts.length;i++){
+            texts[i] = new Font(20);
+            texts[i].setColor(Color.BLACK);
+        }
+
+        background = new SpriteWidget(textures[1], 6f);
+        background.setPosition(0, 150);
+    }
+
+    public void setStages(int stages) {
+        this.stages = stages;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
+    }
+
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
+
+    public void draw(SpriteBatch batch){
+        background.draw(batch);
+        int x = 50;
+        texts[0].draw(batch, "stage: "+stages, x,700);
+        texts[1].draw(batch, "win: "+wins, x,600);
+        texts[2].draw(batch, "lose: "+loses, x,500);
+        texts[3].draw(batch, "tokens: "+tokens, x,400);
+    }
+
+    public void dispose(){
+        for (Font font:texts)
+            font.dispose();
     }
 }
