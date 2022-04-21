@@ -4,6 +4,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.ValueHolder;
 import com.arithfighter.not.widget.SceneControlButton;
@@ -42,8 +43,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         cardLimit = limit;
     }
 
-    public boolean isNoTokens(){
-        return tokenHolder.getValue() == 0;
+    public void setGameRecorder(GameRecorder gameRecorder){
+        pauseMenu.setGameRecorder(gameRecorder);
     }
 
     public boolean isExceedCardLimit(){

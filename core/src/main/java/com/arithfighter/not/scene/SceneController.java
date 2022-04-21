@@ -1,5 +1,7 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.not.pojo.GameRecorder;
+
 public class SceneController {
     private GameScene gameScene;
     private final CharacterMenu characterMenu;
@@ -9,9 +11,12 @@ public class SceneController {
     private final GameOver gameOver;
     private final OptionMenu optionMenu;
     private final int initTokens = 100;
+    private final GameRecorder gameRecorder;
 
     public SceneController(SceneBuilder sceneBuilder) {
         gameScene = GameScene.MENU;
+
+        gameRecorder = new GameRecorder();
 
         characterMenu = sceneBuilder.getCharacterMenu();
 
@@ -31,6 +36,8 @@ public class SceneController {
     }
 
     public void updateScene() {
+        stage.setGameRecorder(gameRecorder);
+
         manageMenu();
 
         manageBet();
@@ -47,6 +54,7 @@ public class SceneController {
     private void manageMenu(){
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
+            gameRecorder.init();
             stage.setInitTokens(initTokens);
             betScreen.setToken(stage.getTokenHolder().getValue());
             characterMenu.init();
@@ -79,6 +87,7 @@ public class SceneController {
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.WIN);
+            gameRecorder.getWinRecorder().update(1);
             stage.getTokenHolder().increaseValue(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
@@ -86,6 +95,7 @@ public class SceneController {
         if (stage.isExceedCardLimit()&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
+            gameRecorder.getLoseRecorder().update(1);
             stage.getTokenHolder().decreaseValue(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
@@ -95,6 +105,9 @@ public class SceneController {
     private void manageBet(){
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
+            gameRecorder.getTokenRecorder().reset();
+            gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getValue());
+            gameRecorder.getStagesRecorder().update(1);
             stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
             stage.setCardLimit(betScreen.getCardLimit());
             betScreen.init();

@@ -2,6 +2,7 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.Dialog;
@@ -20,6 +21,7 @@ public class PauseMenu {
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private final MessageDisplacer messageDisplacer;
+    private GameRecorder gameRecorder;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
@@ -37,6 +39,10 @@ public class PauseMenu {
         messageDisplacer = new MessageDisplacer(textures);
     }
 
+    public void setGameRecorder(GameRecorder gameRecorder){
+        this.gameRecorder = gameRecorder;
+    }
+
     public void draw(SpriteBatch batch) {
         background.draw(batch);
 
@@ -52,6 +58,11 @@ public class PauseMenu {
     }
 
     public void update() {
+        messageDisplacer.setStages(gameRecorder.getStagesRecorder().getRecord());
+        messageDisplacer.setWins(gameRecorder.getWinRecorder().getRecord());
+        messageDisplacer.setLoses(gameRecorder.getLoseRecorder().getRecord());
+        messageDisplacer.setTokens(gameRecorder.getTokenRecorder().getRecord());
+
         if (buttons.getQuit().isStart()){
             dialog.update();
 
