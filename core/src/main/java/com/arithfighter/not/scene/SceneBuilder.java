@@ -4,16 +4,15 @@ import com.arithfighter.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.file.MyAssetProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
-    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager, GameSave gameSave){
+    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager){
         super(assetProcessor, soundManager);
-
-        setGameSave(gameSave);
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
@@ -95,8 +94,12 @@ class SceneCollection{
     }
 
     public void setGameSave(GameSave gameSave){
-        optionMenu.setSoundVolume(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[0]));
-        optionMenu.setMusicVolume(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[1]));
+        Preferences pref = gameSave.getPreferences();
+        String soundVolumeKey = gameSave.getOptionKeys()[0];
+        String musicVolumeKey = gameSave.getOptionKeys()[1];
+
+        optionMenu.setSoundVolume(pref.getInteger(soundVolumeKey));
+        optionMenu.setMusicVolume(pref.getInteger(musicVolumeKey));
     }
 
     public CharacterMenu getCharacterMenu() {

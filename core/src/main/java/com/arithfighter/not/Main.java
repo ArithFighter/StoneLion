@@ -27,8 +27,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        GameSave gameSave = new GameSave();
-
         assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
@@ -39,7 +37,7 @@ public class Main extends ApplicationAdapter {
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager(), gameSave);
+        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager());
 
         sceneBuilder.setBatch(batch);
 
@@ -50,6 +48,9 @@ public class Main extends ApplicationAdapter {
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
         sceneController = new SceneController(sceneBuilder, GameScene.MENU);
+
+        GameSave gameSave = new GameSave();
+        sceneBuilder.setGameSave(gameSave);
         sceneController.setGameSave(gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
