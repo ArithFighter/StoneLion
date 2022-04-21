@@ -3,12 +3,10 @@ package com.arithfighter.not;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
-import com.arithfighter.not.font.Font;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -28,8 +26,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        gameScene = GameScene.MENU;
-
         assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
@@ -50,7 +46,7 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
-        sceneController = new SceneController(sceneBuilder);
+        sceneController = new SceneController(sceneBuilder, GameScene.MENU);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -63,6 +59,8 @@ public class Main extends ApplicationAdapter {
         assetProcessor.update(17);
 
         if (assetProcessor.getAssetManager().update()){
+            updateScene();
+
             cursorPos.update();
 
             audioHandler.setAudioVolume();
@@ -70,8 +68,6 @@ public class Main extends ApplicationAdapter {
             setSelectedCharacter();
 
             mouseAdapter.setGameScene(gameScene);
-
-            updateScene();
 
             playBackgroundMusic();
 

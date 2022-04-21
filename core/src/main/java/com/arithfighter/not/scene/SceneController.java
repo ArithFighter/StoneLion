@@ -13,8 +13,8 @@ public class SceneController {
     private final int initTokens = 100;
     private final GameRecorderController gameRecorderController;
 
-    public SceneController(SceneBuilder sceneBuilder) {
-        gameScene = GameScene.MENU;
+    public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
+        gameScene = initScene;
 
         gameRecorderController = new GameRecorderController();
 
@@ -101,7 +101,7 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
         }
-        if (stage.isExceedCardLimit()&& gameScene == GameScene.STAGE){
+        if (stage.isExceedCardLimit()){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
             gameRecorderController.updateWhenLoose();
