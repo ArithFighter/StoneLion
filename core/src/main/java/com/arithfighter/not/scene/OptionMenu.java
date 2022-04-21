@@ -16,9 +16,8 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private GameScene sceneTemp;
-    private GameSave gameSave;
 
-    public OptionMenu(Texture[] textures, SoundManager soundManager){
+    public OptionMenu(Texture[] textures, SoundManager soundManager, GameSave gameSave){
         this.soundManager = soundManager;
 
         textProvider = new TextProvider();
@@ -33,10 +32,6 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
         musicControl = new ControlBar(textures, 6);
         musicControl.setPosition(500,400);
         musicControl.setValue(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[1]));
-    }
-
-    public void setGameSave(GameSave gameSave){
-        this.gameSave = gameSave;
     }
 
     public GameScene getSceneTemp(){

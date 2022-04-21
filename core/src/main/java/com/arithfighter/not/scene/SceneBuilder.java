@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.file.MyAssetProcessor;
@@ -9,8 +10,8 @@ public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
-    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager){
-        super(assetProcessor, soundManager);
+    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager, GameSave gameSave){
+        super(assetProcessor, soundManager, gameSave);
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
@@ -75,14 +76,14 @@ class SceneCollection{
     private final ResultScreen resultScreen;
     private final GameOver gameOver;
 
-    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
+    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager, GameSave gameSave){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
                 soundManager);
 
         stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
                 soundManager);
 
-        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager, gameSave);
 
         betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
 

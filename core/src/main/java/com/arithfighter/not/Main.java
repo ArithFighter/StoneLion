@@ -1,5 +1,6 @@
 package com.arithfighter.not;
 
+import com.arithfighter.GameSave;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
@@ -24,9 +25,12 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
+    private GameSave gameSave;
 
     @Override
     public void create() {
+        gameSave = new GameSave();
+
         assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
@@ -37,7 +41,7 @@ public class Main extends ApplicationAdapter {
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager());
+        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager(), gameSave);
 
         sceneBuilder.setBatch(batch);
 

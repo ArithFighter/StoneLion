@@ -18,7 +18,7 @@ public class ValueHolder {
     }
 
     public void setValue(int i){
-        if (value<=initValue)
+        if (i<=initValue)
             value = Math.max(0,i);
         else
             value = initValue;
