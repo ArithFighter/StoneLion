@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
 
 public class SceneController {
@@ -12,8 +13,11 @@ public class SceneController {
     private final OptionMenu optionMenu;
     private final int initTokens = 100;
     private final GameRecordManager gameRecordManager;
+    private final GameSave gameSave;
 
-    public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
+    public SceneController(SceneBuilder sceneBuilder, GameScene initScene, GameSave gameSave) {
+        this.gameSave = gameSave;
+
         gameScene = initScene;
 
         gameRecordManager = new GameRecordManager();
@@ -78,6 +82,9 @@ public class SceneController {
     private void manageOption(){
         if (optionMenu.isLeaving()) {
             gameScene = optionMenu.getSceneTemp();
+            gameSave.getPreferences().putInteger(gameSave.getOptionKeys()[0], optionMenu.getSoundVolume());
+            gameSave.getPreferences().putInteger(gameSave.getOptionKeys()[1], optionMenu.getMusicVolume());
+            gameSave.getPreferences().flush();
             optionMenu.init();
         }
     }

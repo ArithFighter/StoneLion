@@ -8,7 +8,6 @@ import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -25,11 +24,10 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
-    private GameSave gameSave;
 
     @Override
     public void create() {
-        gameSave = new GameSave();
+        GameSave gameSave = new GameSave();
 
         assetProcessor = new MyAssetProcessor();
 
@@ -51,7 +49,7 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
-        sceneController = new SceneController(sceneBuilder, GameScene.MENU);
+        sceneController = new SceneController(sceneBuilder, GameScene.MENU, gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
