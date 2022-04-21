@@ -38,17 +38,26 @@ public class SceneController {
     public void updateScene() {
         stage.setGameRecorder(gameRecorder);
 
-        manageMenu();
-
-        manageBet();
-
-        manageStage();
-
-        manageResult();
-
-        manageGameOver();
-
-        manageOption();
+        switch (gameScene){
+            case MENU:
+                manageMenu();
+                break;
+            case BET:
+                manageBet();
+                break;
+            case STAGE:
+                manageStage();
+                break;
+            case RESULT:
+                manageResult();
+                break;
+            case GAME_OVER:
+                manageGameOver();
+                break;
+            case OPTION:
+                manageOption();
+                break;
+        }
     }
 
     private void manageMenu(){
