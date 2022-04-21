@@ -11,12 +11,12 @@ public class SceneController {
     private final GameOver gameOver;
     private final OptionMenu optionMenu;
     private final int initTokens = 100;
-    private final GameRecorder gameRecorder;
+    private final GameRecorderController gameRecorderController;
 
     public SceneController(SceneBuilder sceneBuilder) {
         gameScene = GameScene.MENU;
 
-        gameRecorder = new GameRecorder();
+        gameRecorderController = new GameRecorderController();
 
         characterMenu = sceneBuilder.getCharacterMenu();
 
@@ -36,7 +36,7 @@ public class SceneController {
     }
 
     public void updateScene() {
-        stage.setGameRecorder(gameRecorder);
+        stage.setGameRecorder(gameRecorderController.getGameRecorder());
 
         switch (gameScene){
             case MENU:
@@ -63,7 +63,7 @@ public class SceneController {
     private void manageMenu(){
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
-            gameRecorder.init();
+            gameRecorderController.init();
             stage.setInitTokens(initTokens);
             betScreen.setToken(stage.getTokenHolder().getValue());
             characterMenu.init();
@@ -96,7 +96,7 @@ public class SceneController {
         if (stage.isAllNumZero()){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.WIN);
-            gameRecorder.getWinRecorder().update(1);
+            gameRecorderController.updateWhenWin();
             stage.getTokenHolder().increaseValue(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
@@ -104,7 +104,7 @@ public class SceneController {
         if (stage.isExceedCardLimit()&& gameScene == GameScene.STAGE){
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
-            gameRecorder.getLoseRecorder().update(1);
+            gameRecorderController.updateWhenLoose();
             stage.getTokenHolder().decreaseValue(betScreen.getBet());
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
             stage.init();
@@ -114,9 +114,7 @@ public class SceneController {
     private void manageBet(){
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
-            gameRecorder.getTokenRecorder().reset();
-            gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getValue());
-            gameRecorder.getStagesRecorder().update(1);
+            gameRecorderController.updateBeforeStartStage(stage.getTokenHolder().getValue());
             stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
             stage.setCardLimit(betScreen.getCardLimit());
             betScreen.init();
@@ -141,5 +139,35 @@ public class SceneController {
             gameOver.init();
             stage.setInitTokens(initTokens);
         }
+    }
+}
+
+class GameRecorderController{
+    private final GameRecorder gameRecorder;
+
+    public GameRecorderController(){
+        gameRecorder = new GameRecorder();
+    }
+
+    public GameRecorder getGameRecorder() {
+        return gameRecorder;
+    }
+
+    public void updateBeforeStartStage(int tokens){
+        gameRecorder.getTokenRecorder().reset();
+        gameRecorder.getTokenRecorder().update(tokens);
+        gameRecorder.getStagesRecorder().update(1);
+    }
+
+    public void updateWhenWin(){
+        gameRecorder.getWinRecorder().update(1);
+    }
+
+    public void updateWhenLoose(){
+        gameRecorder.getLoseRecorder().update(1);
+    }
+
+    public void init(){
+        gameRecorder.init();
     }
 }
