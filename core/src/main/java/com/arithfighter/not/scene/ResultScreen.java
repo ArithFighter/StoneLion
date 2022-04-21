@@ -8,23 +8,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ResultScreen extends SceneComponent implements SceneEvent, MouseEvent{
+public class ResultScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font winOrLost;
     private final Font tokenMessage;
     private final SceneControlButton continueButton;
     private final SceneControlButton quitButton;
-    private int remainingTokens;
+    private int remainingTokens = 0;
     private ResultState state = ResultState.WIN;
     private final TextProvider textProvider;
 
-    public ResultScreen(Texture[] textures){
+    public ResultScreen(Texture[] textures) {
         textProvider = new TextProvider();
 
         continueButton = new SceneControlButton(textures[6], 2);
-        continueButton.getButton().setPosition(600,150);
+        continueButton.getButton().setPosition(600, 150);
 
         quitButton = new SceneControlButton(textures[6], 2);
-        quitButton.getButton().setPosition(600,150);
+        quitButton.getButton().setPosition(600, 150);
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
@@ -33,12 +33,16 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         tokenMessage.setColor(Color.WHITE);
     }
 
-    public void setState(ResultState state){
+    public void setState(ResultState state) {
         this.state = state;
     }
 
-    public void setRemainingTokens(int tokens){
+    public void setRemainingTokens(int tokens) {
         remainingTokens = tokens;
+    }
+
+    public boolean isNoTokens() {
+        return remainingTokens <= 0;
     }
 
     @Override
@@ -47,29 +51,33 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         float x = cursorPos.getX();
         float y = cursorPos.getY();
 
-        if (state == ResultState.WIN|| state == ResultState.LOOSE)
-            continueButton.getButton().activate(x,y);
+        if (state == ResultState.WIN || state == ResultState.LOOSE){
+            if (isNoTokens())
+                quitButton.getButton().activate(x, y);
+            else
+                continueButton.getButton().activate(x, y);
+        }
 
-        if (state == ResultState.OVER)
-            quitButton.getButton().activate(x, y);
     }
 
     @Override
     public void touchDragged() {
-        if (state == ResultState.WIN|| state == ResultState.LOOSE)
-            continueButton.getButton().deactivate();
-
-        if (state == ResultState.OVER)
-            quitButton.getButton().deactivate();
+        if (state == ResultState.WIN || state == ResultState.LOOSE){
+            if (isNoTokens())
+                quitButton.getButton().deactivate();
+            else
+                continueButton.getButton().deactivate();
+        }
     }
 
     @Override
     public void touchUp() {
-        if (state == ResultState.WIN|| state == ResultState.LOOSE)
-            continueButton.getButton().deactivate();
-
-        if (state == ResultState.OVER)
-            quitButton.getButton().deactivate();
+        if (state == ResultState.WIN || state == ResultState.LOOSE){
+            if (isNoTokens())
+                quitButton.getButton().deactivate();
+            else
+                continueButton.getButton().deactivate();
+        }
     }
 
     @Override
@@ -80,16 +88,17 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
 
     @Override
     public void update() {
-        continueButton.update();
-
-        quitButton.update();
+        if (isNoTokens())
+            quitButton.update();
+        else
+            continueButton.update();
     }
 
-    public boolean isContinue(){
+    public boolean isContinue() {
         return continueButton.isStart();
     }
 
-    public boolean isQuit(){
+    public boolean isQuit() {
         return quitButton.isStart();
     }
 
@@ -99,24 +108,19 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         String message = "";
         String[] texts = textProvider.getResultScreenTexts();
 
-        if (state == ResultState.WIN|| state == ResultState.LOOSE){
-            if (state == ResultState.WIN)
-                message = texts[0];
-            if (state == ResultState.LOOSE)
-                message = texts[1];
+        if (state == ResultState.WIN)
+            message = texts[0];
+        if (state == ResultState.LOOSE)
+            message = texts[1];
 
-            winOrLost.draw(batch, message, 600,500);
+        winOrLost.draw(batch, message, 600, 500);
 
-            tokenMessage.draw(batch, remainingTokens+texts[2], 600,400);
+        tokenMessage.draw(batch, remainingTokens + texts[2], 600, 400);
 
-            continueButton.getButton().draw(batch, texts[3]);
-        }
-        if (state == ResultState.OVER){
-            message = texts[4];
-            winOrLost.draw(batch, message, 600,500);
-
+        if (isNoTokens())
             quitButton.getButton().draw(batch, texts[5]);
-        }
+        else
+            continueButton.getButton().draw(batch, texts[3]);
     }
 
     @Override
