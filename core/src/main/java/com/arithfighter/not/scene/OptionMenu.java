@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.widget.ControlBar;
@@ -15,6 +16,7 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private GameScene sceneTemp;
+    private GameSave gameSave;
 
     public OptionMenu(Texture[] textures, SoundManager soundManager){
         this.soundManager = soundManager;
@@ -26,9 +28,15 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         soundControl = new ControlBar(textures, 6);
         soundControl.setPosition(500,600);
+        soundControl.setValue(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[0]));
 
         musicControl = new ControlBar(textures, 6);
         musicControl.setPosition(500,400);
+        musicControl.setValue(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[1]));
+    }
+
+    public void setGameSave(GameSave gameSave){
+        this.gameSave = gameSave;
     }
 
     public GameScene getSceneTemp(){

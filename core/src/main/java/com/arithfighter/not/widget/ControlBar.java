@@ -28,6 +28,10 @@ public class ControlBar {
         font = new Font(fontSize);
     }
 
+    public void setValue(int value){
+        valueHolder.setValue(value);
+    }
+
     public boolean isButtonActive(){
         return arrows.isLeftActive()||arrows.isRightActive();
     }
@@ -64,7 +68,6 @@ public class ControlBar {
 
     public void update() {
         int i = valueHolder.getValue();
-        valueHolder.updateValue();
 
         if (!isButtonLock) {
             if (arrows.isLeftActive() && i >= 0)

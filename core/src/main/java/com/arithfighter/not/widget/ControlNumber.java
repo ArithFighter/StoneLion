@@ -52,7 +52,6 @@ public class ControlNumber {
 
     public void update() {
         int i = valueHolder.getValue();
-        valueHolder.updateValue();
 
         if (!isButtonLock) {
             if (arrows.isLeftActive() && i > 0)

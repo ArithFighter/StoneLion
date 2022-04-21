@@ -17,6 +17,13 @@ public class ValueHolder {
         value = this.initValue;
     }
 
+    public void setValue(int i){
+        if (value<=initValue)
+            value = Math.max(0,i);
+        else
+            value = initValue;
+    }
+
     public int getValue() {
         return value;
     }
@@ -25,15 +32,13 @@ public class ValueHolder {
         return initValue;
     }
 
-    public void updateValue() {
-        value = Math.max(0, value);
-    }
-
     public void decreaseValue(int i) {
         value -= i;
+        value = Math.max(0, value);
     }
 
     public void increaseValue(int i) {
         value += i;
+        value = Math.max(0, value);
     }
 }
