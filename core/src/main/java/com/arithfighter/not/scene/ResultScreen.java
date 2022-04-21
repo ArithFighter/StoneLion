@@ -114,6 +114,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         if (state == ResultState.OVER){
             message = texts[4];
             winOrLost.draw(batch, message, 600,500);
+
             quitButton.getButton().draw(batch, texts[5]);
         }
     }
