@@ -6,6 +6,7 @@ public class SceneController {
     private final BetScreen betScreen;
     private final Stage stage;
     private final ResultScreen resultScreen;
+    private final GameOver gameOver;
     private final OptionMenu optionMenu;
     private final int initTokens = 100;
 
@@ -19,6 +20,8 @@ public class SceneController {
         stage = sceneBuilder.getStage();
 
         resultScreen = sceneBuilder.getResultScreen();
+
+        gameOver = sceneBuilder.getGameOver();
 
         optionMenu = sceneBuilder.getOptionMenu();
     }
@@ -35,6 +38,8 @@ public class SceneController {
         manageStage();
 
         manageResult();
+
+        manageGameOver();
 
         manageOption();
     }
@@ -103,8 +108,15 @@ public class SceneController {
             resultScreen.init();
         }
         if (resultScreen.isQuit()){
-            gameScene = GameScene.MENU;
+            gameScene = GameScene.GAME_OVER;
             resultScreen.init();
+        }
+    }
+
+    private void manageGameOver(){
+        if (gameOver.isQuit()){
+            gameScene = GameScene.MENU;
+            gameOver.init();
             stage.setInitTokens(initTokens);
         }
     }

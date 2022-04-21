@@ -17,6 +17,7 @@ public class SceneBuilder extends SceneCollection{
                 getBetScreen(),
                 getStage(),
                 getResultScreen(),
+                getGameOver(),
                 getOptionMenu()
         };
 
@@ -25,6 +26,7 @@ public class SceneBuilder extends SceneCollection{
                 getBetScreen(),
                 getStage(),
                 getResultScreen(),
+                getGameOver(),
                 getOptionMenu()
         };
     }
@@ -71,6 +73,7 @@ class SceneCollection{
     private final OptionMenu optionMenu;
     private final BetScreen betScreen;
     private final ResultScreen resultScreen;
+    private final GameOver gameOver;
 
     public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
@@ -84,6 +87,8 @@ class SceneCollection{
         betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
 
         resultScreen = new ResultScreen(assetProcessor.getWidgets());
+
+        gameOver = new GameOver(assetProcessor.getWidgets());
     }
 
     public CharacterMenu getCharacterMenu() {
@@ -104,5 +109,9 @@ class SceneCollection{
 
     public ResultScreen getResultScreen(){
         return resultScreen;
+    }
+
+    public GameOver getGameOver(){
+        return gameOver;
     }
 }
