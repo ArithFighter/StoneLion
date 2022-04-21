@@ -11,7 +11,9 @@ public class SceneBuilder extends SceneCollection{
     private final SceneEvent[] sceneEvents;
 
     public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager, GameSave gameSave){
-        super(assetProcessor, soundManager, gameSave);
+        super(assetProcessor, soundManager);
+
+        setGameSave(gameSave);
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
@@ -76,20 +78,25 @@ class SceneCollection{
     private final ResultScreen resultScreen;
     private final GameOver gameOver;
 
-    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager, GameSave gameSave){
+    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
         characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
                 soundManager);
 
         stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
                 soundManager);
 
-        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager, gameSave);
+        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
         betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
 
         resultScreen = new ResultScreen(assetProcessor.getWidgets());
 
         gameOver = new GameOver(assetProcessor.getWidgets());
+    }
+
+    public void setGameSave(GameSave gameSave){
+        optionMenu.setSoundVolume(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[0]));
+        optionMenu.setMusicVolume(gameSave.getPreferences().getInteger(gameSave.getOptionKeys()[1]));
     }
 
     public CharacterMenu getCharacterMenu() {

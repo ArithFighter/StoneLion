@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
+import com.badlogic.gdx.Preferences;
 
 public class SceneController {
     private GameScene gameScene;
@@ -13,11 +14,9 @@ public class SceneController {
     private final OptionMenu optionMenu;
     private final int initTokens = 100;
     private final GameRecordManager gameRecordManager;
-    private final GameSave gameSave;
+    private GameSave gameSave;
 
-    public SceneController(SceneBuilder sceneBuilder, GameScene initScene, GameSave gameSave) {
-        this.gameSave = gameSave;
-
+    public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
 
         gameRecordManager = new GameRecordManager();
@@ -33,6 +32,10 @@ public class SceneController {
         gameOver = sceneBuilder.getGameOver();
 
         optionMenu = sceneBuilder.getOptionMenu();
+    }
+
+    public void setGameSave(GameSave gameSave){
+        this.gameSave = gameSave;
     }
 
     public GameScene getGameScene() {
@@ -82,11 +85,19 @@ public class SceneController {
     private void manageOption(){
         if (optionMenu.isLeaving()) {
             gameScene = optionMenu.getSceneTemp();
-            gameSave.getPreferences().putInteger(gameSave.getOptionKeys()[0], optionMenu.getSoundVolume());
-            gameSave.getPreferences().putInteger(gameSave.getOptionKeys()[1], optionMenu.getMusicVolume());
-            gameSave.getPreferences().flush();
+            saveOption();
             optionMenu.init();
         }
+    }
+
+    private void saveOption(){
+        Preferences pref = gameSave.getPreferences();
+        String soundVolumeKey = gameSave.getOptionKeys()[0];
+        String musicVolumeKey = gameSave.getOptionKeys()[1];
+
+        pref.putInteger(soundVolumeKey, optionMenu.getSoundVolume());
+        pref.putInteger(musicVolumeKey, optionMenu.getMusicVolume());
+        pref.flush();
     }
 
     private void manageStage(){

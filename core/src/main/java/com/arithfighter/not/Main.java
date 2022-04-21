@@ -49,7 +49,8 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
-        sceneController = new SceneController(sceneBuilder, GameScene.MENU, gameSave);
+        sceneController = new SceneController(sceneBuilder, GameScene.MENU);
+        sceneController.setGameSave(gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
