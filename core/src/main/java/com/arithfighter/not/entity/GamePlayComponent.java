@@ -22,7 +22,7 @@ public class GamePlayComponent {
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
 
-    public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager){
+    public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager) {
         cardFadeOut = new CardAnimation(spriteSheet[1]);
 
         cardReset = new CardAnimation(spriteSheet[1]);
@@ -54,30 +54,30 @@ public class GamePlayComponent {
         sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
     }
 
-    public int getScore(){
+    public int getScore() {
         return scoreRecord.getRecord();
     }
 
-    public void setPlayer(Player player){
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public void init(){
+    public void init() {
         scoreRecord.reset();
         numberBoxDisplacer.init();
         player.init();
         cardFadeOut.init();
     }
 
-    public NumberBoxDisplacer getNumberBoxDisplacer(){
+    public NumberBoxDisplacer getNumberBoxDisplacer() {
         return numberBoxDisplacer;
     }
 
-    public void setNumberQuantity(int quantity){
+    public void setNumberQuantity(int quantity) {
         numberBoxDisplacer.setBoxQuantity(quantity);
     }
 
-    public void update(int mouseX, int mouseY){
+    public void update(int mouseX, int mouseY) {
         numberBoxDisplacer.update(player.getSum());
 
         player.updateWhenTouchCard(mouseX, mouseY);
@@ -98,81 +98,90 @@ public class GamePlayComponent {
         cardReset.draw(batch, 0.5f, AnimationPos.TOP_RIGHT);
     }
 
-    public void touchDown(int mouseX, int mouseY){
+    public void touchDown(int mouseX, int mouseY) {
         player.activateCard(mouseX, mouseY);
-        cardReset.setLastPoint(player.getActiveCard().getInitPoint());
+        cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
     }
 
-    public void touchDragged(int mouseX, int mouseY){
+    public void touchDragged(int mouseX, int mouseY) {
         player.updateWhenDrag(mouseX, mouseY);
     }
 
-    public void touchUp(int mouseX, int mouseY){
+    public void touchUp(int mouseX, int mouseY) {
         cardPlaceBasket.playCardToBasket(mouseX, mouseY);
-        cardFadeOut.setLastPoint(new Point(mouseX,mouseY));
+        cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
     }
 
-    public void dispose(){
+    public void dispose() {
         numberBoxDisplacer.dispose();
         sumBox.dispose();
     }
 }
 
-class CardAnimation{
+class CardAnimation {
     private final AnimationProcessor processor;
     private boolean isStart = false;
     private final TimeHandler fadeOutHandler;
-    private Point lastPoint;
+    private Point lastMousePoint;
+    private Point drawPoint;
 
-    public CardAnimation(Texture texture){
-        processor = new AnimationProcessor(texture,3,3);
+    public CardAnimation(Texture texture) {
+        processor = new AnimationProcessor(texture, 3, 3);
         processor.setScale(16);
         processor.setSpeed(0.08f);
         fadeOutHandler = new TimeHandler();
-        lastPoint = new Point();
+        drawPoint = new Point();
+        lastMousePoint = new Point();
     }
 
-    public void setLastPoint(Point point){
-        lastPoint = point;
+    public void setLastMousePoint(Point point) {
+        lastMousePoint = point;
     }
 
-    public void setStart(){
+    public void setStart() {
         isStart = true;
     }
 
-    public void init(){
+    public void init() {
         isStart = false;
     }
 
-    public void draw(SpriteBatch batch, float duration, AnimationPos pos){
-        if (isStart){
+    public void draw(SpriteBatch batch, float duration, AnimationPos pos) {
+        if (isStart) {
             fadeOutHandler.updatePastedTime();
-            if (fadeOutHandler.getPastedTime()<duration){
-                processor.setPoint(lastPoint);
+            if (fadeOutHandler.getPastedTime() < duration) {
+                processor.setPoint(lastMousePoint);
                 processor.setBatch(batch);
 
-                float x = 0;
-                float y = 0;
+                drawPoint = getPoint(pos);
 
-                if (pos == AnimationPos.CENTER){
-                    x = processor.getPoint().getX()- processor.getWidth()/2;
-                    y = processor.getPoint().getY()- processor.getHeight()/2;
-                }
-                if(pos == AnimationPos.TOP_RIGHT){
-                    x = processor.getPoint().getX();
-                    y = processor.getPoint().getY();
-                }
-                processor.draw(x,y);
-            }else{
+                processor.draw(drawPoint.getX(), drawPoint.getY());
+            } else {
                 isStart = false;
             }
-        }else {
+        } else {
             fadeOutHandler.resetPastedTime();
             processor.init();
         }
     }
+
+    private Point getPoint(AnimationPos pos) {
+        float x = 0;
+        float y = 0;
+
+        if (pos == AnimationPos.CENTER) {
+            x = processor.getPoint().getX() - processor.getWidth() / 2;
+            y = processor.getPoint().getY() - processor.getHeight() / 2;
+        }
+        if (pos == AnimationPos.TOP_RIGHT) {
+            x = processor.getPoint().getX();
+            y = processor.getPoint().getY();
+        }
+
+        return new Point(x,y);
+    }
 }
 
-enum AnimationPos{
+enum AnimationPos {
     CENTER, TOP_RIGHT
 }
