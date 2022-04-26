@@ -1,6 +1,5 @@
 package com.arithfighter.not;
 
-import com.arithfighter.GameSave;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;

@@ -1,6 +1,6 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.GameSave;
+import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
 import com.badlogic.gdx.Preferences;
 

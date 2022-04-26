@@ -1,6 +1,6 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.GameSave;
+import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.file.MyAssetProcessor;

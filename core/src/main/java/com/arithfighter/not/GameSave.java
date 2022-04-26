@@ -1,4 +1,4 @@
-package com.arithfighter;
+package com.arithfighter.not;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
