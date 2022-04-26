@@ -55,6 +55,11 @@ public class FileLibrary {
             "sound/select.ogg"
     };
 
+    private final String[] sheetFiles = {
+            "spritesheet/card-fade-in.png",
+            "spritesheet/card-fade-out.png"
+    };
+
     public String[] getWidgetFiles(){
         return widgetFiles;
     }
@@ -73,5 +78,9 @@ public class FileLibrary {
 
     public String[] getSoundFiles() {
         return soundFiles;
+    }
+
+    public String[] getSheetFiles() {
+        return sheetFiles;
     }
 }
