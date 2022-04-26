@@ -21,6 +21,7 @@ public class GamePlayComponent {
     private final Recorder scoreRecord = new Recorder();
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
+    private boolean isCardDrag = false;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager) {
         cardFadeOut = new CardAnimation(spriteSheet[1]);
@@ -99,17 +100,22 @@ public class GamePlayComponent {
     }
 
     public void touchDown(int mouseX, int mouseY) {
+        isCardDrag = false;
         player.activateCard(mouseX, mouseY);
         cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
     }
 
     public void touchDragged(int mouseX, int mouseY) {
+        if (player.isCardActive())
+            isCardDrag = true;
         player.updateWhenDrag(mouseX, mouseY);
     }
 
     public void touchUp(int mouseX, int mouseY) {
-        cardPlaceBasket.playCardToBasket(mouseX, mouseY);
-        cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+        if (isCardDrag) {
+            cardPlaceBasket.playCardToBasket(mouseX, mouseY);
+            cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+        }
     }
 
     public void dispose() {
@@ -148,21 +154,27 @@ class CardAnimation {
 
     public void draw(SpriteBatch batch, float duration, AnimationPos pos) {
         if (isStart) {
-            fadeOutHandler.updatePastedTime();
-            if (fadeOutHandler.getPastedTime() < duration) {
-                processor.setPoint(lastMousePoint);
-                processor.setBatch(batch);
-
-                drawPoint = getPoint(pos);
-
-                processor.draw(drawPoint.getX(), drawPoint.getY());
-            } else {
-                isStart = false;
-            }
+            handleAnimation(batch, duration, pos);
         } else {
-            fadeOutHandler.resetPastedTime();
-            processor.init();
+            resetTimeAndAnimation();
         }
+    }
+
+    private void handleAnimation(SpriteBatch batch, float duration, AnimationPos pos) {
+        fadeOutHandler.updatePastedTime();
+
+        if (fadeOutHandler.getPastedTime() < duration) {
+            processor.setBatch(batch);
+            processor.setPoint(lastMousePoint);
+            drawPoint = getPoint(pos);
+            processor.draw(drawPoint.getX(), drawPoint.getY());
+        } else
+            isStart = false;
+    }
+
+    private void resetTimeAndAnimation(){
+        fadeOutHandler.resetPastedTime();
+        processor.init();
     }
 
     private Point getPoint(AnimationPos pos) {
@@ -178,7 +190,7 @@ class CardAnimation {
             y = processor.getPoint().getY();
         }
 
-        return new Point(x,y);
+        return new Point(x, y);
     }
 }
 

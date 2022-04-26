@@ -1,7 +1,6 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
-import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,6 +32,10 @@ public class Player {
         sumAccessor.reset();
         capacityManager.initialize();
         energyBar.reset();
+    }
+
+    public boolean isCardActive(){
+        return hand.isCardActive();
     }
 
     public NumberCard getActiveCard() {
