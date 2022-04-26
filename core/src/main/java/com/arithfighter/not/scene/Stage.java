@@ -22,10 +22,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private int numberBoxQuantity;
     private int cardLimit;
 
-    public Stage(Texture[] textures, Texture[] cards, SoundManager soundManager) {
+    public Stage(Texture[] textures, Texture[] cards, Texture[] spriteSheet, SoundManager soundManager) {
         dataDisplacer = new GameDataDisplacer();
 
-        gamePlayComponent = new GamePlayComponent(textures, soundManager);
+        gamePlayComponent = new GamePlayComponent(textures, spriteSheet, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
 

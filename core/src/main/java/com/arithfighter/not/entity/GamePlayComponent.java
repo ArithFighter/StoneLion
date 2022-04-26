@@ -1,8 +1,11 @@
 package com.arithfighter.not.entity;
 
+import com.arithfighter.not.SpriteAnimation;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
+import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.CardPlaceBasket;
 import com.arithfighter.not.widget.SumBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,8 +19,16 @@ public class GamePlayComponent {
     private Player player;
     private final SumBox sumBox;
     private final Recorder scoreRecord = new Recorder();
+    private final SpriteAnimation cardFadeOut;
+    private boolean isCardPlayed = false;
+    private final TimeHandler fadeOutHandler = new TimeHandler();
+    private final Point lastPoint = new Point();
 
-    public GamePlayComponent(Texture[] textures, SoundManager soundManager){
+    public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager){
+        cardFadeOut = new SpriteAnimation(spriteSheet[1], 3,3);
+        cardFadeOut.setScale(16);
+        cardFadeOut.setSpeed(0.08f);
+
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
             public void initCardPosition() {
@@ -27,6 +38,7 @@ public class GamePlayComponent {
             @Override
             public void checkCardPlayed() {
                 player.playCard();
+                isCardPlayed = true;
             }
         };
         cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
@@ -80,6 +92,19 @@ public class GamePlayComponent {
         sumBox.draw(player.getSum(), batch);
 
         player.draw(batch);
+
+        if (isCardPlayed){
+            fadeOutHandler.updatePastedTime();
+            if (fadeOutHandler.getPastedTime()<0.5f){
+                cardFadeOut.setPoint(lastPoint);
+                cardFadeOut.setBatch(batch);
+                cardFadeOut.draw();
+            }else{
+                fadeOutHandler.resetPastedTime();
+                cardFadeOut.init();
+                isCardPlayed = false;
+            }
+        }
     }
 
     public void touchDown(int mouseX, int mouseY){
@@ -92,6 +117,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY){
         cardPlaceBasket.playCardToBasket(mouseX, mouseY);
+        lastPoint.set(mouseX, mouseY);
     }
 
     public void dispose(){

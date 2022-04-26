@@ -16,7 +16,7 @@ public class NumberCard{
 
     public NumberCard(float initX, float initY, Texture texture, int number) {
         card = new RawCard(initX, initY, texture);
-        card.addShape(texture, 1.8f);
+        card.addShape(texture, 2f);
         initPoint = card.getInitPoint();
         point = card.getPoint();
         shape = card.getShape();

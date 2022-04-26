@@ -82,7 +82,7 @@ class SceneCollection{
                 soundManager);
 
         stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
-                soundManager);
+                assetProcessor.getSpriteSheet(), soundManager);
 
         optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
 
