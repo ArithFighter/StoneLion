@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class SpriteSheetProcessor {
-    private final int FRAME_COLS, FRAME_ROWS;
+public class AnimationProcessor {
     private final Animation<TextureRegion> animation;
     private SpriteBatch batch;
     private Point point = new Point(0,0);
@@ -16,32 +15,11 @@ public class SpriteSheetProcessor {
 
 	float stateTime = 0;
 
-    public SpriteSheetProcessor(Texture texture, int cols, int rows){
-        FRAME_COLS = cols;
-        FRAME_ROWS = rows;
+    public AnimationProcessor(Texture texture, int cols, int rows){
+        FrameProducer frameProducer = new FrameProducer(texture, cols, rows);
 
-		TextureRegion[][] splitSheet = getSplitSpriteSheet(texture);
-
-		TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-
-		addSpriteToFrame(splitSheet, frames);
-
-		animation = new Animation<>(0.166f, frames);
+		animation = new Animation<>(0.166f, frameProducer.getFrames());
     }
-
-	private TextureRegion[][] getSplitSpriteSheet(Texture texture){
-		return TextureRegion.split(texture,
-				texture.getWidth() / FRAME_COLS,
-				texture.getHeight() / FRAME_ROWS);
-	}
-
-	private void addSpriteToFrame(TextureRegion[][] splitSheet, TextureRegion[] walkFrames){
-		int index = 0;
-		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++)
-				walkFrames[index++] = splitSheet[i][j];
-		}
-	}
 
     public void setSpeed(float perSec){
         animation.setFrameDuration(perSec);
@@ -76,5 +54,27 @@ public class SpriteSheetProcessor {
 
     public void init(){
         stateTime = 0;
+    }
+}
+
+class FrameProducer{
+    TextureRegion[] frames;
+
+    public FrameProducer(Texture texture, int cols, int rows){
+        TextureRegion[][] splitSheet = TextureRegion.split(texture,
+				texture.getWidth() / cols,
+				texture.getHeight() / rows);
+
+        frames = new TextureRegion[cols * rows];
+
+		int index = 0;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++)
+				frames[index++] = splitSheet[i][j];
+		}
+    }
+
+    public TextureRegion[] getFrames() {
+        return frames;
     }
 }

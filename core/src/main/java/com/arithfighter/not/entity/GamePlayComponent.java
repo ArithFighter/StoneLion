@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity;
 
-import com.arithfighter.not.SpriteSheetProcessor;
+import com.arithfighter.not.AnimationProcessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;
@@ -112,15 +112,15 @@ public class GamePlayComponent {
 }
 
 class CardAnimation{
-    private final SpriteSheetProcessor cardFadeOut;
+    private final AnimationProcessor processor;
     private boolean isCardPlayed = false;
     private final TimeHandler fadeOutHandler;
     private Point lastPoint;
 
     public CardAnimation(Texture texture){
-        cardFadeOut = new SpriteSheetProcessor(texture,3,3);
-        cardFadeOut.setScale(16);
-        cardFadeOut.setSpeed(0.08f);
+        processor = new AnimationProcessor(texture,3,3);
+        processor.setScale(16);
+        processor.setSpeed(0.08f);
         fadeOutHandler = new TimeHandler();
         lastPoint = new Point();
     }
@@ -141,15 +141,15 @@ class CardAnimation{
         if (isCardPlayed){
             fadeOutHandler.updatePastedTime();
             if (fadeOutHandler.getPastedTime()<duration){
-                cardFadeOut.setPoint(lastPoint);
-                cardFadeOut.setBatch(batch);
-                cardFadeOut.draw();
+                processor.setPoint(lastPoint);
+                processor.setBatch(batch);
+                processor.draw();
             }else{
                 isCardPlayed = false;
             }
         }else {
             fadeOutHandler.resetPastedTime();
-            cardFadeOut.init();
+            processor.init();
         }
     }
 }
