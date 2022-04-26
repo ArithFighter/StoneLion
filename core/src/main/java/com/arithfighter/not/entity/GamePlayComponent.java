@@ -19,15 +19,10 @@ public class GamePlayComponent {
     private Player player;
     private final SumBox sumBox;
     private final Recorder scoreRecord = new Recorder();
-    private final SpriteAnimation cardFadeOut;
-    private boolean isCardPlayed = false;
-    private final TimeHandler fadeOutHandler = new TimeHandler();
-    private final Point lastPoint = new Point();
+    private final CardAnimation cardFadeOut;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager){
-        cardFadeOut = new SpriteAnimation(spriteSheet[1], 3,3);
-        cardFadeOut.setScale(16);
-        cardFadeOut.setSpeed(0.08f);
+        cardFadeOut = new CardAnimation(spriteSheet[1]);
 
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
@@ -38,7 +33,7 @@ public class GamePlayComponent {
             @Override
             public void checkCardPlayed() {
                 player.playCard();
-                isCardPlayed = true;
+                cardFadeOut.setCardPlayed();
             }
         };
         cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
@@ -67,7 +62,7 @@ public class GamePlayComponent {
         scoreRecord.reset();
         numberBoxDisplacer.init();
         player.init();
-        isCardPlayed = false;
+        cardFadeOut.init();
     }
 
     public NumberBoxDisplacer getNumberBoxDisplacer(){
@@ -94,21 +89,7 @@ public class GamePlayComponent {
 
         player.draw(batch);
 
-        if (isCardPlayed){
-            fadeOutHandler.updatePastedTime();
-            if (fadeOutHandler.getPastedTime()<0.5f){
-                cardFadeOut.setPoint(lastPoint);
-                cardFadeOut.setBatch(batch);
-                cardFadeOut.draw();
-            }else{
-                fadeOutHandler.resetPastedTime();
-                cardFadeOut.init();
-                isCardPlayed = false;
-            }
-        }else {
-            fadeOutHandler.resetPastedTime();
-            cardFadeOut.init();
-        }
+        cardFadeOut.draw(batch, 0.5f);
     }
 
     public void touchDown(int mouseX, int mouseY){
@@ -121,11 +102,54 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY){
         cardPlaceBasket.playCardToBasket(mouseX, mouseY);
-        lastPoint.set(mouseX, mouseY);
+        cardFadeOut.setLastPoint(new Point(mouseX,mouseY));
     }
 
     public void dispose(){
         numberBoxDisplacer.dispose();
         sumBox.dispose();
+    }
+}
+
+class CardAnimation{
+    private final SpriteAnimation cardFadeOut;
+    private boolean isCardPlayed = false;
+    private final TimeHandler fadeOutHandler;
+    private Point lastPoint;
+
+    public CardAnimation(Texture texture){
+        cardFadeOut = new SpriteAnimation(texture,3,3);
+        cardFadeOut.setScale(16);
+        cardFadeOut.setSpeed(0.08f);
+        fadeOutHandler = new TimeHandler();
+        lastPoint = new Point();
+    }
+
+    public void setLastPoint(Point point){
+        lastPoint = point;
+    }
+
+    public void setCardPlayed(){
+        isCardPlayed = true;
+    }
+
+    public void init(){
+        isCardPlayed = false;
+    }
+
+    public void draw(SpriteBatch batch, float duration){
+        if (isCardPlayed){
+            fadeOutHandler.updatePastedTime();
+            if (fadeOutHandler.getPastedTime()<duration){
+                cardFadeOut.setPoint(lastPoint);
+                cardFadeOut.setBatch(batch);
+                cardFadeOut.draw();
+            }else{
+                isCardPlayed = false;
+            }
+        }else {
+            fadeOutHandler.resetPastedTime();
+            cardFadeOut.init();
+        }
     }
 }
