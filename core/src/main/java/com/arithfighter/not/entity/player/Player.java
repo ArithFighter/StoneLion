@@ -34,6 +34,10 @@ public class Player {
         energyBar.reset();
     }
 
+    public NumberCard getActiveCard(){
+        return hand.getActiveCard();
+    }
+
     public final void activateCard(int mouseX, int mouseY) {
         for (NumberCard card : hand.getCards())
             card.activateCard(mouseX, mouseY);

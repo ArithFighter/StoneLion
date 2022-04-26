@@ -33,7 +33,7 @@ public class GamePlayComponent {
             @Override
             public void checkCardPlayed() {
                 player.playCard();
-                cardFadeOut.setCardPlayed();
+                cardFadeOut.setStart();
             }
         };
         cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
@@ -113,13 +113,13 @@ public class GamePlayComponent {
 
 class CardAnimation{
     private final AnimationProcessor processor;
-    private boolean isCardPlayed = false;
+    private boolean isStart = false;
     private final TimeHandler fadeOutHandler;
     private Point lastPoint;
 
     public CardAnimation(Texture texture){
         processor = new AnimationProcessor(texture,3,3);
-        processor.setScale(16);
+        processor.setScale(18);
         processor.setSpeed(0.08f);
         fadeOutHandler = new TimeHandler();
         lastPoint = new Point();
@@ -129,23 +129,23 @@ class CardAnimation{
         lastPoint = point;
     }
 
-    public void setCardPlayed(){
-        isCardPlayed = true;
+    public void setStart(){
+        isStart = true;
     }
 
     public void init(){
-        isCardPlayed = false;
+        isStart = false;
     }
 
     public void draw(SpriteBatch batch, float duration){
-        if (isCardPlayed){
+        if (isStart){
             fadeOutHandler.updatePastedTime();
             if (fadeOutHandler.getPastedTime()<duration){
                 processor.setPoint(lastPoint);
                 processor.setBatch(batch);
                 processor.draw();
             }else{
-                isCardPlayed = false;
+                isStart = false;
             }
         }else {
             fadeOutHandler.resetPastedTime();

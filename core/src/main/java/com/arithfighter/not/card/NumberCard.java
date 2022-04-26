@@ -96,7 +96,7 @@ public class NumberCard{
     }
 
     private boolean isOnCard(float x, float y) {
-        int tolerance = 15;
+        int tolerance = 10;
 
         tolerance = getCardActivationRange(tolerance);
 
