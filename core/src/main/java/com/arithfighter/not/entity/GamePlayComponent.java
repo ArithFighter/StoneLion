@@ -153,18 +153,18 @@ class CardAnimation {
     }
 
     public void draw(SpriteBatch batch, float duration, AnimationPos pos) {
+        processor.setBatch(batch);
         if (isStart) {
-            handleAnimation(batch, duration, pos);
+            handleAnimation(duration, pos);
         } else {
             resetTimeAndAnimation();
         }
     }
 
-    private void handleAnimation(SpriteBatch batch, float duration, AnimationPos pos) {
+    private void handleAnimation(float duration, AnimationPos pos) {
         fadeOutHandler.updatePastedTime();
 
         if (fadeOutHandler.getPastedTime() < duration) {
-            processor.setBatch(batch);
             processor.setPoint(lastMousePoint);
             drawPoint = getPoint(pos);
             processor.draw(drawPoint.getX(), drawPoint.getY());
