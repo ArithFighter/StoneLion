@@ -1,5 +1,6 @@
 package com.arithfighter.not.entity.player;
 
+import com.arithfighter.not.card.NumberCard;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,11 +35,13 @@ public class Player {
     }
 
     public final void activateCard(int mouseX, int mouseY) {
-        hand.activateCard(mouseX, mouseY);
+        for (NumberCard card : hand.getCards())
+            card.activateCard(mouseX, mouseY);
     }
 
     public final void updateWhenDrag(int mouseX, int mouseY) {
-        hand.updateWhenDrag(mouseX, mouseY);
+        for (NumberCard card : hand.getCards())
+            card.updateWhenDrag(mouseX, mouseY);
     }
 
     public final void draw(SpriteBatch batch) {
@@ -50,7 +53,8 @@ public class Player {
     }
 
     public void updateWhenTouchCard(int mouseX, int mouseY) {
-        hand.updateWhenTouchCard(mouseX, mouseY);
+        for (NumberCard card : hand.getCards())
+            card.updateWhenTouchCard(mouseX, mouseY);
     }
 
     private void checkCapacity() {
@@ -62,7 +66,8 @@ public class Player {
     }
 
     public final void initHand() {
-        hand.initCardsPosition();
+        for (NumberCard card : hand.getCards())
+            card.initCard();
     }
 
     public final int getSum() {

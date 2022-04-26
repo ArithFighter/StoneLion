@@ -24,7 +24,6 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
-    private SpriteAnimation spriteAnimation;
 
     @Override
     public void create() {
@@ -53,12 +52,6 @@ public class Main extends ApplicationAdapter {
         GameSave gameSave = new GameSave();
         sceneBuilder.setGameSave(gameSave);
         sceneController.setGameSave(gameSave);
-
-        spriteAnimation = new SpriteAnimation(assetProcessor.getSpriteSheet()[1], 3,3);
-        spriteAnimation.setBatch(batch);
-        spriteAnimation.setPoint(new Point(500,150));
-        spriteAnimation.setScale(10);
-        spriteAnimation.setSpeed(0.08f);
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -115,8 +108,6 @@ public class Main extends ApplicationAdapter {
         batch.begin();
 
         sceneBuilder.drawScene(gameScene);
-
-        spriteAnimation.draw();
 
         //show game data for development
         if (gameScene == GameScene.STAGE)

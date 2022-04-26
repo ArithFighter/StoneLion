@@ -41,6 +41,10 @@ public class Hand {
             card.draw(batch);
     }
 
+    public NumberCard getActiveCard(){
+        return cards[getActiveCardIndex()];
+    }
+
     public int getCardNumber() {
         return cards[getActiveCardIndex()].getNumber();
     }
@@ -49,24 +53,8 @@ public class Hand {
         return getActiveCardIndex() == cards.length-1;
     }
 
-    public void updateWhenTouchCard(float x, float y) {
-        for (NumberCard card : cards)
-            card.updateWhenTouchCard(x, y);
-    }
-
-    public void activateCard(float x, float y) {
-        for (NumberCard card : cards)
-            card.activateCard(x, y);
-    }
-
-    public void updateWhenDrag(float x, float y) {
-        for (NumberCard card : cards)
-            card.updateWhenDrag(x, y);
-    }
-
-    public void initCardsPosition() {
-        for (NumberCard card : cards)
-            card.initCard();
+    public NumberCard[] getCards(){
+        return cards;
     }
 
     public boolean isCardActive() {

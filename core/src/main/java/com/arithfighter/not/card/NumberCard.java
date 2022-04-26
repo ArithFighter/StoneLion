@@ -32,6 +32,14 @@ public class NumberCard{
         return shape.getWidth();
     }
 
+    public Point getPoint(){
+        return point;
+    }
+
+    public Point getInitPoint(){
+        return initPoint;
+    }
+
     public void draw(SpriteBatch batch) {
         setPointWhenOutOfScreen();
 
