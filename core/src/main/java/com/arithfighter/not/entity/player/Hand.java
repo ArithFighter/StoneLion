@@ -33,7 +33,7 @@ public class Hand {
 
     private float getPadding(Texture[] textures) {
         NumberCard sample = new NumberCard(0, 0, textures[0], 0);
-        return sample.getWidth() + WindowSetting.GRID_X * 0.6f;
+        return sample.getShape().getWidth() + WindowSetting.GRID_X * 0.6f;
     }
 
     public void draw(SpriteBatch batch) {

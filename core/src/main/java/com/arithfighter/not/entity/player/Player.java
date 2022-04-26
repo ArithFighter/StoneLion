@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,18 +35,18 @@ public class Player {
         energyBar.reset();
     }
 
-    public NumberCard getActiveCard(){
-        return hand.getActiveCard();
-    }
-
     public final void activateCard(int mouseX, int mouseY) {
         for (NumberCard card : hand.getCards())
             card.activateCard(mouseX, mouseY);
     }
 
     public final void updateWhenDrag(int mouseX, int mouseY) {
-        for (NumberCard card : hand.getCards())
-            card.updateWhenDrag(mouseX, mouseY);
+        for (NumberCard card : hand.getCards()){
+            if (card.isActive()){
+                card.setPosition(mouseX - card.getShape().getWidth() / 2,
+                            mouseY - card.getShape().getHeight() / 2);
+            }
+        }
     }
 
     public final void draw(SpriteBatch batch) {
@@ -57,8 +58,20 @@ public class Player {
     }
 
     public void updateWhenTouchCard(int mouseX, int mouseY) {
-        for (NumberCard card : hand.getCards())
-            card.updateWhenTouchCard(mouseX, mouseY);
+        for (NumberCard card : hand.getCards()) {
+            if (card.isOnCard(mouseX, mouseY)) {
+                playTouchedAnimation(card);
+            } else
+                card.initCard();
+        }
+    }
+
+    private void playTouchedAnimation(NumberCard card){
+        int movingDistance = 30;
+        float speed = 3;
+
+        if (card.getPoint().getY() < card.getInitPoint().getY() + movingDistance)
+            card.setPosition(card.getPoint().getX(), card.getPoint().getY()+speed);
     }
 
     private void checkCapacity() {

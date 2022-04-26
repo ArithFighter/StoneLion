@@ -28,8 +28,8 @@ public class NumberCard{
         return number;
     }
 
-    public float getWidth() {
-        return shape.getWidth();
+    public Shape getShape() {
+        return shape;
     }
 
     public Point getPoint(){
@@ -38,6 +38,10 @@ public class NumberCard{
 
     public Point getInitPoint(){
         return initPoint;
+    }
+
+    public void setPosition(float x, float y){
+        point.set(x,y);
     }
 
     public void draw(SpriteBatch batch) {
@@ -58,26 +62,6 @@ public class NumberCard{
                 sbi.updateWhenExceedY(point.getY()));
     }
 
-    public void updateWhenTouchCard(float x, float y) {
-        if (isOnCard(x, y)){
-            playTouchedAnimation();
-        }
-        else
-            initCard();
-    }
-
-    private void playTouchedAnimation(){
-        int movingDistance = 30;
-        float speed = 3;
-        if (point.getY() < initPoint.getY() + movingDistance)
-            point.setY(point.getY()+speed);
-    }
-
-    public void updateWhenDrag(float x, float y) {
-        if (isCardActive)
-            point.set(x - shape.getWidth() / 2, y - shape.getHeight() / 2);
-    }
-
     public void initCard() {
         point.set(initPoint.getX(), initPoint.getY());
 
@@ -95,7 +79,7 @@ public class NumberCard{
         return isCardActive;
     }
 
-    private boolean isOnCard(float x, float y) {
+    public boolean isOnCard(float x, float y) {
         int tolerance = 10;
 
         tolerance = getCardActivationRange(tolerance);
