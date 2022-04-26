@@ -12,7 +12,7 @@ public class SpriteAnimation {
     private final Animation<TextureRegion> animation;
     private SpriteBatch batch;
     private Point point = new Point(0,0);
-    private int scale = 1;
+    private float scale = 1;
 
 	float stateTime = 0;
 
@@ -43,7 +43,7 @@ public class SpriteAnimation {
 		}
 	}
 
-    public void setSpeed(int perSec){
+    public void setSpeed(float perSec){
         animation.setFrameDuration(perSec);
     }
 
@@ -55,7 +55,7 @@ public class SpriteAnimation {
         this.point = point;
     }
 
-    public void setScale(int scale){
+    public void setScale(float scale){
         this.scale = scale;
     }
 
@@ -63,9 +63,12 @@ public class SpriteAnimation {
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
-        currentFrame.setRegionWidth(currentFrame.getRegionWidth()*scale);
-        currentFrame.setRegionHeight(currentFrame.getRegionHeight()*scale);
-		batch.draw(currentFrame, point.getX(), point.getY());
+
+		batch.draw(currentFrame,
+                point.getX(),
+                point.getY(),
+                currentFrame.getRegionWidth()*scale,
+                currentFrame.getRegionHeight()*scale);
     }
 
     public void init(){
