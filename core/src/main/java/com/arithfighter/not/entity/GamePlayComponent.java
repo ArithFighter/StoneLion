@@ -67,6 +67,7 @@ public class GamePlayComponent {
         scoreRecord.reset();
         numberBoxDisplacer.init();
         player.init();
+        isCardPlayed = false;
     }
 
     public NumberBoxDisplacer getNumberBoxDisplacer(){
@@ -104,6 +105,9 @@ public class GamePlayComponent {
                 cardFadeOut.init();
                 isCardPlayed = false;
             }
+        }else {
+            fadeOutHandler.resetPastedTime();
+            cardFadeOut.init();
         }
     }
 

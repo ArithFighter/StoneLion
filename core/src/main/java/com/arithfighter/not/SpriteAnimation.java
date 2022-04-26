@@ -64,11 +64,14 @@ public class SpriteAnimation {
 
 		TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
 
+        float width = currentFrame.getRegionWidth()*scale;
+        float height = currentFrame.getRegionHeight()*scale;
+
 		batch.draw(currentFrame,
-                point.getX(),
-                point.getY(),
-                currentFrame.getRegionWidth()*scale,
-                currentFrame.getRegionHeight()*scale);
+                point.getX()-width/2,
+                point.getY()-height/2,
+                width,
+                height);
     }
 
     public void init(){
