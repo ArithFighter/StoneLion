@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity;
 
-import com.arithfighter.not.SpriteAnimation;
+import com.arithfighter.not.SpriteSheetProcessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;
@@ -112,13 +112,13 @@ public class GamePlayComponent {
 }
 
 class CardAnimation{
-    private final SpriteAnimation cardFadeOut;
+    private final SpriteSheetProcessor cardFadeOut;
     private boolean isCardPlayed = false;
     private final TimeHandler fadeOutHandler;
     private Point lastPoint;
 
     public CardAnimation(Texture texture){
-        cardFadeOut = new SpriteAnimation(texture,3,3);
+        cardFadeOut = new SpriteSheetProcessor(texture,3,3);
         cardFadeOut.setScale(16);
         cardFadeOut.setSpeed(0.08f);
         fadeOutHandler = new TimeHandler();

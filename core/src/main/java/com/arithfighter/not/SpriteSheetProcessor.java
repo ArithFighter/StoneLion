@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class SpriteAnimation {
+public class SpriteSheetProcessor {
     private final int FRAME_COLS, FRAME_ROWS;
     private final Animation<TextureRegion> animation;
     private SpriteBatch batch;
@@ -16,7 +16,7 @@ public class SpriteAnimation {
 
 	float stateTime = 0;
 
-    public SpriteAnimation(Texture texture, int cols, int rows){
+    public SpriteSheetProcessor(Texture texture, int cols, int rows){
         FRAME_COLS = cols;
         FRAME_ROWS = rows;
 
