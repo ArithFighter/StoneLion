@@ -27,15 +27,19 @@ public class MouseAdapter extends InputAdapter {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        for (MouseEvent mouseEvent : mouseEvents)
-            mouseEvent.touchDragged();
+        for (int i = 0; i < GameScene.values().length; i++){
+            if (gameScene == GameScene.values()[i])
+                mouseEvents[i].touchDragged();
+        }
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        for (MouseEvent mouseEvent : mouseEvents)
-            mouseEvent.touchUp();
+        for (int i = 0; i < GameScene.values().length; i++) {
+            if (gameScene == GameScene.values()[i])
+                mouseEvents[i].touchUp();
+        }
         return true;
     }
 }

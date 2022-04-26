@@ -25,7 +25,7 @@ public class GamePlayComponent {
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager){
         cardFadeOut = new CardAnimation(spriteSheet[1]);
 
-        cardReset = new CardAnimation(spriteSheet[0]);
+        cardReset = new CardAnimation(spriteSheet[1]);
 
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
@@ -142,10 +142,6 @@ class CardAnimation{
 
     public void init(){
         isStart = false;
-    }
-
-    public boolean isOver(){
-        return !isStart;
     }
 
     public void draw(SpriteBatch batch, float duration, AnimationPos pos){
