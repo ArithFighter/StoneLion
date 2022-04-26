@@ -11,6 +11,8 @@ public class AnimationProcessor {
     private final Animation<TextureRegion> animation;
     private SpriteBatch batch;
     private Point point = new Point(0,0);
+    private float width;
+    private float height;
     private float scale = 1;
 
 	float stateTime = 0;
@@ -21,12 +23,24 @@ public class AnimationProcessor {
 		animation = new Animation<>(0.166f, frameProducer.getFrames());
     }
 
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
     public void setSpeed(float perSec){
         animation.setFrameDuration(perSec);
     }
 
     public void setBatch(SpriteBatch batch){
         this.batch = batch;
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public void setPoint(Point point){
@@ -37,19 +51,15 @@ public class AnimationProcessor {
         this.scale = scale;
     }
 
-    public void draw(){
+    public void draw(float x, float y){
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
 
-        float width = currentFrame.getRegionWidth()*scale;
-        float height = currentFrame.getRegionHeight()*scale;
+        width = currentFrame.getRegionWidth()*scale;
+        height = currentFrame.getRegionHeight()*scale;
 
-		batch.draw(currentFrame,
-                point.getX()-width/2,
-                point.getY()-height/2,
-                width,
-                height);
+		batch.draw(currentFrame, x, y, width, height);
     }
 
     public void init(){

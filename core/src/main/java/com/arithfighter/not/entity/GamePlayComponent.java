@@ -20,13 +20,17 @@ public class GamePlayComponent {
     private final SumBox sumBox;
     private final Recorder scoreRecord = new Recorder();
     private final CardAnimation cardFadeOut;
+    private final CardAnimation cardReset;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheet, SoundManager soundManager){
         cardFadeOut = new CardAnimation(spriteSheet[1]);
 
+        cardReset = new CardAnimation(spriteSheet[0]);
+
         cardPlaceBasket = new CardPlaceBasket(textures[1]) {
             @Override
             public void initCardPosition() {
+                cardReset.setStart();
                 player.initHand();
             }
 
@@ -89,11 +93,14 @@ public class GamePlayComponent {
 
         player.draw(batch);
 
-        cardFadeOut.draw(batch, 0.5f);
+        cardFadeOut.draw(batch, 0.5f, AnimationPos.CENTER);
+
+        cardReset.draw(batch, 0.5f, AnimationPos.TOP_RIGHT);
     }
 
     public void touchDown(int mouseX, int mouseY){
         player.activateCard(mouseX, mouseY);
+        cardReset.setLastPoint(player.getActiveCard().getInitPoint());
     }
 
     public void touchDragged(int mouseX, int mouseY){
@@ -119,7 +126,7 @@ class CardAnimation{
 
     public CardAnimation(Texture texture){
         processor = new AnimationProcessor(texture,3,3);
-        processor.setScale(18);
+        processor.setScale(16);
         processor.setSpeed(0.08f);
         fadeOutHandler = new TimeHandler();
         lastPoint = new Point();
@@ -137,13 +144,29 @@ class CardAnimation{
         isStart = false;
     }
 
-    public void draw(SpriteBatch batch, float duration){
+    public boolean isOver(){
+        return !isStart;
+    }
+
+    public void draw(SpriteBatch batch, float duration, AnimationPos pos){
         if (isStart){
             fadeOutHandler.updatePastedTime();
             if (fadeOutHandler.getPastedTime()<duration){
                 processor.setPoint(lastPoint);
                 processor.setBatch(batch);
-                processor.draw();
+
+                float x = 0;
+                float y = 0;
+
+                if (pos == AnimationPos.CENTER){
+                    x = processor.getPoint().getX()- processor.getWidth()/2;
+                    y = processor.getPoint().getY()- processor.getHeight()/2;
+                }
+                if(pos == AnimationPos.TOP_RIGHT){
+                    x = processor.getPoint().getX();
+                    y = processor.getPoint().getY();
+                }
+                processor.draw(x,y);
             }else{
                 isStart = false;
             }
@@ -152,4 +175,8 @@ class CardAnimation{
             processor.init();
         }
     }
+}
+
+enum AnimationPos{
+    CENTER, TOP_RIGHT
 }
