@@ -5,10 +5,13 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.ValueHolder;
+import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.SceneControlButton;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -20,6 +23,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final GameDataDisplacer dataDisplacer;
     private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
+    private final Font winOrLoseMessage;
+    private boolean isWin = false;
+    private boolean isLose = false;
+    private final TimeHandler transitionHandler;
     private int numberBoxQuantity;
     private int cardLimit;
 
@@ -42,6 +49,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000,600);
+
+        winOrLoseMessage = new Font(45);
+        winOrLoseMessage.setColor(Color.WHITE);
+
+        transitionHandler = new TimeHandler();
     }
 
     public void setCardLimit(int limit){
@@ -52,11 +64,19 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         pauseMenu.setGameRecorder(gameRecorder);
     }
 
-    public boolean isExceedCardLimit(){
-        return playRecord.getRecord()>cardLimit;
+    public boolean isWin(){
+        return isWin;
     }
 
-    public boolean isAllNumZero(){
+    public boolean isLose(){
+        return isLose;
+    }
+
+    private boolean isExceedCardLimit(){
+        return playRecord.getRecord()>=cardLimit;
+    }
+
+    private boolean isAllNumZero(){
         return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
     }
 
@@ -85,6 +105,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
+        isWin = false;
+        isLose = false;
+        transitionHandler.resetPastedTime();
     }
 
     public void setNumberBoxQuantity(int quantity){
@@ -117,6 +140,24 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
             pauseMenu.draw(batch);
         else
             pauseButton.getButton().draw(batch, "Pause");
+
+        String message = "";
+        if (isAllNumZero()||isExceedCardLimit()){
+            if (isAllNumZero())
+                message = "Complete";
+            if (isExceedCardLimit())
+                message = "Exceed limit";
+
+            transitionHandler.updatePastedTime();
+            if (transitionHandler.getPastedTime()<2.5f)
+                winOrLoseMessage.draw(batch, message, 500,400);
+            else {
+                if (isAllNumZero())
+                    isWin = true;
+                if (isExceedCardLimit())
+                    isLose = true;
+            }
+        }
     }
 
     public void drawData(int index) {
@@ -139,29 +180,36 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (pauseButton.isStart())
-            pauseMenu.touchDown(x, y);
-        else{
-            pauseButton.getButton().activate(x, y);
-            gamePlayComponent.touchDown(x, y);
+        if (!isAllNumZero()||!isExceedCardLimit()) {
+            if (pauseButton.isStart())
+                pauseMenu.touchDown(x, y);
+            else{
+                pauseButton.getButton().activate(x, y);
+                gamePlayComponent.touchDown(x, y);
+            }
         }
     }
 
     public void touchDragged() {
-        if (pauseButton.isStart())
-            pauseMenu.touchDragged();
-        else{
-            pauseButton.getButton().deactivate();
-            gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
+        if (!isAllNumZero()||!isExceedCardLimit()){
+            if (pauseButton.isStart())
+                pauseMenu.touchDragged();
+            else{
+                pauseButton.getButton().deactivate();
+                gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
+            }
         }
+
     }
 
     public void touchUp() {
-        if (pauseButton.isStart())
-            pauseMenu.touchUp();
-        else{
-            pauseButton.getButton().deactivate();
-            gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
+        if (!isAllNumZero()||!isExceedCardLimit()){
+            if (pauseButton.isStart())
+                pauseMenu.touchUp();
+            else{
+                pauseButton.getButton().deactivate();
+                gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
+            }
         }
     }
 

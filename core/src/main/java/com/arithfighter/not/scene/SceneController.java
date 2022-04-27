@@ -111,12 +111,12 @@ public class SceneController {
             optionMenu.setSceneTemp(GameScene.STAGE);
             stage.initPauseMenu();
         }
-        if (stage.isAllNumZero()||stage.isExceedCardLimit()){
+        if (stage.isWin()||stage.isLose()){
             gameScene = GameScene.RESULT;
 
-            if (stage.isAllNumZero())
+            if (stage.isWin())
                 doWhenWin();
-            if (stage.isExceedCardLimit())
+            if (stage.isLose())
                 doWhenLoose();
 
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
