@@ -1,38 +1,32 @@
 package com.arithfighter.not.pojo;
 
 public class GameRecorder {
-    private final Recorder stagesRecorder;
-    private final Recorder winRecorder;
-    private final Recorder loseRecorder;
-    private final Recorder tokenRecorder;
+    private final Recorder[] recorders;
 
     public GameRecorder() {
-        stagesRecorder = new Recorder();
-        winRecorder = new Recorder();
-        loseRecorder = new Recorder();
-        tokenRecorder = new Recorder();
+        recorders = new Recorder[4];
+        for (int i =0; i< recorders.length;i++)
+            recorders[i] = new Recorder();
     }
 
     public void init() {
-        stagesRecorder.reset();
-        winRecorder.reset();
-        loseRecorder.reset();
-        tokenRecorder.reset();
+        for (Recorder r:recorders)
+            r.reset();
     }
 
     public Recorder getStagesRecorder() {
-        return stagesRecorder;
+        return recorders[0];
     }
 
     public Recorder getWinRecorder() {
-        return winRecorder;
+        return recorders[1];
     }
 
     public Recorder getLoseRecorder() {
-        return loseRecorder;
+        return recorders[2];
     }
 
     public Recorder getTokenRecorder() {
-        return tokenRecorder;
+        return recorders[3];
     }
 }

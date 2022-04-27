@@ -94,9 +94,9 @@ public class GamePlayComponent {
 
         player.draw(batch);
 
-        cardFadeOut.draw(batch, 0.5f, AnimationPos.CENTER);
+        cardFadeOut.draw(batch, 0.4f, AnimationPos.CENTER);
 
-        cardReset.draw(batch, 0.5f, AnimationPos.TOP_RIGHT);
+        cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
     }
 
     public void touchDown(int mouseX, int mouseY) {

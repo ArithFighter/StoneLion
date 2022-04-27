@@ -20,7 +20,7 @@ public class PauseMenu {
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
-    private final MessageDisplacer messageDisplacer;
+    private final RecordDisplacer recordDisplacer;
     private GameRecorder gameRecorder;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
@@ -30,55 +30,56 @@ public class PauseMenu {
 
         buttons = new ButtonProducer(textures);
 
+        int x = 500;
+        int y = 300;
+        int margin = 100;
+
         dialog = new Dialog(textures);
-        dialog.setPoint(new Point(500,300));
+        dialog.setPoint(new Point(x, y));
 
         background = new SpriteWidget(textures[1], 5f);
-        background.setPosition(500,200);
+        background.setPosition(x, y - margin);
 
-        messageDisplacer = new MessageDisplacer(textures);
+        recordDisplacer = new RecordDisplacer(textures);
     }
 
-    public void setGameRecorder(GameRecorder gameRecorder){
+    public void setGameRecorder(GameRecorder gameRecorder) {
         this.gameRecorder = gameRecorder;
     }
 
     public void draw(SpriteBatch batch) {
         background.draw(batch);
 
-        for (int i =0; i<buttons.getButtons().length;i++){
-            Button b = buttons.getButtons()[i].getButton();
-            b.draw(batch, textProvider.getPauseMenuTexts()[i]);
-        }
+        buttons.draw(batch, textProvider.getPauseMenuTexts());
 
         if (buttons.getQuit().isStart())
             dialog.draw(batch, textProvider.getPauseMenuTexts()[3], textProvider.getPauseMenuTexts()[4]);
 
-        messageDisplacer.draw(batch);
+        recordDisplacer.draw(batch);
     }
 
     public void update() {
-        messageDisplacer.setStages(gameRecorder.getStagesRecorder().getRecord());
-        messageDisplacer.setWins(gameRecorder.getWinRecorder().getRecord());
-        messageDisplacer.setLoses(gameRecorder.getLoseRecorder().getRecord());
-        messageDisplacer.setTokens(gameRecorder.getTokenRecorder().getRecord());
+        recordDisplacer.setStages(gameRecorder.getStagesRecorder().getRecord());
+        recordDisplacer.setWins(gameRecorder.getWinRecorder().getRecord());
+        recordDisplacer.setLoses(gameRecorder.getLoseRecorder().getRecord());
+        recordDisplacer.setTokens(gameRecorder.getTokenRecorder().getRecord());
 
-        if (buttons.getQuit().isStart()){
+        if (buttons.getQuit().isStart()) {
             dialog.update();
 
-            if (dialog.getNoButton().isStart()){
+            if (dialog.getNoButton().isStart()) {
                 buttons.getQuit().init();
                 dialog.init();
             }
         } else {
-            for (SceneControlButton button:buttons.getButtons())
+            for (SceneControlButton button : buttons.getButtons())
                 button.update();
         }
     }
 
     public void init() {
-        for (SceneControlButton button:buttons.getButtons())
-                button.init();
+        for (SceneControlButton button : buttons.getButtons())
+            button.init();
         dialog.init();
     }
 
@@ -86,45 +87,51 @@ public class PauseMenu {
         return dialog.getYesButton().isStart();
     }
 
-    public boolean isResume(){
+    public boolean isResume() {
         return buttons.getResume().isStart();
     }
 
-    public boolean isOpenOption(){
+    public boolean isOpenOption() {
         return buttons.getOption().isStart();
     }
 
     public void touchDown(float x, float y) {
-        if (buttons.getQuit().isStart()){
+        if (isQuit())
             dialog.activate(x, y);
-        }else {
-            for (SceneControlButton button:buttons.getButtons())
+        else {
+            for (SceneControlButton button : buttons.getButtons())
                 button.getButton().activate(x, y);
         }
     }
 
-    public void touchDragged(){
-        if (buttons.getQuit().isStart()){
+    public void touchDragged() {
+        if (isQuit())
             dialog.deactivate();
-        }else {
-            for (SceneControlButton button:buttons.getButtons())
-                button.getButton().deactivate();
+        else {
+            deactivateButtons();
         }
     }
 
     public void touchUp() {
-        if (buttons.getQuit().isStart()){
+        if (isQuit())
             dialog.deactivate();
-        }else {
+        else {
             playSound();
-
-            for (SceneControlButton button:buttons.getButtons())
-                button.getButton().deactivate();
+            deactivateButtons();
         }
     }
 
-    private void playSound(){
-        for (int i =0;i<buttons.getButtons().length;i++){
+    private boolean isQuit() {
+        return buttons.getQuit().isStart();
+    }
+
+    private void deactivateButtons() {
+        for (SceneControlButton button : buttons.getButtons())
+            button.getButton().deactivate();
+    }
+
+    private void playSound() {
+        for (int i = 0; i < buttons.getButtons().length; i++) {
             Button b = buttons.getButtons()[i].getButton();
             if (b.isActive())
                 soundManager.playAcceptSound();
@@ -132,60 +139,73 @@ public class PauseMenu {
     }
 
     public void dispose() {
-        for (SceneControlButton button:buttons.getButtons())
-                button.dispose();
+        for (SceneControlButton button : buttons.getButtons())
+            button.dispose();
         dialog.dispose();
-        messageDisplacer.dispose();
+        recordDisplacer.dispose();
     }
 }
 
-class ButtonProducer{
+class ButtonProducer {
     private final SceneControlButton[] buttons;
 
-    public ButtonProducer(Texture[] textures){
+    public ButtonProducer(Texture[] textures) {
         buttons = new SceneControlButton[3];
 
-        for (int i =0; i< buttons.length;i++){
+        for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new SceneControlButton(textures[6], 1.8f);
-            buttons[i].getButton().setPosition(540,250+150*i);
+            buttons[i].getButton().setPosition(540, 250 + 150 * i);
         }
     }
 
-    public SceneControlButton[] getButtons(){
+    public SceneControlButton[] getButtons() {
         return buttons;
     }
 
-    public SceneControlButton getResume(){
+    public SceneControlButton getResume() {
         return buttons[2];
     }
 
-    public SceneControlButton getOption(){
+    public SceneControlButton getOption() {
         return buttons[1];
     }
 
-    public SceneControlButton getQuit(){
+    public SceneControlButton getQuit() {
         return buttons[0];
+    }
+
+    public void draw(SpriteBatch batch, String[] texts) {
+        for (int i = 0; i < buttons.length; i++) {
+            Button b = buttons[i].getButton();
+            b.draw(batch, texts[i]);
+        }
     }
 }
 
-class MessageDisplacer{
+class RecordDisplacer {
     private final Font[] texts;
     private final VisibleWidget background;
     private int stages;
     private int wins;
     private int loses;
     private int tokens;
+    private int posX;
 
-    public MessageDisplacer(Texture[] textures){
+    public RecordDisplacer(Texture[] textures) {
         texts = new Font[4];
+        posX = 0;
 
-        for (int i = 0; i< texts.length;i++){
+        for (int i = 0; i < texts.length; i++) {
             texts[i] = new Font(20);
             texts[i].setColor(Color.BLACK);
         }
 
         background = new SpriteWidget(textures[1], 6f);
-        background.setPosition(0, 150);
+        background.setPosition(posX, 150);
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
     }
 
     public void setStages(int stages) {
@@ -204,17 +224,17 @@ class MessageDisplacer{
         this.tokens = tokens;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         background.draw(batch);
-        int x = 50;
-        texts[0].draw(batch, "stage: "+stages, x,700);
-        texts[1].draw(batch, "win: "+wins, x,600);
-        texts[2].draw(batch, "lose: "+loses, x,500);
-        texts[3].draw(batch, "tokens: "+tokens, x,400);
+        int x = posX + 50;
+        texts[0].draw(batch, "stage: " + stages, x, 700);
+        texts[1].draw(batch, "win: " + wins, x, 600);
+        texts[2].draw(batch, "lose: " + loses, x, 500);
+        texts[3].draw(batch, "tokens: " + tokens, x, 400);
     }
 
-    public void dispose(){
-        for (Font font:texts)
+    public void dispose() {
+        for (Font font : texts)
             font.dispose();
     }
 }
