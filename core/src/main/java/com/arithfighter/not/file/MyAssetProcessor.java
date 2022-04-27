@@ -5,15 +5,24 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MyAssetProcessor {
     private final AssetManager assetManager;
     private final FileLibrary fileLibrary;
     private final AssetAccessor accessor;
+    private final Map<String, Texture> textureMap;
+    private final Map<String, Music> musicMap;
+    private final Map<String, Sound> soundMap;
 
     public MyAssetProcessor(){
         assetManager = new AssetManager();
         fileLibrary = new FileLibrary();
         accessor = new AssetAccessor(assetManager);
+        textureMap = new HashMap<>();
+        musicMap = new HashMap<>();
+        soundMap = new HashMap<>();
     }
 
     public void load(){
@@ -30,12 +39,37 @@ public class MyAssetProcessor {
         loadSound();
 
         assetManager.finishLoading();
+
+        for (int i =0; i<getWidgets().length;i++)
+            textureMap.put(fileLibrary.getWidgetFiles()[i], getWidgets()[i]);
+        for (int i = 0; i<getCards().length;i++)
+            textureMap.put(fileLibrary.getCardFiles()[i], getCards()[i]);
+        for (int i =0; i<getPanels().length;i++)
+            textureMap.put(fileLibrary.getPanelFiles()[i], getPanels()[i]);
+
+        for (int i = 0;i<getMusics().length;i++)
+            musicMap.put(fileLibrary.getMusicFiles()[i], getMusics()[i]);
+
+        for (int i = 0;i<getSounds().length;i++)
+            soundMap.put(fileLibrary.getSoundFiles()[i], getSounds()[i]);
     }
 
     public AssetManager getAssetManager(){
         return assetManager;
     }
-    
+
+    public Map<String, Texture> getTextureMap() {
+        return textureMap;
+    }
+
+    public Map<String, Music> getMusicMap() {
+        return musicMap;
+    }
+
+    public Map<String, Sound> getSoundMap() {
+        return soundMap;
+    }
+
     private void loadTextures(String[] files){
          for (String file : files)
             assetManager.load(file, Texture.class);

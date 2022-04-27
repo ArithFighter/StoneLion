@@ -3,7 +3,6 @@ package com.arithfighter.not;
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
-import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
