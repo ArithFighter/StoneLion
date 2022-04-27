@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.widget.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
@@ -17,7 +18,8 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
     private ResultState state = ResultState.WIN;
     private final TextProvider textProvider;
 
-    public ResultScreen(Texture[] textures) {
+    public ResultScreen(TextureManager textureManager) {
+        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         textProvider = new TextProvider();
 
         continueButton = new SceneControlButton(textures[6], 2);

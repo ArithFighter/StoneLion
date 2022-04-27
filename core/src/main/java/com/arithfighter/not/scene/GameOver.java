@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
@@ -10,7 +11,8 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent{
     private final Font text;
     private final SceneControlButton quitButton;
 
-    public GameOver(Texture[] textures){
+    public GameOver(TextureManager textureManager){
+        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         quitButton = new SceneControlButton(textures[6], 2);
         quitButton.getButton().setPosition(600,150);
 

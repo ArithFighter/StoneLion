@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.widget.ControlNumber;
 import com.arithfighter.not.widget.SceneControlButton;
@@ -24,7 +25,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     private int initToken;
     private final TextProvider textProvider;
 
-    public BetScreen(Texture[] textures, SoundManager soundManager){
+    public BetScreen(TextureManager textureManager, SoundManager soundManager){
+        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         this.soundManager = soundManager;
 
         tokenHolder = new ValueHolder();

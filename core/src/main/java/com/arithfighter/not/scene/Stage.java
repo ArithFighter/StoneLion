@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene;
 
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
@@ -22,7 +23,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private int numberBoxQuantity;
     private int cardLimit;
 
-    public Stage(Texture[] textures, Texture[] cards, Texture[] spriteSheet, SoundManager soundManager) {
+    public Stage(TextureManager textureManager, SoundManager soundManager) {
+        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
+        Texture[] cards=textureManager.getTextures(textureManager.getKeys()[1]);
+        Texture[] spriteSheet=textureManager.getTextures(textureManager.getKeys()[3]);
+
         dataDisplacer = new GameDataDisplacer();
 
         gamePlayComponent = new GamePlayComponent(textures, spriteSheet, soundManager);

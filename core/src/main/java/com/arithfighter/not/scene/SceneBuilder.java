@@ -81,27 +81,15 @@ class SceneCollection{
     public SceneCollection(TextureManager textureManager, SoundManager soundManager){
         characterMenu = new CharacterMenu(textureManager, soundManager);
 
-        stage = new Stage(
-                textureManager.getTextures(textureManager.getKeys()[0]),
-                textureManager.getTextures(textureManager.getKeys()[1]),
-                textureManager.getTextures(textureManager.getKeys()[3]),
-                soundManager);
+        stage = new Stage(textureManager, soundManager);
 
-        optionMenu = new OptionMenu(
-                textureManager.getTextures(textureManager.getKeys()[0]),
-                soundManager);
+        optionMenu = new OptionMenu(textureManager, soundManager);
 
-        betScreen = new BetScreen(
-                textureManager.getTextures(textureManager.getKeys()[0]),
-                soundManager);
+        betScreen = new BetScreen(textureManager, soundManager);
 
-        resultScreen = new ResultScreen(
-                textureManager.getTextures(textureManager.getKeys()[0])
-        );
+        resultScreen = new ResultScreen(textureManager);
 
-        gameOver = new GameOver(
-                textureManager.getTextures(textureManager.getKeys()[0])
-        );
+        gameOver = new GameOver(textureManager);
     }
 
     public void setGameSave(GameSave gameSave){
