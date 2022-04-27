@@ -47,7 +47,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
 
-        conditionMessage = new ConditionMessage(450,500) {
+        conditionMessage = new ConditionMessage(450, 500) {
             @Override
             public boolean isExceedCardLimitAndStageNotComplete() {
                 return playRecord.getRecord() >= cardLimit && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
@@ -206,15 +206,17 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
 class ConditionMessage {
     private final Font text;
-    private boolean isWin = false;
-    private boolean isLose = false;
+
+    enum Condition {WIN, LOSE, NEUTRAL}
+
+    private Condition condition = Condition.NEUTRAL;
     private final TimeHandler transitionHandler;
     private final float x;
     private final float y;
 
     public ConditionMessage(float x, float y) {
         this.x = x;
-        this.y =y;
+        this.y = y;
         text = new Font(45);
         text.setColor(Color.WHITE);
 
@@ -222,16 +224,15 @@ class ConditionMessage {
     }
 
     public final boolean isWin() {
-        return isWin;
+        return condition == Condition.WIN;
     }
 
     public final boolean isLose() {
-        return isLose;
+        return condition == Condition.LOSE;
     }
 
     public final void init() {
-        isWin = false;
-        isLose = false;
+        condition = Condition.NEUTRAL;
         transitionHandler.resetPastedTime();
     }
 
@@ -239,12 +240,12 @@ class ConditionMessage {
         if (isStageComplete() || isExceedCardLimitAndStageNotComplete()) {
             transitionHandler.updatePastedTime();
             if (transitionHandler.getPastedTime() < 2.5f)
-                text.draw(batch, getMessage(), x,y);
+                text.draw(batch, getMessage(), x, y);
             else {
                 if (isStageComplete())
-                    isWin = true;
+                    condition = Condition.WIN;
                 if (isExceedCardLimitAndStageNotComplete())
-                    isLose = true;
+                    condition = Condition.LOSE;
             }
         }
     }
