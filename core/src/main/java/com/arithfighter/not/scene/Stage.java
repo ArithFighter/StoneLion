@@ -23,10 +23,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     private final GameDataDisplacer dataDisplacer;
     private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
-    private final Font winOrLoseMessage;
-    private boolean isWin = false;
-    private boolean isLose = false;
-    private final TimeHandler transitionHandler;
+    private final ConditionMessage conditionMessage;
     private int numberBoxQuantity;
     private int cardLimit;
 
@@ -50,10 +47,17 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000,600);
 
-        winOrLoseMessage = new Font(45);
-        winOrLoseMessage.setColor(Color.WHITE);
+        conditionMessage = new ConditionMessage(){
+            @Override
+            public boolean isExceedCardLimit() {
+                return playRecord.getRecord()>=cardLimit;
+            }
 
-        transitionHandler = new TimeHandler();
+            @Override
+            public boolean isAllNumZero() {
+                return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
+            }
+        };
     }
 
     public void setCardLimit(int limit){
@@ -65,19 +69,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public boolean isWin(){
-        return isWin;
+        return conditionMessage.isWin();
     }
 
     public boolean isLose(){
-        return isLose;
-    }
-
-    private boolean isExceedCardLimit(){
-        return playRecord.getRecord()>=cardLimit;
-    }
-
-    private boolean isAllNumZero(){
-        return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
+        return conditionMessage.isLose();
     }
 
     public ValueHolder getTokenHolder(){
@@ -105,9 +101,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
-        isWin = false;
-        isLose = false;
-        transitionHandler.resetPastedTime();
+        conditionMessage.init();
     }
 
     public void setNumberBoxQuantity(int quantity){
@@ -141,23 +135,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         else
             pauseButton.getButton().draw(batch, "Pause");
 
-        String message = "";
-        if (isAllNumZero()||isExceedCardLimit()){
-            if (isAllNumZero())
-                message = "Complete";
-            if (isExceedCardLimit())
-                message = "Exceed limit";
-
-            transitionHandler.updatePastedTime();
-            if (transitionHandler.getPastedTime()<2.5f)
-                winOrLoseMessage.draw(batch, message, 500,400);
-            else {
-                if (isAllNumZero())
-                    isWin = true;
-                if (isExceedCardLimit())
-                    isLose = true;
-            }
-        }
+        conditionMessage.draw(batch);
     }
 
     public void drawData(int index) {
@@ -180,7 +158,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (!isAllNumZero()||!isExceedCardLimit()) {
+        if (conditionMessage.isStageNotComplete()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
             else{
@@ -191,7 +169,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchDragged() {
-        if (!isAllNumZero()||!isExceedCardLimit()){
+        if (conditionMessage.isStageNotComplete()){
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
             else{
@@ -203,7 +181,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchUp() {
-        if (!isAllNumZero()||!isExceedCardLimit()){
+        if (conditionMessage.isStageNotComplete()){
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
             else{
@@ -219,5 +197,69 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         pauseMenu.dispose();
         playerCollection.dispose();
         pauseButton.dispose();
+    }
+}
+
+class ConditionMessage{
+    private final Font message;
+    private boolean isWin = false;
+    private boolean isLose = false;
+    private final TimeHandler transitionHandler;
+
+    public ConditionMessage(){
+        message = new Font(45);
+        message.setColor(Color.WHITE);
+
+        transitionHandler = new TimeHandler();
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public boolean isLose() {
+        return isLose;
+    }
+
+    public void init(){
+        isWin = false;
+        isLose = false;
+        transitionHandler.resetPastedTime();
+    }
+
+    public void draw(SpriteBatch batch){
+        String message = "";
+        if (isAllNumZero()||isExceedCardLimit()){
+            if (isAllNumZero())
+                message = "Complete";
+            if (isExceedCardLimit())
+                message = "Exceed limit";
+
+            transitionHandler.updatePastedTime();
+            if (transitionHandler.getPastedTime()<2.5f)
+                this.message.draw(batch, message, 500,400);
+            else {
+                if (isAllNumZero())
+                    isWin = true;
+                if (isExceedCardLimit())
+                    isLose = true;
+            }
+        }
+    }
+
+    public boolean isExceedCardLimit() {
+        return false;
+    }
+
+    public boolean isAllNumZero() {
+        return false;
+    }
+
+    public boolean isStageNotComplete(){
+        return !isAllNumZero()||!isExceedCardLimit();
+    }
+
+    public void dispose(){
+        message.dispose();
     }
 }
