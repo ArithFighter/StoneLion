@@ -23,7 +23,6 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
-    private TextureManager textureManager;
 
     @Override
     public void create() {
@@ -31,6 +30,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.load();
 
+        TextureManager textureManager = new TextureManager();
         textureManager.put(textureManager.getKeys()[0], assetProcessor.getWidgets());
         textureManager.put(textureManager.getKeys()[1], assetProcessor.getCards());
         textureManager.put(textureManager.getKeys()[2], assetProcessor.getPanels());
@@ -42,7 +42,7 @@ public class Main extends ApplicationAdapter {
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(assetProcessor, audioHandler.getSoundManager());
+        sceneBuilder = new SceneBuilder(textureManager, audioHandler.getSoundManager());
 
         sceneBuilder.setBatch(batch);
 

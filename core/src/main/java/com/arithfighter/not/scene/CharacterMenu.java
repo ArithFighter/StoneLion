@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.widget.SceneControlButton;
@@ -23,7 +24,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
 
-    public CharacterMenu(Texture[] textures, Texture[] panels, SoundManager soundManager) {
+    public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
+        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
+        Texture[] panels = textureManager.getTextures(textureManager.getKeys()[2]);
         this.soundManager = soundManager;
 
         int panelQuantity = CharacterList.values().length;

@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.badlogic.gdx.Preferences;
@@ -11,8 +12,8 @@ public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
-    public SceneBuilder(MyAssetProcessor assetProcessor, SoundManager soundManager){
-        super(assetProcessor, soundManager);
+    public SceneBuilder(TextureManager textureManager, SoundManager soundManager){
+        super(textureManager, soundManager);
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
@@ -77,20 +78,30 @@ class SceneCollection{
     private final ResultScreen resultScreen;
     private final GameOver gameOver;
 
-    public SceneCollection(MyAssetProcessor assetProcessor, SoundManager soundManager){
-        characterMenu = new CharacterMenu(assetProcessor.getWidgets(), assetProcessor.getPanels(),
+    public SceneCollection(TextureManager textureManager, SoundManager soundManager){
+        characterMenu = new CharacterMenu(textureManager, soundManager);
+
+        stage = new Stage(
+                textureManager.getTextures(textureManager.getKeys()[0]),
+                textureManager.getTextures(textureManager.getKeys()[1]),
+                textureManager.getTextures(textureManager.getKeys()[3]),
                 soundManager);
 
-        stage = new Stage(assetProcessor.getWidgets(), assetProcessor.getCards(),
-                assetProcessor.getSpriteSheet(), soundManager);
+        optionMenu = new OptionMenu(
+                textureManager.getTextures(textureManager.getKeys()[0]),
+                soundManager);
 
-        optionMenu = new OptionMenu(assetProcessor.getWidgets(), soundManager);
+        betScreen = new BetScreen(
+                textureManager.getTextures(textureManager.getKeys()[0]),
+                soundManager);
 
-        betScreen = new BetScreen(assetProcessor.getWidgets(), soundManager);
+        resultScreen = new ResultScreen(
+                textureManager.getTextures(textureManager.getKeys()[0])
+        );
 
-        resultScreen = new ResultScreen(assetProcessor.getWidgets());
-
-        gameOver = new GameOver(assetProcessor.getWidgets());
+        gameOver = new GameOver(
+                textureManager.getTextures(textureManager.getKeys()[0])
+        );
     }
 
     public void setGameSave(GameSave gameSave){
