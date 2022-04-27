@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
+public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
@@ -29,8 +29,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
 
     public Stage(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
-        Texture[] cards=textureManager.getTextures(textureManager.getKeys()[1]);
-        Texture[] spriteSheet=textureManager.getTextures(textureManager.getKeys()[3]);
+        Texture[] cards = textureManager.getTextures(textureManager.getKeys()[1]);
+        Texture[] spriteSheet = textureManager.getTextures(textureManager.getKeys()[3]);
 
         dataDisplacer = new GameDataDisplacer();
 
@@ -45,46 +45,46 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         playerCollection.setPlayRecord(playRecord);
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
-        pauseButton.getButton().setPosition(1000,600);
+        pauseButton.getButton().setPosition(1000, 600);
 
-        conditionMessage = new ConditionMessage(){
+        conditionMessage = new ConditionMessage(450,500) {
             @Override
-            public boolean isExceedCardLimit() {
-                return playRecord.getRecord()>=cardLimit&&!gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
+            public boolean isExceedCardLimitAndStageNotComplete() {
+                return playRecord.getRecord() >= cardLimit && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
 
             @Override
-            public boolean isAllNumZero() {
+            public boolean isStageComplete() {
                 return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
         };
     }
 
-    public void setCardLimit(int limit){
+    public void setCardLimit(int limit) {
         cardLimit = limit;
     }
 
-    public void setGameRecorder(GameRecorder gameRecorder){
+    public void setGameRecorder(GameRecorder gameRecorder) {
         pauseMenu.setGameRecorder(gameRecorder);
     }
 
-    public boolean isWin(){
+    public boolean isWin() {
         return conditionMessage.isWin();
     }
 
-    public boolean isLose(){
+    public boolean isLose() {
         return conditionMessage.isLose();
     }
 
-    public ValueHolder getTokenHolder(){
+    public ValueHolder getTokenHolder() {
         return tokenHolder;
     }
 
-    public void setInitTokens(int initTokens){
+    public void setInitTokens(int initTokens) {
         tokenHolder.setInitValue(initTokens);
     }
 
-    public boolean isOpenOption(){
+    public boolean isOpenOption() {
         return pauseMenu.isOpenOption();
     }
 
@@ -92,7 +92,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         return pauseMenu.isReturnToMainMenu();
     }
 
-    public void initPauseMenu(){
+    public void initPauseMenu() {
         pauseMenu.init();
     }
 
@@ -104,19 +104,19 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         conditionMessage.init();
     }
 
-    public void setNumberBoxQuantity(int quantity){
+    public void setNumberBoxQuantity(int quantity) {
         numberBoxQuantity = quantity;
     }
 
     public void update() {
-        if (pauseButton.isStart()){
+        if (pauseButton.isStart()) {
             pauseMenu.update();
 
-            if (pauseMenu.isResume()){
+            if (pauseMenu.isResume()) {
                 pauseButton.init();
                 pauseMenu.init();
             }
-        }else {
+        } else {
             pauseButton.update();
 
             gamePlayComponent.setNumberQuantity(numberBoxQuantity);
@@ -161,7 +161,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         if (isStageNotComplete()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
-            else{
+            else {
                 pauseButton.getButton().activate(x, y);
                 gamePlayComponent.touchDown(x, y);
             }
@@ -169,10 +169,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchDragged() {
-        if (isStageNotComplete()){
+        if (isStageNotComplete()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
-            else{
+            else {
                 pauseButton.getButton().deactivate();
                 gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
             }
@@ -181,18 +181,18 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchUp() {
-        if (isStageNotComplete()){
+        if (isStageNotComplete()) {
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
-            else{
+            else {
                 pauseButton.getButton().deactivate();
                 gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
             }
         }
     }
 
-    public boolean isStageNotComplete(){
-        return !conditionMessage.isAllNumZero()&&!conditionMessage.isExceedCardLimit();
+    private boolean isStageNotComplete() {
+        return !conditionMessage.isStageComplete() && !conditionMessage.isExceedCardLimitAndStageNotComplete();
     }
 
     public void dispose() {
@@ -204,62 +204,69 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 }
 
-class ConditionMessage{
-    private final Font message;
+class ConditionMessage {
+    private final Font text;
     private boolean isWin = false;
     private boolean isLose = false;
     private final TimeHandler transitionHandler;
+    private final float x;
+    private final float y;
 
-    public ConditionMessage(){
-        message = new Font(45);
-        message.setColor(Color.WHITE);
+    public ConditionMessage(float x, float y) {
+        this.x = x;
+        this.y =y;
+        text = new Font(45);
+        text.setColor(Color.WHITE);
 
         transitionHandler = new TimeHandler();
     }
 
-    public boolean isWin() {
+    public final boolean isWin() {
         return isWin;
     }
 
-    public boolean isLose() {
+    public final boolean isLose() {
         return isLose;
     }
 
-    public void init(){
+    public final void init() {
         isWin = false;
         isLose = false;
         transitionHandler.resetPastedTime();
     }
 
-    public void draw(SpriteBatch batch){
-        String message = "";
-        if (isAllNumZero()||isExceedCardLimit()){
-            if (isAllNumZero())
-                message = "Complete";
-            if (isExceedCardLimit())
-                message = "Exceed limit";
-
+    public final void draw(SpriteBatch batch) {
+        if (isStageComplete() || isExceedCardLimitAndStageNotComplete()) {
             transitionHandler.updatePastedTime();
-            if (transitionHandler.getPastedTime()<2.5f)
-                this.message.draw(batch, message, 500,400);
+            if (transitionHandler.getPastedTime() < 2.5f)
+                text.draw(batch, getMessage(), x,y);
             else {
-                if (isAllNumZero())
+                if (isStageComplete())
                     isWin = true;
-                if (isExceedCardLimit())
+                if (isExceedCardLimitAndStageNotComplete())
                     isLose = true;
             }
         }
     }
 
-    public boolean isExceedCardLimit() {
+    private String getMessage() {
+        String message = "";
+        if (isStageComplete())
+            message = "Complete";
+        if (isExceedCardLimitAndStageNotComplete())
+            message = "Exceed limit";
+        return message;
+    }
+
+    public boolean isExceedCardLimitAndStageNotComplete() {
         return false;
     }
 
-    public boolean isAllNumZero() {
+    public boolean isStageComplete() {
         return false;
     }
 
-    public void dispose(){
-        message.dispose();
+    public final void dispose() {
+        text.dispose();
     }
 }
