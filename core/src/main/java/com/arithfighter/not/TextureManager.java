@@ -29,4 +29,10 @@ public class TextureManager {
     public Texture[] getTextures(String key) {
         return textureMap.get(key);
     }
+
+    public void dispose(){
+        for (Texture[] ts: textureMap.values())
+            for (Texture t:ts)
+                t.dispose();
+    }
 }
