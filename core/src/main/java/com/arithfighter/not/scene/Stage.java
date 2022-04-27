@@ -50,7 +50,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         conditionMessage = new ConditionMessage(){
             @Override
             public boolean isExceedCardLimit() {
-                return playRecord.getRecord()>=cardLimit;
+                return playRecord.getRecord()>=cardLimit&&!gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
 
             @Override
@@ -158,7 +158,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (conditionMessage.isStageNotComplete()) {
+        if (isStageNotComplete()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
             else{
@@ -169,7 +169,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchDragged() {
-        if (conditionMessage.isStageNotComplete()){
+        if (isStageNotComplete()){
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
             else{
@@ -181,7 +181,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
     }
 
     public void touchUp() {
-        if (conditionMessage.isStageNotComplete()){
+        if (isStageNotComplete()){
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
             else{
@@ -189,6 +189,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent{
                 gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
             }
         }
+    }
+
+    public boolean isStageNotComplete(){
+        return !conditionMessage.isAllNumZero()&&!conditionMessage.isExceedCardLimit();
     }
 
     public void dispose() {
@@ -253,10 +257,6 @@ class ConditionMessage{
 
     public boolean isAllNumZero() {
         return false;
-    }
-
-    public boolean isStageNotComplete(){
-        return !isAllNumZero()||!isExceedCardLimit();
     }
 
     public void dispose(){
