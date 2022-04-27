@@ -23,12 +23,18 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
+    private TextureManager textureManager;
 
     @Override
     public void create() {
         assetProcessor = new MyAssetProcessor();
 
         assetProcessor.load();
+
+        textureManager.put(textureManager.getKeys()[0], assetProcessor.getWidgets());
+        textureManager.put(textureManager.getKeys()[1], assetProcessor.getCards());
+        textureManager.put(textureManager.getKeys()[2], assetProcessor.getPanels());
+        textureManager.put(textureManager.getKeys()[3], assetProcessor.getSpriteSheet());
 
         batch = new SpriteBatch();
 
