@@ -6,7 +6,6 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.ValueHolder;
 import com.arithfighter.not.time.TimeHandler;
@@ -68,10 +67,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         cardLimit = limit;
     }
 
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        pauseMenu.setGameRecorder(gameRecorder);
-    }
-
     public PauseMenu getPauseMenu(){
         return pauseMenu;
     }
@@ -80,16 +75,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         return tokenHolder;
     }
 
-    public void setInitTokens(int initTokens) {
-        tokenHolder.setInitValue(initTokens);
-    }
-
     public StageMessage getStageMessage(){
         return stageMessage;
-    }
-
-    public void initPauseMenu() {
-        pauseMenu.init();
     }
 
     public void init() {

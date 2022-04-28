@@ -46,7 +46,7 @@ public class SceneController {
     }
 
     public void updateScene() {
-        stage.setGameRecorder(gameRecordManager.getGameRecorder());
+        stage.getPauseMenu().setGameRecorder(gameRecordManager.getGameRecorder());
 
         switch (gameScene){
             case MENU:
@@ -74,7 +74,7 @@ public class SceneController {
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
             gameRecordManager.init();
-            stage.setInitTokens(initTokens);
+            stage.getTokenHolder().setInitValue(initTokens);
             betScreen.setToken(stage.getTokenHolder().getValue());
             characterMenu.init();
         }
@@ -107,12 +107,12 @@ public class SceneController {
         if (stageManager.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
-            stage.setInitTokens(initTokens);
+            stage.getTokenHolder().setInitValue(initTokens);
         }
         if (stageManager.isOpenOption()){
             gameScene = GameScene.OPTION;
             optionMenu.setSceneTemp(GameScene.STAGE);
-            stage.initPauseMenu();
+            stage.getPauseMenu().init();
         }
         if (stageManager.isWin()||stageManager.isLose()){
             gameScene = GameScene.RESULT;
@@ -165,7 +165,7 @@ public class SceneController {
         if (gameOver.isQuit()){
             gameScene = GameScene.MENU;
             gameOver.init();
-            stage.setInitTokens(initTokens);
+            stage.getTokenHolder().setInitValue(initTokens);
         }
     }
 }
