@@ -23,7 +23,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GameDataDisplacer dataDisplacer;
     private final ValueHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
-    private final ConditionMessage conditionMessage;
+    private final StageMessage stageMessage;
     private int numberBoxQuantity;
     private int cardLimit;
 
@@ -38,16 +38,20 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        tokenHolder = new ValueHolder(999);
+        tokenHolder = new ValueHolder(999);//the initValue there doesn't matter
 
-        playerCollection = new PlayerCollection(textures, cards,
-                CharacterList.values().length, gamePlayComponent.getNumberBoxDisplacer());
+        playerCollection = new PlayerCollection(
+                textures,
+                cards,
+                CharacterList.values().length,
+                gamePlayComponent.getNumberBoxDisplacer()
+        );
         playerCollection.setPlayRecord(playRecord);
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
 
-        conditionMessage = new ConditionMessage(450, 500) {
+        stageMessage = new StageMessage(450, 500) {
             @Override
             public boolean isExceedCardLimitAndStageNotComplete() {
                 return playRecord.getRecord() >= cardLimit && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
@@ -68,12 +72,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseMenu.setGameRecorder(gameRecorder);
     }
 
-    public boolean isWin() {
-        return conditionMessage.isWin();
-    }
-
-    public boolean isLose() {
-        return conditionMessage.isLose();
+    public PauseMenu getPauseMenu(){
+        return pauseMenu;
     }
 
     public ValueHolder getTokenHolder() {
@@ -84,12 +84,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         tokenHolder.setInitValue(initTokens);
     }
 
-    public boolean isOpenOption() {
-        return pauseMenu.isOpenOption();
-    }
-
-    public boolean isQuit() {
-        return pauseMenu.isReturnToMainMenu();
+    public StageMessage getStageMessage(){
+        return stageMessage;
     }
 
     public void initPauseMenu() {
@@ -101,7 +97,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
-        conditionMessage.init();
+        stageMessage.init();
     }
 
     public void setNumberBoxQuantity(int quantity) {
@@ -135,7 +131,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         else
             pauseButton.getButton().draw(batch, "Pause");
 
-        conditionMessage.draw(batch);
+        stageMessage.draw(batch);
     }
 
     public void drawData(int index) {
@@ -177,7 +173,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
             }
         }
-
     }
 
     public void touchUp() {
@@ -192,7 +187,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     private boolean isStageNotComplete() {
-        return !conditionMessage.isStageComplete() && !conditionMessage.isExceedCardLimitAndStageNotComplete();
+        return !stageMessage.isStageComplete() && !stageMessage.isExceedCardLimitAndStageNotComplete();
     }
 
     public void dispose() {
@@ -204,7 +199,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 }
 
-class ConditionMessage {
+class StageMessage {
     private final Font text;
 
     enum Condition {WIN, LOSE, NEUTRAL}
@@ -214,7 +209,7 @@ class ConditionMessage {
     private final float x;
     private final float y;
 
-    public ConditionMessage(float x, float y) {
+    public StageMessage(float x, float y) {
         this.x = x;
         this.y = y;
         text = new Font(45);

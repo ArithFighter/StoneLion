@@ -15,6 +15,7 @@ public class SceneController {
     private final int initTokens = 100;
     private final GameRecordManager gameRecordManager;
     private GameSave gameSave;
+    private final StageManager stageManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -32,6 +33,8 @@ public class SceneController {
         gameOver = sceneBuilder.getGameOver();
 
         optionMenu = sceneBuilder.getOptionMenu();
+
+        stageManager = new StageManager(stage);
     }
 
     public void setGameSave(GameSave gameSave){
@@ -101,22 +104,22 @@ public class SceneController {
     }
 
     private void manageStage(){
-        if (stage.isQuit()) {
+        if (stageManager.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
             stage.setInitTokens(initTokens);
         }
-        if (stage.isOpenOption()){
+        if (stageManager.isOpenOption()){
             gameScene = GameScene.OPTION;
             optionMenu.setSceneTemp(GameScene.STAGE);
             stage.initPauseMenu();
         }
-        if (stage.isWin()||stage.isLose()){
+        if (stageManager.isWin()||stageManager.isLose()){
             gameScene = GameScene.RESULT;
 
-            if (stage.isWin())
+            if (stageManager.isWin())
                 doWhenWin();
-            if (stage.isLose())
+            if (stageManager.isLose())
                 doWhenLoose();
 
             resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
@@ -194,5 +197,29 @@ class GameRecordManager {
 
     public void init(){
         gameRecorder.init();
+    }
+}
+
+class StageManager {
+    private final Stage stage;
+
+    public StageManager(Stage stage){
+        this.stage = stage;
+    }
+
+    public boolean isWin() {
+        return stage.getStageMessage().isWin();
+    }
+
+    public boolean isLose() {
+        return stage.getStageMessage().isLose();
+    }
+
+    public boolean isOpenOption() {
+        return stage.getPauseMenu().isOpenOption();
+    }
+
+    public boolean isQuit() {
+        return stage.getPauseMenu().isReturnToMainMenu();
     }
 }
