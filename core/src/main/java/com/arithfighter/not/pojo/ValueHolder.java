@@ -39,6 +39,6 @@ public class ValueHolder {
 
     public void increaseValue(int i) {
         value += i;
-        value = Math.max(0, value);
+        value = Math.min(initValue, value);
     }
 }

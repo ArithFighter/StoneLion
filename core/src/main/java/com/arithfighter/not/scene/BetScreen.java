@@ -110,16 +110,24 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
         startButton.update();
         tokenBet.update();
 
-        int valueChange = initToken/10;
+        int divide = 7;
+        int valueChange = initToken/divide;
         tokenBet.setValueChange(valueChange);
 
-        cardLimit = calculateLimit();
+        cardLimit = calculateLimit(divide);
     }
 
-    private int calculateLimit(){
+    private int calculateLimit(int divide){
         float betTokensProportion = tokenHolder.getValue()/(float)initToken;
+        int baseLimit;
+        if (numberBoxQuantity<2)
+            baseLimit = 0;
+        else if (numberBoxQuantity<6)
+            baseLimit = 2;
+        else
+            baseLimit = 3;
 
-        return (int) ((1-betTokensProportion)*10+numberBoxQuantity+2);
+        return (int) ((1-betTokensProportion)*divide+numberBoxQuantity+baseLimit);
     }
 
     @Override
