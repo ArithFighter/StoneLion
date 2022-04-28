@@ -7,7 +7,7 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Recorder;
-import com.arithfighter.not.pojo.ValueHolder;
+import com.arithfighter.not.pojo.TokenHolder;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
@@ -20,7 +20,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
-    private final ValueHolder tokenHolder;
+    private final TokenHolder tokenHolder;
     private final Recorder playRecord = new Recorder();
     private final StageMessage stageMessage;
     private int numberBoxQuantity;
@@ -37,7 +37,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
-        tokenHolder = new ValueHolder(999);//the initValue there doesn't matter
+        tokenHolder = new TokenHolder();//the initValue there doesn't matter
 
         playerCollection = new PlayerCollection(
                 textures,
@@ -71,7 +71,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         return pauseMenu;
     }
 
-    public ValueHolder getTokenHolder() {
+    public TokenHolder getTokenHolder() {
         return tokenHolder;
     }
 
@@ -127,7 +127,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         dataDisplacer.setScore(gamePlayComponent.getScore());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
-        dataDisplacer.setToken(tokenHolder.getValue());
+        dataDisplacer.setToken(tokenHolder.getTokens());
         dataDisplacer.setCardLimit(cardLimit);
         dataDisplacer.draw(getBatch());
     }

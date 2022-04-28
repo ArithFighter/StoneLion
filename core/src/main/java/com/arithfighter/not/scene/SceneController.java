@@ -74,8 +74,9 @@ public class SceneController {
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
             gameRecordManager.init();
-            stage.getTokenHolder().setInitValue(initTokens);
-            betScreen.setToken(stage.getTokenHolder().getValue());
+            stage.getTokenHolder().reset();
+            stage.getTokenHolder().gain(initTokens);
+            betScreen.setToken(stage.getTokenHolder().getTokens());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -107,7 +108,7 @@ public class SceneController {
         if (stageManager.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
-            stage.getTokenHolder().setInitValue(initTokens);
+            stage.getTokenHolder().gain(initTokens);
         }
         if (stageManager.isOpenOption()){
             gameScene = GameScene.OPTION;
@@ -122,27 +123,27 @@ public class SceneController {
             if (stageManager.isLose())
                 doWhenLoose();
 
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getValue());
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
     }
 
     private void doWhenWin(){
         resultScreen.setState(ResultState.WIN);
-        stage.getTokenHolder().increaseValue(betScreen.getBet());
+        stage.getTokenHolder().gain(betScreen.getBet());
         gameRecordManager.updateWhenWin();
     }
 
     private void doWhenLoose(){
         resultScreen.setState(ResultState.LOOSE);
-        stage.getTokenHolder().decreaseValue(betScreen.getBet());
+        stage.getTokenHolder().lose(betScreen.getBet());
         gameRecordManager.updateWhenLoose();
     }
 
     private void manageBet(){
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
-            gameRecordManager.updateBeforeStartStage(stage.getTokenHolder().getValue());
+            gameRecordManager.updateBeforeStartStage(stage.getTokenHolder().getTokens());
             stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
             stage.setCardLimit(betScreen.getCardLimit());
             betScreen.init();
@@ -152,7 +153,7 @@ public class SceneController {
     private void manageResult(){
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
-            betScreen.setToken(stage.getTokenHolder().getValue());
+            betScreen.setToken(stage.getTokenHolder().getTokens());
             resultScreen.init();
         }
         if (resultScreen.isQuit()){
@@ -165,7 +166,6 @@ public class SceneController {
         if (gameOver.isQuit()){
             gameScene = GameScene.MENU;
             gameOver.init();
-            stage.getTokenHolder().setInitValue(initTokens);
         }
     }
 }
