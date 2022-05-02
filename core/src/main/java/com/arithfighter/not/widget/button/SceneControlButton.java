@@ -1,6 +1,5 @@
 package com.arithfighter.not.widget.button;
 
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 
 public class SceneControlButton{

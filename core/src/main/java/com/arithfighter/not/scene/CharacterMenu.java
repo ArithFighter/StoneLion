@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent{
+public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font characterName;
     private final SpriteWidget highLight;
     private final SceneControlButton optionButton;
@@ -25,8 +25,12 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
     private final ConversationDialog conversationDialog;
-    private final String[][] conversations = {{"123456", "rpg dialog"}, {"rpg dialog test", "Hello world!!"}};
+    private final String[][] conversations = {
+            {"123456", "rpg dialog"},
+            {"rpg dialog test", "Hello world!!"},
+            {"My name is ArithFighter", "Math is great"}};
     private int cursor = 0;
+    private boolean isButtonLock = false;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -65,18 +69,22 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.init();
     }
 
-    public void update(){
+    public void update() {
         optionButton.update();
         startButton.update();
 
-        for (int i =0;i< conversations.length;i++){
-            if (conversationDialog.getSkipButton().isActive()){
+        if (!isButtonLock){
+            if (conversationDialog.getSkipButton().isActive() ) {
                 cursor++;
-                cursor = Math.min(cursor, conversations.length-1);
+                isButtonLock = true;
             }
-            conversationDialog.setContent1(conversations[cursor][0]);
-            conversationDialog.setContent2(conversations[cursor][1]);
         }
+        isButtonLock = conversationDialog.getSkipButton().isActive();
+
+        if (cursor> conversations.length-1)
+            cursor = 0;
+        conversationDialog.setContent1(conversations[cursor][0]);
+        conversationDialog.setContent2(conversations[cursor][1]);
     }
 
     public void draw() {
@@ -123,7 +131,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         startButton.getButton().activate(x, y);
 
-        conversationDialog.activate(x,y);
+        conversationDialog.activate(x, y);
     }
 
     public void touchDragged() {
