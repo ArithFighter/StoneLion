@@ -4,7 +4,6 @@ import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.file.MyAssetProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -92,7 +91,7 @@ class SceneCollection{
         gameOver = new GameOver(textureManager);
     }
 
-    public void setGameSave(GameSave gameSave){
+    public void setAudioVolume(GameSave gameSave){
         Preferences pref = gameSave.getPreferences();
         String soundVolumeKey = gameSave.getOptionKeys()[0];
         String musicVolumeKey = gameSave.getOptionKeys()[1];

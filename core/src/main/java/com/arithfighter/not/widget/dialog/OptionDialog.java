@@ -1,5 +1,6 @@
 package com.arithfighter.not.widget.dialog;
 
+import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,10 @@ public class OptionDialog extends Dialog {
 
     public OptionDialog(Texture[] textures){
         super(textures[10], 35);
+        getPoint().set(
+                WindowSetting.CENTER_X - getDialog().getWidget().getWidth() / 2,
+                WindowSetting.CENTER_Y - getDialog().getWidget().getHeight() / 2
+        );
         yesButton = new SceneControlButton(textures[6], 1.2f);
         noButton = new SceneControlButton(textures[6], 1.2f);
     }

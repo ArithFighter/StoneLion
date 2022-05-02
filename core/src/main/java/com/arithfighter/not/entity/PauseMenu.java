@@ -3,7 +3,6 @@ package com.arithfighter.not.entity;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.GameRecorder;
-import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
@@ -34,7 +33,6 @@ public class PauseMenu {
         int margin = 100;
 
         dialog = new OptionDialog(textures);
-        dialog.setPoint(new Point(x, y));
         dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
         dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
 

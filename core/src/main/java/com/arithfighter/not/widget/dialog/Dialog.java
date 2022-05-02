@@ -14,7 +14,7 @@ public class Dialog {
     private final VisibleWidget dialog;
     private String content1;
     private String content2;
-    private Point point;
+    private final Point point;
 
     public Dialog(Texture texture, float scale){
         dialog = new SpriteWidget(texture, scale);
@@ -24,6 +24,8 @@ public class Dialog {
 
         text2 = new Font(20);
         text2.setColor(Color.BLACK);
+
+        point = new Point();
     }
 
     public void setContent1(String content1) {
@@ -40,10 +42,6 @@ public class Dialog {
 
     public VisibleWidget getDialog(){
         return dialog;
-    }
-
-    public void setPoint(Point point){
-        this.point = point;
     }
 
     public void drawDialog(SpriteBatch batch){

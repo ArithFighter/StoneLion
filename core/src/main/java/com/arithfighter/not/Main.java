@@ -4,6 +4,7 @@ import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.scene.*;
+import com.arithfighter.not.widget.dialog.ConversationDialog;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -52,7 +53,8 @@ public class Main extends ApplicationAdapter {
         sceneController = new SceneController(sceneBuilder, GameScene.MENU);
 
         GameSave gameSave = new GameSave();
-        sceneBuilder.setGameSave(gameSave);
+        sceneBuilder.setAudioVolume(gameSave);
+
         sceneController.setGameSave(gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
