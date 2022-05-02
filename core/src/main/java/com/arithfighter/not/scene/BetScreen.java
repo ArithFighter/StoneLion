@@ -122,7 +122,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
         int baseLimit;
         if (numberBoxQuantity<2)
             baseLimit = 0;
-        else if (numberBoxQuantity<6)
+        else if (numberBoxQuantity<4)
             baseLimit = 2;
         else
             baseLimit = 3;

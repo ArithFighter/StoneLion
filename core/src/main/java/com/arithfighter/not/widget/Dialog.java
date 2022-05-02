@@ -12,6 +12,8 @@ public class Dialog {
     private final VisibleWidget dialog;
     private final SceneControlButton yesButton;
     private final SceneControlButton noButton;
+    private String content1;
+    private String content2;
     private Point point;
 
     public Dialog(Texture[] textures){
@@ -27,6 +29,14 @@ public class Dialog {
         text2.setColor(Color.BLACK);
     }
 
+    public void setContent1(String content1) {
+        this.content1 = content1;
+    }
+
+    public void setContent2(String content2) {
+        this.content2 = content2;
+    }
+
     public void init(){
         yesButton.init();
         noButton.init();
@@ -37,11 +47,15 @@ public class Dialog {
         noButton.update();
     }
 
+    public VisibleWidget getDialog(){
+        return dialog;
+    }
+
     public void setPoint(Point point){
         this.point = point;
     }
 
-    public void draw(SpriteBatch batch, String content1, String content2){
+    public void draw(SpriteBatch batch){
         dialog.setPosition(point.getX(), point.getY());
         dialog.draw(batch);
 
@@ -78,6 +92,7 @@ public class Dialog {
 
     public void dispose(){
         text1.dispose();
+        text2.dispose();
         yesButton.dispose();
         noButton.dispose();
     }

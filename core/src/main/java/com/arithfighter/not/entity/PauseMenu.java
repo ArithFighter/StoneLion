@@ -36,6 +36,8 @@ public class PauseMenu {
 
         dialog = new Dialog(textures);
         dialog.setPoint(new Point(x, y));
+        dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
+        dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
 
         background = new SpriteWidget(textures[1], 5f);
         background.setPosition(x, y - margin);
@@ -52,8 +54,9 @@ public class PauseMenu {
 
         buttons.draw(batch, textProvider.getPauseMenuTexts());
 
-        if (buttons.getQuit().isStart())
-            dialog.draw(batch, textProvider.getPauseMenuTexts()[3], textProvider.getPauseMenuTexts()[4]);
+        if (buttons.getQuit().isStart()){
+            dialog.draw(batch);
+        }
 
         recordDisplacer.draw(batch);
     }
@@ -202,10 +205,6 @@ class RecordDisplacer {
 
         background = new SpriteWidget(textures[1], 6f);
         background.setPosition(posX, 150);
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
     }
 
     public void setStages(int stages) {
