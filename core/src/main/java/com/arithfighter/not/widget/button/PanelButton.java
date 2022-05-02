@@ -7,16 +7,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelButton {
-    private final DetectableWidget widget;
+    private final DetectableWidget button;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public PanelButton(Texture texture){
-        widget = new SpriteWidget(texture, 0.8f);
+        button = new SpriteWidget(texture, 0.8f);
     }
 
     public void setPosition(float x, float y){
-        widget.setPosition(x,y);
+        button.setPosition(x,y);
     }
 
     public void draw(SpriteBatch batch){
@@ -27,17 +27,17 @@ public class PanelButton {
     }
 
     private void initialize(SpriteBatch batch){
-        widget.getSprite().setColor(Color.WHITE);
-        widget.draw(batch);
+        button.getSprite().setColor(Color.WHITE);
+        button.draw(batch);
     }
 
     private void changeColor(SpriteBatch batch){
-        widget.getSprite().setColor(Color.ORANGE);
-        widget.draw(batch);
+        button.getSprite().setColor(Color.ORANGE);
+        button.draw(batch);
     }
 
     private boolean isOnButton(float x, float y){
-        return widget.isOnWidget(x,y);
+        return button.isOnWidget(x,y);
     }
 
     public void activate(float x, float y){

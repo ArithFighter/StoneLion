@@ -33,7 +33,7 @@ public class PauseMenu {
         int y = 300;
         int margin = 100;
 
-        dialog = new OptionDialog(textures, 35);
+        dialog = new OptionDialog(textures);
         dialog.setPoint(new Point(x, y));
         dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
         dialog.setContent2(textProvider.getPauseMenuTexts()[4]);

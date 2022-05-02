@@ -2,7 +2,6 @@ package com.arithfighter.not.widget.dialog;
 
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.arithfighter.not.widget.dialog.Dialog;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,8 +9,8 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton yesButton;
     private final SceneControlButton noButton;
 
-    public OptionDialog(Texture[] textures, float scale){
-        super(textures[10], scale);
+    public OptionDialog(Texture[] textures){
+        super(textures[10], 35);
         yesButton = new SceneControlButton(textures[6], 1.2f);
         noButton = new SceneControlButton(textures[6], 1.2f);
     }

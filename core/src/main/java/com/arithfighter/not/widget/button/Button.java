@@ -9,19 +9,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button{
     private final Font font;
-    private final DetectableFontWidget widget;
+    private final DetectableFontWidget button;
 
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public Button(Texture texture, float scale){
-        widget = new SpriteWidget(texture, scale, 22);
+        button = new SpriteWidget(texture, scale, 22);
 
-        font = new Font(widget.getFontSize());
+        font = new Font(button.getFontSize());
+    }
+
+    public DetectableFontWidget getButton(){
+        return button;
     }
 
     public void setPosition(float x, float y){
-        widget.setPosition(x, y);
+        button.setPosition(x, y);
     }
 
     public void draw(SpriteBatch batch, String content){
@@ -32,29 +36,29 @@ public class Button{
     }
 
     private void initialize(SpriteBatch batch, String content){
-        widget.getSprite().setColor(Color.WHITE);
+        button.getSprite().setColor(Color.WHITE);
         font.setColor(Color.BLACK);
         show(batch, content);
     }
 
     private void changeColor(SpriteBatch batch, String content){
-        widget.getSprite().setColor(Color.ORANGE);
+        button.getSprite().setColor(Color.ORANGE);
         font.setColor(Color.WHITE);
         show(batch, content);
     }
 
     private void show(SpriteBatch batch, String content){
-        widget.draw(batch);
+        button.draw(batch);
         font.draw(
                 batch,
                 content,
-                widget.getCenterX(content),
-                widget.getCenterY()
+                button.getCenterX(content),
+                button.getCenterY()
         );
     }
 
     private boolean isOnButton(float x, float y){
-        return widget.isOnWidget(x,y);
+        return button.isOnWidget(x,y);
     }
 
     public void activate(float x, float y){
