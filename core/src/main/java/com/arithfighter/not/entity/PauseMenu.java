@@ -5,10 +5,7 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
-import com.arithfighter.not.widget.Dialog;
-import com.arithfighter.not.widget.SceneControlButton;
-import com.arithfighter.not.widget.SpriteWidget;
-import com.arithfighter.not.widget.VisibleWidget;
+import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
     private final ButtonProducer buttons;
-    private final Dialog dialog;
+    private final OptionDialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
@@ -34,7 +31,7 @@ public class PauseMenu {
         int y = 300;
         int margin = 100;
 
-        dialog = new Dialog(textures);
+        dialog = new OptionDialog(textures);
         dialog.setPoint(new Point(x, y));
         dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
         dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
@@ -144,7 +141,7 @@ public class PauseMenu {
     public void dispose() {
         for (SceneControlButton button : buttons.getButtons())
             button.dispose();
-        dialog.dispose();
+        dialog.disposeTexts();
         recordDisplacer.dispose();
     }
 }
@@ -192,7 +189,7 @@ class RecordDisplacer {
     private int wins;
     private int loses;
     private int tokens;
-    private int posX;
+    private final int posX;
 
     public RecordDisplacer(Texture[] textures) {
         texts = new Font[4];
