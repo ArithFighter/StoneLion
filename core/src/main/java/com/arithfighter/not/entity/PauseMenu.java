@@ -7,6 +7,8 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
+import com.arithfighter.not.widget.button.SceneControlButton;
+import com.arithfighter.not.widget.dialog.OptionDialog;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,7 +33,7 @@ public class PauseMenu {
         int y = 300;
         int margin = 100;
 
-        dialog = new OptionDialog(textures);
+        dialog = new OptionDialog(textures, 35);
         dialog.setPoint(new Point(x, y));
         dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
         dialog.setContent2(textProvider.getPauseMenuTexts()[4]);

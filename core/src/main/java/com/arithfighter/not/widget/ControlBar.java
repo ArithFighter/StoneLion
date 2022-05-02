@@ -3,6 +3,7 @@ package com.arithfighter.not.widget;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.ValueHolder;
+import com.arithfighter.not.widget.button.ArrowButtons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

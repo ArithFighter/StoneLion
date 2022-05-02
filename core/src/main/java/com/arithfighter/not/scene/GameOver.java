@@ -2,7 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.widget.SceneControlButton;
+import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

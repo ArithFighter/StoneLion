@@ -1,6 +1,8 @@
-package com.arithfighter.not.widget;
+package com.arithfighter.not.widget.stagecomponent;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.widget.FontWidget;
+import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

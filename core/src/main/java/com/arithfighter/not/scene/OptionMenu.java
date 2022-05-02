@@ -4,7 +4,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.widget.ControlBar;
-import com.arithfighter.not.widget.SceneControlButton;
+import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

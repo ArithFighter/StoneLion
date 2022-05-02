@@ -1,4 +1,4 @@
-package com.arithfighter.not.widget;
+package com.arithfighter.not.widget.button;
 
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.Button;

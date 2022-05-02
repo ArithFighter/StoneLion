@@ -9,7 +9,7 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.arithfighter.not.time.TimeHandler;
-import com.arithfighter.not.widget.SceneControlButton;
+import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

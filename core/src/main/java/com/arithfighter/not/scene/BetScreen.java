@@ -4,7 +4,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.widget.ControlNumber;
-import com.arithfighter.not.widget.SceneControlButton;
+import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.pojo.TextProvider;

@@ -6,8 +6,8 @@ import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.time.TimeHandler;
-import com.arithfighter.not.widget.CardPlaceBasket;
-import com.arithfighter.not.widget.SumBox;
+import com.arithfighter.not.widget.stagecomponent.CardPlaceBasket;
+import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

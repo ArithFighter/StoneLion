@@ -6,7 +6,7 @@ import com.arithfighter.not.pojo.RandomNumFactory;
 import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
-import com.arithfighter.not.widget.NumberBox;
+import com.arithfighter.not.widget.stagecomponent.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
