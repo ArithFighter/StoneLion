@@ -1,5 +1,6 @@
 package com.arithfighter.not.widget.dialog;
 
+import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,9 +9,11 @@ public class ConversationDialog extends Dialog{
     private final Button skipButton;
 
     public ConversationDialog(Texture[] textures) {
-        super(textures[11], 35);
+        super(textures[11], 30);
 
         skipButton = new Button(textures[6], 1.2f);
+
+        getPoint().set(WindowSetting.CENTER_X-getDialog().getWidget().getWidth()/2,0);
     }
 
     public void draw(SpriteBatch batch){
@@ -18,6 +21,8 @@ public class ConversationDialog extends Dialog{
 
         float buttonWidth = skipButton.getButton().getWidget().getWidth();
         int margin = 15;
+
+        drawDialog(batch);
 
         skipButton.setPosition(
                 getPoint().getX()+width-buttonWidth-margin,

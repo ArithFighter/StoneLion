@@ -10,6 +10,7 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.Mask;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.SpriteWidget;
+import com.arithfighter.not.widget.dialog.ConversationDialog;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +24,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
+    private final ConversationDialog conversationDialog;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -54,6 +56,10 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         }
 
         animation = new MaskAnimation(masks);
+
+        conversationDialog = new ConversationDialog(textures);
+        conversationDialog.setContent1("123456");
+        conversationDialog.setContent2("rpg dialog");
     }
 
     public void init() {
@@ -84,6 +90,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
+
+        conversationDialog.draw(batch);
     }
 
     public int getSelectIndex() {
@@ -139,6 +147,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.getButton().dispose();
         optionButton.getButton().dispose();
         characterName.dispose();
+        conversationDialog.dispose();
     }
 }
 
