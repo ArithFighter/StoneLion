@@ -14,7 +14,8 @@ public class FileLibrary {
             "widget/arrow-left.png",
             "widget/arrow-right.png",
 
-            "widget/dialog.png"
+            "widget/dialog.png",
+            "widget/wide-dialog.png"
     };
 
     private final String[] cardFiles = {
