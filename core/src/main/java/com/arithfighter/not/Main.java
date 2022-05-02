@@ -31,11 +31,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.load();
 
-        textureManager = new TextureManager();
-        textureManager.put(textureManager.getKeys()[0], assetProcessor.getWidgets());
-        textureManager.put(textureManager.getKeys()[1], assetProcessor.getCards());
-        textureManager.put(textureManager.getKeys()[2], assetProcessor.getPanels());
-        textureManager.put(textureManager.getKeys()[3], assetProcessor.getSpriteSheet());
+        textureManager = new TextureManager(assetProcessor);
 
         batch = new SpriteBatch();
 
