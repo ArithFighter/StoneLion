@@ -49,10 +49,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         Mask[] masks = new Mask[panelQuantity];
         for (int i = 0; i < panelQuantity; i++) {
             masks[i] = new Mask(textures[5], 3f);
-            masks[i].setPosition(
-                    placer.getButtonX(i),
-                    placer.getButtonY(i)
-            );
+            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
 
         animation = new MaskAnimation(masks);

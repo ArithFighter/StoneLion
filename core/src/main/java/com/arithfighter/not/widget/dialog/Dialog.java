@@ -15,17 +15,20 @@ public class Dialog {
     private String content1;
     private String content2;
     private final Point point;
+    private final int fontSize;
 
-    public Dialog(Texture texture, float scale){
+    public Dialog(Texture texture, float scale, int fontSize){
         dialog = new SpriteWidget(texture, scale);
 
-        text1 = new Font(20);
+        text1 = new Font(fontSize);
         text1.setColor(Color.BLACK);
 
-        text2 = new Font(20);
+        text2 = new Font(fontSize);
         text2.setColor(Color.BLACK);
 
         point = new Point();
+
+        this.fontSize = fontSize;
     }
 
     public void setContent1(String content1) {
@@ -52,7 +55,7 @@ public class Dialog {
         float height = dialog.getWidget().getHeight();
 
         text1.draw(batch, content1, point.getX()+width/9, point.getY()+height*3/4);
-        text2.draw(batch, content2, point.getX()+width/9, point.getY()+height*5/8);
+        text2.draw(batch, content2, point.getX()+width/9, point.getY()+height*5/8-fontSize/2f);
     }
 
     public void disposeTexts(){

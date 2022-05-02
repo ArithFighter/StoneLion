@@ -9,7 +9,7 @@ public class ConversationDialog extends Dialog{
     private final Button skipButton;
 
     public ConversationDialog(Texture[] textures) {
-        super(textures[11], 30);
+        super(textures[11], 25, 28);
 
         skipButton = new Button(textures[6], 1.2f);
 

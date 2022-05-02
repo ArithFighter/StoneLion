@@ -11,7 +11,7 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton noButton;
 
     public OptionDialog(Texture[] textures){
-        super(textures[10], 35);
+        super(textures[10], 35, 20);
         getPoint().set(
                 WindowSetting.CENTER_X - getDialog().getWidget().getWidth() / 2,
                 WindowSetting.CENTER_Y - getDialog().getWidget().getHeight() / 2
