@@ -16,6 +16,10 @@ public class ConversationDialog extends Dialog{
         getPoint().set(WindowSetting.CENTER_X-getDialog().getWidget().getWidth()/2,0);
     }
 
+    public Button getSkipButton(){
+        return skipButton;
+    }
+
     public void draw(SpriteBatch batch){
         float width = getDialog().getWidget().getWidth();
 

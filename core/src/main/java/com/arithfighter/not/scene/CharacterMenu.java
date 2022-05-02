@@ -25,6 +25,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
     private final ConversationDialog conversationDialog;
+    private final String[][] conversations = {{"123456", "rpg dialog"}, {"rpg dialog test", "Hello world!!"}};
+    private int cursor = 0;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -55,8 +57,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         animation = new MaskAnimation(masks);
 
         conversationDialog = new ConversationDialog(textures);
-        conversationDialog.setContent1("123456");
-        conversationDialog.setContent2("rpg dialog");
     }
 
     public void init() {
@@ -68,6 +68,15 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     public void update(){
         optionButton.update();
         startButton.update();
+
+        for (int i =0;i< conversations.length;i++){
+            if (conversationDialog.getSkipButton().isActive()){
+                cursor++;
+                cursor = Math.min(cursor, conversations.length-1);
+            }
+            conversationDialog.setContent1(conversations[cursor][0]);
+            conversationDialog.setContent2(conversations[cursor][1]);
+        }
     }
 
     public void draw() {
@@ -113,6 +122,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         optionButton.getButton().activate(x, y);
 
         startButton.getButton().activate(x, y);
+
+        conversationDialog.activate(x,y);
     }
 
     public void touchDragged() {
@@ -138,6 +149,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         optionButton.getButton().deactivate();
 
         startButton.getButton().deactivate();
+
+        conversationDialog.deactivate();
     }
 
     public void dispose() {

@@ -29,6 +29,8 @@ public class Dialog {
         point = new Point();
 
         this.fontSize = fontSize;
+        content1 = "";
+        content2 = "";
     }
 
     public void setContent1(String content1) {
