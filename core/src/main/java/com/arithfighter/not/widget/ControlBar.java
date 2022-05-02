@@ -12,8 +12,8 @@ public class ControlBar {
     private final Font font;
     private final ArrowButtons arrows;
     private final int fontSize;
-    private boolean isButtonLock = false;
     private final ValueHolder valueHolder;
+    private boolean isButtonLock = false;
 
     public ControlBar(Texture[] textures, int max) {
         valueHolder = new ValueHolder(max);

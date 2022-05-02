@@ -2,7 +2,6 @@ package com.arithfighter.not.widget.dialog;
 
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.widget.button.Button;
-import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

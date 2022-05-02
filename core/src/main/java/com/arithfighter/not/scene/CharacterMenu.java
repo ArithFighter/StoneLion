@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
@@ -10,7 +11,6 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.Mask;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.SpriteWidget;
-import com.arithfighter.not.widget.dialog.ConversationDialog;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,13 +24,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
-    private final ConversationDialog conversationDialog;
-    private final String[][] conversations = {
-            {"123456", "rpg dialog"},
-            {"rpg dialog test", "Hello world!!"},
-            {"My name is ArithFighter", "Math is great"}};
-    private int cursor = 0;
-    private boolean isButtonLock = false;
+    private final TextAdventure textAdventure;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -60,7 +54,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation = new MaskAnimation(masks);
 
-        conversationDialog = new ConversationDialog(textures);
+        textAdventure = new TextAdventure(textures);
     }
 
     public void init() {
@@ -73,18 +67,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         optionButton.update();
         startButton.update();
 
-        if (!isButtonLock){
-            if (conversationDialog.getSkipButton().isActive() ) {
-                cursor++;
-                isButtonLock = true;
-            }
-        }
-        isButtonLock = conversationDialog.getSkipButton().isActive();
-
-        if (cursor> conversations.length-1)
-            cursor = 0;
-        conversationDialog.setContent1(conversations[cursor][0]);
-        conversationDialog.setContent2(conversations[cursor][1]);
+        textAdventure.update();
     }
 
     public void draw() {
@@ -105,7 +88,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation.draw(batch, 0.1f);
 
-        conversationDialog.draw(batch);
+        textAdventure.draw(batch);
     }
 
     public int getSelectIndex() {
@@ -131,11 +114,12 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         startButton.getButton().activate(x, y);
 
-        conversationDialog.activate(x, y);
+        textAdventure.touchDown(x,y);
     }
 
     public void touchDragged() {
         deactivateButton();
+        textAdventure.touchDragged();
     }
 
     public void touchUp() {
@@ -148,6 +132,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         if (startButton.getButton().isActive())
             soundManager.playAcceptSound();
 
+        textAdventure.touchUp();
         deactivateButton();
     }
 
@@ -157,15 +142,13 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         optionButton.getButton().deactivate();
 
         startButton.getButton().deactivate();
-
-        conversationDialog.deactivate();
     }
 
     public void dispose() {
         startButton.getButton().dispose();
         optionButton.getButton().dispose();
         characterName.dispose();
-        conversationDialog.dispose();
+        textAdventure.dispose();
     }
 }
 
