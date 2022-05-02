@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
@@ -24,7 +23,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
-    private final TextAdventure textAdventure;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -53,8 +51,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         }
 
         animation = new MaskAnimation(masks);
-
-        textAdventure = new TextAdventure(textures);
     }
 
     public void init() {
@@ -66,8 +62,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     public void update() {
         optionButton.update();
         startButton.update();
-
-        textAdventure.update();
     }
 
     public void draw() {
@@ -87,8 +81,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
-
-        textAdventure.draw(batch);
     }
 
     public int getSelectIndex() {
@@ -113,13 +105,10 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         optionButton.getButton().activate(x, y);
 
         startButton.getButton().activate(x, y);
-
-        textAdventure.touchDown(x,y);
     }
 
     public void touchDragged() {
         deactivateButton();
-        textAdventure.touchDragged();
     }
 
     public void touchUp() {
@@ -132,7 +121,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         if (startButton.getButton().isActive())
             soundManager.playAcceptSound();
 
-        textAdventure.touchUp();
         deactivateButton();
     }
 
@@ -148,7 +136,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.getButton().dispose();
         optionButton.getButton().dispose();
         characterName.dispose();
-        textAdventure.dispose();
     }
 }
 
