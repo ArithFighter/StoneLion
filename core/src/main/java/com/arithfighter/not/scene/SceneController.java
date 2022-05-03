@@ -156,12 +156,23 @@ public class SceneController {
         if (resultScreen.isContinue()){
             gameScene = GameScene.BET;
             betScreen.setToken(stage.getTokenHolder().getTokens());
+            saveHighScore();
             resultScreen.init();
         }
         if (resultScreen.isQuit()){
             gameScene = GameScene.GAME_OVER;
+            saveHighScore();
             resultScreen.init();
         }
+    }
+
+    private void saveHighScore(){
+        Preferences pref = gameSave.getPreferences();
+        String[] keys = gameSave.getHighScoreKey();
+        int characterIndex = characterMenu.getSelectIndex();
+
+        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+        pref.flush();
     }
 
     private void manageGameOver(){

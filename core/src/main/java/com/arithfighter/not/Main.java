@@ -24,6 +24,7 @@ public class Main extends ApplicationAdapter {
     private int selectedCharacterIndex = 0;
     private SceneController sceneController;
     private TextureManager textureManager;
+    private GameSave gameSave;
 
     @Override
     public void create() {
@@ -51,7 +52,7 @@ public class Main extends ApplicationAdapter {
 
         sceneController = new SceneController(sceneBuilder, GameScene.MENU);
 
-        GameSave gameSave = new GameSave();
+        gameSave = new GameSave();
         sceneBuilder.setAudioVolume(gameSave);
         sceneBuilder.setHighScore(gameSave);
 
@@ -69,6 +70,8 @@ public class Main extends ApplicationAdapter {
 
         if (assetProcessor.getAssetManager().update()){
             updateScene();
+
+            sceneBuilder.setHighScore(gameSave);
 
             cursorPos.update();
 

@@ -35,7 +35,7 @@ public class GameSave {
     private void initHighScore(){
         for (String s:highScoreKey){
             if (!preferences.contains(s))
-                preferences.putInteger(s, 99999);
+                preferences.putInteger(s, 0);
         }
     }
 
