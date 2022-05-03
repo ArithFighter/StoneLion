@@ -58,6 +58,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
     public void setToken(int value){
         initToken = value;
         tokenHolder.setMaxValue(initToken);
+        tokenHolder.setMinValue(100);
     }
 
     public int getBet(){
@@ -110,14 +111,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
         startButton.update();
         tokenBet.update();
 
-        int divide = 7;
-        int valueChange = initToken/divide;
+        int valueChange = 100;
         tokenBet.setValueChange(valueChange);
 
-        cardLimit = calculateLimit(divide);
+        cardLimit = calculateLimit(valueChange);
     }
 
-    private int calculateLimit(int divide){
+    private int calculateLimit(int valueChange){
         float betTokensProportion = tokenHolder.getValue()/(float)initToken;
         int baseLimit;
         if (numberBoxQuantity<2)
@@ -127,7 +127,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
         else
             baseLimit = 3;
 
-        return (int) ((1-betTokensProportion)*divide+numberBoxQuantity+baseLimit);
+        return (int) ((1-betTokensProportion)*valueChange/10+numberBoxQuantity+baseLimit);
     }
 
     @Override

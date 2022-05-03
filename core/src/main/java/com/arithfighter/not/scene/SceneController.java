@@ -12,7 +12,7 @@ public class SceneController {
     private final ResultScreen resultScreen;
     private final GameOver gameOver;
     private final OptionMenu optionMenu;
-    private final int initTokens = 100;
+    private final int initTokens = 500;
     private final GameRecordManager gameRecordManager;
     private GameSave gameSave;
     private final StageManager stageManager;
