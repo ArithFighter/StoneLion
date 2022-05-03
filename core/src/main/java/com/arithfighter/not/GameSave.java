@@ -15,7 +15,7 @@ public class GameSave {
 
         for (String s:optionKeys){
             if (!preferences.contains(s))
-                preferences.putInteger(s, 99);
+                preferences.putInteger(s, 3);
         }
     }
 

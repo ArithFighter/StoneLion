@@ -57,7 +57,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
 
     public void setToken(int value){
         initToken = value;
-        tokenHolder.setInitValue(initToken);
+        tokenHolder.setMaxValue(initToken);
     }
 
     public int getBet(){

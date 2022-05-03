@@ -57,7 +57,7 @@ public class ControlNumber {
         if (!isButtonLock) {
             if (arrows.isLeftActive() && i > 0)
                 valueHolder.decreaseValue(valueChange);
-            if (arrows.isRightActive() && i < valueHolder.getInitValue())
+            if (arrows.isRightActive() && i < valueHolder.getMaxValue())
                 valueHolder.increaseValue(valueChange);
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
