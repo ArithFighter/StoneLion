@@ -5,6 +5,7 @@ import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
+import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.Font;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font characterName;
-    private final SpriteWidget highLight;
+    private final VisibleWidget highLight;
     private final SceneControlButton optionButton;
     private final SceneControlButton startButton;
     private final PanelButtonPlacer placer = new PanelButtonPlacer();
@@ -46,15 +47,19 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         characterName = new Font(36);
         characterName.setColor(Color.WHITE);
 
-        Mask[] masks = new Mask[panelQuantity];
-        for (int i = 0; i < panelQuantity; i++) {
-            masks[i] = new Mask(textures[5], 3f);
-            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
-        }
-
-        animation = new MaskAnimation(masks);
+        animation = new MaskAnimation(getMasks(panelQuantity, textures[5]));
 
         textAdventure = new TextAdventure(textures);
+    }
+
+    private Mask[] getMasks(int quantity, Texture texture){
+        Mask[] masks = new Mask[quantity];
+
+        for (int i = 0; i < quantity; i++) {
+            masks[i] = new Mask(texture, 3f);
+            masks[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
+        }
+        return masks;
     }
 
     public void init() {
@@ -71,9 +76,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
     public void draw() {
         SpriteBatch batch = getBatch();
-        int index = buttonProducer.getActiveButtonIndex();
 
-        highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
+        setButtonHighLightPosition();
         highLight.draw(batch);
 
         buttonProducer.draw(batch);
@@ -82,11 +86,16 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         optionButton.getButton().draw(batch, "Option");
 
-        CharacterList[] characters = CharacterList.values();
-        characterName.draw(batch, characters[getSelectIndex()].name(), 900, 500);
+        characterName.draw(batch, CharacterList.values()[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
+
         textAdventure.draw(batch);
+    }
+
+    private void setButtonHighLightPosition(){
+        int index = buttonProducer.getActiveButtonIndex();
+        highLight.setPosition(placer.getButtonX(index) - 22, placer.getButtonY(index) - 20);
     }
 
     public int getSelectIndex() {
@@ -123,10 +132,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         if (buttonProducer.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (optionButton.getButton().isActive())
-            soundManager.playAcceptSound();
-
-        if (startButton.getButton().isActive())
+        if (optionButton.getButton().isActive()||startButton.getButton().isActive())
             soundManager.playAcceptSound();
 
         deactivateButton();
