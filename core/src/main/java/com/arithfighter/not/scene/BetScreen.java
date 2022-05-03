@@ -100,9 +100,12 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent{
         startButton.getButton().deactivate();
     }
 
+    public void setNumberBoxQuantity(){
+        numberBoxQuantity = new RandomNumProducer(9,1).getRandomNum();
+    }
+
     @Override
     public void init() {
-        numberBoxQuantity = new RandomNumProducer(9,1).getRandomNum();
         startButton.init();
     }
 

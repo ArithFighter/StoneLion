@@ -76,6 +76,7 @@ public class SceneController {
             gameRecordManager.init();
             stage.getTokenHolder().reset();
             stage.getTokenHolder().gain(initTokens);
+            betScreen.setNumberBoxQuantity();
             betScreen.setToken(stage.getTokenHolder().getTokens());
             characterMenu.init();
         }
@@ -146,6 +147,7 @@ public class SceneController {
             gameRecordManager.updateBeforeStartStage(stage.getTokenHolder().getTokens());
             stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
             stage.setCardLimit(betScreen.getCardLimit());
+            betScreen.setNumberBoxQuantity();
             betScreen.init();
         }
     }
