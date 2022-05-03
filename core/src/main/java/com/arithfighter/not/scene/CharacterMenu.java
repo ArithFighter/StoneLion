@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
@@ -25,6 +24,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
+    private final Font bestScoreText;
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -47,6 +47,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         characterName.setColor(Color.WHITE);
 
         animation = new MaskAnimation(getMasks(panelQuantity, textures[5]));
+
+        bestScoreText = new Font(20);
+        bestScoreText.setColor(Color.WHITE);
     }
 
     private Mask[] getMasks(int quantity, Texture texture){
@@ -85,6 +88,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         characterName.draw(batch, CharacterList.values()[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
+
+        bestScoreText.draw(batch, "best: ", 900,450);
     }
 
     private void setButtonHighLightPosition(){
@@ -142,6 +147,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.getButton().dispose();
         optionButton.getButton().dispose();
         characterName.dispose();
+        bestScoreText.dispose();
     }
 }
 
