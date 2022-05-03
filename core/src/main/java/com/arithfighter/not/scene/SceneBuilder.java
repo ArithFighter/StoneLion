@@ -4,6 +4,7 @@ import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.entity.player.CharacterList;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -98,6 +99,17 @@ class SceneCollection{
 
         optionMenu.setSoundVolume(pref.getInteger(soundVolumeKey));
         optionMenu.setMusicVolume(pref.getInteger(musicVolumeKey));
+    }
+
+    public void setHighScore(GameSave gameSave){
+        Preferences pref = gameSave.getPreferences();
+
+        for (int i = 0;i<gameSave.getHighScoreKey().length;i++){
+            characterMenu.setHighScore(
+                    CharacterList.values()[i],
+                    pref.getInteger(gameSave.getHighScoreKey()[i])
+            );
+        }
     }
 
     public CharacterMenu getCharacterMenu() {

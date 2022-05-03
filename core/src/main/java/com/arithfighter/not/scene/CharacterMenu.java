@@ -25,6 +25,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
     private final Font bestScoreText;
+    private final int[] highScores = new int[CharacterList.values().length];
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -62,6 +63,13 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         return masks;
     }
 
+    public void setHighScore(CharacterList character, int highScore) {
+        for (int i = 0; i<CharacterList.values().length;i++){
+            if (character == CharacterList.values()[i])
+                highScores[i] = highScore;
+        }
+    }
+
     public void init() {
         animation.init();
         optionButton.init();
@@ -89,7 +97,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation.draw(batch, 0.1f);
 
-        bestScoreText.draw(batch, "best: ", 900,450);
+        bestScoreText.draw(batch, "best: "+highScores[getSelectIndex()], 900,450);
     }
 
     private void setButtonHighLightPosition(){
