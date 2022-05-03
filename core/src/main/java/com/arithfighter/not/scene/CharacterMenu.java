@@ -49,7 +49,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation = new MaskAnimation(getMasks(panelQuantity, textures[5]));
 
-        textAdventure = new TextAdventure(textures);
+        textAdventure = new TextAdventure(textures, panels);
     }
 
     private Mask[] getMasks(int quantity, Texture texture){
