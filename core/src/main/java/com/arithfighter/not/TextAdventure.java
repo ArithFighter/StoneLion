@@ -17,21 +17,35 @@ public class TextAdventure{
         conversationHolder = new ConversationHolder();
     }
 
-    public void update(){
-        if (!isButtonLock){
-            if (conversationDialog.getSkipButton().isActive() )
-                cursor++;
-        }
-        isButtonLock = conversationDialog.getSkipButton().isActive();
+    public void init(){
+        cursor-=cursor;
+    }
 
+    public void update(){
         String[][] conversations = conversationHolder.getConversations();
 
-        if (cursor > conversations.length-1)
-            cursor = conversations.length-1;
+        handleSkipButton();
+
+        //reset cursor with key R
         if (Gdx.input.isKeyJustPressed(Input.Keys.R))
             cursor = 0;
-        conversationDialog.setContent1(conversations[cursor][0]);
-        conversationDialog.setContent2(conversations[cursor][1]);
+
+        try{
+            conversationDialog.setContent1(conversations[cursor][0]);
+            conversationDialog.setContent2(conversations[cursor][1]);
+        }catch (ArrayIndexOutOfBoundsException ignored){}
+    }
+
+    private void handleSkipButton(){
+        if (!isButtonLock){
+            updateCursorWhenButtonActivate();
+        }
+        isButtonLock = conversationDialog.getSkipButton().isActive();
+    }
+
+    private void updateCursorWhenButtonActivate(){
+        if (conversationDialog.getSkipButton().isActive() )
+            cursor++;
     }
 
     public void draw(SpriteBatch batch){
