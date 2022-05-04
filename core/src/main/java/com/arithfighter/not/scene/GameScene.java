@@ -6,5 +6,6 @@ public enum GameScene {
     STAGE,
     RESULT,
     GAME_OVER,
+    ENDING,
     OPTION
 }

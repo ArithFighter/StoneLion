@@ -50,7 +50,7 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
-        sceneController = new SceneController(sceneBuilder, GameScene.MENU);
+        sceneController = new SceneController(sceneBuilder, GameScene.ENDING);
 
         gameSave = new GameSave();
         sceneBuilder.setAudioVolume(gameSave);

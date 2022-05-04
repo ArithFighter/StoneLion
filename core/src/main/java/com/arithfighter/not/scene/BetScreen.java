@@ -1,10 +1,8 @@
-package com.arithfighter.not.scene.scene;
+package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.scene.MouseEvent;
-import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.ControlNumber;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;

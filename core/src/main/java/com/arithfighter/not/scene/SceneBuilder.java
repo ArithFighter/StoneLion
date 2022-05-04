@@ -5,7 +5,6 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.CharacterList;
-import com.arithfighter.not.scene.scene.*;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -22,6 +21,7 @@ public class SceneBuilder extends SceneCollection{
                 getStage(),
                 getResultScreen(),
                 getGameOver(),
+                getEnding(),
                 getOptionMenu()
         };
 
@@ -31,6 +31,7 @@ public class SceneBuilder extends SceneCollection{
                 getStage(),
                 getResultScreen(),
                 getGameOver(),
+                getEnding(),
                 getOptionMenu()
         };
     }
@@ -77,6 +78,7 @@ class SceneCollection{
     private final OptionMenu optionMenu;
     private final BetScreen betScreen;
     private final ResultScreen resultScreen;
+    private final Ending ending;
     private final GameOver gameOver;
 
     public SceneCollection(TextureManager textureManager, SoundManager soundManager){
@@ -89,6 +91,8 @@ class SceneCollection{
         betScreen = new BetScreen(textureManager, soundManager);
 
         resultScreen = new ResultScreen(textureManager);
+
+        ending = new Ending(textureManager);
 
         gameOver = new GameOver(textureManager);
     }
@@ -135,5 +139,9 @@ class SceneCollection{
 
     public GameOver getGameOver(){
         return gameOver;
+    }
+
+    public Ending getEnding() {
+        return ending;
     }
 }
