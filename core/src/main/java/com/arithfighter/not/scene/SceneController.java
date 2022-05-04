@@ -162,7 +162,7 @@ public class SceneController {
     }
 
     private void manageResult(){
-        int totalStages = 3;
+        int totalStages = 6;
         if (resultScreen.isContinue()){
             if (gameRecordManager.getGameRecorder().getStagesRecorder().getRecord() == totalStages)
                 gameScene = GameScene.ENDING;

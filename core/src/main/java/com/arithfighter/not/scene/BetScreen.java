@@ -20,10 +20,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final ValueHolder tokenHolder;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
-    private int numberBoxQuantity = 1;
+    private int numberBoxQuantity = 0;
     private int cardLimit;
     private int initToken;
     private final TextProvider textProvider;
+    private final NumberBoxQuantityGenerator numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager){
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -101,7 +102,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity(){
-        numberBoxQuantity = new RandomNumProducer(9,1).getRandomNum();
+        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
+        numberBoxQuantityGenerator.update();
     }
 
     @Override
@@ -153,5 +155,28 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         cardLimitMessage.dispose();
         tokenBet.dispose();
         startButton.dispose();
+    }
+}
+
+class NumberBoxQuantityGenerator{
+    private final int[] quantityCandidates = {3,6,5,1,7,2,8,9};
+    private int candidateCursor = 0;
+
+    public int getQuantity(){
+        checkCursor();
+        return quantityCandidates[candidateCursor];
+    }
+
+    private void checkCursor(){
+        if (candidateCursor>quantityCandidates.length-1)
+            init();
+    }
+
+    public void init(){
+        candidateCursor = 0;
+    }
+
+    public void update(){
+        candidateCursor++;
     }
 }
