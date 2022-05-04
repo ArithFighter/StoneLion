@@ -1,6 +1,6 @@
 package com.arithfighter.not.audio;
 
-import com.arithfighter.not.scene.OptionMenu;
+import com.arithfighter.not.scene.scene.OptionMenu;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 

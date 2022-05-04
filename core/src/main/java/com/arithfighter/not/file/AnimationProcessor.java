@@ -1,4 +1,4 @@
-package com.arithfighter.not;
+package com.arithfighter.not.file;
 
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.Gdx;

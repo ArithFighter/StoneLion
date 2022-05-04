@@ -54,7 +54,6 @@ public class Main extends ApplicationAdapter {
 
         gameSave = new GameSave();
         sceneBuilder.setAudioVolume(gameSave);
-        sceneBuilder.setHighScore(gameSave);
 
         sceneController.setGameSave(gameSave);
 

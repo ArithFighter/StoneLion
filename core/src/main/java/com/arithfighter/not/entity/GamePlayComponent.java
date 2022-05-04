@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity;
 
-import com.arithfighter.not.AnimationProcessor;
+import com.arithfighter.not.file.AnimationProcessor;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;

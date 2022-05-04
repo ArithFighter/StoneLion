@@ -16,10 +16,10 @@ public class TextAdventure{
     private final ConversationHolder conversationHolder = new ConversationHolder();
     private final MugShot mugShot;
 
-    public TextAdventure(Texture[] textures, Texture[] panels){
-        conversationDialog = new ConversationDialog(textures);
+    public TextAdventure(Texture[] widgets, Texture[] panels){
+        conversationDialog = new ConversationDialog(widgets);
 
-        mugShot = new MugShot(textures[3], panels[0]);
+        mugShot = new MugShot(widgets[3], panels[0]);
 
         RawWidget widget = conversationDialog.getDialog().getWidget();
         mugShot.setPosition(widget.getWidth()*9/10, widget.getHeight()*0.7f);

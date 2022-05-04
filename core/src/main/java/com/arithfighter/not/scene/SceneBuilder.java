@@ -5,6 +5,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.CharacterList;
+import com.arithfighter.not.scene.scene.*;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

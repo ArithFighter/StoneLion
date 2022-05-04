@@ -1,15 +1,18 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.scene.GameScene;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent{
+public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton leaveButton;
     private final ControlBar soundControl;
     private final ControlBar musicControl;
