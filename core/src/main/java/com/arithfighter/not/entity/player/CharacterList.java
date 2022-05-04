@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.pojo.GameNumProducer;
+import com.arithfighter.not.system.GameNumProducer;
 
 public enum CharacterList {
     KNIGHT(new int[]{2,3,9,0}, new int[]{2,3,9,0}),

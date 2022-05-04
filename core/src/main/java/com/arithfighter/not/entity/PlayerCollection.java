@@ -2,8 +2,8 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
-import com.arithfighter.not.pojo.GameNumProducer;
-import com.arithfighter.not.pojo.RandomNumProducer;
+import com.arithfighter.not.system.GameNumProducer;
+import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 

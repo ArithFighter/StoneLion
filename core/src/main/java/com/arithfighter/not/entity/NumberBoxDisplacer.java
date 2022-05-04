@@ -1,16 +1,15 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.animate.Animator;
-import com.arithfighter.not.pojo.GameNumProducer;
-import com.arithfighter.not.pojo.RandomNumFactory;
-import com.arithfighter.not.pojo.RandomNumProducer;
+import com.arithfighter.not.system.GameNumProducer;
+import com.arithfighter.not.system.RandomNumProducer;
+import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
 import com.arithfighter.not.widget.stagecomponent.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -170,71 +169,6 @@ class RandomIndexPicker{
 
     public void clear(){
         randomNumListProducer.clear();
-    }
-}
-
-class RandomNumListProducer {
-    private int maxQuantity;
-    private final LinkedList<Integer> numberList = new LinkedList<>();
-    private final NumberSetGenerator numberSetGenerator;
-
-    public RandomNumListProducer(RandomNumProducer randomNumProducer){
-        numberSetGenerator = new NumberSetGenerator(randomNumProducer);
-    }
-
-    public RandomNumListProducer(GameNumProducer gameNumProducer){
-        numberSetGenerator = new NumberSetGenerator(gameNumProducer);
-    }
-
-    public void setMaxQuantity(int maxQuantity){
-        this.maxQuantity = maxQuantity;
-    }
-
-    public void clear(){
-        numberList.clear();
-        numberSetGenerator.getNumberSet().clear();
-    }
-
-    public List<Integer> getNumbers() {
-        addNumbersToList();
-        return numberList;
-    }
-
-    private void addNumbersToList() {
-        if (numberList.size() < maxQuantity) {
-            numberSetGenerator.addNumberUntilEqualToQuantity(maxQuantity);
-
-            numberList.addAll(numberSetGenerator.getNumberSet());
-        }
-    }
-}
-
-class NumberSetGenerator{
-    private final HashSet<Integer> numberSet = new HashSet<>();
-    private final RandomNumFactory randomNumFactory;
-
-    public NumberSetGenerator(GameNumProducer gameNumProducer){
-        randomNumFactory = gameNumProducer;
-    }
-
-    public NumberSetGenerator(RandomNumProducer randomNumProducer){
-        randomNumFactory = randomNumProducer;
-    }
-
-    public HashSet<Integer> getNumberSet(){
-        return numberSet;
-    }
-
-    public void addNumberUntilEqualToQuantity(int quantity) {
-        addRandomNumberToSet(quantity);
-
-        while (numberSet.size() < quantity)
-            addNumberUntilEqualToQuantity(quantity - numberSet.size());
-    }
-
-    private void addRandomNumberToSet(int quantity) {
-        for (int i = 0; i < quantity; i++)
-            numberSet.add(randomNumFactory.getRandomNum());
     }
 }
 

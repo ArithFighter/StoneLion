@@ -1,6 +1,8 @@
-package com.arithfighter.not.pojo;
+package com.arithfighter.not.system;
 
-public class RandomNumProducer implements RandomNumFactory{
+import com.arithfighter.not.system.RandomNumFactory;
+
+public class RandomNumProducer implements RandomNumFactory {
     private final int max;
     private final int min;
 

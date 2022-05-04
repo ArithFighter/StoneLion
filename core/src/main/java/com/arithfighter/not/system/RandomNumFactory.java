@@ -1,4 +1,4 @@
-package com.arithfighter.not.pojo;
+package com.arithfighter.not.system;
 
 public interface RandomNumFactory {
     int getRandomNum();

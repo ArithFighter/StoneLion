@@ -6,7 +6,6 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.widget.ControlNumber;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.pojo.RandomNumProducer;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.pojo.ValueHolder;
 import com.badlogic.gdx.graphics.Color;
@@ -24,7 +23,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int cardLimit;
     private int initToken;
     private final TextProvider textProvider;
-    private final NumberBoxQuantityGenerator numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
+    private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager){
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -46,6 +45,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         betMessage = new Font(30);
         betMessage.setColor(Color.WHITE);
+
+        numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
     }
 
     public int getCardLimit(){

@@ -1,6 +1,8 @@
-package com.arithfighter.not.pojo;
+package com.arithfighter.not.system;
 
-public class GameNumProducer implements RandomNumFactory{
+import com.arithfighter.not.system.RandomNumFactory;
+
+public class GameNumProducer implements RandomNumFactory {
     private static final int MAX_NUMBER = 30;
     private static final int MIN_NUMBER = 5;
 
