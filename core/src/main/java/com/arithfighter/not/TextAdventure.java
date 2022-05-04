@@ -49,6 +49,10 @@ public class TextAdventure{
         }catch (ArrayIndexOutOfBoundsException ignored){}
     }
 
+    public boolean isAllConversationFinished(){
+        return cursor>conversationHolder.getConversations().length;
+    }
+
     private void handleSkipButton(){
         if (!isButtonLock){
             updateCursorWhenButtonActivate();
