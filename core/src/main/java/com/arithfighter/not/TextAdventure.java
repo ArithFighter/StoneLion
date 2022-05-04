@@ -1,5 +1,6 @@
 package com.arithfighter.not;
 
+import com.arithfighter.not.pojo.ConversationHolder;
 import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
@@ -13,7 +14,7 @@ public class TextAdventure{
     private final ConversationDialog conversationDialog;
     private int cursor = 0;
     private boolean isButtonLock = false;
-    private final ConversationHolder conversationHolder = new ConversationHolder();
+    private ConversationHolder conversationHolder;
     private final MugShot mugShot;
 
     public TextAdventure(Texture[] widgets, Texture[] panels){
@@ -23,6 +24,10 @@ public class TextAdventure{
 
         RawWidget widget = conversationDialog.getDialog().getWidget();
         mugShot.setPosition(widget.getWidth()*9/10, widget.getHeight()*0.7f);
+    }
+
+    public void setConversationHolder(ConversationHolder conversationHolder){
+        this.conversationHolder = conversationHolder;
     }
 
     public void init(){
@@ -102,14 +107,3 @@ class MugShot{
     }
 }
 
-class ConversationHolder{
-    private final String[][] conversations = {
-            {"123456", "rpg dialog"},
-            {"rpg dialog test", "Hello world!!"},
-            {"My name is ArithFighter", "Math is great"}
-    };
-
-    public String[][] getConversations() {
-        return conversations;
-    }
-}
