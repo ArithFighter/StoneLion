@@ -50,7 +50,7 @@ public class TextAdventure{
     }
 
     public boolean isAllConversationFinished(){
-        return cursor>conversationHolder.getConversations().length;
+        return cursor>=conversationHolder.getConversations().length;
     }
 
     private void handleSkipButton(){

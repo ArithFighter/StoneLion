@@ -12,6 +12,7 @@ public class SceneController {
     private final ResultScreen resultScreen;
     private final GameOver gameOver;
     private final OptionMenu optionMenu;
+    private final Ending ending;
     private final int initTokens = 500;
     private final GameRecordManager gameRecordManager;
     private GameSave gameSave;
@@ -31,6 +32,8 @@ public class SceneController {
         resultScreen = sceneBuilder.getResultScreen();
 
         gameOver = sceneBuilder.getGameOver();
+
+        ending = sceneBuilder.getEnding();
 
         optionMenu = sceneBuilder.getOptionMenu();
 
@@ -63,6 +66,12 @@ public class SceneController {
                 break;
             case GAME_OVER:
                 manageGameOver();
+                break;
+            case ENDING:
+                if (ending.isLeave()){
+                    gameScene = GameScene.MENU;
+                    ending.init();
+                }
                 break;
             case OPTION:
                 manageOption();
@@ -153,8 +162,13 @@ public class SceneController {
     }
 
     private void manageResult(){
+        int totalStages = 3;
         if (resultScreen.isContinue()){
-            gameScene = GameScene.BET;
+            if (gameRecordManager.getGameRecorder().getStagesRecorder().getRecord() == totalStages)
+                gameScene = GameScene.ENDING;
+            else
+                gameScene = GameScene.BET;
+
             betScreen.setToken(stage.getTokenHolder().getTokens());
             saveHighScore();
             resultScreen.init();

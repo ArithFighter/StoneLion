@@ -24,6 +24,10 @@ public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
 
         textAdventure.setConversationHolder(conversationHolder);
     }
+
+    public boolean isLeave(){
+        return textAdventure.isAllConversationFinished();
+    }
     @Override
     public void touchDown() {
         textAdventure.touchDown(getCursorPos().getX(), getCursorPos().getY());
