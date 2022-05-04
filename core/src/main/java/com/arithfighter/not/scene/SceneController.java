@@ -185,8 +185,10 @@ public class SceneController {
         String[] keys = gameSave.getHighScoreKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
-        pref.flush();
+        if (stage.getTokenHolder().getTokens()>pref.getInteger(keys[characterIndex])){
+            pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+            pref.flush();
+        }
     }
 
     private void manageGameOver(){
