@@ -8,9 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Gecko {
     private final DetectableWidget widget;
+    private final int scale = 8;
 
     public Gecko(Texture texture){
-        widget = new SpriteWidget(texture, 8);
+        widget = new SpriteWidget(texture, scale);
+    }
+
+    public int getScale(){
+        return scale;
     }
 
     public void setPosition(int x, int y){
