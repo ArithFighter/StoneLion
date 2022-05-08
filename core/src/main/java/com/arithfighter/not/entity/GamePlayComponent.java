@@ -1,16 +1,16 @@
 package com.arithfighter.not.entity;
 
-import com.arithfighter.not.file.AnimationProcessor;
+import com.arithfighter.not.animate.AnimationPos;
+import com.arithfighter.not.animate.CardAnimation;
+import com.arithfighter.not.animate.LoopAnimation;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.stagecomponent.Gecko;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 
 import static com.arithfighter.not.WindowSetting.*;
 
@@ -59,7 +59,8 @@ public class GamePlayComponent {
         sumBox = new SumBox(textures[2]);
         sumBox.setPosition(CENTER_X + GRID_X * 6, GRID_Y * 11);
 
-        geckoBlink = new LoopAnimation(spriteSheets[3], gecko.getScale(), 2,3);
+        geckoBlink = new LoopAnimation(spriteSheets[3], 2,3);
+        geckoBlink.setScale(gecko.getScale());
         geckoBlink.setDrawPoint(new Point(geckoX, geckoY));
     }
 
@@ -96,6 +97,8 @@ public class GamePlayComponent {
     public void draw(SpriteBatch batch) {
         gecko.draw(batch);
 
+        geckoBlink.draw(batch, 30);
+
         numberBoxDisplacer.draw(batch);
 
         sumBox.changeColor(player.getCondition());
@@ -106,8 +109,6 @@ public class GamePlayComponent {
         cardFadeOut.draw(batch, 0.4f, AnimationPos.CENTER);
 
         cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
-
-        geckoBlink.draw(batch, 30);
     }
 
     public void touchDown(int mouseX, int mouseY) {
@@ -135,117 +136,3 @@ public class GamePlayComponent {
     }
 }
 
-class LoopAnimation {
-    private final AnimationProcessor processor;
-    private final TimeHandler timeHandler;
-    private Point drawPoint;
-
-    public LoopAnimation(Texture spriteSheet, int scale, int cols, int rows){
-        processor = new AnimationProcessor(spriteSheet, cols,rows);
-        processor.setScale(scale);
-        processor.setSpeed(0.08f);
-
-        timeHandler = new TimeHandler();
-    }
-
-    public void setDrawPoint(Point drawPoint) {
-        this.drawPoint = drawPoint;
-    }
-
-    public void draw(SpriteBatch batch, int ratePerMin) {
-        processor.setBatch(batch);
-
-        long timeGap = 60000 / ratePerMin;
-        if (TimeUtils.millis() % (timeGap + timeGap) < timeGap) {
-            if (timeHandler.getPastedTime()<1)
-                handleAnimation();
-        }else
-            resetTimeAndAnimation();
-    }
-
-    private void handleAnimation() {
-        timeHandler.updatePastedTime();
-
-        processor.setPoint(drawPoint);
-        processor.draw(drawPoint.getX(), drawPoint.getY());
-    }
-
-    private void resetTimeAndAnimation(){
-        timeHandler.resetPastedTime();
-        processor.init();
-    }
-}
-
-class CardAnimation {
-    private final AnimationProcessor processor;
-    private boolean isStart = false;
-    private final TimeHandler timeHandler;
-    private Point lastMousePoint;
-    private Point drawPoint;
-
-    public CardAnimation(Texture texture) {
-        processor = new AnimationProcessor(texture, 3, 3);
-        processor.setScale(16);
-        processor.setSpeed(0.08f);
-        timeHandler = new TimeHandler();
-        drawPoint = new Point();
-        lastMousePoint = new Point();
-    }
-
-    public void setLastMousePoint(Point point) {
-        lastMousePoint = point;
-    }
-
-    public void setStart() {
-        isStart = true;
-    }
-
-    public void init() {
-        isStart = false;
-    }
-
-    public void draw(SpriteBatch batch, float duration, AnimationPos pos) {
-        processor.setBatch(batch);
-        if (isStart) {
-            handleAnimation(duration, pos);
-        } else {
-            resetTimeAndAnimation();
-        }
-    }
-
-    private void handleAnimation(float duration, AnimationPos pos) {
-        timeHandler.updatePastedTime();
-
-        if (timeHandler.getPastedTime() < duration) {
-            processor.setPoint(lastMousePoint);
-            drawPoint = getPoint(pos);
-            processor.draw(drawPoint.getX(), drawPoint.getY());
-        } else
-            isStart = false;
-    }
-
-    private void resetTimeAndAnimation(){
-        timeHandler.resetPastedTime();
-        processor.init();
-    }
-
-    private Point getPoint(AnimationPos pos) {
-        float x = 0;
-        float y = 0;
-
-        if (pos == AnimationPos.CENTER) {
-            x = processor.getPoint().getX() - processor.getWidth() / 2;
-            y = processor.getPoint().getY() - processor.getHeight() / 2;
-        }
-        if (pos == AnimationPos.TOP_RIGHT) {
-            x = processor.getPoint().getX();
-            y = processor.getPoint().getY();
-        }
-
-        return new Point(x, y);
-    }
-}
-
-enum AnimationPos {
-    CENTER, TOP_RIGHT
-}
