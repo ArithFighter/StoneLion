@@ -6,7 +6,7 @@ import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.time.TimeHandler;
-import com.arithfighter.not.widget.stagecomponent.CardPlaceBasket;
+import com.arithfighter.not.widget.stagecomponent.Gecko;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
-    private final CardPlaceBasket cardPlaceBasket;
+    private final Gecko gecko;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
@@ -28,7 +28,7 @@ public class GamePlayComponent {
 
         cardReset = new CardAnimation(spriteSheet[1]);
 
-        cardPlaceBasket = new CardPlaceBasket(textures[1]) {
+        gecko = new Gecko(spriteSheet[2]) {
             @Override
             public void initCardPosition() {
                 cardReset.setStart();
@@ -41,7 +41,7 @@ public class GamePlayComponent {
                 cardFadeOut.setStart();
             }
         };
-        cardPlaceBasket.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
+        gecko.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -85,7 +85,7 @@ public class GamePlayComponent {
     }
 
     public void draw(SpriteBatch batch) {
-        cardPlaceBasket.draw(batch);
+        gecko.draw(batch);
 
         numberBoxDisplacer.draw(batch);
 
@@ -113,7 +113,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDrag) {
-            cardPlaceBasket.playCardToBasket(mouseX, mouseY);
+            gecko.playCardToBasket(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
     }

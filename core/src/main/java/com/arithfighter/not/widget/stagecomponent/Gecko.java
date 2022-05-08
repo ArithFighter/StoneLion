@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CardPlaceBasket {
+public class Gecko {
     private final DetectableWidget widget;
 
-    public CardPlaceBasket(Texture texture){
-        widget = new SpriteWidget(texture, 3);
-
-        widget.getSprite().setColor(Color.BROWN);
+    public Gecko(Texture texture){
+        widget = new SpriteWidget(texture, 5);
     }
 
     public void setPosition(int x, int y){
