@@ -286,7 +286,7 @@ class NumberBoxProducer {
 }
 
 class NumberBoxPlacer {
-    private final float initX = GRID_X * 9.5f;
+    private final float initX = GRID_X * 7.5f;
     private final float initY = GRID_Y * 5;
     private final float margin = GRID_X;
 

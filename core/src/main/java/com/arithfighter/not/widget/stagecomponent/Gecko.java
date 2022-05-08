@@ -10,7 +10,7 @@ public class Gecko {
     private final DetectableWidget widget;
 
     public Gecko(Texture texture){
-        widget = new SpriteWidget(texture, 5);
+        widget = new SpriteWidget(texture, 8);
     }
 
     public void setPosition(int x, int y){

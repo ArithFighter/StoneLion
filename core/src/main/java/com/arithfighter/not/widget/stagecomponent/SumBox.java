@@ -12,7 +12,7 @@ public class SumBox{
     private final FontWidget widget;
 
     public SumBox(Texture texture){
-        widget = new SpriteWidget(texture,10, 36);
+        widget = new SpriteWidget(texture,8, 36);
         text = new Font(widget.getFontSize());
     }
 

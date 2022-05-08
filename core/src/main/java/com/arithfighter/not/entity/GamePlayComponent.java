@@ -41,7 +41,7 @@ public class GamePlayComponent {
                 cardFadeOut.setStart();
             }
         };
-        gecko.setPosition(CENTER_X + GRID_X * 10, GRID_Y * 6);
+        gecko.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 6);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -52,7 +52,7 @@ public class GamePlayComponent {
         };
 
         sumBox = new SumBox(textures[2]);
-        sumBox.setPosition(CENTER_X + GRID_X * 5, GRID_Y * 7);
+        sumBox.setPosition(CENTER_X + GRID_X * 6, GRID_Y * 11);
     }
 
     public int getScore() {
