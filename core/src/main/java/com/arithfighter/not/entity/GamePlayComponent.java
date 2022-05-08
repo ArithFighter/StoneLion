@@ -23,7 +23,7 @@ public class GamePlayComponent {
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
-    private LoopAnimation geckoBlink;
+    private final LoopAnimation geckoBlink;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheets, SoundManager soundManager) {
         cardFadeOut = new CardAnimation(spriteSheets[1]);
@@ -107,7 +107,7 @@ public class GamePlayComponent {
 
         cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
 
-        geckoBlink.draw(batch, 5);
+        geckoBlink.draw(batch, 30);
     }
 
     public void touchDown(int mouseX, int mouseY) {
@@ -152,11 +152,13 @@ class LoopAnimation {
         this.drawPoint = drawPoint;
     }
 
-    public void draw(SpriteBatch batch, float duration) {
+    public void draw(SpriteBatch batch, int ratePerMin) {
         processor.setBatch(batch);
 
-        if (timeHandler.getPastedTime()<duration) {
-            handleAnimation();
+        long timeGap = 60000 / ratePerMin;
+        if (TimeUtils.millis() % (timeGap + timeGap) < timeGap) {
+            if (timeHandler.getPastedTime()<1)
+                handleAnimation();
         }else
             resetTimeAndAnimation();
     }
