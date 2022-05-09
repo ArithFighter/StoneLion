@@ -4,37 +4,15 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 
-public class RawAnimation extends AnimationComponent {
-    public RawAnimation(Texture spriteSheet, int cols, int rows) {
-        setProcessor(new AnimationProcessor(spriteSheet, cols, rows));
-
-        setTimeHandler(new TimeHandler());
-    }
-
-    public void handleAnimation() {
-        getTimeHandler().updatePastedTime();
-
-        getProcessor().setPoint(getDrawPoint());
-        getProcessor().draw(getDrawPoint().getX(), getDrawPoint().getY());
-    }
-
-    public void resetTimeAndAnimation() {
-        getTimeHandler().resetPastedTime();
-        getProcessor().init();
-    }
-}
-
-class AnimationComponent {
-    private AnimationProcessor processor;
-    private TimeHandler timeHandler;
+public class RawAnimation{
+    private final AnimationProcessor processor;
+    private final TimeHandler timeHandler;
     private Point drawPoint;
 
-    public void setProcessor(AnimationProcessor processor) {
-        this.processor = processor;
-    }
+    public RawAnimation(Texture spriteSheet, int cols, int rows) {
+        processor = new AnimationProcessor(spriteSheet, cols, rows);
 
-    public void setTimeHandler(TimeHandler timeHandler) {
-        this.timeHandler = timeHandler;
+        timeHandler = new TimeHandler();
     }
 
     public void setDrawPoint(Point drawPoint) {
@@ -51,5 +29,17 @@ class AnimationComponent {
 
     public Point getDrawPoint() {
         return drawPoint;
+    }
+
+    public void handleAnimation() {
+        timeHandler.updatePastedTime();
+
+        processor.setPoint(drawPoint);
+        processor.draw(drawPoint.getX(), drawPoint.getY());
+    }
+
+    public void resetTimeAndAnimation() {
+        timeHandler.resetPastedTime();
+        processor.init();
     }
 }
