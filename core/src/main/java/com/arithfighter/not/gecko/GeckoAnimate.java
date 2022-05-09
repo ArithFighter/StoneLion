@@ -47,6 +47,11 @@ public class GeckoAnimate {
     public void swing(){
         geckoActions[1].getAnimation().draw(batch);
     }
+
+    public void init(){
+        for (GeckoAction ga:geckoActions)
+            ga.getAnimation().init();
+    }
 }
 
 interface GeckoAction {

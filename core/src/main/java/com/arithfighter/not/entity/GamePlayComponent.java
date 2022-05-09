@@ -8,6 +8,7 @@ import com.arithfighter.not.gecko.GeckoAnimate;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.gecko.Gecko;
+import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,7 @@ public class GamePlayComponent {
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
     private final GeckoAnimate geckoAnimate;
+    private final TimeHandler geckoActionHandler = new TimeHandler();
     private SpriteBatch batch;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheets, SoundManager soundManager) {
@@ -113,10 +115,23 @@ public class GamePlayComponent {
     }
 
     private void drawGecko(){
+        geckoActionHandler.updatePastedTime();
         geckoAnimate.setBatch(batch);
-        geckoAnimate.swing();
 
-        if (geckoAnimate.isDefault())
+        int x = 2;
+
+        if (geckoActionHandler.getPastedTime()>x){
+            geckoAnimate.blink();
+        }
+        if (geckoActionHandler.getPastedTime()>x+1){
+            geckoAnimate.swing();
+        }
+        if (geckoActionHandler.getPastedTime()>x+2){
+            geckoAnimate.init();
+            geckoActionHandler.resetPastedTime();
+        }
+
+        if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime()<=x)
             gecko.draw(batch);
     }
 
