@@ -1,4 +1,4 @@
-package com.arithfighter.not.widget.stagecomponent;
+package com.arithfighter.not.gecko;
 
 import com.arithfighter.not.widget.DetectableWidget;
 import com.arithfighter.not.widget.SpriteWidget;
