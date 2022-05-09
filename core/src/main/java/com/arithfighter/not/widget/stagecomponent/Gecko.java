@@ -2,7 +2,6 @@ package com.arithfighter.not.widget.stagecomponent;
 
 import com.arithfighter.not.widget.DetectableWidget;
 import com.arithfighter.not.widget.SpriteWidget;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -18,7 +17,7 @@ public class Gecko {
         return scale;
     }
 
-    public void setPosition(int x, int y){
+    public void setPosition(float x, float y){
         widget.setPosition(x,y);
     }
 

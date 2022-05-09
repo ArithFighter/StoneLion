@@ -23,15 +23,14 @@ public class GamePlayComponent {
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
-    private final LoopAnimation geckoBlink;
+    private final GeckoAnimate geckoAnimate;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheets, SoundManager soundManager) {
         cardFadeOut = new CardAnimation(spriteSheets[1]);
 
         cardReset = new CardAnimation(spriteSheets[1]);
 
-        int geckoX = CENTER_X + GRID_X * 5;
-        int geckoY = GRID_Y * 6;
+        Point geckoPoint = new Point(CENTER_X + GRID_X * 5,GRID_Y * 6);
 
         gecko = new Gecko(spriteSheets[2]) {
             @Override
@@ -46,7 +45,7 @@ public class GamePlayComponent {
                 cardFadeOut.setStart();
             }
         };
-        gecko.setPosition(geckoX, geckoY);
+        gecko.setPosition(geckoPoint.getX(), geckoPoint.getY());
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -57,11 +56,10 @@ public class GamePlayComponent {
         };
 
         sumBox = new SumBox(textures[2]);
-        sumBox.setPosition(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
 
-        geckoBlink = new LoopAnimation(spriteSheets[3], 2,3);
-        geckoBlink.setScale(gecko.getScale());
-        geckoBlink.setDrawPoint(new Point(geckoX, geckoY));
+        geckoAnimate = new GeckoAnimate(spriteSheets, gecko.getScale(), geckoPoint);
     }
 
     public int getScore() {
@@ -97,7 +95,8 @@ public class GamePlayComponent {
     public void draw(SpriteBatch batch) {
         gecko.draw(batch);
 
-        geckoBlink.draw(batch, 30);
+        geckoAnimate.setBatch(batch);
+        geckoAnimate.blink();
 
         numberBoxDisplacer.draw(batch);
 
@@ -136,3 +135,21 @@ public class GamePlayComponent {
     }
 }
 
+class GeckoAnimate{
+    private final LoopAnimation geckoBlink;
+    private SpriteBatch batch;
+
+    public GeckoAnimate(Texture[] spriteSheets, int scale, Point point){
+        geckoBlink = new LoopAnimation(spriteSheets[3], 2,3);
+        geckoBlink.setScale(scale);
+        geckoBlink.setDrawPoint(point);
+    }
+
+    public void setBatch(SpriteBatch batch){
+        this.batch = batch;
+    }
+
+    public void blink(){
+        geckoBlink.draw(batch, 30);
+    }
+}
