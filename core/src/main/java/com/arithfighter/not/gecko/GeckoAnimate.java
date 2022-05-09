@@ -24,6 +24,6 @@ public class GeckoAnimate {
     }
 
     public void blink() {
-        geckoBlink.draw(batch, 10);
+        geckoBlink.draw(batch, 20);
     }
 }
