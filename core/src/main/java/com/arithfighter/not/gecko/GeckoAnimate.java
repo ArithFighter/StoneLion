@@ -15,6 +15,10 @@ public class GeckoAnimate {
         geckoBlink.setDrawPoint(point);
     }
 
+    public boolean isDrawing(){
+        return geckoBlink.isDrawing();
+    }
+
     public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }

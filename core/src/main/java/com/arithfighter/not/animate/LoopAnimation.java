@@ -10,12 +10,17 @@ public class LoopAnimation {
     private final AnimationProcessor processor;
     private final TimeHandler timeHandler;
     private Point drawPoint;
+    private boolean isDrawing = false;
 
     public LoopAnimation(Texture spriteSheet, int cols, int rows) {
         processor = new AnimationProcessor(spriteSheet, cols, rows);
         processor.setSpeed(0.08f);
 
         timeHandler = new TimeHandler();
+    }
+
+    public boolean isDrawing() {
+        return isDrawing;
     }
 
     public void setScale(int scale){
@@ -31,10 +36,15 @@ public class LoopAnimation {
 
         long timeGap = 60000 / ratePerMin;
         if (TimeUtils.millis() % (timeGap + timeGap) < timeGap) {
-            if (timeHandler.getPastedTime() < 1)
+            if (timeHandler.getPastedTime() < 1){
                 handleAnimation();
-        } else
+                isDrawing = true;
+            }else
+                isDrawing = false;
+        } else{
             resetTimeAndAnimation();
+            isDrawing = false;
+        }
     }
 
     private void handleAnimation() {
