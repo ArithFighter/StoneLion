@@ -59,7 +59,9 @@ public class GamePlayComponent {
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
         sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
 
-        geckoAnimate = new GeckoAnimate(spriteSheets, gecko.getScale(), geckoPoint);
+        geckoAnimate = new GeckoAnimate(spriteSheets);
+        geckoAnimate.setDrawPoint(geckoPoint);
+        geckoAnimate.setScale(gecko.getScale());
     }
 
     public int getScore() {

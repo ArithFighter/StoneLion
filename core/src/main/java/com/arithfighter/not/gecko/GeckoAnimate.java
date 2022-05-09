@@ -6,17 +6,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
-    private final LoopAnimation geckoBlink;
+    private final GeckoAnimationFactory geckoBlink;
     private SpriteBatch batch;
 
-    public GeckoAnimate(Texture[] spriteSheets, int scale, Point point) {
-        geckoBlink = new LoopAnimation(spriteSheets[3], 2, 3);
-        geckoBlink.setScale(scale);
-        geckoBlink.setDrawPoint(point);
+    public GeckoAnimate(Texture[] spriteSheets) {
+        geckoBlink = new GeckoBlink(spriteSheets);
+    }
+
+    public void setScale(int scale){
+        geckoBlink.getAnimation().setScale(scale);
+    }
+
+    public void setDrawPoint(Point point){
+        geckoBlink.getAnimation().setDrawPoint(point);
     }
 
     public boolean isDefault(){
-        return geckoBlink.isEnd();
+        return geckoBlink.getAnimation().isEnd();
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -24,6 +30,25 @@ public class GeckoAnimate {
     }
 
     public void blink() {
-        geckoBlink.draw(batch, 20);
+        geckoBlink.getAnimation().draw(batch);
+    }
+}
+
+interface GeckoAnimationFactory{
+    LoopAnimation getAnimation();
+}
+
+class GeckoBlink implements GeckoAnimationFactory{
+    private final LoopAnimation geckoBlink;
+
+    public GeckoBlink(Texture[] spriteSheets){
+        geckoBlink = new LoopAnimation(spriteSheets[3], 2, 3);
+        geckoBlink.setDrawTime(1000);
+        geckoBlink.setRatePerMin(20);
+    }
+
+    @Override
+    public LoopAnimation getAnimation() {
+        return geckoBlink;
     }
 }

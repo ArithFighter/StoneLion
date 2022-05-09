@@ -10,6 +10,8 @@ public class LoopAnimation {
     private final AnimationProcessor processor;
     private final TimeHandler timeHandler;
     private Point drawPoint;
+    private int ratePerMin;
+    private int drawTime;
     private boolean isEnd = false;
 
     public LoopAnimation(Texture spriteSheet, int cols, int rows) {
@@ -17,6 +19,14 @@ public class LoopAnimation {
         processor.setSpeed(0.08f);
 
         timeHandler = new TimeHandler();
+    }
+
+    public void setRatePerMin(int ratePerMin) {
+        this.ratePerMin = ratePerMin;
+    }
+
+    public void setDrawTime(int millisecond) {
+        this.drawTime = millisecond;
     }
 
     public boolean isEnd() {
@@ -31,11 +41,11 @@ public class LoopAnimation {
         this.drawPoint = drawPoint;
     }
 
-    public void draw(SpriteBatch batch, int ratePerMin) {
+    public void draw(SpriteBatch batch) {
         processor.setBatch(batch);
 
         long timeGap = 60000 / ratePerMin;
-        long drawTime = 1000;
+
         if (TimeUtils.millis() % (timeGap+drawTime) < drawTime) {
                 handleAnimation();
                 isEnd = false;
