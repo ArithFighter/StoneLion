@@ -96,7 +96,7 @@ public class GamePlayComponent {
 
     public void draw(SpriteBatch batch) {
         geckoAnimate.setBatch(batch);
-        geckoAnimate.blink();
+        geckoAnimate.swing();
 
         if (geckoAnimate.isDefault())
             gecko.draw(batch);

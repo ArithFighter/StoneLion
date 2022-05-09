@@ -7,27 +7,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
-    private final GeckoBlink geckoBlink;
-    private final GeckoLoop geckoSwing;
+    private final GeckoAction[] geckoActions;
     private SpriteBatch batch;
 
     public GeckoAnimate(Texture[] spriteSheets) {
-        geckoBlink = new GeckoBlink(spriteSheets);
-        geckoSwing = new GeckoSwing(spriteSheets);
+        geckoActions = new GeckoAction[]{
+                new GeckoBlink(spriteSheets),
+                new GeckoSwing(spriteSheets)
+        };
     }
 
     public void setScale(int scale){
-        geckoBlink.getAnimation().setScale(scale);
-        geckoSwing.getAnimation().setScale(scale);
+        for (GeckoAction ga:geckoActions)
+            ga.getAnimation().setScale(scale);
     }
 
     public void setDrawPoint(Point point){
-        geckoBlink.getAnimation().setDrawPoint(point);
-        geckoSwing.getAnimation().setDrawPoint(point);
+        for (GeckoAction ga:geckoActions)
+            ga.getAnimation().setDrawPoint(point);
     }
 
     public boolean isDefault(){
-        return geckoBlink.getAnimation().isEnd()||geckoSwing.getAnimation().isEnd();
+        boolean condition = false;
+
+        for (GeckoAction ga:geckoActions)
+            if (ga.getAnimation().isEnd())
+                condition = true;
+
+        return condition;
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -35,19 +42,19 @@ public class GeckoAnimate {
     }
 
     public void blink() {
-        geckoBlink.getAnimation().draw(batch);
+        geckoActions[0].getAnimation().draw(batch);
     }
 
     public void swing(){
-        geckoSwing.getAnimation().draw(batch);
+        geckoActions[1].getAnimation().draw(batch);
     }
 }
 
-interface GeckoLoop {
-    LoopAnimation getAnimation();
+interface GeckoAction {
+    TimeLimitedAnimation getAnimation();
 }
 
-class GeckoBlink{
+class GeckoBlink implements GeckoAction{
     private final TimeLimitedAnimation geckoBlink;
 
     public GeckoBlink(Texture[] spriteSheets){
@@ -61,17 +68,16 @@ class GeckoBlink{
     }
 }
 
-class GeckoSwing implements GeckoLoop{
-    private final LoopAnimation geckoSwing;
+class GeckoSwing implements GeckoAction{
+    private final TimeLimitedAnimation geckoSwing;
 
     public GeckoSwing(Texture[] spriteSheets){
-        geckoSwing = new LoopAnimation(spriteSheets[4], 2, 4);
-        geckoSwing.setDrawTime(1200);
-        geckoSwing.setRatePerMin(15);
+        geckoSwing = new TimeLimitedAnimation(spriteSheets[4], 2, 4);
+        geckoSwing.setDrawTime(1.2f);
+        geckoSwing.setSpeed(0.08f);
     }
 
-    @Override
-    public LoopAnimation getAnimation() {
+    public TimeLimitedAnimation getAnimation() {
         return geckoSwing;
     }
 }

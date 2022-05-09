@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TimeLimitedAnimation{
     private final RawAnimation rawAnimation;
-    private int drawTime;
+    private float drawTime;
     private boolean isEnd = false;
 
     public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
@@ -21,7 +21,7 @@ public class TimeLimitedAnimation{
         rawAnimation.getProcessor().setSpeed(speed);
     }
 
-    public void setDrawTime(int second) {
+    public void setDrawTime(float second) {
         this.drawTime = second;
     }
 
