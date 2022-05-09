@@ -1,5 +1,6 @@
 package com.arithfighter.not.animate;
 
+import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,7 +13,11 @@ public class TimeLimitedAnimation{
         rawAnimation = new RawAnimation(spriteSheet, cols, rows);
     }
 
-    public void setSpeed(int speed) {
+    public void setDrawPoint(Point point){
+        rawAnimation.setDrawPoint(point);
+    }
+
+    public void setSpeed(float speed) {
         rawAnimation.getProcessor().setSpeed(speed);
     }
 
@@ -34,9 +39,12 @@ public class TimeLimitedAnimation{
         if (rawAnimation.getTimeHandler().getPastedTime() < drawTime) {
                 rawAnimation.handleAnimation();
                 isEnd = false;
-        } else{
+        }else
             isEnd = true;
-            rawAnimation.resetTimeAndAnimation();
-        }
+    }
+
+    public void init(){
+        isEnd = false;
+        rawAnimation.resetTimeAndAnimation();
     }
 }

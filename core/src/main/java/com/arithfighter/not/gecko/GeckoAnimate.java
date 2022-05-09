@@ -1,12 +1,13 @@
 package com.arithfighter.not.gecko;
 
 import com.arithfighter.not.animate.LoopAnimation;
+import com.arithfighter.not.animate.TimeLimitedAnimation;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
-    private final GeckoLoop geckoBlink;
+    private final GeckoBlink geckoBlink;
     private final GeckoLoop geckoSwing;
     private SpriteBatch batch;
 
@@ -26,7 +27,7 @@ public class GeckoAnimate {
     }
 
     public boolean isDefault(){
-        return geckoBlink.getAnimation().isEnd()&&geckoSwing.getAnimation().isEnd();
+        return geckoBlink.getAnimation().isEnd()||geckoSwing.getAnimation().isEnd();
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -46,17 +47,16 @@ interface GeckoLoop {
     LoopAnimation getAnimation();
 }
 
-class GeckoBlink implements GeckoLoop {
-    private final LoopAnimation geckoBlink;
+class GeckoBlink{
+    private final TimeLimitedAnimation geckoBlink;
 
     public GeckoBlink(Texture[] spriteSheets){
-        geckoBlink = new LoopAnimation(spriteSheets[3], 2, 3);
-        geckoBlink.setDrawTime(1000);
-        geckoBlink.setRatePerMin(20);
+        geckoBlink = new TimeLimitedAnimation(spriteSheets[3], 2, 3);
+        geckoBlink.setDrawTime(1);
+        geckoBlink.setSpeed(0.08f);
     }
 
-    @Override
-    public LoopAnimation getAnimation() {
+    public TimeLimitedAnimation getAnimation() {
         return geckoBlink;
     }
 }
