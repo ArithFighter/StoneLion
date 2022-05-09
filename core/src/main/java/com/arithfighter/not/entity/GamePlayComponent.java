@@ -126,7 +126,7 @@ public class GamePlayComponent {
         if (geckoActionHandler.getPastedTime()>x+1){
             geckoAnimate.swing();
         }
-        if (geckoActionHandler.getPastedTime()>x+2){
+        if (geckoActionHandler.getPastedTime()>x+1.64f){
             geckoAnimate.init();
             geckoActionHandler.resetPastedTime();
         }

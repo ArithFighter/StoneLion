@@ -28,10 +28,14 @@ public class GeckoAnimate {
 
     public boolean isDefault(){
         boolean condition = false;
+        int x = 0;
 
-        for (GeckoAction ga:geckoActions)
+        for (GeckoAction ga:geckoActions){
             if (ga.getAnimation().isEnd())
-                condition = true;
+                x++;
+        }
+        if (x == geckoActions.length)
+            condition = true;
 
         return condition;
     }
