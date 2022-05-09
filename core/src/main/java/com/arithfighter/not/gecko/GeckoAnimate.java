@@ -1,6 +1,5 @@
 package com.arithfighter.not.gecko;
 
-import com.arithfighter.not.animate.LoopAnimation;
 import com.arithfighter.not.animate.TimeLimitedAnimation;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;

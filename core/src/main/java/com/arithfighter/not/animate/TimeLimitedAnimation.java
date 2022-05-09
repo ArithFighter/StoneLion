@@ -1,24 +1,29 @@
 package com.arithfighter.not.animate;
 
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TimeLimitedAnimation{
-    private final RawAnimation rawAnimation;
+    private final AnimationProcessor processor;
+    private Point drawPoint;
+    private final TimeHandler timeHandler;
     private float drawTime;
     private boolean isEnd = false;
 
     public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
-        rawAnimation = new RawAnimation(spriteSheet, cols, rows);
+        processor = new AnimationProcessor(spriteSheet, cols, rows);
+
+        timeHandler = new TimeHandler();
     }
 
     public void setDrawPoint(Point point){
-        rawAnimation.setDrawPoint(point);
+        drawPoint = point;
     }
 
     public void setSpeed(float speed) {
-        rawAnimation.getProcessor().setSpeed(speed);
+        processor.setSpeed(speed);
     }
 
     public void setDrawTime(float second) {
@@ -30,21 +35,25 @@ public class TimeLimitedAnimation{
     }
 
     public void setScale(int scale){
-        rawAnimation.getProcessor().setScale(scale);
+        processor.setScale(scale);
     }
 
     public void draw(SpriteBatch batch) {
-        rawAnimation.getProcessor().setBatch(batch);
+        processor.setBatch(batch);
 
-        if (rawAnimation.getTimeHandler().getPastedTime() < drawTime) {
-                rawAnimation.handleAnimation();
-                isEnd = false;
+        processor.setPoint(drawPoint);
+
+        if (timeHandler.getPastedTime() < drawTime) {
+            timeHandler.updatePastedTime();
+            processor.draw(drawPoint.getX(), drawPoint.getY());
+            isEnd = false;
         }else
             isEnd = true;
     }
 
     public void init(){
         isEnd = false;
-        rawAnimation.resetTimeAndAnimation();
+        timeHandler.resetPastedTime();
+        processor.init();
     }
 }
