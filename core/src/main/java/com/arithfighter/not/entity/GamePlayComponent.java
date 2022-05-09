@@ -24,6 +24,7 @@ public class GamePlayComponent {
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
     private final GeckoAnimate geckoAnimate;
+    private SpriteBatch batch;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheets, SoundManager soundManager) {
         cardFadeOut = new CardAnimation(spriteSheets[1]);
@@ -64,6 +65,10 @@ public class GamePlayComponent {
         geckoAnimate.setScale(gecko.getScale());
     }
 
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
     public int getScore() {
         return scoreRecord.getRecord();
     }
@@ -94,12 +99,8 @@ public class GamePlayComponent {
         player.updateWhenTouchCard(mouseX, mouseY);
     }
 
-    public void draw(SpriteBatch batch) {
-        geckoAnimate.setBatch(batch);
-        geckoAnimate.swing();
-
-        if (geckoAnimate.isDefault())
-            gecko.draw(batch);
+    public void draw() {
+        drawGecko();
 
         numberBoxDisplacer.draw(batch);
 
@@ -108,6 +109,18 @@ public class GamePlayComponent {
 
         player.draw(batch);
 
+        drawCardAnimate();
+    }
+
+    private void drawGecko(){
+        geckoAnimate.setBatch(batch);
+        geckoAnimate.swing();
+
+        if (geckoAnimate.isDefault())
+            gecko.draw(batch);
+    }
+
+    private void drawCardAnimate(){
         cardFadeOut.draw(batch, 0.4f, AnimationPos.CENTER);
 
         cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
