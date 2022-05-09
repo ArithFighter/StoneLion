@@ -3,26 +3,23 @@ package com.arithfighter.not.animate;
 import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 
-public class LoopAnimation extends AnimationComponent{
+public class TimeLimitedAnimation extends AnimationComponent{
     private int drawTime;
     private boolean isEnd = false;
-    private int ratePerMin;
 
-    public LoopAnimation(Texture spriteSheet, int cols, int rows) {
+    public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
         setProcessor(new AnimationProcessor(spriteSheet, cols, rows));
-        getProcessor().setSpeed(0.08f);
 
         setTimeHandler(new TimeHandler());
     }
 
-    public void setRatePerMin(int ratePerMin) {
-        this.ratePerMin = ratePerMin;
+    public void setSpeed(int speed) {
+        getProcessor().setSpeed(speed);
     }
 
-    public void setDrawTime(int millisecond) {
-        this.drawTime = millisecond;
+    public void setDrawTime(int second) {
+        this.drawTime = second;
     }
 
     public boolean isEnd() {
@@ -36,9 +33,7 @@ public class LoopAnimation extends AnimationComponent{
     public void draw(SpriteBatch batch) {
         getProcessor().setBatch(batch);
 
-        long timeGap = 60000 / ratePerMin;
-
-        if (TimeUtils.millis() % (timeGap+drawTime) < drawTime) {
+        if (getTimeHandler().getPastedTime() < drawTime) {
                 handleAnimation();
                 isEnd = false;
         } else{
