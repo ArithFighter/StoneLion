@@ -5,11 +5,11 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Gecko {
+public class GeckoSprite {
     private final DetectableWidget widget;
     private final int scale = 8;
 
-    public Gecko(Texture texture){
+    public GeckoSprite(Texture texture){
         widget = new SpriteWidget(texture, scale);
     }
 
@@ -25,8 +25,8 @@ public class Gecko {
         widget.draw(batch);
     }
 
-    public final void playCardToBasket(int mouseX, int mouseY) {
-        if (isOnBasket(mouseX, mouseY)) {
+    public final void playCardToGecko(int mouseX, int mouseY) {
+        if (isOnGecko(mouseX, mouseY)) {
             checkCardPlayed();
         }
         initCardPosition();
@@ -40,7 +40,7 @@ public class Gecko {
 
     }
 
-    public boolean isOnBasket(float x, float y){
+    public boolean isOnGecko(float x, float y){
         return widget.isOnWidget(x,y);
     }
 }

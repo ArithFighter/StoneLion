@@ -7,7 +7,7 @@ import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.gecko.GeckoAnimate;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
-import com.arithfighter.not.gecko.Gecko;
+import com.arithfighter.not.gecko.GeckoSprite;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
-    private final Gecko gecko;
+    private final GeckoSprite geckoSprite;
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
@@ -35,7 +35,7 @@ public class GamePlayComponent {
 
         Point geckoPoint = new Point(CENTER_X + GRID_X * 5,GRID_Y * 6);
 
-        gecko = new Gecko(spriteSheets[2]) {
+        geckoSprite = new GeckoSprite(spriteSheets[2]) {
             @Override
             public void initCardPosition() {
                 cardReset.setStart();
@@ -48,7 +48,7 @@ public class GamePlayComponent {
                 cardFadeOut.setStart();
             }
         };
-        gecko.setPosition(geckoPoint.getX(), geckoPoint.getY());
+        geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -64,7 +64,7 @@ public class GamePlayComponent {
 
         geckoAnimate = new GeckoAnimate(spriteSheets);
         geckoAnimate.setDrawPoint(geckoPoint);
-        geckoAnimate.setScale(gecko.getScale());
+        geckoAnimate.setScale(geckoSprite.getScale());
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -132,7 +132,7 @@ public class GamePlayComponent {
         }
 
         if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime()<=x)
-            gecko.draw(batch);
+            geckoSprite.draw(batch);
     }
 
     private void drawCardAnimate(){
@@ -155,7 +155,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDrag) {
-            gecko.playCardToBasket(mouseX, mouseY);
+            geckoSprite.playCardToGecko(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
     }
@@ -165,3 +165,4 @@ public class GamePlayComponent {
         sumBox.dispose();
     }
 }
+
