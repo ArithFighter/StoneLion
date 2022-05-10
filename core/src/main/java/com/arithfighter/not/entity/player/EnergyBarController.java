@@ -2,20 +2,21 @@ package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.widget.bar.EnergyBar;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class PlayerEnergyBar {
-    private final EnergyBar energyBar;
+public class EnergyBarController {
+    private EnergyBar energyBar;
     private final Recorder energyRecorder;
     private int energyGain;
 
-    public PlayerEnergyBar(Texture[] textures, CharacterList character) {
+    public EnergyBarController(CharacterList character) {
         energyRecorder = new Recorder();
 
-        energyBar = new EnergyBar(textures);
-
         setEnergyGain(character);
+    }
+
+    public void setEnergyBar(EnergyBar energyBar) {
+        this.energyBar = energyBar;
     }
 
     private void setEnergyGain(CharacterList character) {

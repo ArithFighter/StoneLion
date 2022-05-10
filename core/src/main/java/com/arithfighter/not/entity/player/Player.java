@@ -2,6 +2,7 @@ package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
 import com.arithfighter.not.pojo.Recorder;
+import com.arithfighter.not.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,14 +11,17 @@ public class Player {
     private final CapacityManager capacityManager;
     private final Recorder sumAccessor;
     private final CharacterList character;
-    private final PlayerEnergyBar energyBar;
+    private final EnergyBarController energyBarController;
 
     private enum SkillState {NEUTRAL, READY}
 
     private SkillState skillState = SkillState.NEUTRAL;
 
     public Player(Texture[] textures, Texture[] cards, CharacterList character) {
-        energyBar = new PlayerEnergyBar(textures, character);
+        energyBarController = new EnergyBarController(character);
+
+        EnergyBar energyBar = new EnergyBar(textures);
+        energyBarController.setEnergyBar(energyBar);
 
         hand = new Hand(cards, character);
 
@@ -31,7 +35,7 @@ public class Player {
     public void init() {
         sumAccessor.reset();
         capacityManager.initialize();
-        energyBar.reset();
+        energyBarController.reset();
     }
 
     public boolean isCapacityManagerEmpty(){
@@ -61,7 +65,7 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        energyBar.draw(batch);
+        energyBarController.draw(batch);
 
         hand.draw(batch);
 
@@ -110,7 +114,7 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenCardPlayed();
 
-            energyBar.update();
+            energyBarController.update();
 
             if (hand.isResettingCard())
                 checkResettingCardPlay();
@@ -135,7 +139,7 @@ public class Player {
     private void checkResettingCardPlay() {
         if (isSkillReady()) {
             castSkill(character);
-            energyBar.reset();
+            energyBarController.reset();
             skillState = SkillState.NEUTRAL;
         } else {
             doWhenResettingCardPlay();
@@ -144,7 +148,7 @@ public class Player {
 
     private boolean isSkillReady() {
         return skillState == SkillState.READY &&
-                energyBar.isMaxEnergy();
+                energyBarController.isMaxEnergy();
     }
 
     public void castSkill(CharacterList character) {
@@ -162,11 +166,11 @@ public class Player {
 
     public final void dispose() {
         hand.dispose();
-        energyBar.dispose();
+        energyBarController.dispose();
     }
 
     public final int getEnergy() {
-        return energyBar.getEnergy();
+        return energyBarController.getEnergy();
     }
 }
 
