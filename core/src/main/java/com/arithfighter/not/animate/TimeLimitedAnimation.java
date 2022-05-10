@@ -52,7 +52,7 @@ public class TimeLimitedAnimation{
     }
 
     public void init(){
-        isEnd = false;
+        isEnd = true;
         timeHandler.resetPastedTime();
         processor.init();
     }
