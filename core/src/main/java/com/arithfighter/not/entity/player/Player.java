@@ -34,6 +34,10 @@ public class Player {
         energyBar.reset();
     }
 
+    public boolean isCapacityManagerEmpty(){
+        return capacityManager.isEmpty();
+    }
+
     public boolean isCardActive(){
         return hand.isCardActive();
     }
@@ -180,6 +184,10 @@ class CapacityManager {
 
     public void initialize() {
         capacity = initCapacity;
+    }
+
+    public boolean isEmpty(){
+        return capacity==initCapacity;
     }
 
     public boolean isFull() {

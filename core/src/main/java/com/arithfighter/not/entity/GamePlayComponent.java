@@ -114,10 +114,13 @@ public class GamePlayComponent {
         sumBox.draw(player.getSum(), batch);
 
         geckoController.setBatch(batch);
-        geckoController.drawGecko();
 
         if (sumBox.isCapacityWarning())
             geckoController.setGeckoState(GeckoState.TOO_FULL);
+        if (player.isCapacityManagerEmpty())
+            geckoController.setGeckoState(GeckoState.NEUTRAL);
+
+        geckoController.drawGecko();
 
         player.draw(batch);
 
