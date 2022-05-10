@@ -26,6 +26,20 @@ public class GeckoAnimate {
             ga.getAnimation().setDrawPoint(point);
     }
 
+    public boolean isDefault(){
+        boolean condition = false;
+        int x = 0;
+
+        for (GeckoAction ga:geckoActions){
+            if (ga.getAnimation().isEnd())
+                x++;
+        }
+        if (x == geckoActions.length)
+            condition = true;
+
+        return condition;
+    }
+
     public TimeLimitedAnimation getBlink() {
         return geckoActions[0].getAnimation();
     }
