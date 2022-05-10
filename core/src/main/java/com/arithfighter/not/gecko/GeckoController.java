@@ -26,36 +26,34 @@ public class GeckoController {
         this.geckoState = geckoState;
     }
 
-    public void drawGecko(SpriteBatch batch) {
-        geckoActionHandler.updatePastedTime();
+    public void setBatch(SpriteBatch batch) {
         this.batch = batch;
+    }
 
-        int initTime = 2;
+    public void drawGecko() {
+        geckoActionHandler.updatePastedTime();
 
-        switchState(initTime);
+        switch (geckoState) {
+            case NEUTRAL:
+                handleNeutral();
+                break;
+            case EATING:
+                handleEating();
+                break;
+        }
     }
 
     public void init() {
         geckoAnimate.init();
     }
 
-    private void switchState(float initTime) {
-        switch (geckoState) {
-            case NEUTRAL:
-                drawGeckoAction(initTime);
+    private void handleNeutral(){
+        int initTime = 2;
 
-                if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime() < initTime)
-                    geckoSprite.draw(batch);
-                break;
-            case EATING:
-                geckoAnimate.getEat().draw(batch);
+        drawGeckoAction(initTime);
 
-                if (geckoAnimate.getEat().isEnd()) {
-                    geckoState = GeckoState.NEUTRAL;
-                    geckoSprite.draw(batch);
-                }
-                break;
-        }
+        if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime() < initTime)
+            geckoSprite.draw(batch);
     }
 
     private void drawGeckoAction(float initTime) {
@@ -68,6 +66,15 @@ public class GeckoController {
         if (geckoActionHandler.getPastedTime() > initTime + 1.64f) {
             geckoAnimate.init();
             geckoActionHandler.resetPastedTime();
+        }
+    }
+
+    private void handleEating(){
+        geckoAnimate.getEat().draw(batch);
+
+        if (geckoAnimate.getEat().isEnd()) {
+            geckoState = GeckoState.NEUTRAL;
+            geckoSprite.draw(batch);
         }
     }
 }

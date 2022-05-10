@@ -90,6 +90,7 @@ public class GamePlayComponent {
         player.init();
         cardFadeOut.init();
         cardReset.init();
+        geckoController.init();
     }
 
     public NumberBoxDisplacer getNumberBoxDisplacer() {
@@ -107,7 +108,8 @@ public class GamePlayComponent {
     }
 
     public void draw() {
-        geckoController.drawGecko(batch);
+        geckoController.setBatch(batch);
+        geckoController.drawGecko();
 
         numberBoxDisplacer.draw(batch);
 
