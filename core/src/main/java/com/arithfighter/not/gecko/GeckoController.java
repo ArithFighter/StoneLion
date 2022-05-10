@@ -44,7 +44,7 @@ public class GeckoController {
             case NEUTRAL:
                 drawGeckoAction(initTime);
 
-                if (geckoAnimate.isDefault() || geckoActionHandler.getPastedTime() <= initTime)
+                if (geckoAnimate.isDefault() || geckoActionHandler.getPastedTime() < initTime)
                     geckoSprite.draw(batch);
                 break;
             case EATING:

@@ -10,7 +10,7 @@ public class TimeLimitedAnimation{
     private Point drawPoint;
     private final TimeHandler timeHandler;
     private float drawTime;
-    private boolean isEnd = false;
+    private boolean isEnd = true;
 
     public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
         processor = new AnimationProcessor(spriteSheet, cols, rows);
