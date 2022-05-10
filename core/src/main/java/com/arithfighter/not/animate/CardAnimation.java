@@ -15,7 +15,7 @@ public class CardAnimation {
     public CardAnimation(Texture texture) {
         processor = new AnimationProcessor(texture, 3, 3);
         processor.setScale(16);
-        processor.setSpeed(0.08f);
+        processor.setFrameDuration(0.08f);
         timeHandler = new TimeHandler();
         drawPoint = new Point();
         lastMousePoint = new Point();

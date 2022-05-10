@@ -71,8 +71,8 @@ class GeckoBlink implements GeckoAction{
 
     public GeckoBlink(Texture[] spriteSheets){
         geckoBlink = new TimeLimitedAnimation(spriteSheets[3], 2, 3);
-        geckoBlink.setDrawTime(1);
-        geckoBlink.setSpeed(0.08f);
+        geckoBlink.setDuration(1);
+        geckoBlink.setFrameDuration(0.08f);
     }
 
     public TimeLimitedAnimation getAnimation() {
@@ -85,8 +85,8 @@ class GeckoSwing implements GeckoAction{
 
     public GeckoSwing(Texture[] spriteSheets){
         geckoSwing = new TimeLimitedAnimation(spriteSheets[4], 2, 4);
-        geckoSwing.setDrawTime(1.2f);
-        geckoSwing.setSpeed(0.08f);
+        geckoSwing.setDuration(1.2f);
+        geckoSwing.setFrameDuration(0.08f);
     }
 
     public TimeLimitedAnimation getAnimation() {
@@ -99,8 +99,8 @@ class GeckoEating implements GeckoAction{
 
     public GeckoEating(Texture[] spriteSheets){
         geckoEating = new TimeLimitedAnimation(spriteSheets[5], 2, 4);
-        geckoEating.setDrawTime(1.2f);
-        geckoEating.setSpeed(0.16f);
+        geckoEating.setDuration(1.2f);
+        geckoEating.setFrameDuration(0.16f);
     }
 
     @Override
@@ -114,8 +114,8 @@ class GeckoLick implements GeckoAction{
 
     public GeckoLick(Texture[] spriteSheets){
         geckoLick = new TimeLimitedAnimation(spriteSheets[6], 2,4);
-        geckoLick.setDrawTime(0.8f);
-        geckoLick.setSpeed(0.1f);
+        geckoLick.setDuration(0.8f);
+        geckoLick.setFrameDuration(0.1f);
     }
     @Override
     public TimeLimitedAnimation getAnimation() {

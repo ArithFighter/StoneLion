@@ -9,7 +9,7 @@ public class TimeLimitedAnimation{
     private final AnimationProcessor processor;
     private Point drawPoint;
     private final TimeHandler timeHandler;
-    private float drawTime;
+    private float duration;
     private boolean isEnd = true;
 
     public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
@@ -22,12 +22,12 @@ public class TimeLimitedAnimation{
         drawPoint = point;
     }
 
-    public void setSpeed(float speed) {
-        processor.setSpeed(speed);
+    public void setFrameDuration(float perSec) {
+        processor.setFrameDuration(perSec);
     }
 
-    public void setDrawTime(float second) {
-        this.drawTime = second;
+    public void setDuration(float second) {
+        this.duration = second;
     }
 
     public boolean isEnd() {
@@ -43,7 +43,7 @@ public class TimeLimitedAnimation{
 
         processor.setPoint(drawPoint);
 
-        if (timeHandler.getPastedTime() < drawTime) {
+        if (timeHandler.getPastedTime() < duration) {
             timeHandler.updatePastedTime();
             processor.draw(drawPoint.getX(), drawPoint.getY());
             isEnd = false;

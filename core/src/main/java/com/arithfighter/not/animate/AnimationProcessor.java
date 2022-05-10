@@ -31,7 +31,7 @@ public class AnimationProcessor {
         return height;
     }
 
-    public void setSpeed(float perSec){
+    public void setFrameDuration(float perSec){
         animation.setFrameDuration(perSec);
     }
 
