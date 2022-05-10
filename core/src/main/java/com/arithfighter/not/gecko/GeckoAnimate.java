@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
     private final GeckoAction[] geckoActions;
-    private SpriteBatch batch;
 
     public GeckoAnimate(Texture[] spriteSheets) {
         geckoActions = new GeckoAction[]{
@@ -41,20 +40,16 @@ public class GeckoAnimate {
         return condition;
     }
 
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
+    public TimeLimitedAnimation getBlink() {
+        return geckoActions[0].getAnimation();
     }
 
-    public void blink() {
-        geckoActions[0].getAnimation().draw(batch);
+    public TimeLimitedAnimation getSwing(){
+        return geckoActions[1].getAnimation();
     }
 
-    public void swing(){
-        geckoActions[1].getAnimation().draw(batch);
-    }
-
-    public void eat(){
-        geckoActions[2].getAnimation().draw(batch);
+    public TimeLimitedAnimation getEat(){
+        return geckoActions[2].getAnimation();
     }
 
     public void init(){

@@ -6,6 +6,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.gecko.GeckoAnimate;
 import com.arithfighter.not.gecko.GeckoController;
+import com.arithfighter.not.gecko.GeckoState;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.gecko.GeckoSprite;
@@ -42,6 +43,7 @@ public class GamePlayComponent {
 
             @Override
             public void checkCardPlayed() {
+                geckoController.setGeckoState(GeckoState.EATING);
                 player.playCard();
                 cardFadeOut.setStart();
             }
