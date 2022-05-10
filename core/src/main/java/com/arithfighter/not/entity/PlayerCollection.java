@@ -80,13 +80,13 @@ class SkillHandler {
                 changeANumberBoxValue(22);
                 break;
             case WARRIOR:
-                increaseAllValueByFour();
+                increaseAllValueBy11();
                 break;
         }
     }
 
-    private void increaseAllValueByFour() {
-        int gain = 4;
+    private void increaseAllValueBy11() {
+        int gain = 11;
 
         for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
             if (getNumberBoxValue(i) > 0 &&
