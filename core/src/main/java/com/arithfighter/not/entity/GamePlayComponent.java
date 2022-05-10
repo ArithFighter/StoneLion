@@ -23,7 +23,7 @@ public class GamePlayComponent {
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
-    private final Gecko gecko;
+    private final GeckoController geckoController;
     private SpriteBatch batch;
 
     public GamePlayComponent(Texture[] textures, Texture[] spriteSheets, SoundManager soundManager) {
@@ -64,9 +64,9 @@ public class GamePlayComponent {
         geckoAnimate.setDrawPoint(geckoPoint);
         geckoAnimate.setScale(geckoSprite.getScale());
 
-        gecko = new Gecko();
-        gecko.setGeckoSprite(geckoSprite);
-        gecko.setGeckoAnimate(geckoAnimate);
+        geckoController = new GeckoController();
+        geckoController.setGeckoSprite(geckoSprite);
+        geckoController.setGeckoAnimate(geckoAnimate);
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -104,7 +104,7 @@ public class GamePlayComponent {
     }
 
     public void draw() {
-        gecko.drawGecko(batch);
+        geckoController.drawGecko(batch);
 
         numberBoxDisplacer.draw(batch);
 
@@ -136,7 +136,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDrag) {
-            gecko.getGeckoSprite().playCardToGecko(mouseX, mouseY);
+            geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
     }
@@ -147,7 +147,7 @@ public class GamePlayComponent {
     }
 }
 
-class Gecko{
+class GeckoController {
     private GeckoSprite geckoSprite;
     private GeckoAnimate geckoAnimate;
     private final TimeHandler geckoActionHandler = new TimeHandler();
@@ -164,28 +164,28 @@ class Gecko{
         return geckoSprite;
     }
 
-    public GeckoAnimate getGeckoAnimate() {
-        return geckoAnimate;
-    }
-
     public void drawGecko(SpriteBatch batch){
         geckoActionHandler.updatePastedTime();
         geckoAnimate.setBatch(batch);
 
-        int x = 2;
+        int initTime = 2;
 
-        if (geckoActionHandler.getPastedTime()>x){
+        drawGeckoAction(initTime);
+
+        if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime()<= initTime)
+            geckoSprite.draw(batch);
+    }
+
+    private void drawGeckoAction(float initTime){
+        if (geckoActionHandler.getPastedTime()> initTime){
             geckoAnimate.blink();
         }
-        if (geckoActionHandler.getPastedTime()>x+1){
+        if (geckoActionHandler.getPastedTime()> initTime +1){
             geckoAnimate.swing();
         }
-        if (geckoActionHandler.getPastedTime()>x+1.64f){
+        if (geckoActionHandler.getPastedTime()> initTime +1.64f){
             geckoAnimate.init();
             geckoActionHandler.resetPastedTime();
         }
-
-        if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime()<=x)
-            geckoSprite.draw(batch);
     }
 }
