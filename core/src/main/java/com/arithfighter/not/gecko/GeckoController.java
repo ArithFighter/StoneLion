@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GeckoController {
     private GeckoSprite geckoSprite;
     private GeckoAnimate geckoAnimate;
-    private final TimeHandler geckoActionHandler = new TimeHandler();
+    private final TimeHandler geckoNeutralHandler = new TimeHandler();
+    private final TimeHandler geckoEatingHandler = new TimeHandler();
     private GeckoState geckoState = GeckoState.NEUTRAL;
     private SpriteBatch batch;
 
@@ -41,16 +42,16 @@ public class GeckoController {
         }
     }
 
-    public void init(){
+    public void init() {
         geckoAnimate.init();
-        geckoActionHandler.resetPastedTime();
+        geckoNeutralHandler.resetPastedTime();
     }
 
-    private void handleNeutral(){
+    private void handleNeutral() {
         int initTime = 2;
-        float pastedTime = geckoActionHandler.getPastedTime();
+        float pastedTime = geckoNeutralHandler.getPastedTime();
 
-        geckoActionHandler.updatePastedTime();
+        geckoNeutralHandler.updatePastedTime();
 
         if (pastedTime > initTime)
             geckoAnimate.getBlink().draw(batch);
@@ -62,10 +63,17 @@ public class GeckoController {
             geckoSprite.draw(batch);
     }
 
-    private void handleEating(){
+    private void handleEating() {
+        float pastedTime = geckoEatingHandler.getPastedTime();
+
+        geckoEatingHandler.updatePastedTime();
+
         geckoAnimate.getEat().draw(batch);
 
-        if (geckoAnimate.getEat().isEnd()) {
+        if (geckoAnimate.getEat().isEnd() && pastedTime > 1.2) {
+            geckoAnimate.getLick().draw(batch);
+        }
+        if (geckoAnimate.isDefault() && pastedTime > 2) {
             init();
             geckoState = GeckoState.NEUTRAL;
             geckoSprite.draw(batch);

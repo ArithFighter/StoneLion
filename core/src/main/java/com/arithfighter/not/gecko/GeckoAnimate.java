@@ -114,8 +114,8 @@ class GeckoLick implements GeckoAction{
 
     public GeckoLick(Texture[] spriteSheets){
         geckoLick = new TimeLimitedAnimation(spriteSheets[6], 2,4);
-        geckoLick.setDrawTime(1.2f);
-        geckoLick.setSpeed(0.16f);
+        geckoLick.setDrawTime(0.8f);
+        geckoLick.setSpeed(0.1f);
     }
     @Override
     public TimeLimitedAnimation getAnimation() {

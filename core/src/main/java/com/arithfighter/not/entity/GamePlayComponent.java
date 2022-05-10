@@ -32,6 +32,18 @@ public class GamePlayComponent {
 
         cardReset = new CardAnimation(spriteSheets[1]);
 
+        sumBox = new SumBox(textures[2]);
+        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
+
+        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+            @Override
+            public void doWhenSumAndNumMatched() {
+                scoreRecord.update(1);
+                soundManager.playScoreSound();
+            }
+        };
+
         Point geckoPoint = new Point(CENTER_X + GRID_X * 5,GRID_Y * 6);
 
         GeckoSprite geckoSprite = new GeckoSprite(spriteSheets[2]) {
@@ -51,21 +63,9 @@ public class GamePlayComponent {
         };
         geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
-            @Override
-            public void doWhenSumAndNumMatched() {
-                scoreRecord.update(1);
-                soundManager.playScoreSound();
-            }
-        };
-
         GeckoAnimate geckoAnimate = new GeckoAnimate(spriteSheets);
         geckoAnimate.setDrawPoint(geckoPoint);
         geckoAnimate.setScale(geckoSprite.getScale());
-
-        sumBox = new SumBox(textures[2]);
-        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
-        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
 
         geckoController = new GeckoController();
         geckoController.setGeckoSprite(geckoSprite);
