@@ -43,6 +43,7 @@ public class GamePlayComponent {
 
             @Override
             public void checkCardPlayed() {
+                geckoController.init();
                 geckoController.setGeckoState(GeckoState.EATING);
                 player.playCard();
                 cardFadeOut.setStart();

@@ -44,15 +44,15 @@ public class GeckoController {
             case NEUTRAL:
                 drawGeckoAction(initTime);
 
-                if (geckoAnimate.isDefault() || geckoActionHandler.getPastedTime() < initTime)
+                if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime() < initTime)
                     geckoSprite.draw(batch);
                 break;
             case EATING:
                 geckoAnimate.getEat().draw(batch);
 
                 if (geckoAnimate.getEat().isEnd()) {
-                    geckoSprite.draw(batch);
                     geckoState = GeckoState.NEUTRAL;
+                    geckoSprite.draw(batch);
                 }
                 break;
         }

@@ -3,7 +3,6 @@ package com.arithfighter.not.gecko;
 import com.arithfighter.not.animate.TimeLimitedAnimation;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
     private final GeckoAction[] geckoActions;
