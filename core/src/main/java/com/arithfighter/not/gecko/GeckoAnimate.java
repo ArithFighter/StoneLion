@@ -12,7 +12,8 @@ public class GeckoAnimate {
     public GeckoAnimate(Texture[] spriteSheets) {
         geckoActions = new GeckoAction[]{
                 new GeckoBlink(spriteSheets),
-                new GeckoSwing(spriteSheets)
+                new GeckoSwing(spriteSheets),
+                new GeckoEating(spriteSheets)
         };
     }
 
@@ -52,6 +53,10 @@ public class GeckoAnimate {
         geckoActions[1].getAnimation().draw(batch);
     }
 
+    public void eat(){
+        geckoActions[2].getAnimation().draw(batch);
+    }
+
     public void init(){
         for (GeckoAction ga:geckoActions)
             ga.getAnimation().init();
@@ -87,5 +92,20 @@ class GeckoSwing implements GeckoAction{
 
     public TimeLimitedAnimation getAnimation() {
         return geckoSwing;
+    }
+}
+
+class GeckoEating implements GeckoAction{
+    private final TimeLimitedAnimation geckoEating;
+
+    public GeckoEating(Texture[] spriteSheets){
+        geckoEating = new TimeLimitedAnimation(spriteSheets[5], 2, 4);
+        geckoEating.setDrawTime(1.2f);
+        geckoEating.setSpeed(0.08f);
+    }
+
+    @Override
+    public TimeLimitedAnimation getAnimation() {
+        return geckoEating;
     }
 }

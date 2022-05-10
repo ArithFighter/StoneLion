@@ -31,11 +31,21 @@ public class GeckoController {
 
         int initTime = 2;
 
-        if (geckoState == GeckoState.NEUTRAL)
-            drawGeckoAction(initTime);
+        changeState(initTime);
 
         if (geckoAnimate.isDefault() || geckoActionHandler.getPastedTime() <= initTime)
             geckoSprite.draw(batch);
+    }
+
+    private void changeState(float initTime){
+        switch (geckoState){
+            case NEUTRAL:
+                drawGeckoAction(initTime);
+                break;
+            case EATING:
+                geckoAnimate.eat();
+                break;
+        }
     }
 
     private void drawGeckoAction(float initTime) {
