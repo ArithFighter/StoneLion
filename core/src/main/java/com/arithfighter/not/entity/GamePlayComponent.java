@@ -5,10 +5,10 @@ import com.arithfighter.not.animate.CardAnimation;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.gecko.GeckoAnimate;
+import com.arithfighter.not.gecko.GeckoController;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.gecko.GeckoSprite;
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -56,13 +56,13 @@ public class GamePlayComponent {
             }
         };
 
-        sumBox = new SumBox(textures[2]);
-        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
-        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
-
         GeckoAnimate geckoAnimate = new GeckoAnimate(spriteSheets);
         geckoAnimate.setDrawPoint(geckoPoint);
         geckoAnimate.setScale(geckoSprite.getScale());
+
+        sumBox = new SumBox(textures[2]);
+        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
 
         geckoController = new GeckoController();
         geckoController.setGeckoSprite(geckoSprite);
@@ -144,48 +144,5 @@ public class GamePlayComponent {
     public void dispose() {
         numberBoxDisplacer.dispose();
         sumBox.dispose();
-    }
-}
-
-class GeckoController {
-    private GeckoSprite geckoSprite;
-    private GeckoAnimate geckoAnimate;
-    private final TimeHandler geckoActionHandler = new TimeHandler();
-
-    public void setGeckoSprite(GeckoSprite geckoSprite) {
-        this.geckoSprite = geckoSprite;
-    }
-
-    public void setGeckoAnimate(GeckoAnimate geckoAnimate) {
-        this.geckoAnimate = geckoAnimate;
-    }
-
-    public GeckoSprite getGeckoSprite() {
-        return geckoSprite;
-    }
-
-    public void drawGecko(SpriteBatch batch){
-        geckoActionHandler.updatePastedTime();
-        geckoAnimate.setBatch(batch);
-
-        int initTime = 2;
-
-        drawGeckoAction(initTime);
-
-        if (geckoAnimate.isDefault()||geckoActionHandler.getPastedTime()<= initTime)
-            geckoSprite.draw(batch);
-    }
-
-    private void drawGeckoAction(float initTime){
-        if (geckoActionHandler.getPastedTime()> initTime){
-            geckoAnimate.blink();
-        }
-        if (geckoActionHandler.getPastedTime()> initTime +1){
-            geckoAnimate.swing();
-        }
-        if (geckoActionHandler.getPastedTime()> initTime +1.64f){
-            geckoAnimate.init();
-            geckoActionHandler.resetPastedTime();
-        }
     }
 }
