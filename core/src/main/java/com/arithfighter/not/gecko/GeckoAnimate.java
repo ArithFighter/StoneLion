@@ -96,7 +96,7 @@ class GeckoEating implements GeckoAction{
     public GeckoEating(Texture[] spriteSheets){
         geckoEating = new TimeLimitedAnimation(spriteSheets[5], 2, 4);
         geckoEating.setDrawTime(1.2f);
-        geckoEating.setSpeed(0.08f);
+        geckoEating.setSpeed(0.16f);
     }
 
     @Override
