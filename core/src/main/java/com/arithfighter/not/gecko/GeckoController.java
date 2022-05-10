@@ -45,6 +45,7 @@ public class GeckoController {
     public void init() {
         geckoAnimate.init();
         geckoNeutralHandler.resetPastedTime();
+        geckoEatingHandler.resetPastedTime();
     }
 
     private void handleNeutral() {
@@ -60,7 +61,7 @@ public class GeckoController {
         if (pastedTime > initTime + 1.64f && geckoAnimate.isDefault())
             init();
         if (geckoAnimate.isDefault())
-            geckoSprite.draw(batch);
+            geckoSprite.drawDefault(batch);
     }
 
     private void handleEating() {
@@ -76,7 +77,7 @@ public class GeckoController {
         if (geckoAnimate.isDefault() && pastedTime > 2) {
             init();
             geckoState = GeckoState.NEUTRAL;
-            geckoSprite.draw(batch);
+            geckoSprite.drawDefault(batch);
         }
     }
 }

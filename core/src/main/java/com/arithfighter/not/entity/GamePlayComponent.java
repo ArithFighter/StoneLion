@@ -46,7 +46,7 @@ public class GamePlayComponent {
 
         Point geckoPoint = new Point(CENTER_X + GRID_X * 5,GRID_Y * 6);
 
-        GeckoSprite geckoSprite = new GeckoSprite(spriteSheets[2]) {
+        GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
             @Override
             public void initCardPosition() {
                 cardReset.setStart();

@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoSprite {
-    private final DetectableWidget widget;
+    private final DetectableWidget defaultGecko;
+    private final DetectableWidget fullGecko;
     private final int scale = 8;
 
-    public GeckoSprite(Texture texture){
-        widget = new SpriteWidget(texture, scale);
+    public GeckoSprite(Texture[] textures){
+        defaultGecko = new SpriteWidget(textures[2], scale);
+        fullGecko = new SpriteWidget(textures[6], scale);
     }
 
     public int getScale(){
@@ -18,11 +20,16 @@ public class GeckoSprite {
     }
 
     public void setPosition(float x, float y){
-        widget.setPosition(x,y);
+        defaultGecko.setPosition(x,y);
+        fullGecko.setPosition(x, y);
     }
 
-    public void draw(SpriteBatch batch){
-        widget.draw(batch);
+    public void drawDefault(SpriteBatch batch){
+        defaultGecko.draw(batch);
+    }
+
+    public void drawFull(SpriteBatch batch){
+        fullGecko.draw(batch);
     }
 
     public final void playCardToGecko(int mouseX, int mouseY) {
@@ -41,6 +48,6 @@ public class GeckoSprite {
     }
 
     public boolean isOnGecko(float x, float y){
-        return widget.isOnWidget(x,y);
+        return defaultGecko.isOnWidget(x,y)|| fullGecko.isOnWidget(x, y);
     }
 }
