@@ -98,7 +98,7 @@ public class Player {
         return sumAccessor.getRecord();
     }
 
-    public final int getCondition() {
+    public final int getCardCapacity() {
         return capacityManager.getCapacity();
     }
 

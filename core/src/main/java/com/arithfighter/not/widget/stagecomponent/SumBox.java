@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SumBox{
     private final Font text;
     private final FontWidget widget;
+    private int capacity;
 
     public SumBox(Texture texture){
         widget = new SpriteWidget(texture,8, 36);
@@ -22,6 +23,8 @@ public class SumBox{
 
     public void draw(int number, SpriteBatch batch){
         widget.draw(batch);
+
+        changeColor();
 
         drawText(number, batch);
     }
@@ -36,12 +39,20 @@ public class SumBox{
         text.draw(batch, sum, textX, textY);
     }
 
-    public void changeColor(int condition){
-        int warningCondition = 2;
-        if (condition<= warningCondition)
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    private void changeColor(){
+        if (isCapacityWarning())
             widget.getSprite().setColor(Color.RED);
         else
             widget.getSprite().setColor(Color.TEAL);
+    }
+
+    public boolean isCapacityWarning(){
+        int capacityWarning = 2;
+        return capacity<= capacityWarning;
     }
 
     public void dispose(){

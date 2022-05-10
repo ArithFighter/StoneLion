@@ -113,7 +113,7 @@ public class GamePlayComponent {
 
         numberBoxDisplacer.draw(batch);
 
-        sumBox.changeColor(player.getCondition());
+        sumBox.setCapacity(player.getCardCapacity());
         sumBox.draw(player.getSum(), batch);
 
         player.draw(batch);

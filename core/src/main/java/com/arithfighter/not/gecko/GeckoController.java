@@ -39,6 +39,9 @@ public class GeckoController {
             case EATING:
                 handleEating();
                 break;
+            case TOO_FULL:
+                geckoSprite.drawFull(batch);
+                break;
         }
     }
 

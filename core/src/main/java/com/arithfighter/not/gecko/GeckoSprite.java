@@ -12,7 +12,7 @@ public class GeckoSprite {
 
     public GeckoSprite(Texture[] textures){
         defaultGecko = new SpriteWidget(textures[2], scale);
-        fullGecko = new SpriteWidget(textures[6], scale);
+        fullGecko = new SpriteWidget(textures[7], scale);
     }
 
     public int getScale(){
