@@ -74,7 +74,7 @@ public class GeckoController {
 
         geckoAnimate.getEat().draw(batch);
 
-        if (geckoAnimate.getEat().isEnd() && pastedTime > 1.2) {
+        if (pastedTime > 1.2) {
             geckoAnimate.getLick().draw(batch);
         }
         if (geckoAnimate.isDefault() && pastedTime > 2) {

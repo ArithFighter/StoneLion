@@ -9,10 +9,10 @@ public class GeckoAnimate {
 
     public GeckoAnimate(Texture[] spriteSheets) {
         geckoActions = new GeckoAction[]{
-                new GeckoBlink(spriteSheets),
-                new GeckoSwing(spriteSheets),
-                new GeckoEating(spriteSheets),
-                new GeckoLick(spriteSheets)
+                new Blink(spriteSheets),
+                new Swing(spriteSheets),
+                new Eating(spriteSheets),
+                new Lick(spriteSheets)
         };
     }
 
@@ -66,7 +66,7 @@ interface GeckoAction {
     TimeLimitedAnimation getAnimation();
 }
 
-class GeckoAnimation implements GeckoAction{
+class Animation implements GeckoAction{
     private TimeLimitedAnimation animation;
 
     public void setAnimation(TimeLimitedAnimation animation) {
@@ -79,53 +79,38 @@ class GeckoAnimation implements GeckoAction{
     }
 }
 
-class GeckoBlink extends GeckoAnimation{
-    public GeckoBlink(Texture[] spriteSheets){
+class Blink extends Animation {
+
+    public Blink(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[3], 2, 3));
         getAnimation().setDuration(1);
         getAnimation().setFrameDuration(0.08f);
     }
 }
 
-class GeckoSwing implements GeckoAction{
-    private final TimeLimitedAnimation geckoSwing;
+class Swing extends Animation{
 
-    public GeckoSwing(Texture[] spriteSheets){
-        geckoSwing = new TimeLimitedAnimation(spriteSheets[4], 2, 4);
-        geckoSwing.setDuration(1.2f);
-        geckoSwing.setFrameDuration(0.08f);
-    }
-
-    public TimeLimitedAnimation getAnimation() {
-        return geckoSwing;
+    public Swing(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[4], 2, 4));
+        getAnimation().setDuration(1.2f);
+        getAnimation().setFrameDuration(0.08f);
     }
 }
 
-class GeckoEating implements GeckoAction{
-    private final TimeLimitedAnimation geckoEating;
+class Eating extends Animation{
 
-    public GeckoEating(Texture[] spriteSheets){
-        geckoEating = new TimeLimitedAnimation(spriteSheets[5], 2, 4);
-        geckoEating.setDuration(1.2f);
-        geckoEating.setFrameDuration(0.16f);
-    }
-
-    @Override
-    public TimeLimitedAnimation getAnimation() {
-        return geckoEating;
+    public Eating(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[5], 2, 4));
+        getAnimation().setDuration(1.2f);
+        getAnimation().setFrameDuration(0.16f);
     }
 }
 
-class GeckoLick implements GeckoAction{
-    private final TimeLimitedAnimation geckoLick;
+class Lick extends Animation{
 
-    public GeckoLick(Texture[] spriteSheets){
-        geckoLick = new TimeLimitedAnimation(spriteSheets[6], 2,4);
-        geckoLick.setDuration(0.8f);
-        geckoLick.setFrameDuration(0.1f);
-    }
-    @Override
-    public TimeLimitedAnimation getAnimation() {
-        return geckoLick;
+    public Lick(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[6], 2, 4));
+        getAnimation().setDuration(0.8f);
+        getAnimation().setFrameDuration(0.1f);
     }
 }
