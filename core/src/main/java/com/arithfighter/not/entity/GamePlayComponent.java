@@ -8,7 +8,6 @@ import com.arithfighter.not.gecko.GeckoAnimate;
 import com.arithfighter.not.gecko.GeckoController;
 import com.arithfighter.not.gecko.GeckoState;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.gecko.GeckoSprite;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +19,6 @@ public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private final Recorder scoreRecord = new Recorder();
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
@@ -39,7 +37,6 @@ public class GamePlayComponent {
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
             public void doWhenSumAndNumMatched() {
-                scoreRecord.update(1);
                 soundManager.playScoreSound();
             }
         };
@@ -85,16 +82,11 @@ public class GamePlayComponent {
         this.batch = batch;
     }
 
-    public int getScore() {
-        return scoreRecord.getRecord();
-    }
-
     public void setPlayer(Player player) {
         this.player = player;
     }
 
     public void init() {
-        scoreRecord.reset();
         numberBoxDisplacer.init();
         player.init();
         cardFadeOut.init();
