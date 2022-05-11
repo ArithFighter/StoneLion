@@ -48,14 +48,15 @@ public class GeckoController {
                 break;
             case FULL_EATING:
                 geckoAnimate.eatWhenFull(batch);
-                if (geckoAnimate.isDefault()){
+                if (geckoAnimate.isAllActionEnd()){
                     geckoState = GeckoState.TOO_FULL;
                     geckoSprite.drawFull(batch);
+                    geckoAnimate.init();
                 }
                 break;
             case SPIT:
                 geckoAnimate.spit(batch);
-                if (geckoAnimate.isDefault()){
+                if (geckoAnimate.isAllActionEnd()){
                     geckoState = GeckoState.NEUTRAL;
                     geckoSprite.drawFull(batch);
                 }
@@ -79,9 +80,9 @@ public class GeckoController {
             geckoAnimate.blink(batch);
         if (pastedTime > initTime + 1)
             geckoAnimate.swing(batch);
-        if (pastedTime > initTime + 1.64f && geckoAnimate.isDefault())
+        if (pastedTime > initTime + 1.64f && geckoAnimate.isAllActionEnd())
             init();
-        if (geckoAnimate.isDefault())
+        if (geckoAnimate.isAllActionEnd())
             geckoSprite.drawDefault(batch);
     }
 
@@ -95,7 +96,7 @@ public class GeckoController {
         if (pastedTime > 1.2) {
             geckoAnimate.lick(batch);
         }
-        if (geckoAnimate.isDefault() && pastedTime > 2) {
+        if (geckoAnimate.isAllActionEnd() && pastedTime > 2) {
             init();
             geckoState = GeckoState.NEUTRAL;
             geckoSprite.drawDefault(batch);

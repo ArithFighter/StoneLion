@@ -119,9 +119,6 @@ public class GamePlayComponent {
         sumBox.setCapacity(player.getCardCapacity());
         sumBox.draw(player.getSum(), batch);
 
-        if (player.isCapacityManagerEmpty())
-            geckoController.setGeckoState(GeckoState.NEUTRAL);
-
         geckoController.setBatch(batch);
 
         geckoController.drawGecko();
@@ -141,6 +138,11 @@ public class GamePlayComponent {
         isCardDrag = false;
         player.activateCard(mouseX, mouseY);
         cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
+
+        if (sumBox.isCapacityWarning())
+            geckoController.setGeckoState(GeckoState.TOO_FULL);
+        if (player.isCapacityManagerEmpty())
+            geckoController.setGeckoState(GeckoState.NEUTRAL);
     }
 
     public void touchDragged(int mouseX, int mouseY) {

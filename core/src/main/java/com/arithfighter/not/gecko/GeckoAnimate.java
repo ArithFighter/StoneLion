@@ -29,7 +29,7 @@ public class GeckoAnimate {
             ga.getAnimation().setDrawPoint(point);
     }
 
-    public boolean isDefault(){
+    public boolean isAllActionEnd(){
         boolean condition = false;
         int x = 0;
 
