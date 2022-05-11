@@ -138,7 +138,8 @@ public class GamePlayComponent {
         cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
 
         if (sumBox.isCapacityWarning())
-            geckoController.setGeckoState(GeckoState.TOO_FULL);
+            if (geckoController.isNotFullEating())
+                geckoController.setGeckoState(GeckoState.TOO_FULL);
 
         if (player.isCapacityManagerEmpty())
             setGeckoToNeutralOrSpit();

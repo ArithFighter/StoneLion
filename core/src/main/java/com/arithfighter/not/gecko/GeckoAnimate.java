@@ -125,8 +125,8 @@ class Licking extends Animation{
 class FullEating extends Animation{
     public FullEating(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[8], 2, 4));
-        getAnimation().setDuration(1.2f);
-        getAnimation().setFrameDuration(0.16f);
+        getAnimation().setDuration(1.5f);
+        getAnimation().setFrameDuration(0.18f);
     }
 }
 
