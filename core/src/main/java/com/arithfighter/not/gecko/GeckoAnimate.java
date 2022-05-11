@@ -3,6 +3,7 @@ package com.arithfighter.not.gecko;
 import com.arithfighter.not.animate.TimeLimitedAnimation;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
     private final GeckoAction[] geckoActions;
@@ -40,20 +41,20 @@ public class GeckoAnimate {
         return condition;
     }
 
-    public TimeLimitedAnimation getBlink() {
-        return geckoActions[0].getAnimation();
+    public void blink(SpriteBatch batch) {
+        geckoActions[0].getAnimation().draw(batch);
     }
 
-    public TimeLimitedAnimation getSwing(){
-        return geckoActions[1].getAnimation();
+    public void swing(SpriteBatch batch){
+        geckoActions[1].getAnimation().draw(batch);
     }
 
-    public TimeLimitedAnimation getEat(){
-        return geckoActions[2].getAnimation();
+    public void eat(SpriteBatch batch){
+        geckoActions[2].getAnimation().draw(batch);
     }
 
-    public TimeLimitedAnimation getLick(){
-        return geckoActions[3].getAnimation();
+    public void lick(SpriteBatch batch){
+        geckoActions[3].getAnimation().draw(batch);
     }
 
     public void init(){
