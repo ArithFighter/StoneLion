@@ -31,8 +31,8 @@ public class GeckoController {
         this.batch = batch;
     }
 
-    public boolean isNotSpitting(){
-        return geckoState!=GeckoState.SPIT;
+    public boolean isNotEating(){
+        return geckoState!=GeckoState.FULL_EATING;
     }
 
     public void drawGecko() {
@@ -59,6 +59,7 @@ public class GeckoController {
                 if (geckoAnimate.isAllActionEnd()){
                     geckoState = GeckoState.NEUTRAL;
                     geckoSprite.drawFull(batch);
+                    geckoAnimate.init();
                 }
                 break;
         }

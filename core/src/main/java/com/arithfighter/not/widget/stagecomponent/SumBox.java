@@ -51,8 +51,8 @@ public class SumBox {
     }
 
     public boolean isCapacityWarning() {
-        int capacityWarning = 2;
-        return capacity <= capacityWarning;
+        int capacityWarning = 3;
+        return capacity < capacityWarning;
     }
 
     public void dispose() {
