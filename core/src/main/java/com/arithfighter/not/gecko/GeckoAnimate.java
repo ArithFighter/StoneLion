@@ -13,7 +13,9 @@ public class GeckoAnimate {
                 new Blink(spriteSheets),
                 new Swing(spriteSheets),
                 new Eating(spriteSheets),
-                new Lick(spriteSheets)
+                new Licking(spriteSheets),
+                new FullEating(spriteSheets),
+                new Spitting(spriteSheets)
         };
     }
 
@@ -55,6 +57,14 @@ public class GeckoAnimate {
 
     public void lick(SpriteBatch batch){
         geckoActions[3].getAnimation().draw(batch);
+    }
+
+    public void eatWhenFull(SpriteBatch batch){
+        geckoActions[4].getAnimation().draw(batch);
+    }
+
+    public void spit(SpriteBatch batch){
+        geckoActions[5].getAnimation().draw(batch);
     }
 
     public void init(){
@@ -107,11 +117,27 @@ class Eating extends Animation{
     }
 }
 
-class Lick extends Animation{
+class Licking extends Animation{
 
-    public Lick(Texture[] spriteSheets){
+    public Licking(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[6], 2, 4));
         getAnimation().setDuration(0.8f);
         getAnimation().setFrameDuration(0.1f);
+    }
+}
+
+class FullEating extends Animation{
+    public FullEating(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[7], 2, 4));
+        getAnimation().setDuration(1.2f);
+        getAnimation().setFrameDuration(0.16f);
+    }
+}
+
+class Spitting extends Animation{
+    public Spitting(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[8], 2, 3));
+        getAnimation().setDuration(1f);
+        getAnimation().setFrameDuration(0.08f);
     }
 }
