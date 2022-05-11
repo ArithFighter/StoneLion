@@ -32,7 +32,11 @@ public class GeckoController {
     }
 
     public boolean isNotEating(){
-        return geckoState!=GeckoState.FULL_EATING;
+        return geckoState!=GeckoState.FULL_EATING && geckoState!=GeckoState.NEUTRAL;
+    }
+
+    public boolean isNotSpitting(){
+        return geckoState!=GeckoState.SPIT && geckoState!=GeckoState.NEUTRAL;
     }
 
     public void drawGecko() {

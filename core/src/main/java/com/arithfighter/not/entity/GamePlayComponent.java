@@ -57,13 +57,7 @@ public class GamePlayComponent {
             public void checkCardPlayed() {
                 player.playCard();
                 cardFadeOut.setStart();
-                if (sumBox.isCapacityWarning()) {
-                    geckoController.init();
-                    geckoController.setGeckoState(GeckoState.FULL_EATING);
-                } else {
-                    geckoController.init();
-                    geckoController.setGeckoState(GeckoState.EATING);
-                }
+                changeGeckoStateWhenPlayCard();
             }
         };
         geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
@@ -75,6 +69,16 @@ public class GamePlayComponent {
         geckoController = new GeckoController();
         geckoController.setGeckoSprite(geckoSprite);
         geckoController.setGeckoAnimate(geckoAnimate);
+    }
+
+    private void changeGeckoStateWhenPlayCard() {
+        if (sumBox.isCapacityWarning()) {
+            geckoController.init();
+            geckoController.setGeckoState(GeckoState.FULL_EATING);
+        } else {
+            geckoController.init();
+            geckoController.setGeckoState(GeckoState.EATING);
+        }
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -142,9 +146,15 @@ public class GamePlayComponent {
         if (sumBox.isCapacityWarning())
             geckoController.setGeckoState(GeckoState.TOO_FULL);
 
-        if (player.isCapacityManagerEmpty())
-            if (geckoController.isNotEating())
-                geckoController.setGeckoState(GeckoState.NEUTRAL);
+        if (player.isCapacityManagerEmpty()) {
+            if (geckoController.isNotEating()) {
+
+                geckoController.setGeckoState(GeckoState.SPIT);
+
+                if (geckoController.isNotSpitting())
+                    geckoController.setGeckoState(GeckoState.NEUTRAL);
+            }
+        }
     }
 
     public void touchDragged(int mouseX, int mouseY) {
