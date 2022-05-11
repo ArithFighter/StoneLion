@@ -105,7 +105,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity(){
-        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
+        int quantity = numberBoxQuantityGenerator.getQuantity();
+        numberBoxQuantity = 9;
         numberBoxQuantityGenerator.update();
     }
 

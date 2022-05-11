@@ -141,8 +141,10 @@ public class GamePlayComponent {
 
         if (sumBox.isCapacityWarning())
             geckoController.setGeckoState(GeckoState.TOO_FULL);
+
         if (player.isCapacityManagerEmpty())
-            geckoController.setGeckoState(GeckoState.NEUTRAL);
+            if (geckoController.isNotEating())
+                geckoController.setGeckoState(GeckoState.NEUTRAL);
     }
 
     public void touchDragged(int mouseX, int mouseY) {
