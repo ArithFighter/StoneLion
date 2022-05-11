@@ -44,7 +44,7 @@ public class GamePlayComponent {
             }
         };
 
-        Point geckoPoint = new Point(CENTER_X + GRID_X * 5,GRID_Y * 6);
+        Point geckoPoint = new Point(CENTER_X + GRID_X * 5, GRID_Y * 6);
 
         GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
             @Override
@@ -55,15 +55,15 @@ public class GamePlayComponent {
 
             @Override
             public void checkCardPlayed() {
-                if (sumBox.isCapacityWarning()){
+                player.playCard();
+                cardFadeOut.setStart();
+                if (sumBox.isCapacityWarning()) {
                     geckoController.init();
                     geckoController.setGeckoState(GeckoState.FULL_EATING);
-                }else {
+                } else {
                     geckoController.init();
                     geckoController.setGeckoState(GeckoState.EATING);
                 }
-                player.playCard();
-                cardFadeOut.setStart();
             }
         };
         geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
@@ -96,6 +96,7 @@ public class GamePlayComponent {
         cardFadeOut.init();
         cardReset.init();
         geckoController.init();
+        geckoController.setGeckoState(GeckoState.NEUTRAL);
     }
 
     public NumberBoxDisplacer getNumberBoxDisplacer() {
@@ -118,10 +119,10 @@ public class GamePlayComponent {
         sumBox.setCapacity(player.getCardCapacity());
         sumBox.draw(player.getSum(), batch);
 
-        geckoController.setBatch(batch);
-
         if (player.isCapacityManagerEmpty())
             geckoController.setGeckoState(GeckoState.NEUTRAL);
+
+        geckoController.setBatch(batch);
 
         geckoController.drawGecko();
 
@@ -130,7 +131,7 @@ public class GamePlayComponent {
         drawCardAnimate();
     }
 
-    private void drawCardAnimate(){
+    private void drawCardAnimate() {
         cardFadeOut.draw(batch, 0.4f, AnimationPos.CENTER);
 
         cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
