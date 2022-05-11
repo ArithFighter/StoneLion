@@ -91,7 +91,6 @@ class Animation implements GeckoAction{
 }
 
 class Blink extends Animation {
-
     public Blink(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[3], 2, 3));
         getAnimation().setDuration(1);
@@ -100,7 +99,6 @@ class Blink extends Animation {
 }
 
 class Swing extends Animation{
-
     public Swing(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[4], 2, 4));
         getAnimation().setDuration(1.2f);
@@ -109,7 +107,6 @@ class Swing extends Animation{
 }
 
 class Eating extends Animation{
-
     public Eating(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[5], 2, 4));
         getAnimation().setDuration(1.2f);
@@ -118,7 +115,6 @@ class Eating extends Animation{
 }
 
 class Licking extends Animation{
-
     public Licking(Texture[] spriteSheets){
         setAnimation(new TimeLimitedAnimation(spriteSheets[6], 2, 4));
         getAnimation().setDuration(0.8f);

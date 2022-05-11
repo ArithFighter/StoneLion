@@ -42,6 +42,20 @@ public class GeckoController {
             case TOO_FULL:
                 geckoSprite.drawFull(batch);
                 break;
+            case FULL_EATING:
+                geckoAnimate.eatWhenFull(batch);
+                if (geckoAnimate.isDefault()){
+                    geckoState = GeckoState.TOO_FULL;
+                    geckoSprite.drawFull(batch);
+                }
+                break;
+            case SPIT:
+                geckoAnimate.spit(batch);
+                if (geckoAnimate.isDefault()){
+                    geckoState = GeckoState.NEUTRAL;
+                    geckoSprite.drawFull(batch);
+                }
+                break;
         }
     }
 
