@@ -131,9 +131,12 @@ public class GamePlayComponent {
     }
 
     public void touchDown(int mouseX, int mouseY) {
-        isCardDrag = false;
-        player.activateCard(mouseX, mouseY);
-        cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
+        if (geckoController.isNotFullEating() && geckoController.isNotSpitting()) {
+            isCardDrag = false;
+            player.activateCard(mouseX, mouseY);
+            cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
+
+        }
 
         if (sumBox.isCapacityWarning())
             geckoController.setGeckoState(GeckoState.TOO_FULL);
@@ -142,7 +145,7 @@ public class GamePlayComponent {
             setGeckoToNeutralOrSpit();
     }
 
-    private void setGeckoToNeutralOrSpit(){
+    private void setGeckoToNeutralOrSpit() {
         if (geckoController.isNotFullEating() && geckoController.isNotNeutral()) {
 
             geckoController.setGeckoState(GeckoState.SPIT);
@@ -153,15 +156,19 @@ public class GamePlayComponent {
     }
 
     public void touchDragged(int mouseX, int mouseY) {
-        if (player.isCardActive())
-            isCardDrag = true;
-        player.updateWhenDrag(mouseX, mouseY);
+        if (geckoController.isNotFullEating() && geckoController.isNotSpitting()) {
+            if (player.isCardActive())
+                isCardDrag = true;
+            player.updateWhenDrag(mouseX, mouseY);
+        }
     }
 
     public void touchUp(int mouseX, int mouseY) {
-        if (isCardDrag) {
-            geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
-            cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+        if (geckoController.isNotFullEating() && geckoController.isNotSpitting()) {
+            if (isCardDrag) {
+                geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
+                cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+            }
         }
     }
 
