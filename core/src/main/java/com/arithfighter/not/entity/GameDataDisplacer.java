@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameDataDisplacer {
     private final Font font;
     private int cardPlayTimes;
-    private int score;
     private int energy;
     private final Point cursorPoint = new Point();
     private int token;
@@ -19,10 +18,6 @@ public class GameDataDisplacer {
     public GameDataDisplacer(){
         font = new Font(fontSize);
         font.setColor(Color.WHITE);
-    }
-
-    public void setScore(int score){
-        this.score = score;
     }
 
     public void setCardPlayTimes(int times){
@@ -52,9 +47,6 @@ public class GameDataDisplacer {
 
         font.draw(batch, "Record: "+cardPlayTimes,0,
                 Gdx.graphics.getHeight()-fontSize*1.2f);
-
-        font.draw(batch, "Score: "+score,0,
-                Gdx.graphics.getHeight()-fontSize*2.4f);
 
         font.draw(batch, "Energy: "+energy, 0,
                 Gdx.graphics.getHeight()-fontSize*3.6f);

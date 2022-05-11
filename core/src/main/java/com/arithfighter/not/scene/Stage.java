@@ -125,7 +125,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     public void drawData(int index) {
         //for dev
         dataDisplacer.setCardPlayTimes(playRecord.getRecord());
-        dataDisplacer.setScore(gamePlayComponent.getScore());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
         dataDisplacer.setToken(tokenHolder.getTokens());
