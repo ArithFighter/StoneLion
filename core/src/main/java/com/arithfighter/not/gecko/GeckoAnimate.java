@@ -66,17 +66,24 @@ interface GeckoAction {
     TimeLimitedAnimation getAnimation();
 }
 
-class GeckoBlink implements GeckoAction{
-    private final TimeLimitedAnimation geckoBlink;
+class GeckoAnimation implements GeckoAction{
+    private TimeLimitedAnimation animation;
 
-    public GeckoBlink(Texture[] spriteSheets){
-        geckoBlink = new TimeLimitedAnimation(spriteSheets[3], 2, 3);
-        geckoBlink.setDuration(1);
-        geckoBlink.setFrameDuration(0.08f);
+    public void setAnimation(TimeLimitedAnimation animation) {
+        this.animation = animation;
     }
 
+    @Override
     public TimeLimitedAnimation getAnimation() {
-        return geckoBlink;
+        return animation;
+    }
+}
+
+class GeckoBlink extends GeckoAnimation{
+    public GeckoBlink(Texture[] spriteSheets){
+        setAnimation(new TimeLimitedAnimation(spriteSheets[3], 2, 3));
+        getAnimation().setDuration(1);
+        getAnimation().setFrameDuration(0.08f);
     }
 }
 
