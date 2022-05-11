@@ -124,7 +124,7 @@ class Licking extends Animation{
 
 class FullEating extends Animation{
     public FullEating(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[7], 2, 4));
+        setAnimation(new TimeLimitedAnimation(spriteSheets[8], 2, 4));
         getAnimation().setDuration(1.2f);
         getAnimation().setFrameDuration(0.16f);
     }
@@ -132,7 +132,7 @@ class FullEating extends Animation{
 
 class Spitting extends Animation{
     public Spitting(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[8], 2, 3));
+        setAnimation(new TimeLimitedAnimation(spriteSheets[9], 2, 3));
         getAnimation().setDuration(1f);
         getAnimation().setFrameDuration(0.08f);
     }

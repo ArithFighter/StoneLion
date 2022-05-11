@@ -31,6 +31,10 @@ public class GeckoController {
         this.batch = batch;
     }
 
+    public boolean isNotSpitting(){
+        return geckoState!=GeckoState.SPIT;
+    }
+
     public void drawGecko() {
         switch (geckoState) {
             case NEUTRAL:

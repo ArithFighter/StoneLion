@@ -55,8 +55,13 @@ public class GamePlayComponent {
 
             @Override
             public void checkCardPlayed() {
-                geckoController.init();
-                geckoController.setGeckoState(GeckoState.EATING);
+                if (sumBox.isCapacityWarning()){
+                    geckoController.init();
+                    geckoController.setGeckoState(GeckoState.FULL_EATING);
+                }else {
+                    geckoController.init();
+                    geckoController.setGeckoState(GeckoState.EATING);
+                }
                 player.playCard();
                 cardFadeOut.setStart();
             }
@@ -115,8 +120,6 @@ public class GamePlayComponent {
 
         geckoController.setBatch(batch);
 
-        if (sumBox.isCapacityWarning())
-            geckoController.setGeckoState(GeckoState.TOO_FULL);
         if (player.isCapacityManagerEmpty())
             geckoController.setGeckoState(GeckoState.NEUTRAL);
 
