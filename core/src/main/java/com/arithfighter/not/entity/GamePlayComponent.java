@@ -146,14 +146,17 @@ public class GamePlayComponent {
         if (sumBox.isCapacityWarning())
             geckoController.setGeckoState(GeckoState.TOO_FULL);
 
-        if (player.isCapacityManagerEmpty()) {
-            if (geckoController.isNotEating()) {
+        if (player.isCapacityManagerEmpty())
+            setGeckoToNeutralOrSpit();
+    }
 
-                geckoController.setGeckoState(GeckoState.SPIT);
+    private void setGeckoToNeutralOrSpit(){
+        if (geckoController.isNotFullEating() && geckoController.isNotNeutral()) {
 
-                if (geckoController.isNotSpitting())
-                    geckoController.setGeckoState(GeckoState.NEUTRAL);
-            }
+            geckoController.setGeckoState(GeckoState.SPIT);
+
+            if (geckoController.isNotSpitting() && geckoController.isNotNeutral())
+                geckoController.setGeckoState(GeckoState.NEUTRAL);
         }
     }
 

@@ -31,12 +31,16 @@ public class GeckoController {
         this.batch = batch;
     }
 
-    public boolean isNotEating(){
-        return geckoState!=GeckoState.FULL_EATING && geckoState!=GeckoState.NEUTRAL;
+    public boolean isNotFullEating(){
+        return geckoState!=GeckoState.FULL_EATING;
     }
 
     public boolean isNotSpitting(){
-        return geckoState!=GeckoState.SPIT && geckoState!=GeckoState.NEUTRAL;
+        return geckoState!=GeckoState.SPIT;
+    }
+
+    public boolean isNotNeutral(){
+        return geckoState!=GeckoState.NEUTRAL;
     }
 
     public void drawGecko() {
