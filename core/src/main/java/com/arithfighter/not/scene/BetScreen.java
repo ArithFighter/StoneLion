@@ -4,7 +4,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.system.RandomNumProducer;
-import com.arithfighter.not.widget.ControlNumber;
+import com.arithfighter.not.widget.ValueBrowser;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font cardLimitMessage;
     private final Font betMessage;
-    private final ControlNumber tokenBet;
+    private final ValueBrowser tokenBet;
     private final ValueHolder tokenHolder;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
@@ -34,7 +34,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         textProvider = new TextProvider();
 
-        tokenBet = new ControlNumber(textures);
+        tokenBet = new ValueBrowser(textures);
         tokenBet.setPosition(500, 300);
         tokenBet.setValueHolder(tokenHolder);
 

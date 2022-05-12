@@ -7,7 +7,7 @@ import com.arithfighter.not.widget.button.ArrowButtons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ControlNumber {
+public class ValueBrowser {
     private final Font number;
     private final ArrowButtons arrows;
     private final int fontSize;
@@ -15,7 +15,7 @@ public class ControlNumber {
     private ValueHolder valueHolder;
     private int valueChange;
 
-    public ControlNumber(Texture[] textures) {
+    public ValueBrowser(Texture[] textures) {
         arrows = new ArrowButtons(textures, 0.8f);
 
         fontSize = 25;
