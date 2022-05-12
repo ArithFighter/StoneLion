@@ -105,8 +105,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity(){
-        int quantity = numberBoxQuantityGenerator.getQuantity();
-        numberBoxQuantity = quantity;
+        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
         numberBoxQuantityGenerator.update();
     }
 
@@ -163,18 +162,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 }
 
 class NumberBoxQuantityGenerator{
-    private final int totalCandidate = 3;
-    private final int[] quantityCandidates = new int[totalCandidate];
+    private final int[] quantityCandidates;
     private int candidateCursor = 0;
-    private final RandomNumListProducer randomNumListProducer;
 
     public NumberBoxQuantityGenerator(){
-        RandomNumProducer rnp = new RandomNumProducer(9,1);
-        randomNumListProducer = new RandomNumListProducer(rnp);
-        randomNumListProducer.setMaxQuantity(totalCandidate);
-
-        for (int i = 0;i<randomNumListProducer.getNumbers().size();i++)
-            quantityCandidates[i] = randomNumListProducer.getNumbers().get(i);
+        quantityCandidates = new int[]{1,3,6,9};
     }
     public int getQuantity(){
         checkCursor();
@@ -188,9 +180,6 @@ class NumberBoxQuantityGenerator{
 
     public void init(){
         candidateCursor = 0;
-        randomNumListProducer.clear();
-        for (int i = 0;i<randomNumListProducer.getNumbers().size();i++)
-            quantityCandidates[i] = randomNumListProducer.getNumbers().get(i);
     }
 
     public void update(){
