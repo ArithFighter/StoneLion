@@ -84,7 +84,7 @@ public class SceneController {
             gameScene = GameScene.BET;
             gameRecordManager.init();
             stage.getTokenHolder().reset();
-            stage.getTokenHolder().gain(initTokens);
+            receiveTokens();
             betScreen.setNumberBoxQuantity();
             betScreen.setToken(stage.getTokenHolder().getTokens());
             characterMenu.init();
@@ -94,6 +94,17 @@ public class SceneController {
             optionMenu.setSceneTemp(GameScene.MENU);
             characterMenu.init();
         }
+    }
+
+    private void receiveTokens(){
+        Preferences pref = gameSave.getPreferences();
+        String[] keys = gameSave.getTokenKey();
+        int characterIndex = characterMenu.getSelectIndex();
+
+        if (pref.getInteger(keys[characterIndex])==0)
+            stage.getTokenHolder().gain(initTokens);
+        else
+            stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
     }
 
     private void manageOption(){
@@ -170,25 +181,23 @@ public class SceneController {
                 gameScene = GameScene.BET;
 
             betScreen.setToken(stage.getTokenHolder().getTokens());
-            saveHighScore();
+            saveTokens();
             resultScreen.init();
         }
         if (resultScreen.isQuit()){
             gameScene = GameScene.GAME_OVER;
-            saveHighScore();
+            saveTokens();
             resultScreen.init();
         }
     }
 
-    private void saveHighScore(){
+    private void saveTokens(){
         Preferences pref = gameSave.getPreferences();
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        if (stage.getTokenHolder().getTokens()>pref.getInteger(keys[characterIndex])){
-            pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
-            pref.flush();
-        }
+        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+        pref.flush();
     }
 
     private void manageGameOver(){
