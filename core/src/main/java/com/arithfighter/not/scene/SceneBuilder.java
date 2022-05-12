@@ -110,7 +110,7 @@ class SceneCollection{
         Preferences pref = gameSave.getPreferences();
 
         for (int i = 0; i<gameSave.getTokenKey().length; i++){
-            characterMenu.setHighScore(
+            characterMenu.setSavedTokens(
                     CharacterList.values()[i],
                     pref.getInteger(gameSave.getTokenKey()[i])
             );

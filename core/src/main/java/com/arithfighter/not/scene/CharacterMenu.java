@@ -24,8 +24,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
-    private final Font bestScoreText;
-    private final int[] highScores = new int[CharacterList.values().length];
+    private final Font savedTokensText;
+    private final int[] savedTokens = new int[CharacterList.values().length];
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -49,8 +49,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation = new MaskAnimation(getMasks(panelQuantity, textures[5]));
 
-        bestScoreText = new Font(20);
-        bestScoreText.setColor(Color.WHITE);
+        savedTokensText = new Font(20);
+        savedTokensText.setColor(Color.WHITE);
     }
 
     private Mask[] getMasks(int quantity, Texture texture){
@@ -63,10 +63,10 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         return masks;
     }
 
-    public void setHighScore(CharacterList character, int highScore) {
+    public void setSavedTokens(CharacterList character, int highScore) {
         for (int i = 0; i<CharacterList.values().length;i++){
             if (character == CharacterList.values()[i])
-                highScores[i] = highScore;
+                savedTokens[i] = highScore;
         }
     }
 
@@ -97,7 +97,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation.draw(batch, 0.1f);
 
-        bestScoreText.draw(batch, "best: "+highScores[getSelectIndex()], 900,450);
+        savedTokensText.draw(batch, "tokens: "+ savedTokens[getSelectIndex()], 900,450);
     }
 
     private void setButtonHighLightPosition(){
@@ -155,7 +155,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.getButton().dispose();
         optionButton.getButton().dispose();
         characterName.dispose();
-        bestScoreText.dispose();
+        savedTokensText.dispose();
     }
 }
 
