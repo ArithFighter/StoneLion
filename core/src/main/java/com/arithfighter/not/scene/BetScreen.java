@@ -26,7 +26,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
 
-    public BetScreen(TextureManager textureManager, SoundManager soundManager){
+    public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         this.soundManager = soundManager;
 
@@ -35,11 +35,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textProvider = new TextProvider();
 
         tokenBet = new ControlNumber(textures);
-        tokenBet.setPosition(500,300);
+        tokenBet.setPosition(500, 300);
         tokenBet.setValueHolder(tokenHolder);
 
         startButton = new SceneControlButton(textures[6], 2f);
-        startButton.getButton().setPosition(1000,150);
+        startButton.getButton().setPosition(1000, 150);
 
         cardLimitMessage = new Font(40);
         cardLimitMessage.setColor(Color.WHITE);
@@ -50,25 +50,25 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
     }
 
-    public int getCardLimit(){
+    public int getCardLimit() {
         return cardLimit;
     }
 
-    public int getNumberBoxQuantity(){
+    public int getNumberBoxQuantity() {
         return numberBoxQuantity;
     }
 
-    public void setToken(int value){
+    public void setToken(int value) {
         initToken = value;
         tokenHolder.setMaxValue(initToken);
         tokenHolder.setMinValue(100);
     }
 
-    public int getBet(){
+    public int getBet() {
         return tokenHolder.getValue();
     }
 
-    public boolean isStartGame(){
+    public boolean isStartGame() {
         return startButton.isStart();
     }
 
@@ -103,7 +103,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.getButton().deactivate();
     }
 
-    public void setNumberBoxQuantity(){
+    public void setNumberBoxQuantity() {
         numberBoxQuantityGenerator.update();
         numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
     }
@@ -124,17 +124,17 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         cardLimit = calculateLimit(valueChange);
     }
 
-    private int calculateLimit(int valueChange){
-        float betTokensProportion = tokenHolder.getValue()/(float)initToken;
+    private int calculateLimit(int valueChange) {
+        float betTokensProportion = tokenHolder.getValue() / (float) initToken;
         int baseLimit;
-        if (numberBoxQuantity<2)
+        if (numberBoxQuantity < 2)
             baseLimit = 0;
-        else if (numberBoxQuantity<4)
+        else if (numberBoxQuantity < 4)
             baseLimit = 2;
         else
             baseLimit = 3;
 
-        return (int) ((1-betTokensProportion)*valueChange/10+numberBoxQuantity+baseLimit);
+        return (int) ((1 - betTokensProportion) * valueChange / 10 + numberBoxQuantity + baseLimit);
     }
 
     @Override
@@ -142,9 +142,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
 
-        cardLimitMessage.draw(batch, texts[0] + cardLimit, 400,600);
+        cardLimitMessage.draw(batch, texts[0] + cardLimit, 400, 600);
 
-        betMessage.draw(batch, texts[1], 400,400);
+        betMessage.draw(batch, texts[1], 400, 400);
 
         tokenBet.draw(batch);
 
@@ -160,40 +160,48 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 }
 
-class NumberBoxQuantityGenerator{
+class NumberBoxQuantityGenerator {
     private final int[] quantityCandidates;
     private int candidateCursor = 0;
-    private final RandomNumProducer randomNumProducer;
+    private final RandomNumProducer probabilityProducer;
+    private final int percent = 100;
 
-    public NumberBoxQuantityGenerator(){
-        quantityCandidates = new int[]{1,3,6,9};
+    public NumberBoxQuantityGenerator() {
+        quantityCandidates = new int[]{1, 3, 6, 9};
 
-        randomNumProducer = new RandomNumProducer(100,0);
+        probabilityProducer = new RandomNumProducer(percent, 0);
     }
-    public int getQuantity(){
+
+    public int getQuantity() {
         checkCursor();
         return quantityCandidates[candidateCursor];
     }
 
-    private void checkCursor(){
-        if (candidateCursor>quantityCandidates.length-1)
+    private void checkCursor() {
+        if (candidateCursor > quantityCandidates.length - 1)
             init();
     }
 
-    private void init(){
+    private void init() {
         candidateCursor = 0;
     }
 
-    public void update(){
-        int i = randomNumProducer.getRandomNum();
+    public void update() {
+        int i = probabilityProducer.getRandomNum();
+        double[] probability = {
+                0.05 * percent,
+                0.1 * percent,
+                0.5 * percent,
+                0.35 * percent
+        };
 
-        if (i < 5)
+        if (i < probability[0])
             candidateCursor = 0;
-        if (i>=5&&i<15)
+        if (i >= probability[0] && i < probability[0]+probability[1])
             candidateCursor = 1;
-        if (i>=15&&i<80)
+        if (i >= probability[0]+probability[1] && i < probability[0]+probability[1]+probability[2])
             candidateCursor = 2;
-        if (i>=80&&i<=100)
+        if (i >= percent - probability[3] && i <= percent)
             candidateCursor = 3;
     }
 }

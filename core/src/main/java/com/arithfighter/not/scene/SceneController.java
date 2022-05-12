@@ -2,6 +2,8 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 
 public class SceneController {
@@ -136,6 +138,12 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.N)){
+//            gameScene = GameScene.RESULT;
+//            doWhenWin();
+//            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+//            stage.init();
+//        }
     }
 
     private void doWhenWin(){
