@@ -24,6 +24,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int cardLimit;
     private int initTokens;
     private int minTokens;
+    private final CardLimitCalculator cardLimitCalculator = new CardLimitCalculator();
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
 
@@ -123,20 +124,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int valueChange = minTokens;
         tokenBet.setValueChange(valueChange);
 
-        cardLimit = calculateLimit(valueChange);
-    }
+        cardLimitCalculator.setInitTokens(initTokens);
+        cardLimitCalculator.setTokenHolder(tokenHolder);
+        cardLimitCalculator.setNumberBoxQuantity(numberBoxQuantity);
 
-    private int calculateLimit(int valueChange) {
-        float betTokensProportion = tokenHolder.getValue() / (float) initTokens;
-        int baseLimit;
-        if (numberBoxQuantity < 2)
-            baseLimit = 0;
-        else if (numberBoxQuantity < 4)
-            baseLimit = 2;
-        else
-            baseLimit = 3;
-
-        return (int) ((1 - betTokensProportion) * valueChange / 10 + numberBoxQuantity + baseLimit);
+        cardLimit = cardLimitCalculator.getLimit(valueChange);
     }
 
     @Override
@@ -159,6 +151,43 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         cardLimitMessage.dispose();
         tokenBet.dispose();
         startButton.dispose();
+    }
+}
+
+class CardLimitCalculator{
+    private int numberBoxQuantity;
+    private int initTokens;
+    private ValueHolder tokenHolder;
+
+    public void setNumberBoxQuantity(int numberBoxQuantity) {
+        this.numberBoxQuantity = numberBoxQuantity;
+    }
+
+    public void setInitTokens(int initTokens) {
+        this.initTokens = initTokens;
+    }
+
+    public void setTokenHolder(ValueHolder tokenHolder) {
+        this.tokenHolder = tokenHolder;
+    }
+
+    public int getLimit(int valueChange) {
+        float betTokensProportion = tokenHolder.getValue() / (float) initTokens;
+
+        return (int) ((1 - betTokensProportion) * valueChange / 10 + numberBoxQuantity + getBaseLimit());
+    }
+
+    private int getBaseLimit(){
+        int baseLimit;
+
+        if (numberBoxQuantity < 2)
+            baseLimit = 0;
+        else if (numberBoxQuantity < 4)
+            baseLimit = 2;
+        else
+            baseLimit = 3;
+
+        return baseLimit;
     }
 }
 
