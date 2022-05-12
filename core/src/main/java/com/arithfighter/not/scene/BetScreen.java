@@ -22,7 +22,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SoundManager soundManager;
     private int numberBoxQuantity = 0;
     private int cardLimit;
-    private int initToken;
+    private int initTokens;
+    private int minTokens;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
 
@@ -59,9 +60,10 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setToken(int value) {
-        initToken = value;
-        tokenHolder.setMaxValue(initToken);
-        tokenHolder.setMinValue(100);
+        initTokens = value;
+        minTokens = 100;
+        tokenHolder.setMaxValue(initTokens);
+        tokenHolder.setMinValue(minTokens);
     }
 
     public int getBet() {
@@ -118,14 +120,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.update();
         tokenBet.update();
 
-        int valueChange = 100;
+        int valueChange = minTokens;
         tokenBet.setValueChange(valueChange);
 
         cardLimit = calculateLimit(valueChange);
     }
 
     private int calculateLimit(int valueChange) {
-        float betTokensProportion = tokenHolder.getValue() / (float) initToken;
+        float betTokensProportion = tokenHolder.getValue() / (float) initTokens;
         int baseLimit;
         if (numberBoxQuantity < 2)
             baseLimit = 0;
