@@ -1,7 +1,5 @@
 package com.arithfighter.not.system;
 
-import com.arithfighter.not.system.RandomNumFactory;
-
 public class RandomNumProducer implements RandomNumFactory {
     private final int max;
     private final int min;

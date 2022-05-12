@@ -3,7 +3,6 @@ package com.arithfighter.not.scene;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.ControlNumber;
 import com.arithfighter.not.widget.button.SceneControlButton;
@@ -105,8 +104,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity(){
-        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
         numberBoxQuantityGenerator.update();
+        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
     }
 
     @Override
@@ -164,9 +163,12 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 class NumberBoxQuantityGenerator{
     private final int[] quantityCandidates;
     private int candidateCursor = 0;
+    private final RandomNumProducer randomNumProducer;
 
     public NumberBoxQuantityGenerator(){
         quantityCandidates = new int[]{1,3,6,9};
+
+        randomNumProducer = new RandomNumProducer(100,0);
     }
     public int getQuantity(){
         checkCursor();
@@ -178,11 +180,20 @@ class NumberBoxQuantityGenerator{
             init();
     }
 
-    public void init(){
+    private void init(){
         candidateCursor = 0;
     }
 
     public void update(){
-        candidateCursor++;
+        int i = randomNumProducer.getRandomNum();
+
+        if (i < 5)
+            candidateCursor = 0;
+        if (i>=5&&i<15)
+            candidateCursor = 1;
+        if (i>=15&&i<80)
+            candidateCursor = 2;
+        if (i>=80&&i<=100)
+            candidateCursor = 3;
     }
 }
