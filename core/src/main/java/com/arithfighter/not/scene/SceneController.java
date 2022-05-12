@@ -2,8 +2,6 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 
 public class SceneController {
@@ -184,7 +182,7 @@ public class SceneController {
 
     private void saveHighScore(){
         Preferences pref = gameSave.getPreferences();
-        String[] keys = gameSave.getHighScoreKey();
+        String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
         if (stage.getTokenHolder().getTokens()>pref.getInteger(keys[characterIndex])){

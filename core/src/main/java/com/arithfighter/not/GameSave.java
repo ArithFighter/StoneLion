@@ -9,12 +9,12 @@ public class GameSave {
             "sound volume",
             "music volume"
     };
-    private final String[] highScoreKey = {
-            "knight best",
-            "ninja best",
-            "hunter best",
-            "paladin best",
-            "warrior best"
+    private final String[] TokenKey = {
+            "knight tokens",
+            "ninja tokens",
+            "hunter tokens",
+            "paladin tokens",
+            "warrior tokens"
     };
 
     public GameSave(){
@@ -33,7 +33,7 @@ public class GameSave {
     }
 
     private void initHighScore(){
-        for (String s:highScoreKey){
+        for (String s: TokenKey){
             if (!preferences.contains(s))
                 preferences.putInteger(s, 0);
         }
@@ -47,7 +47,7 @@ public class GameSave {
         return optionKeys;
     }
 
-    public String[] getHighScoreKey() {
-        return highScoreKey;
+    public String[] getTokenKey() {
+        return TokenKey;
     }
 }
