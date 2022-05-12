@@ -121,10 +121,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int valueChange = cardLimitCalculator.getMinTokens();
         tokenBet.setValueChange(valueChange);
 
-        cardLimitCalculator.setTokenHolder(tokenHolder);
         cardLimitCalculator.setNumberBoxQuantity(numberBoxQuantity);
 
-        cardLimitCalculator.run();
+        cardLimitCalculator.run(tokenHolder.getValue());
     }
 
     @Override
@@ -156,7 +155,6 @@ class CardLimitCalculator{
     private int numberBoxQuantity;
     private int initTokens;
     private int minTokens;
-    private ValueHolder tokenHolder;
     private int cardLimit;
 
     public void setNumberBoxQuantity(int numberBoxQuantity) {
@@ -165,10 +163,6 @@ class CardLimitCalculator{
 
     public void setInitTokens(int initTokens) {
         this.initTokens = initTokens;
-    }
-
-    public void setTokenHolder(ValueHolder tokenHolder) {
-        this.tokenHolder = tokenHolder;
     }
 
     public void setMinTokens(int minTokens) {
@@ -187,8 +181,8 @@ class CardLimitCalculator{
         return cardLimit;
     }
 
-    public void run() {
-        float betTokensProportion = tokenHolder.getValue() / (float) initTokens;
+    public void run(int value) {
+        float betTokensProportion = value / (float) initTokens;
 
         cardLimit = (int) ((1 - betTokensProportion) * minTokens / 10 + numberBoxQuantity + getBaseLimit());
     }
