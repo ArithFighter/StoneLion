@@ -86,7 +86,7 @@ public class SceneController {
             stage.getTokenHolder().reset();
             receiveTokens();
             betScreen.setNumberBoxQuantity();
-            betScreen.setToken(stage.getTokenHolder().getTokens());
+            betScreen.setInitToken(stage.getTokenHolder().getTokens());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -180,7 +180,7 @@ public class SceneController {
             else
                 gameScene = GameScene.BET;
 
-            betScreen.setToken(stage.getTokenHolder().getTokens());
+            betScreen.setInitToken(stage.getTokenHolder().getTokens());
             saveTokens();
             resultScreen.init();
         }

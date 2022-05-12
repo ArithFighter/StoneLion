@@ -57,11 +57,24 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         return numberBoxQuantity;
     }
 
-    public void setToken(int value) {
-        cardLimitCalculator.setInitTokens(value);
-        cardLimitCalculator.setMinTokens(100);
+    public void setInitToken(int initTokens) {
+        cardLimitCalculator.setInitTokens(initTokens);
+        cardLimitCalculator.setMinTokens(getMinTokensDependOnInitTokens(initTokens));
         tokenHolder.setMaxValue(cardLimitCalculator.getInitTokens());
         tokenHolder.setMinValue(cardLimitCalculator.getMinTokens());
+    }
+
+    private int getMinTokensDependOnInitTokens(int value) {
+        int minTokens = 100;
+
+        if (value > minTokens * 10 && value <= minTokens * 50)
+            minTokens *= 2;
+        if (value > minTokens * 50 && value <= minTokens * 100)
+            minTokens *= 5;
+        if (value > minTokens * 100)
+            minTokens *= 10;
+
+        return minTokens;
     }
 
     public int getBet() {
@@ -151,7 +164,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 }
 
-class CardLimitCalculator{
+class CardLimitCalculator {
     private int numberBoxQuantity;
     private int initTokens;
     private int minTokens;
@@ -177,7 +190,7 @@ class CardLimitCalculator{
         return initTokens;
     }
 
-    public int getCardLimit(){
+    public int getCardLimit() {
         return cardLimit;
     }
 
@@ -187,7 +200,7 @@ class CardLimitCalculator{
         cardLimit = (int) ((1 - betTokensProportion) * minTokens / 10 + numberBoxQuantity + getBaseLimit());
     }
 
-    private int getBaseLimit(){
+    private int getBaseLimit() {
         int baseLimit;
 
         if (numberBoxQuantity < 2)
@@ -238,9 +251,9 @@ class NumberBoxQuantityGenerator {
 
         if (i < probability[0])
             candidateCursor = 0;
-        if (i >= probability[0] && i < probability[0]+probability[1])
+        if (i >= probability[0] && i < probability[0] + probability[1])
             candidateCursor = 1;
-        if (i >= probability[0]+probability[1] && i < probability[0]+probability[1]+probability[2])
+        if (i >= probability[0] + probability[1] && i < probability[0] + probability[1] + probability[2])
             candidateCursor = 2;
         if (i >= percent - probability[3] && i <= percent)
             candidateCursor = 3;
