@@ -21,7 +21,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
     private int numberBoxQuantity = 0;
-    private int cardLimit;
     private int initTokens;
     private int minTokens;
     private final CardLimitCalculator cardLimitCalculator = new CardLimitCalculator();
@@ -53,7 +52,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getCardLimit() {
-        return cardLimit;
+        return cardLimitCalculator.getCardLimit();
     }
 
     public int getNumberBoxQuantity() {
@@ -128,13 +127,15 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         cardLimitCalculator.setTokenHolder(tokenHolder);
         cardLimitCalculator.setNumberBoxQuantity(numberBoxQuantity);
 
-        cardLimit = cardLimitCalculator.getLimit(valueChange);
+        cardLimitCalculator.run(valueChange);
     }
 
     @Override
     public void draw() {
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
+
+        int cardLimit = cardLimitCalculator.getCardLimit();
 
         cardLimitMessage.draw(batch, texts[0] + cardLimit, 400, 600);
 
@@ -158,6 +159,7 @@ class CardLimitCalculator{
     private int numberBoxQuantity;
     private int initTokens;
     private ValueHolder tokenHolder;
+    private int cardLimit;
 
     public void setNumberBoxQuantity(int numberBoxQuantity) {
         this.numberBoxQuantity = numberBoxQuantity;
@@ -171,10 +173,14 @@ class CardLimitCalculator{
         this.tokenHolder = tokenHolder;
     }
 
-    public int getLimit(int valueChange) {
+    public int getCardLimit(){
+        return cardLimit;
+    }
+
+    public void run(int valueChange) {
         float betTokensProportion = tokenHolder.getValue() / (float) initTokens;
 
-        return (int) ((1 - betTokensProportion) * valueChange / 10 + numberBoxQuantity + getBaseLimit());
+        cardLimit = (int) ((1 - betTokensProportion) * valueChange / 10 + numberBoxQuantity + getBaseLimit());
     }
 
     private int getBaseLimit(){
