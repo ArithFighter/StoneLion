@@ -189,10 +189,10 @@ class NumberBoxQuantityGenerator {
     public void update() {
         int i = probabilityProducer.getRandomNum();
         double[] probability = {
-                0.05 * percent,
                 0.1 * percent,
-                0.5 * percent,
-                0.35 * percent
+                0.2 * percent,
+                0.4 * percent,
+                0.3 * percent
         };
 
         if (i < probability[0])

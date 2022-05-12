@@ -138,12 +138,6 @@ public class SceneController {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
-//        if (Gdx.input.isKeyJustPressed(Input.Keys.N)){
-//            gameScene = GameScene.RESULT;
-//            doWhenWin();
-//            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
-//            stage.init();
-//        }
     }
 
     private void doWhenWin(){
