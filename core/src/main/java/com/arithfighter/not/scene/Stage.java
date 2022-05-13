@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
@@ -21,8 +22,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
     private final TokenHolder tokenHolder;
-    private final Recorder playRecord = new Recorder();
     private final StageMessage stageMessage;
+    private final Recorder playRecord = new Recorder();
+    private final Font cardLimitText;
     private int numberBoxQuantity;
     private int cardLimit;
 
@@ -61,6 +63,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
         };
+
+        cardLimitText = new Font(22);
+        cardLimitText.setColor(Color.WHITE);
     }
 
     public void setCardLimit(int limit) {
@@ -110,6 +115,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public void draw() {
         SpriteBatch batch = getBatch();
+
+        cardLimitText.draw(
+                batch,
+                "cards: "+(cardLimit- playRecord.getRecord()),
+                WindowSetting.GRID_X*8,
+                WindowSetting.GRID_Y*8+WindowSetting.CENTER_Y);
 
         gamePlayComponent.setBatch(batch);
         gamePlayComponent.draw();
@@ -183,7 +194,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseMenu.dispose();
         playerCollection.dispose();
         pauseButton.dispose();
+        cardLimitText.dispose();
     }
+}
+
+class CardLimitManager{
+
 }
 
 class StageMessage {
