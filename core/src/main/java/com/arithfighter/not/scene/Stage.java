@@ -23,15 +23,15 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GameDataDisplacer dataDisplacer;
     private final TokenHolder tokenHolder;
     private final StageMessage stageMessage;
-    private final Recorder playRecord = new Recorder();
-    private final Font cardLimitText;
     private int numberBoxQuantity;
-    private int cardLimit;
+    private final CardLimitManager cardLimitManager;
 
     public Stage(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         Texture[] cards = textureManager.getTextures(textureManager.getKeys()[1]);
         Texture[] spriteSheet = textureManager.getTextures(textureManager.getKeys()[3]);
+
+        cardLimitManager = new CardLimitManager();
 
         dataDisplacer = new GameDataDisplacer();
 
@@ -47,7 +47,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 CharacterList.values().length,
                 gamePlayComponent.getNumberBoxDisplacer()
         );
-        playerCollection.setPlayRecord(playRecord);
+        playerCollection.setPlayRecord(cardLimitManager.getPlayRecord());
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
@@ -55,7 +55,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         stageMessage = new StageMessage(450, 500) {
             @Override
             public boolean isExceedCardLimitAndStageNotComplete() {
-                return playRecord.getRecord() >= cardLimit && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
+                return cardLimitManager.isExceedCardLimit() && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
 
             @Override
@@ -63,13 +63,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
         };
-
-        cardLimitText = new Font(22);
-        cardLimitText.setColor(Color.WHITE);
     }
 
     public void setCardLimit(int limit) {
-        cardLimit = limit;
+        cardLimitManager.setCardLimit(limit);
     }
 
     public PauseMenu getPauseMenu(){
@@ -85,7 +82,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void init() {
-        playRecord.reset();
+        cardLimitManager.getPlayRecord().reset();
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
@@ -116,11 +113,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     public void draw() {
         SpriteBatch batch = getBatch();
 
-        cardLimitText.draw(
-                batch,
-                "cards: "+(cardLimit- playRecord.getRecord()),
-                WindowSetting.GRID_X*8,
-                WindowSetting.GRID_Y*8+WindowSetting.CENTER_Y);
+        cardLimitManager.draw(batch);
 
         gamePlayComponent.setBatch(batch);
         gamePlayComponent.draw();
@@ -135,11 +128,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public void drawData(int index) {
         //for dev
-        dataDisplacer.setCardPlayTimes(playRecord.getRecord());
+        dataDisplacer.setCardPlayTimes(cardLimitManager.getPlayRecord().getRecord());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
         dataDisplacer.setToken(tokenHolder.getTokens());
-        dataDisplacer.setCardLimit(cardLimit);
+        dataDisplacer.setCardLimit(cardLimitManager.getCardLimit());
         dataDisplacer.draw(getBatch());
     }
 
@@ -194,12 +187,49 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseMenu.dispose();
         playerCollection.dispose();
         pauseButton.dispose();
-        cardLimitText.dispose();
+        cardLimitManager.dispose();
     }
 }
 
 class CardLimitManager{
+    private final Recorder playRecord;
+    private final Font cardLimitText;
+    private int cardLimit;
 
+    public CardLimitManager(){
+        cardLimitText = new Font(22);
+        cardLimitText.setColor(Color.WHITE);
+
+        playRecord = new Recorder();
+    }
+
+    public void setCardLimit(int cardLimit) {
+        this.cardLimit = cardLimit;
+    }
+
+    public Recorder getPlayRecord() {
+        return playRecord;
+    }
+
+    public int getCardLimit() {
+        return cardLimit;
+    }
+
+    public void draw(SpriteBatch batch){
+        cardLimitText.draw(
+                batch,
+                "cards: "+(cardLimit- playRecord.getRecord()),
+                WindowSetting.GRID_X*8,
+                WindowSetting.GRID_Y*8+WindowSetting.CENTER_Y);
+    }
+
+    public boolean isExceedCardLimit(){
+        return playRecord.getRecord() >= cardLimit;
+    }
+
+    public void dispose(){
+        cardLimitText.dispose();
+    }
 }
 
 class StageMessage {
@@ -237,7 +267,9 @@ class StageMessage {
     public final void draw(SpriteBatch batch) {
         if (isStageComplete() || isExceedCardLimitAndStageNotComplete()) {
             transitionHandler.updatePastedTime();
-            if (transitionHandler.getPastedTime() < 2.5f)
+
+            float time = 2.5f;
+            if (transitionHandler.getPastedTime() < time)
                 text.draw(batch, getMessage(), x, y);
             else {
                 if (isStageComplete())
