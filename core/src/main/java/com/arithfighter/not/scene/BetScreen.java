@@ -21,9 +21,10 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
     private int numberBoxQuantity = 0;
-    private final CardLimitCalculator cardLimitCalculator = new CardLimitCalculator();
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
+    private int minimalBet;
+    private final int cardLimit = 20;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -50,7 +51,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getCardLimit() {
-        return cardLimitCalculator.getCardLimit();
+        return cardLimit;
     }
 
     public int getNumberBoxQuantity() {
@@ -58,10 +59,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setInitToken(int initTokens) {
-        cardLimitCalculator.setInitTokens(initTokens);
-        cardLimitCalculator.setMinTokens(getMinTokensDependOnInitTokens(initTokens));
-        tokenHolder.setMaxValue(cardLimitCalculator.getInitTokens());
-        tokenHolder.setMinValue(cardLimitCalculator.getMinTokens());
+        minimalBet = getMinTokensDependOnInitTokens(initTokens);
+        tokenHolder.setMaxValue(initTokens);
+        tokenHolder.setMinValue(minimalBet);
     }
 
     private int getMinTokensDependOnInitTokens(int value) {
@@ -131,20 +131,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.update();
         tokenBet.update();
 
-        int valueChange = cardLimitCalculator.getMinTokens();
+        int valueChange = minimalBet;
         tokenBet.setValueChange(valueChange);
-
-        cardLimitCalculator.setNumberBoxQuantity(numberBoxQuantity);
-
-        cardLimitCalculator.run(tokenHolder.getValue());
     }
 
     @Override
     public void draw() {
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
-
-        int cardLimit = cardLimitCalculator.getCardLimit();
 
         cardLimitMessage.draw(batch, texts[0] + cardLimit, 400, 600);
 
@@ -161,56 +155,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         cardLimitMessage.dispose();
         tokenBet.dispose();
         startButton.dispose();
-    }
-}
-
-class CardLimitCalculator {
-    private int numberBoxQuantity;
-    private int initTokens;
-    private int minTokens;
-    private int cardLimit;
-
-    public void setNumberBoxQuantity(int numberBoxQuantity) {
-        this.numberBoxQuantity = numberBoxQuantity;
-    }
-
-    public void setInitTokens(int initTokens) {
-        this.initTokens = initTokens;
-    }
-
-    public void setMinTokens(int minTokens) {
-        this.minTokens = minTokens;
-    }
-
-    public int getMinTokens() {
-        return minTokens;
-    }
-
-    public int getInitTokens() {
-        return initTokens;
-    }
-
-    public int getCardLimit() {
-        return cardLimit;
-    }
-
-    public void run(int value) {
-        float betTokensProportion = value / (float) initTokens;
-
-        cardLimit = (int) ((1 - betTokensProportion) * minTokens / 10 + numberBoxQuantity + getBaseLimit());
-    }
-
-    private int getBaseLimit() {
-        int baseLimit;
-
-        if (numberBoxQuantity < 2)
-            baseLimit = 0;
-        else if (numberBoxQuantity < 4)
-            baseLimit = 2;
-        else
-            baseLimit = 3;
-
-        return baseLimit;
     }
 }
 
