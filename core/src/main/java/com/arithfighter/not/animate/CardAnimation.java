@@ -30,6 +30,7 @@ public class CardAnimation {
     }
 
     public void init() {
+        timeHandler.resetPastedTime();
         isStart = false;
     }
 
