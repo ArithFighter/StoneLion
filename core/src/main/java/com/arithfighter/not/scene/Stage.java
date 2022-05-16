@@ -284,7 +284,7 @@ class StageMessage {
         float a = 2.5f;
 
         if (transitionHandler.getPastedTime() < r)
-            text.draw(batch, "Ready", x, y);
+            text.draw(batch, "Game Ready", x, y);
         if (transitionHandler.getPastedTime() > r && transitionHandler.getPastedTime() < a)
             text.draw(batch, "Action", x, y);
         if (transitionHandler.getPastedTime() > a)

@@ -28,7 +28,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final int minimalBet = 100;
     private final int cardLimit = 20;
     private final FontManager fontManager;
-    private final GameCards gameCards;
+    private final GameCard gameCard;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -39,17 +39,17 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textProvider = new TextProvider();
 
         tokenBet = new ValueBrowser(textures);
-        tokenBet.setPosition(500, 300);
+        tokenBet.setPosition(500, 150);
         tokenBet.setValueHolder(tokenHolder);
 
         startButton = new SceneControlButton(textures[6], 2f);
-        startButton.getButton().setPosition(1000, 150);
+        startButton.getButton().setPosition(1000, 80);
 
         fontManager = new FontManager();
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
-        gameCards = new GameCards(textures);
+        gameCard = new GameCard(textures);
     }
 
     public int getCardLimit() {
@@ -103,7 +103,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().off();
 
-        gameCards.touchDown(getCursorPos().getX(), getCursorPos().getY());
+        gameCard.touchDown(getCursorPos().getX(), getCursorPos().getY());
     }
 
     public void setNumberBoxQuantity() {
@@ -139,7 +139,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        gameCards.draw(batch);
+        gameCard.draw(batch);
     }
 
     @Override
@@ -147,19 +147,24 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
-        gameCards.dispose();
+        gameCard.dispose();
     }
 }
 
-class GameCards{
+class GameCard {
+    private final Font codeFont;
     private final Button gameCard;
 
-    public GameCards(Texture[] textures){
+    public GameCard(Texture[] textures){
         gameCard = new Button(textures[6], 2f);
         gameCard.setPosition(100,500);
+
+        codeFont = new Font(24);
+        codeFont.setColor(Color.WHITE);
     }
 
     public void draw(SpriteBatch batch){
+        codeFont.draw(batch, "A", 60,630);
         gameCard.draw(batch, "game card");
     }
 
@@ -171,6 +176,7 @@ class GameCards{
     }
 
     public void dispose(){
+        codeFont.dispose();
         gameCard.dispose();
     }
 }
@@ -182,7 +188,7 @@ class FontManager{
     private String bet;
 
     public FontManager(){
-        cardLimitFont = new Font(40);
+        cardLimitFont = new Font(24);
         cardLimitFont.setColor(Color.WHITE);
 
         betFont = new Font(30);
@@ -198,9 +204,9 @@ class FontManager{
     }
 
     public void draw(SpriteBatch batch){
-        cardLimitFont.draw(batch, cardLimit, 400, 600);
+        cardLimitFont.draw(batch, cardLimit, 900, 650);
 
-        betFont.draw(batch, bet, 400, 400);
+        betFont.draw(batch, bet, 400, 250);
     }
 
     public void dispose(){
