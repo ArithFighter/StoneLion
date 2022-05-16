@@ -29,7 +29,7 @@ public class Button{
     }
 
     public void draw(SpriteBatch batch, String content){
-        if (isActive())
+        if (isOn())
             changeColor(batch, content);
         else
             initialize(batch, content);
@@ -61,16 +61,16 @@ public class Button{
         return button.isOnWidget(x,y);
     }
 
-    public void activate(float x, float y){
+    public void on(float x, float y){
         if (isOnButton(x, y))
             buttonState = State.ON;
     }
 
-    public boolean isActive(){
+    public boolean isOn(){
         return buttonState == State.ON;
     }
 
-    public void deactivate(){
+    public void off(){
         buttonState = State.OFF;
     }
 

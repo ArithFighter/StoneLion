@@ -1,7 +1,6 @@
 package com.arithfighter.not.widget.button;
 
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -35,21 +34,21 @@ public class ArrowButtons {
     }
 
     public boolean isLeftActive() {
-        return leftArrow.isActive();
+        return leftArrow.isOn();
     }
 
     public boolean isRightActive() {
-        return rightArrow.isActive();
+        return rightArrow.isOn();
     }
 
     public void activate(float x, float y) {
-        leftArrow.activate(x, y);
-        rightArrow.activate(x, y);
+        leftArrow.on(x, y);
+        rightArrow.on(x, y);
     }
 
     public void deactivate() {
-        leftArrow.deactivate();
-        rightArrow.deactivate();
+        leftArrow.off();
+        rightArrow.off();
     }
 
     public void dispose() {

@@ -57,11 +57,11 @@ public class TextAdventure{
         if (!isButtonLock){
             updateCursorWhenButtonActivate();
         }
-        isButtonLock = conversationDialog.getSkipButton().isActive();
+        isButtonLock = conversationDialog.getSkipButton().isOn();
     }
 
     private void updateCursorWhenButtonActivate(){
-        if (conversationDialog.getSkipButton().isActive() )
+        if (conversationDialog.getSkipButton().isOn() )
             cursor++;
     }
 

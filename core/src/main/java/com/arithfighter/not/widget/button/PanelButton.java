@@ -11,8 +11,8 @@ public class PanelButton {
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
-    public PanelButton(Texture texture){
-        button = new SpriteWidget(texture, 0.8f);
+    public PanelButton(Texture texture, float scale){
+        button = new SpriteWidget(texture, scale);
     }
 
     public void setPosition(float x, float y){
@@ -20,7 +20,7 @@ public class PanelButton {
     }
 
     public void draw(SpriteBatch batch){
-        if (isActive())
+        if (isOn())
             changeColor(batch);
         else
             initialize(batch);
@@ -40,16 +40,16 @@ public class PanelButton {
         return button.isOnWidget(x,y);
     }
 
-    public void activate(float x, float y){
+    public void on(float x, float y){
         if (isOnButton(x, y))
             buttonState = State.ON;
     }
 
-    public boolean isActive(){
+    public boolean isOn(){
         return buttonState == State.ON;
     }
 
-    public void deactivate(){
+    public void off(){
         buttonState = State.OFF;
     }
 }

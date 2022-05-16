@@ -149,7 +149,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
             else {
-                pauseButton.getButton().activate(x, y);
+                pauseButton.getButton().on(x, y);
                 gamePlayComponent.touchDown(x, y);
             }
         }
@@ -160,7 +160,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
             else {
-                pauseButton.getButton().deactivate();
+                pauseButton.getButton().off();
                 gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
             }
         }
@@ -171,7 +171,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
             else {
-                pauseButton.getButton().deactivate();
+                pauseButton.getButton().off();
                 gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
             }
         }

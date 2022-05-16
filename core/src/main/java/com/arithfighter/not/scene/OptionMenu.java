@@ -88,25 +88,25 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         soundControl.activate(x, y);
         musicControl.activate(x, y);
-        leaveButton.getButton().activate(x, y);
+        leaveButton.getButton().on(x, y);
     }
 
     public void touchDragged(){
         soundControl.deactivate();
         musicControl.deactivate();
-        leaveButton.getButton().deactivate();
+        leaveButton.getButton().off();
     }
 
     public void touchUp() {
         if (soundControl.isButtonActive()|| musicControl.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (leaveButton.getButton().isActive())
+        if (leaveButton.getButton().isOn())
             soundManager.playReturnSound();
 
         soundControl.deactivate();
         musicControl.deactivate();
-        leaveButton.getButton().deactivate();
+        leaveButton.getButton().off();
     }
 
     public void dispose() {

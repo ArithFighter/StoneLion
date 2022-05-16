@@ -100,7 +100,7 @@ public class PauseMenu {
             dialog.activate(x, y);
         else {
             for (SceneControlButton button : buttons.getButtons())
-                button.getButton().activate(x, y);
+                button.getButton().on(x, y);
         }
     }
 
@@ -127,13 +127,13 @@ public class PauseMenu {
 
     private void deactivateButtons() {
         for (SceneControlButton button : buttons.getButtons())
-            button.getButton().deactivate();
+            button.getButton().off();
     }
 
     private void playSound() {
         for (int i = 0; i < buttons.getButtons().length; i++) {
             Button b = buttons.getButtons()[i].getButton();
-            if (b.isActive())
+            if (b.isOn())
                 soundManager.playAcceptSound();
         }
     }

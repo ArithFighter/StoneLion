@@ -36,11 +36,11 @@ public class ConversationDialog extends Dialog{
     }
 
     public void activate(float x, float y){
-        skipButton.activate(x, y);
+        skipButton.on(x, y);
     }
 
     public void deactivate(){
-        skipButton.deactivate();
+        skipButton.off();
     }
 
     public void dispose(){

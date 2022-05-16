@@ -124,9 +124,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         buttonProducer.activate(x, y);
 
-        optionButton.getButton().activate(x, y);
+        optionButton.getButton().on(x, y);
 
-        startButton.getButton().activate(x, y);
+        startButton.getButton().on(x, y);
     }
 
     public void touchDragged() {
@@ -137,7 +137,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         if (buttonProducer.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (optionButton.getButton().isActive()||startButton.getButton().isActive())
+        if (optionButton.getButton().isOn()||startButton.getButton().isOn())
             soundManager.playAcceptSound();
 
         deactivateButton();
@@ -146,9 +146,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private void deactivateButton() {
         buttonProducer.deactivate();
 
-        optionButton.getButton().deactivate();
+        optionButton.getButton().off();
 
-        startButton.getButton().deactivate();
+        startButton.getButton().off();
     }
 
     public void dispose() {
@@ -169,13 +169,13 @@ class PanelButtonProducer {
         PanelButtonPlacer placer = new PanelButtonPlacer();
 
         for (int i = 0; i < length; i++) {
-            buttons[i] = new PanelButton(panels[i]);
+            buttons[i] = new PanelButton(panels[i], 0.8f);
             buttons[i].setPosition(placer.getButtonX(i), placer.getButtonY(i));
         }
     }
 
     public boolean isButtonActive() {
-        return buttons[selectedIndex].isActive();
+        return buttons[selectedIndex].isOn();
     }
 
     public void draw(SpriteBatch batch) {
@@ -184,18 +184,18 @@ class PanelButtonProducer {
 
     public int getActiveButtonIndex() {
         for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].isActive())
+            if (buttons[i].isOn())
                 selectedIndex = i;
         }
         return selectedIndex;
     }
 
     public void activate(int mouseX, int mouseY) {
-        for (PanelButton button : buttons) button.activate(mouseX, mouseY);
+        for (PanelButton button : buttons) button.on(mouseX, mouseY);
     }
 
     public void deactivate() {
-        for (PanelButton button : buttons) button.deactivate();
+        for (PanelButton button : buttons) button.off();
     }
 }
 

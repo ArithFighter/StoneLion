@@ -26,17 +26,17 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
 
     @Override
     public void touchDown() {
-        quitButton.getButton().activate(getCursorPos().getX(), getCursorPos().getY());
+        quitButton.getButton().on(getCursorPos().getX(), getCursorPos().getY());
     }
 
     @Override
     public void touchDragged() {
-        quitButton.getButton().deactivate();
+        quitButton.getButton().off();
     }
 
     @Override
     public void touchUp() {
-        quitButton.getButton().deactivate();
+        quitButton.getButton().off();
     }
 
     @Override

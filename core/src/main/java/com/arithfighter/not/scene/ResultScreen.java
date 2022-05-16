@@ -55,9 +55,9 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
 
         if (state == ResultState.WIN || state == ResultState.LOOSE){
             if (isNoTokens())
-                quitButton.getButton().activate(x, y);
+                quitButton.getButton().on(x, y);
             else
-                continueButton.getButton().activate(x, y);
+                continueButton.getButton().on(x, y);
         }
 
     }
@@ -66,9 +66,9 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
     public void touchDragged() {
         if (state == ResultState.WIN || state == ResultState.LOOSE){
             if (isNoTokens())
-                quitButton.getButton().deactivate();
+                quitButton.getButton().off();
             else
-                continueButton.getButton().deactivate();
+                continueButton.getButton().off();
         }
     }
 
@@ -76,9 +76,9 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
     public void touchUp() {
         if (state == ResultState.WIN || state == ResultState.LOOSE){
             if (isNoTokens())
-                quitButton.getButton().deactivate();
+                quitButton.getButton().off();
             else
-                continueButton.getButton().deactivate();
+                continueButton.getButton().off();
         }
     }
 

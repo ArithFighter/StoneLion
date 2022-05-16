@@ -82,14 +82,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         tokenBet.activate(x, y);
 
-        startButton.getButton().activate(x, y);
+        startButton.getButton().on(x, y);
     }
 
     @Override
     public void touchDragged() {
         tokenBet.deactivate();
 
-        startButton.getButton().deactivate();
+        startButton.getButton().off();
     }
 
     @Override
@@ -97,21 +97,21 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         if (tokenBet.isButtonActive())
             soundManager.playTouchedSound();
 
-        if (startButton.getButton().isActive())
+        if (startButton.getButton().isOn())
             soundManager.playAcceptSound();
 
         tokenBet.deactivate();
 
-        startButton.getButton().deactivate();
+        startButton.getButton().off();
 
         CursorPositionAccessor cursorPos = getCursorPos();
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (gameCard.isActive())
-            gameCard.deactivate();
+        if (gameCard.isOn())
+            gameCard.off();
         else
-            gameCard.activate(x,y);
+            gameCard.on(x,y);
     }
 
     public void setNumberBoxQuantity() {
