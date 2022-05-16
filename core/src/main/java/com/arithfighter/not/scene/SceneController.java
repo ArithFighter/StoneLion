@@ -6,14 +6,8 @@ import com.badlogic.gdx.Preferences;
 
 public class SceneController {
     private GameScene gameScene;
-    private final CharacterMenu characterMenu;
-    private final BetScreen betScreen;
-    private final Stage stage;
-    private final ResultScreen resultScreen;
-    private final GameOver gameOver;
-    private final OptionMenu optionMenu;
-    private final Ending ending;
     private final int initTokens = 500;
+    private final SceneBuilder sceneBuilder;
     private GameSave gameSave;
     private final StageManager stageManager;
     private final GameRecorder gameRecorder;
@@ -23,21 +17,9 @@ public class SceneController {
 
         gameRecorder = new GameRecorder();
 
-        characterMenu = sceneBuilder.getCharacterMenu();
+        this.sceneBuilder = sceneBuilder;
 
-        betScreen = sceneBuilder.getBetScreen();
-
-        stage = sceneBuilder.getStage();
-
-        resultScreen = sceneBuilder.getResultScreen();
-
-        gameOver = sceneBuilder.getGameOver();
-
-        ending = sceneBuilder.getEnding();
-
-        optionMenu = sceneBuilder.getOptionMenu();
-
-        stageManager = new StageManager(stage);
+        stageManager = new StageManager(sceneBuilder.getStage());
     }
 
     public void setGameSave(GameSave gameSave) {
@@ -49,6 +31,7 @@ public class SceneController {
     }
 
     public void updateScene() {
+        Stage stage = sceneBuilder.getStage();
         stage.getRecordDisplacer().setGameRecorder(gameRecorder);
 
         switch (gameScene) {
@@ -68,6 +51,7 @@ public class SceneController {
                 manageGameOver();
                 break;
             case ENDING:
+                Ending ending = sceneBuilder.getEnding();
                 if (ending.isLeave()) {
                     gameScene = GameScene.MENU;
                     ending.init();
@@ -80,6 +64,11 @@ public class SceneController {
     }
 
     private void manageMenu() {
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
             gameRecorder.init();
@@ -97,6 +86,9 @@ public class SceneController {
     }
 
     private void receiveTokens() {
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+        Stage stage = sceneBuilder.getStage();
+
         Preferences pref = gameSave.getPreferences();
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
@@ -108,6 +100,8 @@ public class SceneController {
     }
 
     private void manageOption() {
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
         if (optionMenu.isLeaving()) {
             gameScene = optionMenu.getSceneTemp();
             saveOption();
@@ -116,6 +110,8 @@ public class SceneController {
     }
 
     private void saveOption() {
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
         Preferences pref = gameSave.getPreferences();
         String soundVolumeKey = gameSave.getOptionKeys()[0];
         String musicVolumeKey = gameSave.getOptionKeys()[1];
@@ -126,6 +122,9 @@ public class SceneController {
     }
 
     private void manageBet() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
             gameRecorder.getTokenRecorder().reset();
@@ -140,6 +139,10 @@ public class SceneController {
     }
 
     private void manageStage() {
+        Stage stage = sceneBuilder.getStage();
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
         if (stageManager.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
@@ -164,19 +167,32 @@ public class SceneController {
     }
 
     private void doWhenWin() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
         resultScreen.setState(ResultState.WIN);
         stage.getTokenHolder().gain(betScreen.getBet());
         gameRecorder.getWinRecorder().update(1);
     }
 
     private void doWhenLoose() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
         resultScreen.setState(ResultState.LOOSE);
         stage.getTokenHolder().lose(betScreen.getBet());
         gameRecorder.getLoseRecorder().update(1);
     }
 
     private void manageResult() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
         int totalStages = 6;
+
         if (resultScreen.isContinue()) {
             if (gameRecorder.getStagesRecorder().getRecord() == totalStages)
                 gameScene = GameScene.ENDING;
@@ -195,6 +211,9 @@ public class SceneController {
     }
 
     private void saveTokens() {
+        Stage stage = sceneBuilder.getStage();
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+
         Preferences pref = gameSave.getPreferences();
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
@@ -204,6 +223,8 @@ public class SceneController {
     }
 
     private void manageGameOver() {
+        GameOver gameOver = sceneBuilder.getGameOver();
+
         if (gameOver.isQuit()) {
             gameScene = GameScene.MENU;
             gameOver.init();
