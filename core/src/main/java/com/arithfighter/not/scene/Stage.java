@@ -69,7 +69,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         cardLimitManager.setCardLimit(limit);
     }
 
-    public PauseMenu getPauseMenu(){
+    public PauseMenu getPauseMenu() {
         return pauseMenu;
     }
 
@@ -77,7 +77,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         return tokenHolder;
     }
 
-    public StageMessage getStageMessage(){
+    public StageMessage getStageMessage() {
         return stageMessage;
     }
 
@@ -112,18 +112,19 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public void draw() {
         SpriteBatch batch = getBatch();
-
-        cardLimitManager.draw(batch);
-
-        gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw();
-
         if (pauseButton.isStart())
             pauseMenu.draw(batch);
         else
             pauseButton.getButton().draw(batch, "Pause");
 
         stageMessage.draw(batch);
+
+        if (stageMessage.isNeutral()) {
+            cardLimitManager.draw(batch);
+
+            gamePlayComponent.setBatch(batch);
+            gamePlayComponent.draw();
+        }
     }
 
     public void drawData(int index) {
@@ -191,12 +192,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 }
 
-class CardLimitManager{
+class CardLimitManager {
     private final Recorder playRecord;
     private final Font cardLimitText;
     private int cardLimit;
 
-    public CardLimitManager(){
+    public CardLimitManager() {
         cardLimitText = new Font(22);
         cardLimitText.setColor(Color.WHITE);
 
@@ -215,19 +216,19 @@ class CardLimitManager{
         return cardLimit;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         cardLimitText.draw(
                 batch,
-                "cards: "+(cardLimit- playRecord.getRecord()),
-                WindowSetting.GRID_X*8,
-                WindowSetting.GRID_Y*8+WindowSetting.CENTER_Y);
+                "cards: " + (cardLimit - playRecord.getRecord()),
+                WindowSetting.GRID_X * 8,
+                WindowSetting.GRID_Y * 8 + WindowSetting.CENTER_Y);
     }
 
-    public boolean isExceedCardLimit(){
+    public boolean isExceedCardLimit() {
         return playRecord.getRecord() >= cardLimit;
     }
 
-    public void dispose(){
+    public void dispose() {
         cardLimitText.dispose();
     }
 }
@@ -235,9 +236,9 @@ class CardLimitManager{
 class StageMessage {
     private final Font text;
 
-    enum Condition {WIN, LOSE, NEUTRAL}
+    enum State {WIN, LOSE, NEUTRAL, READY}
 
-    private Condition condition = Condition.NEUTRAL;
+    private State state = State.READY;
     private final TimeHandler transitionHandler;
     private final float x;
     private final float y;
@@ -251,32 +252,53 @@ class StageMessage {
         transitionHandler = new TimeHandler();
     }
 
+    public final boolean isNeutral() {
+        return state == State.NEUTRAL;
+    }
+
     public final boolean isWin() {
-        return condition == Condition.WIN;
+        return state == State.WIN;
     }
 
     public final boolean isLose() {
-        return condition == Condition.LOSE;
+        return state == State.LOSE;
     }
 
     public final void init() {
-        condition = Condition.NEUTRAL;
+        state = State.READY;
         transitionHandler.resetPastedTime();
     }
 
     public final void draw(SpriteBatch batch) {
-        if (isStageComplete() || isExceedCardLimitAndStageNotComplete()) {
-            transitionHandler.updatePastedTime();
+        if (state == State.READY)
+            showReady(batch);
 
-            float time = 2.5f;
-            if (transitionHandler.getPastedTime() < time)
-                text.draw(batch, getMessage(), x, y);
-            else {
-                if (isStageComplete())
-                    condition = Condition.WIN;
-                if (isExceedCardLimitAndStageNotComplete())
-                    condition = Condition.LOSE;
-            }
+        if (isStageComplete() || isExceedCardLimitAndStageNotComplete())
+            showEnd(batch);
+    }
+
+    private void showReady(SpriteBatch batch) {
+        transitionHandler.updatePastedTime();
+
+        float r = 1.5f;
+        float a = 2.5f;
+
+        if (transitionHandler.getPastedTime() < r)
+            text.draw(batch, "Ready", x, y);
+        if (transitionHandler.getPastedTime() > r && transitionHandler.getPastedTime() < a)
+            text.draw(batch, "Action", x, y);
+        if (transitionHandler.getPastedTime() > a)
+            state = State.NEUTRAL;
+    }
+
+    private void showEnd(SpriteBatch batch) {
+        transitionHandler.updatePastedTime();
+
+        float time = 5f;
+        if (transitionHandler.getPastedTime() < time)
+            text.draw(batch, getMessage(), x, y);
+        else {
+            setFinalState();
         }
     }
 
@@ -287,6 +309,13 @@ class StageMessage {
         if (isExceedCardLimitAndStageNotComplete())
             message = "Exceed limit";
         return message;
+    }
+
+    private void setFinalState(){
+        if (isStageComplete())
+                state = State.WIN;
+            if (isExceedCardLimitAndStageNotComplete())
+                state = State.LOSE;
     }
 
     public boolean isExceedCardLimitAndStageNotComplete() {
