@@ -13,6 +13,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font cardLimitMessage;
     private final Font betMessage;
@@ -103,7 +106,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
-        numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
+        numberBoxQuantityGenerator.update();
+        numberBoxQuantity = numberBoxQuantityGenerator.getQuantityGroup()[0];
     }
 
     @Override
@@ -144,23 +148,31 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
 class NumberBoxQuantityGenerator {
     private final int[] quantityCandidates;
-    private int candidateCursor = 0;
+    private final List<Integer> quantityGroup;
+    private final RandomNumProducer indexPicker;
+    private final int quantityArrayLength = 3;
 
     public NumberBoxQuantityGenerator() {
         quantityCandidates = new int[]{1, 3, 6, 9};
+
+        quantityGroup = new LinkedList<>();
+
+        indexPicker = new RandomNumProducer(quantityCandidates.length-1, 0);
     }
 
-    public int getQuantity() {
-        checkCursor();
-        return quantityCandidates[candidateCursor];
+    public int[] getQuantityGroup() {
+        int[] quantityArray = new int[quantityArrayLength];
+
+        for (int i = 0;i<quantityArrayLength;i++)
+            quantityArray[i] = quantityGroup.get(i);
+
+        return quantityArray;
     }
 
-    private void checkCursor() {
-        if (candidateCursor > quantityCandidates.length - 1)
-            init();
-    }
-
-    private void init() {
-        candidateCursor = 0;
+    public void update(){
+        while (quantityGroup.size()<quantityArrayLength){
+            int candidateCursor = indexPicker.getRandomNum();
+            quantityGroup.add(quantityCandidates[candidateCursor]);
+        }
     }
 }
