@@ -28,7 +28,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final int minimalBet = 100;
     private final int cardLimit = 20;
     private final FontManager fontManager;
-    private final Button gameCard;
+    private final GameCards gameCards;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -49,8 +49,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
-        gameCard = new Button(textures[6], 2f);
-        gameCard.setPosition(100,500);
+        gameCards = new GameCards(textures);
     }
 
     public int getCardLimit() {
@@ -104,14 +103,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().off();
 
-        CursorPositionAccessor cursorPos = getCursorPos();
-        int x = cursorPos.getX();
-        int y = cursorPos.getY();
-
-        if (gameCard.isOn())
-            gameCard.off();
-        else
-            gameCard.on(x,y);
+        gameCards.touchDown(getCursorPos().getX(), getCursorPos().getY());
     }
 
     public void setNumberBoxQuantity() {
@@ -147,7 +139,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        gameCard.draw(batch, "game card");
+        gameCards.draw(batch);
     }
 
     @Override
@@ -155,6 +147,30 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
+        gameCards.dispose();
+    }
+}
+
+class GameCards{
+    private final Button gameCard;
+
+    public GameCards(Texture[] textures){
+        gameCard = new Button(textures[6], 2f);
+        gameCard.setPosition(100,500);
+    }
+
+    public void draw(SpriteBatch batch){
+        gameCard.draw(batch, "game card");
+    }
+
+    public void touchDown(float x, float y){
+        if (gameCard.isOn())
+            gameCard.off();
+        else
+            gameCard.on(x,y);
+    }
+
+    public void dispose(){
         gameCard.dispose();
     }
 }
