@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Button implements Clickable{
+public class Button{
     private final Font font;
     private final DetectableFontWidget button;
 
@@ -18,10 +18,6 @@ public class Button implements Clickable{
         button = new SpriteWidget(texture, scale, 22);
 
         font = new Font(button.getFontSize());
-    }
-
-    public DetectableFontWidget getButton(){
-        return button;
     }
 
     public void setPosition(float x, float y){

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class PanelButton implements Clickable{
+public class PanelButton{
     private final DetectableWidget button;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
