@@ -112,19 +112,19 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public void draw() {
         SpriteBatch batch = getBatch();
-        if (pauseButton.isStart())
-            pauseMenu.draw(batch);
-        else
-            pauseButton.getButton().draw(batch, "Pause");
-
-        stageMessage.draw(batch);
-
         if (stageMessage.isNeutral()) {
             cardLimitManager.draw(batch);
 
             gamePlayComponent.setBatch(batch);
             gamePlayComponent.draw();
+
+            if (pauseButton.isStart())
+                pauseMenu.draw(batch);
+            else
+                pauseButton.getButton().draw(batch, "Pause");
         }
+
+        stageMessage.draw(batch);
     }
 
     public void drawData(int index) {
@@ -146,7 +146,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (isStageNotComplete()) {
+        if (isStageNotComplete() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
             else {
@@ -157,7 +157,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void touchDragged() {
-        if (isStageNotComplete()) {
+        if (isStageNotComplete() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
             else {
@@ -168,7 +168,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void touchUp() {
-        if (isStageNotComplete()) {
+        if (isStageNotComplete() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
             else {
@@ -311,11 +311,11 @@ class StageMessage {
         return message;
     }
 
-    private void setFinalState(){
+    private void setFinalState() {
         if (isStageComplete())
-                state = State.WIN;
-            if (isExceedCardLimitAndStageNotComplete())
-                state = State.LOSE;
+            state = State.WIN;
+        if (isExceedCardLimitAndStageNotComplete())
+            state = State.LOSE;
     }
 
     public boolean isExceedCardLimitAndStageNotComplete() {
