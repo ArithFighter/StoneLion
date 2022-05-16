@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ConversationDialog extends Dialog{
     private final Button skipButton;
+    private final float buttonWidth;
 
     public ConversationDialog(Texture[] textures) {
         super(textures[11], 25, 28);
 
         skipButton = new Button(textures[6], 1.2f);
+
+        buttonWidth = textures[6].getWidth()*1.2f;
 
         getPoint().set(WindowSetting.CENTER_X-getDialog().getWidget().getWidth()/2,0);
     }
@@ -22,8 +25,6 @@ public class ConversationDialog extends Dialog{
 
     public void draw(SpriteBatch batch){
         float width = getDialog().getWidget().getWidth();
-
-        float buttonWidth = skipButton.getButton().getWidget().getWidth();
         int margin = 15;
 
         drawDialog(batch);
