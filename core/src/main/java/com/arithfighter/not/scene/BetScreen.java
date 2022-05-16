@@ -5,6 +5,7 @@ import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.ValueBrowser;
+import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
@@ -21,12 +22,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final ValueHolder tokenHolder;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
-    private int numberBoxQuantity = 0;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
+    private int numberBoxQuantity = 0;
     private final int minimalBet = 100;
     private final int cardLimit = 20;
     private final FontManager fontManager;
+    private final Button gameCard;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -46,6 +48,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager = new FontManager();
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
+
+        gameCard = new Button(textures[6], 2f);
+        gameCard.setPosition(100,500);
     }
 
     public int getCardLimit() {
@@ -98,6 +103,15 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         tokenBet.deactivate();
 
         startButton.getButton().deactivate();
+
+        CursorPositionAccessor cursorPos = getCursorPos();
+        int x = cursorPos.getX();
+        int y = cursorPos.getY();
+
+        if (gameCard.isActive())
+            gameCard.deactivate();
+        else
+            gameCard.activate(x,y);
     }
 
     public void setNumberBoxQuantity() {
@@ -132,6 +146,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         tokenBet.draw(batch);
 
         startButton.getButton().draw(batch, texts[2]);
+
+        gameCard.draw(batch, "game card");
     }
 
     @Override
@@ -139,6 +155,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
+        gameCard.dispose();
     }
 }
 
