@@ -23,7 +23,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int numberBoxQuantity = 0;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
-    private int minimalBet = 100;
+    private final int minimalBet = 100;
     private final int cardLimit = 20;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
@@ -103,7 +103,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
-        numberBoxQuantityGenerator.update();
         numberBoxQuantity = numberBoxQuantityGenerator.getQuantity();
     }
 
@@ -117,8 +116,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.update();
         tokenBet.update();
 
-        int valueChange = minimalBet;
-        tokenBet.setValueChange(valueChange);
+        tokenBet.setValueChange(minimalBet);
     }
 
     @Override
@@ -147,13 +145,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 class NumberBoxQuantityGenerator {
     private final int[] quantityCandidates;
     private int candidateCursor = 0;
-    private final RandomNumProducer probabilityProducer;
-    private final int percent = 100;
 
     public NumberBoxQuantityGenerator() {
         quantityCandidates = new int[]{1, 3, 6, 9};
-
-        probabilityProducer = new RandomNumProducer(percent, 0);
     }
 
     public int getQuantity() {
@@ -168,24 +162,5 @@ class NumberBoxQuantityGenerator {
 
     private void init() {
         candidateCursor = 0;
-    }
-
-    public void update() {
-        int i = probabilityProducer.getRandomNum();
-        double[] probability = {
-                0.1 * percent,
-                0.2 * percent,
-                0.4 * percent,
-                0.3 * percent
-        };
-
-        if (i < probability[0])
-            candidateCursor = 0;
-        if (i >= probability[0] && i < probability[0] + probability[1])
-            candidateCursor = 1;
-        if (i >= probability[0] + probability[1] && i < probability[0] + probability[1] + probability[2])
-            candidateCursor = 2;
-        if (i >= percent - probability[3] && i <= percent)
-            candidateCursor = 3;
     }
 }
