@@ -49,8 +49,6 @@ public class SceneController {
     }
 
     public void updateScene() {
-        stage.getPauseMenu().setGameRecorder(gameRecordManager.getGameRecorder());
-
         switch (gameScene){
             case MENU:
                 manageMenu();
