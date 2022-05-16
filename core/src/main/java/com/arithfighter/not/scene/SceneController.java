@@ -6,11 +6,11 @@ import com.badlogic.gdx.Preferences;
 
 public class SceneController {
     private GameScene gameScene;
-    private final int initTokens = 500;
     private final SceneBuilder sceneBuilder;
     private GameSave gameSave;
     private final StageManager stageManager;
     private final GameRecorder gameRecorder;
+    private final MenuManager menuManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -20,10 +20,16 @@ public class SceneController {
         this.sceneBuilder = sceneBuilder;
 
         stageManager = new StageManager(sceneBuilder.getStage());
+
+        menuManager = new MenuManager();
+        menuManager.setGameScene(gameScene);
+        menuManager.setSceneBuilder(sceneBuilder);
+        menuManager.setGameRecorder(gameRecorder);
     }
 
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
+        menuManager.setGameSave(gameSave);
     }
 
     public GameScene getGameScene() {
@@ -36,13 +42,15 @@ public class SceneController {
 
         switch (gameScene) {
             case MENU:
-                manageMenu();
+                menuManager.run();
+                gameScene = menuManager.getGameScene();
                 break;
             case BET:
                 manageBet();
                 break;
             case STAGE:
                 manageStage();
+                menuManager.init();
                 break;
             case RESULT:
                 manageResult();
@@ -59,44 +67,9 @@ public class SceneController {
                 break;
             case OPTION:
                 manageOption();
+                menuManager.init();
                 break;
         }
-    }
-
-    private void manageMenu() {
-        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-
-        if (characterMenu.isGameStart()) {
-            gameScene = GameScene.BET;
-            gameRecorder.init();
-            stage.getTokenHolder().reset();
-            receiveTokens();
-            betScreen.setNumberBoxQuantity();
-            betScreen.setInitToken(stage.getTokenHolder().getTokens());
-            characterMenu.init();
-        }
-        if (characterMenu.isOpenOption()) {
-            gameScene = GameScene.OPTION;
-            optionMenu.setSceneTemp(GameScene.MENU);
-            characterMenu.init();
-        }
-    }
-
-    private void receiveTokens() {
-        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-        Stage stage = sceneBuilder.getStage();
-
-        Preferences pref = gameSave.getPreferences();
-        String[] keys = gameSave.getTokenKey();
-        int characterIndex = characterMenu.getSelectIndex();
-
-        if (pref.getInteger(keys[characterIndex]) == 0)
-            stage.getTokenHolder().gain(initTokens);
-        else
-            stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
     }
 
     private void manageOption() {
@@ -146,7 +119,6 @@ public class SceneController {
         if (stageManager.isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
-            stage.getTokenHolder().gain(initTokens);
         }
         if (stageManager.isOpenOption()) {
             gameScene = GameScene.OPTION;
@@ -229,6 +201,74 @@ public class SceneController {
             gameScene = GameScene.MENU;
             gameOver.init();
         }
+    }
+}
+
+class MenuManager{
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene;
+    private GameRecorder gameRecorder;
+    private GameSave gameSave;
+
+    public void setGameSave(GameSave gameSave) {
+        this.gameSave = gameSave;
+    }
+
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public void setGameScene(GameScene gameScene) {
+        this.gameScene = gameScene;
+    }
+
+    public void setGameRecorder(GameRecorder gameRecorder) {
+        this.gameRecorder = gameRecorder;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void init(){
+        gameScene = GameScene.MENU;
+    }
+
+    public void run() {
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
+        if (characterMenu.isGameStart()) {
+            gameScene = GameScene.BET;
+            gameRecorder.init();
+            stage.getTokenHolder().reset();
+            receiveTokens();
+            betScreen.setNumberBoxQuantity();
+            betScreen.setInitToken(stage.getTokenHolder().getTokens());
+            characterMenu.init();
+        }
+        if (characterMenu.isOpenOption()) {
+            gameScene = GameScene.OPTION;
+            optionMenu.setSceneTemp(GameScene.MENU);
+            characterMenu.init();
+        }
+    }
+
+    private void receiveTokens() {
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+        Stage stage = sceneBuilder.getStage();
+
+        Preferences pref = gameSave.getPreferences();
+        String[] keys = gameSave.getTokenKey();
+        int characterIndex = characterMenu.getSelectIndex();
+
+        int initTokens = 500;
+        if (pref.getInteger(keys[characterIndex]) == 0)
+            stage.getTokenHolder().gain(initTokens);
+        else
+            stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
     }
 }
 
