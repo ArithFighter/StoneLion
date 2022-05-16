@@ -49,6 +49,8 @@ public class SceneController {
     }
 
     public void updateScene() {
+        stage.getRecordDisplacer().setGameRecorder(gameRecordManager.getGameRecorder());
+
         switch (gameScene){
             case MENU:
                 manageMenu();
