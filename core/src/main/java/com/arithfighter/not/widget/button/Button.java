@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Button{
+public class Button implements Clickable{
     private final Font font;
     private final DetectableFontWidget button;
 

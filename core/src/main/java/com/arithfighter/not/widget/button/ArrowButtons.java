@@ -41,12 +41,12 @@ public class ArrowButtons {
         return rightArrow.isOn();
     }
 
-    public void activate(float x, float y) {
+    public void on(float x, float y) {
         leftArrow.on(x, y);
         rightArrow.on(x, y);
     }
 
-    public void deactivate() {
+    public void off() {
         leftArrow.off();
         rightArrow.off();
     }

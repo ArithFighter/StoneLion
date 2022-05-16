@@ -80,11 +80,11 @@ public class ControlBar {
     }
 
     public void activate(float x, float y) {
-        arrows.activate(x, y);
+        arrows.on(x, y);
     }
 
     public void deactivate() {
-        arrows.deactivate();
+        arrows.off();
     }
 
     public void dispose() {
