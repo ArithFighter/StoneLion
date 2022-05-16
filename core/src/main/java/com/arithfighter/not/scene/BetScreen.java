@@ -17,8 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
-    private final Font cardLimitMessage;
-    private final Font betMessage;
     private final ValueBrowser tokenBet;
     private final ValueHolder tokenHolder;
     private final SceneControlButton startButton;
@@ -28,6 +26,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
     private final int minimalBet = 100;
     private final int cardLimit = 20;
+    private final FontManager fontManager;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -44,11 +43,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000, 150);
 
-        cardLimitMessage = new Font(40);
-        cardLimitMessage.setColor(Color.WHITE);
-
-        betMessage = new Font(30);
-        betMessage.setColor(Color.WHITE);
+        fontManager = new FontManager();
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
     }
@@ -106,12 +101,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
+        numberBoxQuantityGenerator.init();
         numberBoxQuantityGenerator.update();
         numberBoxQuantity = numberBoxQuantityGenerator.getQuantityGroup()[0];
     }
 
     @Override
     public void init() {
+        numberBoxQuantityGenerator.init();
         startButton.init();
     }
 
@@ -128,9 +125,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
 
-        cardLimitMessage.draw(batch, texts[0] + cardLimit, 400, 600);
-
-        betMessage.draw(batch, texts[1], 400, 400);
+        fontManager.setCardLimit(texts[0] + cardLimit);
+        fontManager.setBet(texts[1]);
+        fontManager.draw(batch);
 
         tokenBet.draw(batch);
 
@@ -139,10 +136,43 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void dispose() {
-        betMessage.dispose();
-        cardLimitMessage.dispose();
+        fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
+    }
+}
+
+class FontManager{
+    private final Font cardLimitFont;
+    private final Font betFont;
+    private String cardLimit;
+    private String bet;
+
+    public FontManager(){
+        cardLimitFont = new Font(40);
+        cardLimitFont.setColor(Color.WHITE);
+
+        betFont = new Font(30);
+        betFont.setColor(Color.WHITE);
+    }
+
+    public void setCardLimit(String cardLimit) {
+        this.cardLimit = cardLimit;
+    }
+
+    public void setBet(String bet) {
+        this.bet = bet;
+    }
+
+    public void draw(SpriteBatch batch){
+        cardLimitFont.draw(batch, cardLimit, 400, 600);
+
+        betFont.draw(batch, bet, 400, 400);
+    }
+
+    public void dispose(){
+        cardLimitFont.dispose();
+        betFont.dispose();
     }
 }
 
@@ -174,5 +204,9 @@ class NumberBoxQuantityGenerator {
             int candidateCursor = indexPicker.getRandomNum();
             quantityGroup.add(quantityCandidates[candidateCursor]);
         }
+    }
+
+    public void init(){
+        quantityGroup.clear();
     }
 }
