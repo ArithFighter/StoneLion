@@ -13,7 +13,6 @@ public class SceneController {
     private final BetManager betManager;
     private final ResultManager resultManager;
     private final OptionManager optionManager;
-    private final GameOverManager gameOverManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -38,9 +37,6 @@ public class SceneController {
         resultManager.setGameRecorder(gameRecorder);
         resultManager.setSceneBuilder(sceneBuilder);
 
-        gameOverManager = new GameOverManager();
-        gameOverManager.setSceneBuilder(sceneBuilder);
-
         optionManager = new OptionManager();
         optionManager.setSceneBuilder(sceneBuilder);
     }
@@ -61,7 +57,6 @@ public class SceneController {
 
         switch (gameScene) {
             case MENU:
-                gameOverManager.init();
                 optionManager.init();
                 menuManager.run();
                 gameScene = menuManager.getGameScene();
@@ -85,8 +80,12 @@ public class SceneController {
                 gameScene = resultManager.getGameScene();
                 break;
             case GAME_OVER:
-                gameOverManager.run();
-                gameScene = gameOverManager.getGameScene();
+                GameOver gameOver = sceneBuilder.getGameOver();
+
+                if (gameOver.isQuit()) {
+                    gameScene = GameScene.MENU;
+                    gameOver.init();
+                }
                 break;
             case ENDING:
                 Ending ending = sceneBuilder.getEnding();
@@ -96,6 +95,7 @@ public class SceneController {
                 }
                 break;
             case OPTION:
+                stageManager.init();
                 optionManager.run();
                 gameScene = optionManager.getGameScene();
                 menuManager.init();
@@ -104,7 +104,7 @@ public class SceneController {
     }
 }
 
-class MenuManager{
+class MenuManager {
     private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
@@ -126,7 +126,7 @@ class MenuManager{
         return gameScene;
     }
 
-    public void init(){
+    public void init() {
         gameScene = GameScene.MENU;
     }
 
@@ -168,7 +168,7 @@ class MenuManager{
     }
 }
 
-class BetManager{
+class BetManager {
     private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.BET;
     private GameRecorder gameRecorder;
@@ -185,7 +185,7 @@ class BetManager{
         return gameScene;
     }
 
-    public void init(){
+    public void init() {
         gameScene = GameScene.BET;
     }
 
@@ -240,7 +240,7 @@ class StageManager {
         return sceneBuilder.getStage().getPauseMenu().isReturnToMainMenu();
     }
 
-    public void init(){
+    public void init() {
         gameScene = GameScene.STAGE;
     }
 
@@ -292,7 +292,7 @@ class StageManager {
     }
 }
 
-class ResultManager{
+class ResultManager {
     private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.RESULT;
     private GameRecorder gameRecorder;
@@ -314,7 +314,7 @@ class ResultManager{
         this.gameSave = gameSave;
     }
 
-    public void init(){
+    public void init() {
         gameScene = GameScene.RESULT;
     }
 
@@ -355,33 +355,7 @@ class ResultManager{
     }
 }
 
-class GameOverManager{
-    private SceneBuilder sceneBuilder;
-    private GameScene gameScene = GameScene.GAME_OVER;
-
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
-    }
-
-    public void init(){
-        gameScene = GameScene.GAME_OVER;
-    }
-
-    public void run() {
-        GameOver gameOver = sceneBuilder.getGameOver();
-
-        if (gameOver.isQuit()) {
-            gameScene = GameScene.MENU;
-            gameOver.init();
-        }
-    }
-}
-
-class OptionManager{
+class OptionManager {
     private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.OPTION;
     private GameSave gameSave;
@@ -398,7 +372,7 @@ class OptionManager{
         return gameScene;
     }
 
-    public void init(){
+    public void init() {
         gameScene = GameScene.OPTION;
     }
 
