@@ -12,6 +12,7 @@ public class SceneController {
     private final GameRecorder gameRecorder;
     private final MenuManager menuManager;
     private final BetManager betManager;
+    private final ResultManager resultManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -29,11 +30,16 @@ public class SceneController {
         betManager = new BetManager();
         betManager.setSceneBuilder(sceneBuilder);
         betManager.setGameRecorder(gameRecorder);
+
+        resultManager = new ResultManager();
+        resultManager.setGameRecorder(gameRecorder);
+        resultManager.setSceneBuilder(sceneBuilder);
     }
 
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
         menuManager.setGameSave(gameSave);
+        resultManager.setGameSave(gameSave);
     }
 
     public GameScene getGameScene() {
@@ -50,6 +56,7 @@ public class SceneController {
                 gameScene = menuManager.getGameScene();
                 break;
             case BET:
+                resultManager.init();
                 betManager.run();
                 gameScene = betManager.getGameScene();
                 break;
@@ -59,7 +66,8 @@ public class SceneController {
                 betManager.init();
                 break;
             case RESULT:
-                manageResult();
+                resultManager.run();
+                gameScene = resultManager.getGameScene();
                 break;
             case GAME_OVER:
                 manageGameOver();
@@ -145,42 +153,6 @@ public class SceneController {
         resultScreen.setState(ResultState.LOOSE);
         stage.getTokenHolder().lose(betScreen.getBet());
         gameRecorder.getLoseRecorder().update(1);
-    }
-
-    private void manageResult() {
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
-
-        int totalStages = 6;
-
-        if (resultScreen.isContinue()) {
-            if (gameRecorder.getStagesRecorder().getRecord() == totalStages)
-                gameScene = GameScene.ENDING;
-            else
-                gameScene = GameScene.BET;
-
-            betScreen.setInitToken(stage.getTokenHolder().getTokens());
-            saveTokens();
-            resultScreen.init();
-        }
-        if (resultScreen.isQuit()) {
-            gameScene = GameScene.GAME_OVER;
-            saveTokens();
-            resultScreen.init();
-        }
-    }
-
-    private void saveTokens() {
-        Stage stage = sceneBuilder.getStage();
-        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-
-        Preferences pref = gameSave.getPreferences();
-        String[] keys = gameSave.getTokenKey();
-        int characterIndex = characterMenu.getSelectIndex();
-
-        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
-        pref.flush();
     }
 
     private void manageGameOver() {
@@ -317,5 +289,68 @@ class StageManager {
 
     public boolean isQuit() {
         return stage.getPauseMenu().isReturnToMainMenu();
+    }
+}
+
+class ResultManager{
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.RESULT;
+    private GameRecorder gameRecorder;
+    private GameSave gameSave;
+
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void setGameRecorder(GameRecorder gameRecorder) {
+        this.gameRecorder = gameRecorder;
+    }
+
+    public void setGameSave(GameSave gameSave) {
+        this.gameSave = gameSave;
+    }
+
+    public void init(){
+        gameScene = GameScene.RESULT;
+    }
+
+    public void run() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
+        int totalStages = 6;
+
+        if (resultScreen.isContinue()) {
+            if (gameRecorder.getStagesRecorder().getRecord() == totalStages)
+                gameScene = GameScene.ENDING;
+            else
+                gameScene = GameScene.BET;
+
+            betScreen.setInitToken(stage.getTokenHolder().getTokens());
+            saveTokens();
+            resultScreen.init();
+        }
+        if (resultScreen.isQuit()) {
+            gameScene = GameScene.GAME_OVER;
+            saveTokens();
+            resultScreen.init();
+        }
+    }
+
+    private void saveTokens() {
+        Stage stage = sceneBuilder.getStage();
+        CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
+
+        Preferences pref = gameSave.getPreferences();
+        String[] keys = gameSave.getTokenKey();
+        int characterIndex = characterMenu.getSelectIndex();
+
+        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+        pref.flush();
     }
 }
