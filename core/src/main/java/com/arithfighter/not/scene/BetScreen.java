@@ -121,6 +121,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public void init() {
         numberBoxQuantityGenerator.init();
         startButton.init();
+        for(GameCard card: gameCards.getGameCards())
+            card.init();
     }
 
     @Override
@@ -253,7 +255,6 @@ class GameCard {
 
     public void init() {
         gameCard.off();
-        boxQuantity = 0;
     }
 
     public void touchDown(float x, float y) {
