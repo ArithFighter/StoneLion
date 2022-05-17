@@ -29,7 +29,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final int minimalBet = 100;
     private final int cardLimit = 15;
     private final FontManager fontManager;
-    private final GameCard gameCard;
+    private final GameCardCollection gameCards;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -50,8 +50,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
-        gameCard = new GameCard(textures);
-        gameCard.setPoint(new Point(100, 400));
+        gameCards = new GameCardCollection(textures);
     }
 
     public int getCardLimit() {
@@ -59,7 +58,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getNumberBoxQuantity() {
-        return gameCard.getBoxQuantity();
+        return gameCards.getGameCard().getBoxQuantity();
     }
 
     public void setInitToken(int initTokens) {
@@ -105,20 +104,20 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().off();
 
-        gameCard.touchDown(getCursorPos().getX(), getCursorPos().getY());
+        gameCards.getGameCard().touchDown(getCursorPos().getX(), getCursorPos().getY());
     }
 
     public void setNumberBoxQuantity() {
         numberBoxQuantityGenerator.init();
         numberBoxQuantityGenerator.update();
-        gameCard.setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
+        gameCards.getGameCard().setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
     }
 
     @Override
     public void init() {
         numberBoxQuantityGenerator.init();
         startButton.init();
-        gameCard.init();
+        gameCards.getGameCard().init();
     }
 
     @Override
@@ -142,7 +141,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        gameCard.draw(batch);
+        gameCards.getGameCard().draw(batch);
     }
 
     @Override
@@ -150,7 +149,20 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
-        gameCard.dispose();
+        gameCards.getGameCard().dispose();
+    }
+}
+
+class GameCardCollection{
+    private final GameCard gameCard;
+
+    public GameCardCollection(Texture[] textures){
+        gameCard = new GameCard(textures[1]);
+        gameCard.setPoint(new Point(100,400));
+    }
+
+    public GameCard getGameCard() {
+        return gameCard;
     }
 }
 
@@ -162,14 +174,18 @@ class GameCard {
     private Point point;
     private int boxQuantity;
 
-    public GameCard(Texture[] textures){
-        gameCard = new Button(textures[1], 3f);
+    public GameCard(Texture texture){
+        gameCard = new Button(texture, 3f);
 
-        rectangle = new Rectangle(textures[1].getWidth()*3, textures[1].getHeight()*3);
+        rectangle = new Rectangle(texture.getWidth()*3, texture.getHeight()*3);
 
         fontSize = 36;
         codeFont = new Font(fontSize);
         codeFont.setColor(Color.PURPLE);
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
     public void setPoint(Point point) {
