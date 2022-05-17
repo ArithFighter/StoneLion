@@ -112,16 +112,15 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator.init();
         numberBoxQuantityGenerator.update();
 
-        for (GameCard card: gameCards.getGameCards())
-            card.setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
+        int[] array = numberBoxQuantityGenerator.getQuantityGroup();
+        for (int i = 0;i<array.length;i++)
+            gameCards.getGameCards()[i].setBoxQuantity(array[i]);
     }
 
     @Override
     public void init() {
         numberBoxQuantityGenerator.init();
         startButton.init();
-        for (GameCard card: gameCards.getGameCards())
-            card.init();
     }
 
     @Override
