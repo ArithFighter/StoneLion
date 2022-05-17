@@ -7,12 +7,8 @@ import com.badlogic.gdx.Preferences;
 public class SceneController {
     private GameScene gameScene;
     private final SceneBuilder sceneBuilder;
-    private final StageManager stageManager;
     private final GameRecorder gameRecorder;
-    private final MenuManager menuManager;
-    private final BetManager betManager;
-    private final ResultManager resultManager;
-    private final OptionManager optionManager;
+    private final SceneManager sceneManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -21,6 +17,71 @@ public class SceneController {
 
         this.sceneBuilder = sceneBuilder;
 
+        sceneManager = new SceneManager(sceneBuilder, gameRecorder);
+        sceneManager.setGameScene(gameScene);
+    }
+
+    public void setGameSave(GameSave gameSave) {
+        sceneManager.setGameSave(gameSave);
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void updateScene() {
+        Stage stage = sceneBuilder.getStage();
+        stage.getRecordDisplacer().setGameRecorder(gameRecorder);
+
+        switch (gameScene) {
+            case MENU:
+                sceneManager.manageMenu();
+                gameScene = sceneManager.getGameScene();
+                break;
+            case BET:
+                sceneManager.manageBet();
+                gameScene = sceneManager.getGameScene();
+                break;
+            case STAGE:
+                sceneManager.manageStage();
+                gameScene = sceneManager.getGameScene();
+                break;
+            case RESULT:
+                sceneManager.manageResult();
+                gameScene = sceneManager.getGameScene();
+                break;
+            case GAME_OVER:
+                GameOver gameOver = sceneBuilder.getGameOver();
+
+                if (gameOver.isQuit()) {
+                    gameScene = GameScene.MENU;
+                    gameOver.init();
+                }
+                break;
+            case ENDING:
+                Ending ending = sceneBuilder.getEnding();
+                if (ending.isLeave()) {
+                    gameScene = GameScene.MENU;
+                    ending.init();
+                }
+                break;
+            case OPTION:
+                sceneManager.manageOption();
+                gameScene = sceneManager.getGameScene();
+                break;
+        }
+    }
+}
+
+class SceneManager {
+    private final MenuManager menuManager;
+    private final BetManager betManager;
+    private final StageManager stageManager;
+    private final ResultManager resultManager;
+    private final OptionManager optionManager;
+    private GameScene gameScene;
+
+    public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
         stageManager = new StageManager();
         stageManager.setSceneBuilder(sceneBuilder);
         stageManager.setGameRecorder(gameRecorder);
@@ -41,66 +102,52 @@ public class SceneController {
         optionManager.setSceneBuilder(sceneBuilder);
     }
 
-    public void setGameSave(GameSave gameSave) {
-        menuManager.setGameSave(gameSave);
-        resultManager.setGameSave(gameSave);
-        optionManager.setGameSave(gameSave);
+    public void setGameScene(GameScene gameScene) {
+        this.gameScene = gameScene;
     }
 
     public GameScene getGameScene() {
         return gameScene;
     }
 
-    public void updateScene() {
-        Stage stage = sceneBuilder.getStage();
-        stage.getRecordDisplacer().setGameRecorder(gameRecorder);
+    public void setGameSave(GameSave gameSave) {
+        menuManager.setGameSave(gameSave);
+        resultManager.setGameSave(gameSave);
+        optionManager.setGameSave(gameSave);
+    }
 
-        switch (gameScene) {
-            case MENU:
-                optionManager.init();
-                menuManager.run();
-                gameScene = menuManager.getGameScene();
-                break;
-            case BET:
-                stageManager.init();
-                resultManager.init();
-                betManager.run();
-                gameScene = betManager.getGameScene();
-                break;
-            case STAGE:
-                optionManager.init();
-                stageManager.run();
-                gameScene = stageManager.getGameScene();
-                menuManager.init();
-                betManager.init();
-                break;
-            case RESULT:
-                stageManager.init();
-                resultManager.run();
-                gameScene = resultManager.getGameScene();
-                break;
-            case GAME_OVER:
-                GameOver gameOver = sceneBuilder.getGameOver();
+    public void manageMenu() {
+        optionManager.init();
+        menuManager.run();
+        gameScene = menuManager.getGameScene();
+    }
 
-                if (gameOver.isQuit()) {
-                    gameScene = GameScene.MENU;
-                    gameOver.init();
-                }
-                break;
-            case ENDING:
-                Ending ending = sceneBuilder.getEnding();
-                if (ending.isLeave()) {
-                    gameScene = GameScene.MENU;
-                    ending.init();
-                }
-                break;
-            case OPTION:
-                stageManager.init();
-                optionManager.run();
-                gameScene = optionManager.getGameScene();
-                menuManager.init();
-                break;
-        }
+    public void manageBet() {
+        stageManager.init();
+        resultManager.init();
+        betManager.run();
+        gameScene = betManager.getGameScene();
+    }
+
+    public void manageStage() {
+        optionManager.init();
+        stageManager.run();
+        gameScene = stageManager.getGameScene();
+        menuManager.init();
+        betManager.init();
+    }
+
+    public void manageResult() {
+        stageManager.init();
+        resultManager.run();
+        gameScene = resultManager.getGameScene();
+    }
+
+    public void manageOption() {
+        stageManager.init();
+        optionManager.run();
+        gameScene = optionManager.getGameScene();
+        menuManager.init();
     }
 }
 
