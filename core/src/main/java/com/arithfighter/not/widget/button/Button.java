@@ -53,7 +53,7 @@ public class Button{
         );
     }
 
-    private boolean isOnButton(float x, float y){
+    public boolean isOnButton(float x, float y){
         return button.isOnWidget(x,y);
     }
 

@@ -154,25 +154,34 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 class GameCard {
     private final Font codeFont;
     private final Button gameCard;
+    private final float width;
+    private final float height;
+    private final int fontSize;
 
     public GameCard(Texture[] textures){
-        gameCard = new Button(textures[6], 2f);
-        gameCard.setPosition(100,500);
+        gameCard = new Button(textures[1], 3f);
+        gameCard.setPosition(100,400);
 
-        codeFont = new Font(24);
-        codeFont.setColor(Color.WHITE);
+        width = textures[1].getWidth()*3;
+        height = textures[1].getHeight()*3;
+
+        fontSize = 36;
+        codeFont = new Font(fontSize);
+        codeFont.setColor(Color.PURPLE);
     }
 
     public void draw(SpriteBatch batch){
-        codeFont.draw(batch, "A", 60,630);
         gameCard.draw(batch, "game card");
+        codeFont.draw(batch, "A", 100+width-fontSize,400+height-fontSize/2f);
     }
 
     public void touchDown(float x, float y){
-        if (gameCard.isOn())
-            gameCard.off();
-        else
-            gameCard.on(x,y);
+        if (gameCard.isOnButton(x, y)){
+            if (gameCard.isOn())
+                gameCard.off();
+            else
+                gameCard.on(x,y);
+        }
     }
 
     public void dispose(){
