@@ -7,12 +7,12 @@ import com.badlogic.gdx.Preferences;
 public class SceneController {
     private GameScene gameScene;
     private final SceneBuilder sceneBuilder;
-    private GameSave gameSave;
     private final StageManager stageManager;
     private final GameRecorder gameRecorder;
     private final MenuManager menuManager;
     private final BetManager betManager;
     private final ResultManager resultManager;
+    private final OptionManager optionManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -34,12 +34,15 @@ public class SceneController {
         resultManager = new ResultManager();
         resultManager.setGameRecorder(gameRecorder);
         resultManager.setSceneBuilder(sceneBuilder);
+
+        optionManager = new OptionManager();
+        optionManager.setSceneBuilder(sceneBuilder);
     }
 
     public void setGameSave(GameSave gameSave) {
-        this.gameSave = gameSave;
         menuManager.setGameSave(gameSave);
         resultManager.setGameSave(gameSave);
+        optionManager.setGameSave(gameSave);
     }
 
     public GameScene getGameScene() {
@@ -52,6 +55,7 @@ public class SceneController {
 
         switch (gameScene) {
             case MENU:
+                optionManager.init();
                 menuManager.run();
                 gameScene = menuManager.getGameScene();
                 break;
@@ -61,6 +65,7 @@ public class SceneController {
                 gameScene = betManager.getGameScene();
                 break;
             case STAGE:
+                optionManager.init();
                 manageStage();
                 menuManager.init();
                 betManager.init();
@@ -80,32 +85,11 @@ public class SceneController {
                 }
                 break;
             case OPTION:
-                manageOption();
+                optionManager.run();
+                gameScene = optionManager.getGameScene();
                 menuManager.init();
                 break;
         }
-    }
-
-    private void manageOption() {
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-
-        if (optionMenu.isLeaving()) {
-            gameScene = optionMenu.getSceneTemp();
-            saveOption();
-            optionMenu.init();
-        }
-    }
-
-    private void saveOption() {
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-
-        Preferences pref = gameSave.getPreferences();
-        String soundVolumeKey = gameSave.getOptionKeys()[0];
-        String musicVolumeKey = gameSave.getOptionKeys()[1];
-
-        pref.putInteger(soundVolumeKey, optionMenu.getSoundVolume());
-        pref.putInteger(musicVolumeKey, optionMenu.getMusicVolume());
-        pref.flush();
     }
 
     private void manageStage() {
@@ -351,6 +335,50 @@ class ResultManager{
         int characterIndex = characterMenu.getSelectIndex();
 
         pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+        pref.flush();
+    }
+}
+
+class OptionManager{
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.OPTION;
+    private GameSave gameSave;
+
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public void setGameSave(GameSave gameSave) {
+        this.gameSave = gameSave;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void init(){
+        gameScene = GameScene.OPTION;
+    }
+
+    public void run() {
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
+        if (optionMenu.isLeaving()) {
+            gameScene = optionMenu.getSceneTemp();
+            saveOption();
+            optionMenu.init();
+        }
+    }
+
+    private void saveOption() {
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+
+        Preferences pref = gameSave.getPreferences();
+        String soundVolumeKey = gameSave.getOptionKeys()[0];
+        String musicVolumeKey = gameSave.getOptionKeys()[1];
+
+        pref.putInteger(soundVolumeKey, optionMenu.getSoundVolume());
+        pref.putInteger(musicVolumeKey, optionMenu.getMusicVolume());
         pref.flush();
     }
 }
