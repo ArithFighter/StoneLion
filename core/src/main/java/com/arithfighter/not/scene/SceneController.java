@@ -22,7 +22,9 @@ public class SceneController {
 
         this.sceneBuilder = sceneBuilder;
 
-        stageManager = new StageManager(sceneBuilder.getStage());
+        stageManager = new StageManager();
+        stageManager.setSceneBuilder(sceneBuilder);
+        stageManager.setGameRecorder(gameRecorder);
 
         menuManager = new MenuManager();
         menuManager.setSceneBuilder(sceneBuilder);
@@ -65,17 +67,20 @@ public class SceneController {
                 gameScene = menuManager.getGameScene();
                 break;
             case BET:
+                stageManager.init();
                 resultManager.init();
                 betManager.run();
                 gameScene = betManager.getGameScene();
                 break;
             case STAGE:
                 optionManager.init();
-                manageStage();
+                stageManager.run();
+                gameScene = stageManager.getGameScene();
                 menuManager.init();
                 betManager.init();
                 break;
             case RESULT:
+                stageManager.init();
                 resultManager.run();
                 gameScene = resultManager.getGameScene();
                 break;
@@ -96,53 +101,6 @@ public class SceneController {
                 menuManager.init();
                 break;
         }
-    }
-
-    private void manageStage() {
-        Stage stage = sceneBuilder.getStage();
-        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
-
-        if (stageManager.isQuit()) {
-            gameScene = GameScene.MENU;
-            stage.init();
-        }
-        if (stageManager.isOpenOption()) {
-            gameScene = GameScene.OPTION;
-            optionMenu.setSceneTemp(GameScene.STAGE);
-            stage.getPauseMenu().init();
-        }
-        if (stageManager.isWin() || stageManager.isLose()) {
-            gameScene = GameScene.RESULT;
-
-            if (stageManager.isWin())
-                doWhenWin();
-            if (stageManager.isLose())
-                doWhenLoose();
-
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
-            stage.init();
-        }
-    }
-
-    private void doWhenWin() {
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
-
-        resultScreen.setState(ResultState.WIN);
-        stage.getTokenHolder().gain(betScreen.getBet());
-        gameRecorder.getWinRecorder().update(1);
-    }
-
-    private void doWhenLoose() {
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
-
-        resultScreen.setState(ResultState.LOOSE);
-        stage.getTokenHolder().lose(betScreen.getBet());
-        gameRecorder.getLoseRecorder().update(1);
     }
 }
 
@@ -250,26 +208,87 @@ class BetManager{
 }
 
 class StageManager {
-    private final Stage stage;
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.STAGE;
+    private GameRecorder gameRecorder;
 
-    public StageManager(Stage stage) {
-        this.stage = stage;
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
     }
 
-    public boolean isWin() {
-        return stage.getStageMessage().isWin();
+    public void setGameRecorder(GameRecorder gameRecorder) {
+        this.gameRecorder = gameRecorder;
     }
 
-    public boolean isLose() {
-        return stage.getStageMessage().isLose();
+    public GameScene getGameScene() {
+        return gameScene;
     }
 
-    public boolean isOpenOption() {
-        return stage.getPauseMenu().isOpenOption();
+    private boolean isWin() {
+        return sceneBuilder.getStage().getStageMessage().isWin();
     }
 
-    public boolean isQuit() {
-        return stage.getPauseMenu().isReturnToMainMenu();
+    private boolean isLose() {
+        return sceneBuilder.getStage().getStageMessage().isLose();
+    }
+
+    private boolean isOpenOption() {
+        return sceneBuilder.getStage().getPauseMenu().isOpenOption();
+    }
+
+    private boolean isQuit() {
+        return sceneBuilder.getStage().getPauseMenu().isReturnToMainMenu();
+    }
+
+    public void init(){
+        gameScene = GameScene.STAGE;
+    }
+
+    public void run() {
+        Stage stage = sceneBuilder.getStage();
+        OptionMenu optionMenu = sceneBuilder.getOptionMenu();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
+        if (isQuit()) {
+            gameScene = GameScene.MENU;
+            stage.init();
+        }
+        if (isOpenOption()) {
+            gameScene = GameScene.OPTION;
+            optionMenu.setSceneTemp(GameScene.STAGE);
+            stage.getPauseMenu().init();
+        }
+        if (isWin() || isLose()) {
+            gameScene = GameScene.RESULT;
+
+            if (isWin())
+                doWhenWin();
+            if (isLose())
+                doWhenLoose();
+
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            stage.init();
+        }
+    }
+
+    private void doWhenWin() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
+        resultScreen.setState(ResultState.WIN);
+        stage.getTokenHolder().gain(betScreen.getBet());
+        gameRecorder.getWinRecorder().update(1);
+    }
+
+    private void doWhenLoose() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+
+        resultScreen.setState(ResultState.LOOSE);
+        stage.getTokenHolder().lose(betScreen.getBet());
+        gameRecorder.getLoseRecorder().update(1);
     }
 }
 
