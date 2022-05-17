@@ -11,6 +11,7 @@ public class SceneController {
     private final StageManager stageManager;
     private final GameRecorder gameRecorder;
     private final MenuManager menuManager;
+    private final BetManager betManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -22,9 +23,12 @@ public class SceneController {
         stageManager = new StageManager(sceneBuilder.getStage());
 
         menuManager = new MenuManager();
-        menuManager.setGameScene(gameScene);
         menuManager.setSceneBuilder(sceneBuilder);
         menuManager.setGameRecorder(gameRecorder);
+
+        betManager = new BetManager();
+        betManager.setSceneBuilder(sceneBuilder);
+        betManager.setGameRecorder(gameRecorder);
     }
 
     public void setGameSave(GameSave gameSave) {
@@ -46,11 +50,13 @@ public class SceneController {
                 gameScene = menuManager.getGameScene();
                 break;
             case BET:
-                manageBet();
+                betManager.run();
+                gameScene = betManager.getGameScene();
                 break;
             case STAGE:
                 manageStage();
                 menuManager.init();
+                betManager.init();
                 break;
             case RESULT:
                 manageResult();
@@ -92,23 +98,6 @@ public class SceneController {
         pref.putInteger(soundVolumeKey, optionMenu.getSoundVolume());
         pref.putInteger(musicVolumeKey, optionMenu.getMusicVolume());
         pref.flush();
-    }
-
-    private void manageBet() {
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-
-        if (betScreen.isStartGame()) {
-            gameScene = GameScene.STAGE;
-            gameRecorder.getTokenRecorder().reset();
-            gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getTokens());
-            gameRecorder.getStagesRecorder().update(1);
-
-            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
-            stage.setCardLimit(betScreen.getCardLimit());
-            betScreen.setNumberBoxQuantity();
-            betScreen.init();
-        }
     }
 
     private void manageStage() {
@@ -206,7 +195,7 @@ public class SceneController {
 
 class MenuManager{
     private SceneBuilder sceneBuilder;
-    private GameScene gameScene;
+    private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
 
@@ -216,10 +205,6 @@ class MenuManager{
 
     public void setSceneBuilder(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
-    }
-
-    public void setGameScene(GameScene gameScene) {
-        this.gameScene = gameScene;
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -269,6 +254,45 @@ class MenuManager{
             stage.getTokenHolder().gain(initTokens);
         else
             stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
+    }
+}
+
+class BetManager{
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.BET;
+    private GameRecorder gameRecorder;
+
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public void setGameRecorder(GameRecorder gameRecorder) {
+        this.gameRecorder = gameRecorder;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void init(){
+        gameScene = GameScene.BET;
+    }
+
+    public void run() {
+        Stage stage = sceneBuilder.getStage();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+
+        if (betScreen.isStartGame()) {
+            gameScene = GameScene.STAGE;
+            gameRecorder.getTokenRecorder().reset();
+            gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getTokens());
+            gameRecorder.getStagesRecorder().update(1);
+
+            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
+            stage.setCardLimit(betScreen.getCardLimit());
+            betScreen.setNumberBoxQuantity();
+            betScreen.init();
+        }
     }
 }
 
