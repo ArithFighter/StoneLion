@@ -6,18 +6,20 @@ import com.arithfighter.not.pojo.GameRecorder;
 public class SceneController {
     private GameScene gameScene;
     private final SceneBuilder sceneBuilder;
-    private final GameRecorder gameRecorder;
     private final SceneManager sceneManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
 
-        gameRecorder = new GameRecorder();
+        GameRecorder gameRecorder = new GameRecorder();
 
         this.sceneBuilder = sceneBuilder;
 
         sceneManager = new SceneManager(sceneBuilder, gameRecorder);
         sceneManager.setGameScene(gameScene);
+
+        Stage stage = sceneBuilder.getStage();
+        stage.getRecordDisplacer().setGameRecorder(gameRecorder);
     }
 
     public void setGameSave(GameSave gameSave) {
@@ -29,9 +31,6 @@ public class SceneController {
     }
 
     public void updateScene() {
-        Stage stage = sceneBuilder.getStage();
-        stage.getRecordDisplacer().setGameRecorder(gameRecorder);
-
         switch (gameScene) {
             case MENU:
                 sceneManager.manageMenu();
