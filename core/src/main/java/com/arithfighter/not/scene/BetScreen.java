@@ -52,6 +52,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
         gameCard = new GameCard(textures);
+        gameCard.setPoint(new Point(100, 400));
     }
 
     public int getCardLimit() {
@@ -158,19 +159,25 @@ class GameCard {
     private final Button gameCard;
     private final Rectangle rectangle;
     private final int fontSize;
-    private final Point point;
+    private Point point;
 
     public GameCard(Texture[] textures){
-        point = new Point(100,400);
-
         gameCard = new Button(textures[1], 3f);
-        gameCard.setPosition(point.getX(), point.getY());
 
         rectangle = new Rectangle(textures[1].getWidth()*3, textures[1].getHeight()*3);
 
         fontSize = 36;
         codeFont = new Font(fontSize);
         codeFont.setColor(Color.PURPLE);
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+        gameCard.setPosition(point.getX(), point.getY());
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public void draw(SpriteBatch batch){
