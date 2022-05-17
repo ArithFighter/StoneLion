@@ -58,7 +58,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getNumberBoxQuantity() {
-        return gameCards.getGameCard().getBoxQuantity();
+        return gameCards.getGameCards()[0].getBoxQuantity();
     }
 
     public void setInitToken(int initTokens) {
@@ -104,20 +104,24 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().off();
 
-        gameCards.getGameCard().touchDown(getCursorPos().getX(), getCursorPos().getY());
+        for (GameCard card: gameCards.getGameCards())
+            card.touchDown(getCursorPos().getX(), getCursorPos().getY());
     }
 
     public void setNumberBoxQuantity() {
         numberBoxQuantityGenerator.init();
         numberBoxQuantityGenerator.update();
-        gameCards.getGameCard().setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
+
+        for (GameCard card: gameCards.getGameCards())
+            card.setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
     }
 
     @Override
     public void init() {
         numberBoxQuantityGenerator.init();
         startButton.init();
-        gameCards.getGameCard().init();
+        for (GameCard card: gameCards.getGameCards())
+            card.init();
     }
 
     @Override
@@ -141,7 +145,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        gameCards.getGameCard().draw(batch);
+        for (GameCard card: gameCards.getGameCards())
+            card.draw(batch);
     }
 
     @Override
@@ -149,20 +154,44 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         tokenBet.dispose();
         startButton.dispose();
-        gameCards.getGameCard().dispose();
+        for (GameCard card: gameCards.getGameCards())
+            card.dispose();
     }
 }
 
-class GameCardCollection{
-    private final GameCard gameCard;
+class GameCardCollection {
+    private final GameCard[] gameCards;
 
-    public GameCardCollection(Texture[] textures){
-        gameCard = new GameCard(textures[1]);
-        gameCard.setPoint(new Point(100,400));
+    public GameCardCollection(Texture[] textures) {
+        int totalCards = 3;
+        gameCards = new GameCard[totalCards];
+
+        String[] codeArray = {"A", "B", "C"};
+        for (int i = 0; i < totalCards; i++){
+            gameCards[i] = new GameCard(textures[1]);
+            gameCards[i].setCardCode(codeArray[i]);
+        }
+
+        Point point = new Point(100, 400);
+        gameCards[0].setPoint(point);
+
+        int margin = 15;
+        gameCards[1].setPoint(
+                new Point(
+                        gameCards[0].getRectangle().getWidth() + point.getX() + margin,
+                        point.getY()
+                )
+        );
+        gameCards[2].setPoint(
+                new Point(
+                        gameCards[0].getRectangle().getWidth()*2 + point.getX() + margin*2,
+                        point.getY()
+                )
+        );
     }
 
-    public GameCard getGameCard() {
-        return gameCard;
+    public GameCard[] getGameCards() {
+        return gameCards;
     }
 }
 
@@ -173,11 +202,12 @@ class GameCard {
     private final int fontSize;
     private Point point;
     private int boxQuantity;
+    private String cardCode;
 
-    public GameCard(Texture texture){
+    public GameCard(Texture texture) {
         gameCard = new Button(texture, 3f);
 
-        rectangle = new Rectangle(texture.getWidth()*3, texture.getHeight()*3);
+        rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
 
         fontSize = 36;
         codeFont = new Font(fontSize);
@@ -205,46 +235,50 @@ class GameCard {
         this.boxQuantity = boxQuantity;
     }
 
-    public void draw(SpriteBatch batch){
+    public void setCardCode(String cardCode) {
+        this.cardCode = cardCode;
+    }
+
+    public void draw(SpriteBatch batch) {
         gameCard.draw(
                 batch,
-                boxQuantity+" box"
+                boxQuantity + " box"
         );
         codeFont.draw(
                 batch,
-                "A",
-                point.getX()+ rectangle.getWidth()-fontSize,
-                point.getY()+ rectangle.getHeight()-fontSize/2f
+                cardCode,
+                point.getX() + rectangle.getWidth() - fontSize,
+                point.getY() + rectangle.getHeight() - fontSize / 2f
         );
     }
 
-    public void init(){
+    public void init() {
         gameCard.off();
         boxQuantity = 0;
     }
 
-    public void touchDown(float x, float y){
-        if (gameCard.isOnButton(x, y)){
+    public void touchDown(float x, float y) {
+        if (gameCard.isOnButton(x, y)) {
             if (gameCard.isOn())
                 gameCard.off();
             else
-                gameCard.on(x,y);
+                gameCard.on(x, y);
         }
     }
 
-    public void dispose(){
+    public void dispose() {
         codeFont.dispose();
         gameCard.dispose();
     }
 }
 
-class FontManager{
+class FontManager {
     private final Font cardLimitFont;
     private final Font betFont;
     private String cardLimit;
     private String bet;
 
-    public FontManager(){
+    public FontManager() {
         cardLimitFont = new Font(24);
         cardLimitFont.setColor(Color.WHITE);
 
@@ -260,13 +294,13 @@ class FontManager{
         this.bet = bet;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         cardLimitFont.draw(batch, cardLimit, 900, 650);
 
         betFont.draw(batch, bet, 400, 250);
     }
 
-    public void dispose(){
+    public void dispose() {
         cardLimitFont.dispose();
         betFont.dispose();
     }
@@ -283,26 +317,26 @@ class NumberBoxQuantityGenerator {
 
         quantityGroup = new LinkedList<>();
 
-        indexPicker = new RandomNumProducer(quantityCandidates.length-1, 0);
+        indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
     }
 
     public int[] getQuantityGroup() {
         int[] quantityArray = new int[quantityArrayLength];
 
-        for (int i = 0;i<quantityArrayLength;i++)
+        for (int i = 0; i < quantityArrayLength; i++)
             quantityArray[i] = quantityGroup.get(i);
 
         return quantityArray;
     }
 
-    public void update(){
-        while (quantityGroup.size()<quantityArrayLength){
+    public void update() {
+        while (quantityGroup.size() < quantityArrayLength) {
             int candidateCursor = indexPicker.getRandomNum();
             quantityGroup.add(quantityCandidates[candidateCursor]);
         }
     }
 
-    public void init(){
+    public void init() {
         quantityGroup.clear();
     }
 }
