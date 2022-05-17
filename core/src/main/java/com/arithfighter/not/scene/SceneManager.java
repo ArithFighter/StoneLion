@@ -203,19 +203,23 @@ class StageManager {
     }
 
     private boolean isWin() {
-        return sceneBuilder.getStage().getStageMessage().isWin();
+        Stage stage = sceneBuilder.getStage();
+        return stage.getStageMessage().isWin();
     }
 
     private boolean isLose() {
-        return sceneBuilder.getStage().getStageMessage().isLose();
+        Stage stage = sceneBuilder.getStage();
+        return stage.getStageMessage().isLose();
     }
 
     private boolean isOpenOption() {
-        return sceneBuilder.getStage().getPauseMenu().isOpenOption();
+        Stage stage = sceneBuilder.getStage();
+        return stage.getPauseMenu().isOpenOption();
     }
 
     private boolean isQuit() {
-        return sceneBuilder.getStage().getPauseMenu().isReturnToMainMenu();
+        Stage stage = sceneBuilder.getStage();
+        return stage.getPauseMenu().isReturnToMainMenu();
     }
 
     public void init() {
@@ -239,14 +243,17 @@ class StageManager {
         if (isWin() || isLose()) {
             gameScene = GameScene.RESULT;
 
-            if (isWin())
-                doWhenWin();
-            if (isLose())
-                doWhenLoose();
-
+            handleResult();
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
+    }
+
+    private void handleResult(){
+        if (isWin())
+            doWhenWin();
+        if (isLose())
+            doWhenLoose();
     }
 
     private void doWhenWin() {
