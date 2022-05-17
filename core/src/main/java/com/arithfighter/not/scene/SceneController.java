@@ -13,6 +13,7 @@ public class SceneController {
     private final BetManager betManager;
     private final ResultManager resultManager;
     private final OptionManager optionManager;
+    private final GameOverManager gameOverManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
@@ -35,6 +36,9 @@ public class SceneController {
         resultManager.setGameRecorder(gameRecorder);
         resultManager.setSceneBuilder(sceneBuilder);
 
+        gameOverManager = new GameOverManager();
+        gameOverManager.setSceneBuilder(sceneBuilder);
+
         optionManager = new OptionManager();
         optionManager.setSceneBuilder(sceneBuilder);
     }
@@ -55,6 +59,7 @@ public class SceneController {
 
         switch (gameScene) {
             case MENU:
+                gameOverManager.init();
                 optionManager.init();
                 menuManager.run();
                 gameScene = menuManager.getGameScene();
@@ -75,7 +80,8 @@ public class SceneController {
                 gameScene = resultManager.getGameScene();
                 break;
             case GAME_OVER:
-                manageGameOver();
+                gameOverManager.run();
+                gameScene = gameOverManager.getGameScene();
                 break;
             case ENDING:
                 Ending ending = sceneBuilder.getEnding();
@@ -137,15 +143,6 @@ public class SceneController {
         resultScreen.setState(ResultState.LOOSE);
         stage.getTokenHolder().lose(betScreen.getBet());
         gameRecorder.getLoseRecorder().update(1);
-    }
-
-    private void manageGameOver() {
-        GameOver gameOver = sceneBuilder.getGameOver();
-
-        if (gameOver.isQuit()) {
-            gameScene = GameScene.MENU;
-            gameOver.init();
-        }
     }
 }
 
@@ -336,6 +333,32 @@ class ResultManager{
 
         pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
         pref.flush();
+    }
+}
+
+class GameOverManager{
+    private SceneBuilder sceneBuilder;
+    private GameScene gameScene = GameScene.GAME_OVER;
+
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    public void setSceneBuilder(SceneBuilder sceneBuilder) {
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public void init(){
+        gameScene = GameScene.GAME_OVER;
+    }
+
+    public void run() {
+        GameOver gameOver = sceneBuilder.getGameOver();
+
+        if (gameOver.isQuit()) {
+            gameScene = GameScene.MENU;
+            gameOver.init();
+        }
     }
 }
 
