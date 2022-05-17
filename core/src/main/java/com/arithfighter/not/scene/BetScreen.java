@@ -26,7 +26,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
-    private int numberBoxQuantity = 0;
     private final int minimalBet = 100;
     private final int cardLimit = 15;
     private final FontManager fontManager;
@@ -60,7 +59,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getNumberBoxQuantity() {
-        return numberBoxQuantity;
+        return gameCard.getBoxQuantity();
     }
 
     public void setInitToken(int initTokens) {
@@ -112,13 +111,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public void setNumberBoxQuantity() {
         numberBoxQuantityGenerator.init();
         numberBoxQuantityGenerator.update();
-        numberBoxQuantity = numberBoxQuantityGenerator.getQuantityGroup()[0];
+        gameCard.setBoxQuantity(numberBoxQuantityGenerator.getQuantityGroup()[0]);
     }
 
     @Override
     public void init() {
         numberBoxQuantityGenerator.init();
         startButton.init();
+        gameCard.init();
     }
 
     @Override
@@ -160,6 +160,7 @@ class GameCard {
     private final Rectangle rectangle;
     private final int fontSize;
     private Point point;
+    private int boxQuantity;
 
     public GameCard(Texture[] textures){
         gameCard = new Button(textures[1], 3f);
@@ -180,10 +181,18 @@ class GameCard {
         return point;
     }
 
+    public int getBoxQuantity() {
+        return boxQuantity;
+    }
+
+    public void setBoxQuantity(int boxQuantity) {
+        this.boxQuantity = boxQuantity;
+    }
+
     public void draw(SpriteBatch batch){
         gameCard.draw(
                 batch,
-                "game card"
+                boxQuantity+" box"
         );
         codeFont.draw(
                 batch,
@@ -191,6 +200,11 @@ class GameCard {
                 point.getX()+ rectangle.getWidth()-fontSize,
                 point.getY()+ rectangle.getHeight()-fontSize/2f
         );
+    }
+
+    public void init(){
+        gameCard.off();
+        boxQuantity = 0;
     }
 
     public void touchDown(float x, float y){
