@@ -1,7 +1,7 @@
 package com.arithfighter.not.card;
 
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Shape;
+import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class NumberCard{
     private final int number;
     private boolean isCardActive = false;
-    private final Shape shape;
+    private final Rectangle rectangle;
     private final Point initPoint;
     private final Point point;
     private final RawCard card;
@@ -19,7 +19,7 @@ public class NumberCard{
         card.addShape(texture, 2f);
         initPoint = card.getInitPoint();
         point = card.getPoint();
-        shape = card.getShape();
+        rectangle = card.getShape();
 
         this.number = number;
     }
@@ -28,8 +28,8 @@ public class NumberCard{
         return number;
     }
 
-    public Shape getShape() {
-        return shape;
+    public Rectangle getShape() {
+        return rectangle;
     }
 
     public Point getPoint(){
@@ -50,13 +50,13 @@ public class NumberCard{
         card.setSprite();
 
         if (isCardActive)
-            card.getSprite().setSize(shape.getWidth()*1.2f, shape.getHeight()*1.2f);
+            card.getSprite().setSize(rectangle.getWidth()*1.2f, rectangle.getHeight()*1.2f);
 
         card.getSprite().draw(batch);
     }
 
     private void setPointWhenOutOfScreen(){
-        ScreenBorderInspector sbi = new ScreenBorderInspector(shape.getWidth(), shape.getHeight());
+        ScreenBorderInspector sbi = new ScreenBorderInspector(rectangle.getWidth(), rectangle.getHeight());
 
         point.set(sbi.updateWhenExceedX(point.getX()),
                 sbi.updateWhenExceedY(point.getY()));
@@ -67,7 +67,7 @@ public class NumberCard{
 
         isCardActive = false;
 
-        card.getSprite().setSize(shape.getWidth(), shape.getHeight());
+        card.getSprite().setSize(rectangle.getWidth(), rectangle.getHeight());
     }
 
     public void activateCard(float mouseX, float mouseY) {
@@ -85,9 +85,9 @@ public class NumberCard{
         tolerance = getCardActivationRange(tolerance);
 
         return x > point.getX() - tolerance &&
-                x < point.getX() + shape.getWidth() + tolerance &&
+                x < point.getX() + rectangle.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
-                y < point.getY() + shape.getHeight() + tolerance;
+                y < point.getY() + rectangle.getHeight() + tolerance;
     }
 
     private int getCardActivationRange(int tolerance){

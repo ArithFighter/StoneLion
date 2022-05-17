@@ -1,13 +1,13 @@
 package com.arithfighter.not.pojo;
 
-public class Shape {
+public class Rectangle {
     private float width, height;
 
-    public Shape(){
+    public Rectangle(){
 
     }
 
-    public Shape(float width, float height){
+    public Rectangle(float width, float height){
         this.width = width;
         this.height = height;
     }

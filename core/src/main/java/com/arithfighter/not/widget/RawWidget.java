@@ -1,15 +1,15 @@
 package com.arithfighter.not.widget;
 
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Shape;
+import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 
 public class RawWidget {
     private Point point;
-    private final Shape shape;
+    private final Rectangle rectangle;
 
     public RawWidget(){
-        shape = new Shape();
+        rectangle = new Rectangle();
         setPoint(new Point(0,0));
     }
 
@@ -26,19 +26,19 @@ public class RawWidget {
     }
 
     public float getWidth(){
-        return shape.getWidth();
+        return rectangle.getWidth();
     }
 
     public float getHeight(){
-        return shape.getHeight();
+        return rectangle.getHeight();
     }
 
     public void setWidth(float width){
-        shape.setWidth(width);
+        rectangle.setWidth(width);
     }
 
     private void configSize(float width, float height, float scale){
-        shape.setWidth(scale*width);
-        shape.setHeight(scale*height);
+        rectangle.setWidth(scale*width);
+        rectangle.setHeight(scale*height);
     }
 }

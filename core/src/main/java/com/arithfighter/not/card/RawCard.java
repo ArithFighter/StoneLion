@@ -1,14 +1,14 @@
 package com.arithfighter.not.card;
 
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Shape;
+import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class RawCard {
     private final Point initPoint;
     private final Point point;
-    private Shape shape;
+    private Rectangle rectangle;
     private final Sprite sprite;
 
     public RawCard(float initX, float initY, Texture texture){
@@ -22,15 +22,15 @@ public class RawCard {
     }
 
     private void setShape(float width, float height, float scale){
-        Shape shape = new Shape();
-        shape.setWidth(width*scale);
-        shape.setHeight(height*scale);
-        this.shape = shape;
+        Rectangle rectangle = new Rectangle();
+        rectangle.setWidth(width*scale);
+        rectangle.setHeight(height*scale);
+        this.rectangle = rectangle;
     }
 
     public void setSprite(){
         sprite.setPosition(point.getX(), point.getY());
-        sprite.setSize(shape.getWidth(), shape.getHeight());
+        sprite.setSize(rectangle.getWidth(), rectangle.getHeight());
     }
 
     public Point getInitPoint(){
@@ -41,8 +41,8 @@ public class RawCard {
         return point;
     }
 
-    public Shape getShape(){
-        return shape;
+    public Rectangle getShape(){
+        return rectangle;
     }
 
     public Sprite getSprite(){

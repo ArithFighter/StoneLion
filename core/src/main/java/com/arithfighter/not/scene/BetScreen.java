@@ -3,6 +3,8 @@ package com.arithfighter.not.scene;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.ValueBrowser;
 import com.arithfighter.not.widget.button.Button;
@@ -154,16 +156,17 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 class GameCard {
     private final Font codeFont;
     private final Button gameCard;
-    private final float width;
-    private final float height;
+    private final Rectangle rectangle;
     private final int fontSize;
+    private final Point point;
 
     public GameCard(Texture[] textures){
-        gameCard = new Button(textures[1], 3f);
-        gameCard.setPosition(100,400);
+        point = new Point(100,400);
 
-        width = textures[1].getWidth()*3;
-        height = textures[1].getHeight()*3;
+        gameCard = new Button(textures[1], 3f);
+        gameCard.setPosition(point.getX(), point.getY());
+
+        rectangle = new Rectangle(textures[1].getWidth()*3, textures[1].getHeight()*3);
 
         fontSize = 36;
         codeFont = new Font(fontSize);
@@ -171,8 +174,16 @@ class GameCard {
     }
 
     public void draw(SpriteBatch batch){
-        gameCard.draw(batch, "game card");
-        codeFont.draw(batch, "A", 100+width-fontSize,400+height-fontSize/2f);
+        gameCard.draw(
+                batch,
+                "game card"
+        );
+        codeFont.draw(
+                batch,
+                "A",
+                point.getX()+ rectangle.getWidth()-fontSize,
+                point.getY()+ rectangle.getHeight()-fontSize/2f
+        );
     }
 
     public void touchDown(float x, float y){
