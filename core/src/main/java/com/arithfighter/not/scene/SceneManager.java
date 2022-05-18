@@ -138,7 +138,7 @@ class MenuManager {
         int characterIndex = characterMenu.getSelectIndex();
 
         int initTokens = 50;
-        if (pref.getInteger(keys[characterIndex]) == 0)
+        if (pref.getInteger(keys[characterIndex]) <= 0)
             stage.getTokenHolder().gain(initTokens);
         else
             stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
@@ -331,8 +331,10 @@ class ResultManager {
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
-        pref.flush();
+        if (stage.getTokenHolder().getTokens()>0){
+            pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+            pref.flush();
+        }
     }
 }
 
