@@ -2,36 +2,29 @@ package com.arithfighter.not.widget;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.ValueHolder;
 import com.arithfighter.not.widget.button.ArrowButtons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ValueBrowser {
-    private final Font number;
+public class BetBrowser {
+    private final Font font;
     private final ArrowButtons arrows;
     private final int fontSize;
     private boolean isButtonLock = false;
-    private ValueHolder valueHolder;
-    private int valueChange;
+    private final int[] betList;
+    private int cursor = 0;
 
-    public ValueBrowser(Texture[] textures) {
+    public BetBrowser(Texture[] textures) {
         arrows = new ArrowButtons(textures, 0.8f);
 
         fontSize = 25;
-        number = new Font(fontSize);
-    }
+        font = new Font(fontSize);
 
-    public void setValueChange(int i){
-        valueChange = i;
+        betList = new int[]{5,10,20,50,100,200};
     }
 
     public boolean isButtonActive(){
         return arrows.isLeftActive()||arrows.isRightActive();
-    }
-
-    public void setValueHolder(ValueHolder valueHolder){
-        this.valueHolder = valueHolder;
     }
 
     public void setPosition(int x, int y) {
@@ -42,10 +35,10 @@ public class ValueBrowser {
     }
 
     public void draw(SpriteBatch batch){
-        String content = String.valueOf(valueHolder.getValue());
+        String content = String.valueOf(betList[cursor]);
         int width = fontSize*9;
 
-        number.draw(
+        this.font.draw(
                 batch,
                 content,
                 arrows.getPoint().getX()+(width-content.length()*fontSize)/2f,
@@ -57,13 +50,11 @@ public class ValueBrowser {
     }
 
     public void update() {
-        int i = valueHolder.getValue();
-
         if (!isButtonLock) {
-            if (arrows.isLeftActive() && i > 0)
-                valueHolder.decreaseValue(valueChange);
-            if (arrows.isRightActive() && i < valueHolder.getMaxValue())
-                valueHolder.increaseValue(valueChange);
+            if (arrows.isLeftActive() && cursor > 0)
+                cursor++;
+            if (arrows.isRightActive() && cursor < betList.length)
+                cursor--;
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
     }
@@ -77,7 +68,7 @@ public class ValueBrowser {
     }
 
     public void dispose() {
-        number.dispose();
+        font.dispose();
         arrows.dispose();
     }
 }
