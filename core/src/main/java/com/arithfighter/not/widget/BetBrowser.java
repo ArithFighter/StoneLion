@@ -11,7 +11,7 @@ public class BetBrowser {
     private final ArrowButtons arrows;
     private final int fontSize;
     private boolean isButtonLock = false;
-    private final int[] betList;
+    private int[] betList;
     private int cursor = 0;
 
     public BetBrowser(Texture[] textures) {
@@ -19,8 +19,14 @@ public class BetBrowser {
 
         fontSize = 25;
         font = new Font(fontSize);
+    }
 
-        betList = new int[]{5,10,20,50,100,200};
+    public int getBet(){
+        return betList[cursor];
+    }
+
+    public void setBetList(int[] betList) {
+        this.betList = betList;
     }
 
     public boolean isButtonActive(){
@@ -35,15 +41,15 @@ public class BetBrowser {
     }
 
     public void draw(SpriteBatch batch){
-        String content = String.valueOf(betList[cursor]);
         int width = fontSize*9;
+            String content = String.valueOf(getBet());
 
-        this.font.draw(
-                batch,
-                content,
-                arrows.getPoint().getX()+(width-content.length()*fontSize)/2f,
-                arrows.getPoint().getY()+fontSize
-        );
+            this.font.draw(
+                    batch,
+                    content,
+                    arrows.getPoint().getX()+(width-content.length()*fontSize)/2f,
+                    arrows.getPoint().getY()+fontSize
+            );
 
         arrows.drawLeftArrow(batch);
         arrows.drawRightArrow(batch, width);
@@ -52,9 +58,9 @@ public class BetBrowser {
     public void update() {
         if (!isButtonLock) {
             if (arrows.isLeftActive() && cursor > 0)
-                cursor++;
-            if (arrows.isRightActive() && cursor < betList.length)
                 cursor--;
+            if (arrows.isRightActive() && cursor < betList.length-1)
+                cursor++;
         }
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
     }

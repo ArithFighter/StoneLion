@@ -6,12 +6,11 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.system.RandomNumProducer;
-import com.arithfighter.not.widget.ValueBrowser;
+import com.arithfighter.not.widget.BetBrowser;
 import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
-import com.arithfighter.not.pojo.ValueHolder;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,13 +19,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
-    private final ValueBrowser tokenBet;
-    private final ValueHolder tokenHolder;
+    private final BetBrowser betBrowser;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
-    private final int minimalBet = 10;
     private final int cardLimit = 15;
     private final FontManager fontManager;
     private final GameCardCollection gameCards;
@@ -35,13 +32,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         this.soundManager = soundManager;
 
-        tokenHolder = new ValueHolder();
-
         textProvider = new TextProvider();
 
-        tokenBet = new ValueBrowser(textures);
-        tokenBet.setPosition(500, 150);
-        tokenBet.setValueHolder(tokenHolder);
+        betBrowser = new BetBrowser(textures);
+        betBrowser.setPosition(500, 150);
+        betBrowser.setBetList(new int[]{5,10,20,50,100});
 
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000, 80);
@@ -61,13 +56,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         return gameCards.getGameCards()[0].getBoxQuantity();
     }
 
-    public void setInitToken(int initTokens) {
-        tokenHolder.setMaxValue(initTokens);
-        tokenHolder.setMinValue(minimalBet);
-    }
-
     public int getBet() {
-        return tokenHolder.getValue();
+        return betBrowser.getBet();
     }
 
     public boolean isStartGame() {
@@ -80,27 +70,27 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        tokenBet.activate(x, y);
+        betBrowser.activate(x, y);
 
         startButton.getButton().on(x, y);
     }
 
     @Override
     public void touchDragged() {
-        tokenBet.deactivate();
+        betBrowser.deactivate();
 
         startButton.getButton().off();
     }
 
     @Override
     public void touchUp() {
-        if (tokenBet.isButtonActive())
+        if (betBrowser.isButtonActive())
             soundManager.playTouchedSound();
 
         if (startButton.getButton().isOn())
             soundManager.playAcceptSound();
 
-        tokenBet.deactivate();
+        betBrowser.deactivate();
 
         startButton.getButton().off();
 
@@ -128,9 +118,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void update() {
         startButton.update();
-        tokenBet.update();
-
-        tokenBet.setValueChange(minimalBet);
+        betBrowser.update();
     }
 
     @Override
@@ -142,7 +130,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.setBet(texts[1]);
         fontManager.draw(batch);
 
-        tokenBet.draw(batch);
+        betBrowser.draw(batch);
 
         startButton.getButton().draw(batch, texts[2]);
 
@@ -153,7 +141,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void dispose() {
         fontManager.dispose();
-        tokenBet.dispose();
+        betBrowser.dispose();
         startButton.dispose();
         for (GameCard card: gameCards.getGameCards())
             card.dispose();
