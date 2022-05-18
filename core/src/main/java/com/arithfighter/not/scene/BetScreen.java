@@ -26,7 +26,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
-    private final int minimalBet = 100;
+    private final int minimalBet = 10;
     private final int cardLimit = 15;
     private final FontManager fontManager;
     private final GameCardCollection gameCards;

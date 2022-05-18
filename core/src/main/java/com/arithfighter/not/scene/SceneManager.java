@@ -138,7 +138,7 @@ class MenuManager {
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        int initTokens = 500;
+        int initTokens = 50;
         if (pref.getInteger(keys[characterIndex]) == 0)
             stage.getTokenHolder().gain(initTokens);
         else
