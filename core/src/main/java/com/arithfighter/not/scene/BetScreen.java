@@ -142,9 +142,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         betBrowser.update();
 
         if (startButton.getButton().isOn()){
-            if (betBrowser.getBet()>yourTokens){
-                warningDialog.setShow();
-            }
+            checkBetIsLegalOrShowWarning();
+        }
+    }
+
+    private void checkBetIsLegalOrShowWarning(){
+        if (betBrowser.getBet()>yourTokens||betBrowser.getBet()<=0){
+            warningDialog.setShow();
         }
     }
 
@@ -360,9 +364,9 @@ class FontManager {
     }
 
     public void draw(SpriteBatch batch) {
-        cardLimitFont.draw(batch, cardLimit, 900, 650);
+        cardLimitFont.draw(batch, cardLimit, 800, 650);
 
-        tokensFont.draw(batch, tokens, 900,600);
+        tokensFont.draw(batch, tokens, 800,600);
 
         betFont.draw(batch, bet, 400, 250);
     }
