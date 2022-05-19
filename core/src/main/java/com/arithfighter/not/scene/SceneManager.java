@@ -244,33 +244,30 @@ class StageManager extends BuilderService {
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
 
-            if (isAllGameCompleted()) {
-                gameScene = GameScene.RESULT;
-                resultScreen.setState(ResultState.WIN);
+        }
+        if (isAllGameCompleted()) {
+            gameScene = GameScene.RESULT;
+            resultScreen.setState(ResultState.WIN);
 
-                stage.getTokenHolder().gain(betScreen.getBet());
-                gameRecorder.getWinRecorder().update(1);
+            stage.getTokenHolder().gain(betScreen.getBet());
+            gameRecorder.getWinRecorder().update(1);
 
-                resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
-                resetStage();
-                stage.init();
-            }
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            resetStage();
+            stage.init();
         }
         if (isLose()) {
             gameScene = GameScene.RESULT;
-
             resultScreen.setState(ResultState.LOOSE);
             stage.getTokenHolder().lose(betScreen.getBet());
             gameRecorder.getLoseRecorder().update(1);
-
             resetStage();
-
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
     }
 
-    private void resetStage(){
+    private void resetStage() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
 
@@ -297,7 +294,7 @@ class ResultManager extends BuilderService {
     private GameRecorder gameRecorder;
     private GameSave gameSave;
 
-    public ResultManager(SceneBuilder sceneBuilder){
+    public ResultManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -337,7 +334,7 @@ class ResultManager extends BuilderService {
         }
     }
 
-    private void setBetScreen(){
+    private void setBetScreen() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         BetScreen betScreen = sceneBuilder.getBetScreen();
         Stage stage = sceneBuilder.getStage();
@@ -346,7 +343,7 @@ class ResultManager extends BuilderService {
         betScreen.setYourTokens(stage.getTokenHolder().getTokens());
     }
 
-    private void doBeforeLeave(){
+    private void doBeforeLeave() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
         BetScreen betScreen = sceneBuilder.getBetScreen();
@@ -420,7 +417,7 @@ class OptionManager extends BuilderService {
 class BuilderService {
     private final SceneBuilder sceneBuilder;
 
-    public BuilderService(SceneBuilder sceneBuilder){
+    public BuilderService(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
     }
 
