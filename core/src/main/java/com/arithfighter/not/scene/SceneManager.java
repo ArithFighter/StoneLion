@@ -48,37 +48,37 @@ public class SceneManager {
     }
 
     public void manageMenu() {
-        optionManager.init();
+        optionManager.initScene();
         menuManager.run();
         gameScene = menuManager.getGameScene();
     }
 
     public void manageBet() {
-        stageManager.init();
-        resultManager.init();
+        stageManager.initScene();
+        resultManager.initScene();
         betManager.run();
         gameScene = betManager.getGameScene();
     }
 
     public void manageStage() {
-        optionManager.init();
+        optionManager.initScene();
         stageManager.run();
         gameScene = stageManager.getGameScene();
-        menuManager.init();
-        betManager.init();
+        menuManager.initScene();
+        betManager.initScene();
     }
 
     public void manageResult() {
-        stageManager.init();
+        stageManager.initScene();
         resultManager.run();
         gameScene = resultManager.getGameScene();
     }
 
     public void manageOption() {
-        stageManager.init();
+        stageManager.initScene();
         optionManager.run();
         gameScene = optionManager.getGameScene();
-        menuManager.init();
+        menuManager.initScene();
     }
 }
 
@@ -104,7 +104,7 @@ class MenuManager {
         return gameScene;
     }
 
-    public void init() {
+    public void initScene() {
         gameScene = GameScene.MENU;
     }
 
@@ -163,7 +163,7 @@ class BetManager {
         return gameScene;
     }
 
-    public void init() {
+    public void initScene() {
         gameScene = GameScene.BET;
     }
 
@@ -222,7 +222,7 @@ class StageManager {
         return stage.getPauseMenu().isReturnToMainMenu();
     }
 
-    public void init() {
+    public void initScene() {
         gameScene = GameScene.STAGE;
     }
 
@@ -317,7 +317,7 @@ class ResultManager {
         this.gameSave = gameSave;
     }
 
-    public void init() {
+    public void initScene() {
         gameScene = GameScene.RESULT;
     }
 
@@ -377,7 +377,7 @@ class OptionManager {
         return gameScene;
     }
 
-    public void init() {
+    public void initScene() {
         gameScene = GameScene.OPTION;
     }
 
