@@ -227,13 +227,12 @@ class StageManager {
     }
 
     public void run() {
-        Stage stage = sceneBuilder.getStage();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
+        Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
-        boxQuantityList = betScreen.getNumberBoxQuantity();
-        stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+        setBoxQuantityList();
 
         if (isQuit()) {
             gameScene = GameScene.MENU;
@@ -251,8 +250,12 @@ class StageManager {
 
             if (isAllGameCompleted()) {
                 gameScene = GameScene.RESULT;
-                handleResult();
+                resultScreen.setState(ResultState.WIN);
+
+                stage.getTokenHolder().gain(betScreen.getBet());
+                gameRecorder.getWinRecorder().update(1);
                 stage.getCardLimitManager().getPlayRecord().reset();
+
                 resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
                 cursor = 0;
                 stage.init();
@@ -261,32 +264,27 @@ class StageManager {
         if (isLose()) {
             gameScene = GameScene.RESULT;
             cursor = 0;
-            handleResult();
+
+            resultScreen.setState(ResultState.LOOSE);
+            stage.getTokenHolder().lose(betScreen.getBet());
+            gameRecorder.getLoseRecorder().update(1);
+
             stage.getCardLimitManager().getPlayRecord().reset();
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
     }
 
-    private boolean isAllGameCompleted(){
-        return cursor > boxQuantityList.length - 1;
-    }
-
-    private void handleResult() {
+    private void setBoxQuantityList() {
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
-        if (isWin()) {
-            resultScreen.setState(ResultState.WIN);
-            stage.getTokenHolder().gain(betScreen.getBet());
-            gameRecorder.getWinRecorder().update(1);
-        }
-        if (isLose()) {
-            resultScreen.setState(ResultState.LOOSE);
-            stage.getTokenHolder().lose(betScreen.getBet());
-            gameRecorder.getLoseRecorder().update(1);
-        }
+        boxQuantityList = betScreen.getNumberBoxQuantity();
+        stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+    }
+
+    private boolean isAllGameCompleted() {
+        return cursor > boxQuantityList.length - 1;
     }
 }
 
@@ -348,7 +346,7 @@ class ResultManager {
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        if (stage.getTokenHolder().getTokens() > 0) {
+        if (stage.getTokenHolder().getTokens() >= 0) {
             pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
             pref.flush();
         }
