@@ -189,6 +189,8 @@ class StageManager {
     private SceneBuilder sceneBuilder;
     private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
+    int cursor = 0;
+    int[] boxQuantityList = {1, 3, 3};
 
     public void setSceneBuilder(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
@@ -240,13 +242,31 @@ class StageManager {
             optionMenu.setSceneTemp(GameScene.STAGE);
             stage.getPauseMenu().init();
         }
-        if (isWin() || isLose()) {
-            gameScene = GameScene.RESULT;
+        if (isWin()) {
+            cursor++;
+            stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            stage.init();
 
+            if (isAllGameCompleted()) {
+                gameScene = GameScene.RESULT;
+                handleResult();
+                resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+                cursor = 0;
+                stage.init();
+            }
+        }
+        if (isLose()) {
+            gameScene = GameScene.RESULT;
+            cursor = 0;
             handleResult();
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
+    }
+
+    private boolean isAllGameCompleted(){
+        return cursor >= boxQuantityList.length - 1;
     }
 
     private void handleResult() {
