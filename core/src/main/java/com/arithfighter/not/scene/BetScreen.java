@@ -62,8 +62,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         return cardLimit;
     }
 
-    public int getNumberBoxQuantity() {
-        return gameCards.getGameCards()[0].getBoxQuantity();
+    public int[] getNumberBoxQuantity() {
+        int[] array = new int[gameCards.getGameCards().length];
+
+        for (int i = 0;i< array.length;i++)
+            array[i] = gameCards.getGameCards()[i].getBoxQuantity();
+
+        return array;
     }
 
     public int getBet() {

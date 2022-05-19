@@ -189,7 +189,7 @@ class StageManager {
     private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
     int cursor = 0;
-    int[] boxQuantityList = {2,3,5};
+    int[] boxQuantityList = {2,3,1};
 
     public void setSceneBuilder(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
