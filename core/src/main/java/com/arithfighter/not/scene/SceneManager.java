@@ -323,8 +323,6 @@ class ResultManager {
 
     public void run() {
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        Stage stage = sceneBuilder.getStage();
 
         int totalStages = 6;
 
@@ -333,18 +331,30 @@ class ResultManager {
                 gameScene = GameScene.ENDING;
             else
                 gameScene = GameScene.BET;
-            saveTokens();
-            betScreen.setNumberBoxQuantity();
-            betScreen.setYourTokens(stage.getTokenHolder().getTokens());
-            betScreen.init();
-            resultScreen.init();
+            setBetScreen();
+            doBeforeLeave();
         }
         if (resultScreen.isQuit()) {
             gameScene = GameScene.GAME_OVER;
-            saveTokens();
-            betScreen.init();
-            resultScreen.init();
+            doBeforeLeave();
         }
+    }
+
+    private void setBetScreen(){
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        Stage stage = sceneBuilder.getStage();
+
+        betScreen.setNumberBoxQuantity();
+        betScreen.setYourTokens(stage.getTokenHolder().getTokens());
+    }
+
+    private void doBeforeLeave(){
+        ResultScreen resultScreen = sceneBuilder.getResultScreen();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+
+        saveTokens();
+        betScreen.init();
+        resultScreen.init();
     }
 
     private void saveTokens() {
