@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -152,12 +151,17 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         if (startButton.getButton().isOn()){
             checkBetIsLegalOrShowWarning();
+            if (isNoGameCardOn()){
+                warningDialog.setNoGameChoose();
+                warningDialog.setShow();
+            }
         }
     }
 
     private void checkBetIsLegalOrShowWarning(){
         if (betBrowser.getBet()>yourTokens||
-                betBrowser.getBet()<=0||isNoGameCardOn()){
+                betBrowser.getBet()<=0){
+            warningDialog.setNoEnoughToken();
             warningDialog.setShow();
         }
     }
@@ -241,18 +245,16 @@ class GameCardCollection {
 }
 
 class WarningDialog{
-    private final Dialog tokenNotEnoughDialog;
+    private final Dialog dialog;
     private boolean isShow = false;
 
     public WarningDialog(Texture texture){
-        tokenNotEnoughDialog = new Dialog(texture, 35,20);
-        Dialog dialog = tokenNotEnoughDialog;
-        tokenNotEnoughDialog.getPoint().set(
+        dialog = new Dialog(texture, 35,20);
+        Dialog dialog = this.dialog;
+        this.dialog.getPoint().set(
                 WindowSetting.CENTER_X - dialog.getDialog().getWidget().getWidth() / 2,
                 WindowSetting.CENTER_Y - dialog.getDialog().getWidget().getHeight() / 2
         );
-        tokenNotEnoughDialog.setContent1("You don't have enough ");
-        tokenNotEnoughDialog.setContent2("tokens.");
     }
 
     public void setShow() {
@@ -267,13 +269,23 @@ class WarningDialog{
         return !isShow;
     }
 
+    public void setNoEnoughToken(){
+        dialog.setContent1("You don't have enough ");
+        dialog.setContent2("tokens.");
+    }
+
+    public void setNoGameChoose(){
+        dialog.setContent1("Please choose the game");
+        dialog.setContent2("cards.");
+    }
+
     public void draw(SpriteBatch batch){
         if (isShow)
-            tokenNotEnoughDialog.drawDialog(batch);
+            dialog.drawDialog(batch);
     }
 
     public void dispose(){
-        tokenNotEnoughDialog.disposeTexts();
+        dialog.disposeTexts();
     }
 }
 
