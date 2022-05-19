@@ -120,6 +120,7 @@ class MenuManager {
             stage.getTokenHolder().reset();
             receiveTokens();
             betScreen.setNumberBoxQuantity();
+            betScreen.setYourTokens(stage.getTokenHolder().getTokens());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -304,6 +305,8 @@ class ResultManager {
 
     public void run() {
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
+        BetScreen betScreen = sceneBuilder.getBetScreen();
+        Stage stage = sceneBuilder.getStage();
 
         int totalStages = 6;
 
@@ -314,6 +317,7 @@ class ResultManager {
                 gameScene = GameScene.BET;
 
             saveTokens();
+            betScreen.setYourTokens(stage.getTokenHolder().getTokens());
             resultScreen.init();
         }
         if (resultScreen.isQuit()) {

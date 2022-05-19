@@ -27,6 +27,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final int cardLimit = 15;
     private final FontManager fontManager;
     private final GameCardCollection gameCards;
+    private int yourTokens = 0;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -46,6 +47,10 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
         gameCards = new GameCardCollection(textures);
+    }
+
+    public void setYourTokens(int yourTokens) {
+        this.yourTokens = yourTokens;
     }
 
     public int getCardLimit() {
@@ -128,6 +133,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         fontManager.setCardLimit(texts[0] + cardLimit);
         fontManager.setBet(texts[1]);
+        fontManager.setTokens("Your tokens: "+yourTokens);
         fontManager.draw(batch);
 
         betBrowser.draw(batch);
@@ -263,8 +269,10 @@ class GameCard {
 class FontManager {
     private final Font cardLimitFont;
     private final Font betFont;
+    private final Font tokensFont;
     private String cardLimit;
     private String bet;
+    private String tokens;
 
     public FontManager() {
         cardLimitFont = new Font(24);
@@ -272,6 +280,9 @@ class FontManager {
 
         betFont = new Font(30);
         betFont.setColor(Color.WHITE);
+
+        tokensFont = new Font(24);
+        tokensFont.setColor(Color.WHITE);
     }
 
     public void setCardLimit(String cardLimit) {
@@ -282,14 +293,21 @@ class FontManager {
         this.bet = bet;
     }
 
+    public void setTokens(String tokens) {
+        this.tokens = tokens;
+    }
+
     public void draw(SpriteBatch batch) {
         cardLimitFont.draw(batch, cardLimit, 900, 650);
+
+        tokensFont.draw(batch, tokens, 900,600);
 
         betFont.draw(batch, bet, 400, 250);
     }
 
     public void dispose() {
         cardLimitFont.dispose();
+        tokensFont.dispose();
         betFont.dispose();
     }
 }
