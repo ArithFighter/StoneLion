@@ -249,31 +249,21 @@ class StageManager {
         }
     }
 
-    private void handleResult(){
-        if (isWin())
-            doWhenWin();
-        if (isLose())
-            doWhenLoose();
-    }
-
-    private void doWhenWin() {
+    private void handleResult() {
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
-        resultScreen.setState(ResultState.WIN);
-        stage.getTokenHolder().gain(betScreen.getBet());
-        gameRecorder.getWinRecorder().update(1);
-    }
-
-    private void doWhenLoose() {
-        Stage stage = sceneBuilder.getStage();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
-        ResultScreen resultScreen = sceneBuilder.getResultScreen();
-
-        resultScreen.setState(ResultState.LOOSE);
-        stage.getTokenHolder().lose(betScreen.getBet());
-        gameRecorder.getLoseRecorder().update(1);
+        if (isWin()) {
+            resultScreen.setState(ResultState.WIN);
+            stage.getTokenHolder().gain(betScreen.getBet());
+            gameRecorder.getWinRecorder().update(1);
+        }
+        if (isLose()) {
+            resultScreen.setState(ResultState.LOOSE);
+            stage.getTokenHolder().lose(betScreen.getBet());
+            gameRecorder.getLoseRecorder().update(1);
+        }
     }
 }
 
@@ -335,7 +325,7 @@ class ResultManager {
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        if (stage.getTokenHolder().getTokens()>0){
+        if (stage.getTokenHolder().getTokens() > 0) {
             pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
             pref.flush();
         }
