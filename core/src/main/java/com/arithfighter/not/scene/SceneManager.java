@@ -177,7 +177,6 @@ class BetManager {
             gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getTokens());
             gameRecorder.getStagesRecorder().update(1);
 
-            stage.setNumberBoxQuantity(betScreen.getNumberBoxQuantity());
             stage.setCardLimit(betScreen.getCardLimit());
             betScreen.setNumberBoxQuantity();
             betScreen.init();
@@ -190,7 +189,7 @@ class StageManager {
     private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
     int cursor = 0;
-    int[] boxQuantityList = {1, 3, 3};
+    int[] boxQuantityList = {2,3,5};
 
     public void setSceneBuilder(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
@@ -233,6 +232,8 @@ class StageManager {
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
+        stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+
         if (isQuit()) {
             gameScene = GameScene.MENU;
             stage.init();
@@ -244,13 +245,13 @@ class StageManager {
         }
         if (isWin()) {
             cursor++;
-            stage.setNumberBoxQuantity(boxQuantityList[cursor]);
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
 
             if (isAllGameCompleted()) {
                 gameScene = GameScene.RESULT;
                 handleResult();
+                stage.getCardLimitManager().getPlayRecord().reset();
                 resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
                 cursor = 0;
                 stage.init();
@@ -260,13 +261,14 @@ class StageManager {
             gameScene = GameScene.RESULT;
             cursor = 0;
             handleResult();
+            stage.getCardLimitManager().getPlayRecord().reset();
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
     }
 
     private boolean isAllGameCompleted(){
-        return cursor >= boxQuantityList.length - 1;
+        return cursor > boxQuantityList.length - 1;
     }
 
     private void handleResult() {
@@ -325,7 +327,6 @@ class ResultManager {
                 gameScene = GameScene.ENDING;
             else
                 gameScene = GameScene.BET;
-
             saveTokens();
             betScreen.setYourTokens(stage.getTokenHolder().getTokens());
             resultScreen.init();

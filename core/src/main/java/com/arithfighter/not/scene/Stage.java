@@ -88,8 +88,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         return stageMessage;
     }
 
+    public CardLimitManager getCardLimitManager() {
+        return cardLimitManager;
+    }
+
     public void init() {
-        cardLimitManager.getPlayRecord().reset();
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
