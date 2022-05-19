@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,10 +64,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int[] getNumberBoxQuantity() {
-        int[] array = new int[gameCards.getGameCards().length];
+        int length = gameCards.getGameCards().length;
+        int[] array = new int[length];
 
-        for (int i = 0;i< array.length;i++)
-            array[i] = gameCards.getGameCards()[i].getBoxQuantity();
+        for (int i = 0;i< length;i++){
+            if (gameCards.getGameCards()[i].isOn())
+                array[i] = gameCards.getGameCards()[i].getBoxQuantity();
+        }
 
         return array;
     }
@@ -152,9 +156,21 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     private void checkBetIsLegalOrShowWarning(){
-        if (betBrowser.getBet()>yourTokens||betBrowser.getBet()<=0){
+        if (betBrowser.getBet()>yourTokens||
+                betBrowser.getBet()<=0||isNoGameCardOn()){
             warningDialog.setShow();
         }
+    }
+
+    private boolean isNoGameCardOn(){
+        boolean flag = true;
+        int length = gameCards.getGameCards().length;
+
+        for (int i =0;i<length;i++){
+            if (gameCards.getGameCards()[i].isOn())
+                flag = false;
+        }
+        return flag;
     }
 
     @Override
@@ -295,6 +311,10 @@ class GameCard {
 
     public int getBoxQuantity() {
         return boxQuantity;
+    }
+
+    public boolean isOn(){
+        return gameCard.isOn();
     }
 
     public void setBoxQuantity(int boxQuantity) {

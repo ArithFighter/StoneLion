@@ -178,7 +178,6 @@ class BetManager {
             gameRecorder.getStagesRecorder().update(1);
 
             stage.setCardLimit(betScreen.getCardLimit());
-            betScreen.init();
         }
     }
 }
@@ -336,11 +335,13 @@ class ResultManager {
             saveTokens();
             betScreen.setNumberBoxQuantity();
             betScreen.setYourTokens(stage.getTokenHolder().getTokens());
+            betScreen.init();
             resultScreen.init();
         }
         if (resultScreen.isQuit()) {
             gameScene = GameScene.GAME_OVER;
             saveTokens();
+            betScreen.init();
             resultScreen.init();
         }
     }
