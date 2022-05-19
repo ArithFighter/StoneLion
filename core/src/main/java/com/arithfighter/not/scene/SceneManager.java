@@ -183,9 +183,12 @@ class StageManager extends BuilderService {
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
+    private final Stage stage;
 
     public StageManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
+
+        stage = sceneBuilder.getStage();
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -197,26 +200,18 @@ class StageManager extends BuilderService {
     }
 
     private boolean isWin() {
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        Stage stage = sceneBuilder.getStage();
         return stage.getStageMessage().isWin();
     }
 
     private boolean isLose() {
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        Stage stage = sceneBuilder.getStage();
         return stage.getStageMessage().isLose();
     }
 
     private boolean isOpenOption() {
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        Stage stage = sceneBuilder.getStage();
         return stage.getPauseMenu().isOpenOption();
     }
 
     private boolean isQuit() {
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        Stage stage = sceneBuilder.getStage();
         return stage.getPauseMenu().isReturnToMainMenu();
     }
 
