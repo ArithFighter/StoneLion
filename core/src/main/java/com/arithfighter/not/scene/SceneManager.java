@@ -236,6 +236,7 @@ class StageManager {
         if (isQuit()) {
             gameScene = GameScene.MENU;
             resetStage();
+            betScreen.init();
             stage.init();
         }
         if (isOpenOption()) {
