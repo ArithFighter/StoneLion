@@ -236,6 +236,7 @@ class StageManager {
 
         if (isQuit()) {
             gameScene = GameScene.MENU;
+            resetStage();
             stage.init();
         }
         if (isOpenOption()) {
@@ -254,25 +255,31 @@ class StageManager {
 
                 stage.getTokenHolder().gain(betScreen.getBet());
                 gameRecorder.getWinRecorder().update(1);
-                stage.getCardLimitManager().getPlayRecord().reset();
 
                 resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
-                cursor = 0;
+                resetStage();
                 stage.init();
             }
         }
         if (isLose()) {
             gameScene = GameScene.RESULT;
-            cursor = 0;
 
             resultScreen.setState(ResultState.LOOSE);
             stage.getTokenHolder().lose(betScreen.getBet());
             gameRecorder.getLoseRecorder().update(1);
 
-            stage.getCardLimitManager().getPlayRecord().reset();
+            resetStage();
+
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
         }
+    }
+
+    private void resetStage(){
+        Stage stage = sceneBuilder.getStage();
+
+        cursor = 0;
+        stage.getCardLimitManager().getPlayRecord().reset();
     }
 
     private void setBoxQuantityList() {
