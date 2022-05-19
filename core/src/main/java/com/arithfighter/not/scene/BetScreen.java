@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
@@ -11,6 +12,7 @@ import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
+import com.arithfighter.not.widget.dialog.Dialog;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,6 +30,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final FontManager fontManager;
     private final GameCardCollection gameCards;
     private int yourTokens = 0;
+    private final WarningDialog warningDialog;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -47,6 +50,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
         gameCards = new GameCardCollection(textures);
+
+        warningDialog = new WarningDialog(textures[10]);
     }
 
     public void setYourTokens(int yourTokens) {
@@ -142,6 +147,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         for (GameCard card: gameCards.getGameCards())
             card.draw(batch);
+
+        warningDialog.draw(batch);
     }
 
     @Override
@@ -151,6 +158,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.dispose();
         for (GameCard card: gameCards.getGameCards())
             card.dispose();
+        warningDialog.dispose();
     }
 }
 
@@ -187,6 +195,29 @@ class GameCardCollection {
 
     public GameCard[] getGameCards() {
         return gameCards;
+    }
+}
+
+class WarningDialog{
+    private final Dialog tokenNotEnoughDialog;
+
+    public WarningDialog(Texture texture){
+        tokenNotEnoughDialog = new Dialog(texture, 35,20);
+        Dialog dialog = tokenNotEnoughDialog;
+        tokenNotEnoughDialog.getPoint().set(
+                WindowSetting.CENTER_X - dialog.getDialog().getWidget().getWidth() / 2,
+                WindowSetting.CENTER_Y - dialog.getDialog().getWidget().getHeight() / 2
+        );
+        tokenNotEnoughDialog.setContent1("You don't have enough ");
+        tokenNotEnoughDialog.setContent2("tokens.");
+    }
+
+    public void draw(SpriteBatch batch){
+        tokenNotEnoughDialog.drawDialog(batch);
+    }
+
+    public void dispose(){
+        tokenNotEnoughDialog.disposeTexts();
     }
 }
 
