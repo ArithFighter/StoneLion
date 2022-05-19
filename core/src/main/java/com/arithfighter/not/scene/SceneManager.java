@@ -13,24 +13,19 @@ public class SceneManager {
     private GameScene gameScene;
 
     public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
-        stageManager = new StageManager();
-        stageManager.setSceneBuilder(sceneBuilder);
+        stageManager = new StageManager(sceneBuilder);
         stageManager.setGameRecorder(gameRecorder);
 
-        menuManager = new MenuManager();
-        menuManager.setSceneBuilder(sceneBuilder);
+        menuManager = new MenuManager(sceneBuilder);
         menuManager.setGameRecorder(gameRecorder);
 
-        betManager = new BetManager();
-        betManager.setSceneBuilder(sceneBuilder);
+        betManager = new BetManager(sceneBuilder);
         betManager.setGameRecorder(gameRecorder);
 
-        resultManager = new ResultManager();
+        resultManager = new ResultManager(sceneBuilder);
         resultManager.setGameRecorder(gameRecorder);
-        resultManager.setSceneBuilder(sceneBuilder);
 
-        optionManager = new OptionManager();
-        optionManager.setSceneBuilder(sceneBuilder);
+        optionManager = new OptionManager(sceneBuilder);
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -82,18 +77,17 @@ public class SceneManager {
     }
 }
 
-class MenuManager {
-    private SceneBuilder sceneBuilder;
+class MenuManager extends BuilderService {
     private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
 
-    public void setGameSave(GameSave gameSave) {
-        this.gameSave = gameSave;
+    public MenuManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
     }
 
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public void setGameSave(GameSave gameSave) {
+        this.gameSave = gameSave;
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -109,6 +103,7 @@ class MenuManager {
     }
 
     public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
@@ -131,6 +126,7 @@ class MenuManager {
     }
 
     private void receiveTokens() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
         Stage stage = sceneBuilder.getStage();
 
@@ -146,13 +142,12 @@ class MenuManager {
     }
 }
 
-class BetManager {
-    private SceneBuilder sceneBuilder;
+class BetManager extends BuilderService {
     private GameScene gameScene = GameScene.BET;
     private GameRecorder gameRecorder;
 
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public BetManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -168,6 +163,7 @@ class BetManager {
     }
 
     public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
@@ -182,15 +178,14 @@ class BetManager {
     }
 }
 
-class StageManager {
-    private SceneBuilder sceneBuilder;
+class StageManager extends BuilderService {
     private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
 
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public StageManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -202,21 +197,25 @@ class StageManager {
     }
 
     private boolean isWin() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         return stage.getStageMessage().isWin();
     }
 
     private boolean isLose() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         return stage.getStageMessage().isLose();
     }
 
     private boolean isOpenOption() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         return stage.getPauseMenu().isOpenOption();
     }
 
     private boolean isQuit() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         return stage.getPauseMenu().isReturnToMainMenu();
     }
@@ -226,6 +225,7 @@ class StageManager {
     }
 
     public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
         Stage stage = sceneBuilder.getStage();
@@ -276,6 +276,7 @@ class StageManager {
     }
 
     private void resetStage(){
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
 
         cursor = 0;
@@ -283,6 +284,7 @@ class StageManager {
     }
 
     private void setBoxQuantityList() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
@@ -295,14 +297,13 @@ class StageManager {
     }
 }
 
-class ResultManager {
-    private SceneBuilder sceneBuilder;
+class ResultManager extends BuilderService {
     private GameScene gameScene = GameScene.RESULT;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
 
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public ResultManager(SceneBuilder sceneBuilder){
+        super(sceneBuilder);
     }
 
     public GameScene getGameScene() {
@@ -322,6 +323,7 @@ class ResultManager {
     }
 
     public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
         int totalStages = 6;
@@ -341,6 +343,7 @@ class ResultManager {
     }
 
     private void setBetScreen(){
+        SceneBuilder sceneBuilder = getSceneBuilder();
         BetScreen betScreen = sceneBuilder.getBetScreen();
         Stage stage = sceneBuilder.getStage();
 
@@ -349,6 +352,7 @@ class ResultManager {
     }
 
     private void doBeforeLeave(){
+        SceneBuilder sceneBuilder = getSceneBuilder();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
@@ -358,6 +362,7 @@ class ResultManager {
     }
 
     private void saveTokens() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         Stage stage = sceneBuilder.getStage();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
 
@@ -372,13 +377,12 @@ class ResultManager {
     }
 }
 
-class OptionManager {
-    private SceneBuilder sceneBuilder;
+class OptionManager extends BuilderService {
     private GameScene gameScene = GameScene.OPTION;
     private GameSave gameSave;
 
-    public void setSceneBuilder(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public OptionManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
     }
 
     public void setGameSave(GameSave gameSave) {
@@ -394,6 +398,7 @@ class OptionManager {
     }
 
     public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
         if (optionMenu.isLeaving()) {
@@ -404,6 +409,7 @@ class OptionManager {
     }
 
     private void saveOption() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
         Preferences pref = gameSave.getPreferences();
@@ -413,5 +419,17 @@ class OptionManager {
         pref.putInteger(soundVolumeKey, optionMenu.getSoundVolume());
         pref.putInteger(musicVolumeKey, optionMenu.getMusicVolume());
         pref.flush();
+    }
+}
+
+class BuilderService {
+    private final SceneBuilder sceneBuilder;
+
+    public BuilderService(SceneBuilder sceneBuilder){
+        this.sceneBuilder = sceneBuilder;
+    }
+
+    public SceneBuilder getSceneBuilder() {
+        return sceneBuilder;
     }
 }
