@@ -2,6 +2,7 @@ package com.arithfighter.not;
 
 import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
+import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -21,10 +22,10 @@ public class Main extends ApplicationAdapter {
     private GameScene gameScene;
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
-    private int selectedCharacterIndex = 0;
     private SceneController sceneController;
     private TextureManager textureManager;
     private GameSave gameSave;
+    private GameDataDisplacer gameDataDisplacer;
 
     @Override
     public void create() {
@@ -58,6 +59,8 @@ public class Main extends ApplicationAdapter {
         sceneController.setGameSave(gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
+
+        gameDataDisplacer = new GameDataDisplacer();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void setSelectedCharacter() {
-        selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
+        int selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
 
         sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
     }
@@ -115,9 +118,8 @@ public class Main extends ApplicationAdapter {
 
         sceneBuilder.drawScene(gameScene);
 
-        //show game data for development
-//        if (gameScene == GameScene.STAGE)
-            //sceneBuilder.getStage().drawData(selectedCharacterIndex);
+        gameDataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
+        gameDataDisplacer.draw(batch);
 
         batch.end();
     }
