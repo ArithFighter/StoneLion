@@ -8,7 +8,6 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Recorder;
-import com.arithfighter.not.pojo.TokenHolder;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
@@ -20,7 +19,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
-    private final GameDataDisplacer dataDisplacer;
     private final StageMessage stageMessage;
     private final RecordDisplacer recordDisplacer;
     private int numberBoxQuantity;
@@ -32,8 +30,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] spriteSheet = textureManager.getTextures(textureManager.getKeys()[3]);
 
         cardLimitManager = new CardLimitManager();
-
-        dataDisplacer = new GameDataDisplacer();
 
         gamePlayComponent = new GamePlayComponent(textures, spriteSheet, soundManager);
 
@@ -132,16 +128,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         stageMessage.draw(batch);
     }
 
-    public void drawData(int index) {
-        //for dev
-        dataDisplacer.setCardPlayTimes(cardLimitManager.getPlayRecord().getRecord());
-        dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
-        dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
-        //dataDisplacer.setToken(tokenHolder.getTokens());
-        dataDisplacer.setCardLimit(cardLimitManager.getCardLimit());
-        dataDisplacer.draw(getBatch());
-    }
-
     public void setSelectedPlayerToGame(int i) {
         gamePlayComponent.setPlayer(playerCollection.getPlayers()[i]);
     }
@@ -188,7 +174,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void dispose() {
-        dataDisplacer.dispose();
         gamePlayComponent.dispose();
         pauseMenu.dispose();
         playerCollection.dispose();
@@ -216,10 +201,6 @@ class CardLimitManager {
 
     public Recorder getPlayRecord() {
         return playRecord;
-    }
-
-    public int getCardLimit() {
-        return cardLimit;
     }
 
     public void draw(SpriteBatch batch) {

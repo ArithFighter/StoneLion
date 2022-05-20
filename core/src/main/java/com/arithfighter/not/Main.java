@@ -116,8 +116,8 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.drawScene(gameScene);
 
         //show game data for development
-        if (gameScene == GameScene.STAGE)
-            sceneBuilder.getStage().drawData(selectedCharacterIndex);
+//        if (gameScene == GameScene.STAGE)
+            //sceneBuilder.getStage().drawData(selectedCharacterIndex);
 
         batch.end();
     }
