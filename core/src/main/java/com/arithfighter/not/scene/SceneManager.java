@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
+import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
 
 public class SceneManager {
@@ -13,17 +14,23 @@ public class SceneManager {
     private GameScene gameScene;
 
     public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
+        TokenHolder tokenHolder = new TokenHolder();
+
         stageManager = new StageManager(sceneBuilder);
         stageManager.setGameRecorder(gameRecorder);
+        stageManager.setTokenHolder(tokenHolder);
 
         menuManager = new MenuManager(sceneBuilder);
         menuManager.setGameRecorder(gameRecorder);
+        menuManager.setTokenHolder(tokenHolder);
 
         betManager = new BetManager(sceneBuilder);
         betManager.setGameRecorder(gameRecorder);
+        betManager.setTokenHolder(tokenHolder);
 
         resultManager = new ResultManager(sceneBuilder);
         resultManager.setGameRecorder(gameRecorder);
+        resultManager.setTokenHolder(tokenHolder);
 
         optionManager = new OptionManager(sceneBuilder);
     }
@@ -81,6 +88,7 @@ class MenuManager extends BuilderService {
     private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
+    private TokenHolder tokenHolder;
 
     public MenuManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -98,6 +106,10 @@ class MenuManager extends BuilderService {
         return gameScene;
     }
 
+    public void setTokenHolder(TokenHolder tokenHolder) {
+        this.tokenHolder = tokenHolder;
+    }
+
     public void initScene() {
         gameScene = GameScene.MENU;
     }
@@ -105,17 +117,16 @@ class MenuManager extends BuilderService {
     public void run() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-        Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
         if (characterMenu.isGameStart()) {
             gameScene = GameScene.BET;
             gameRecorder.init();
-            stage.getTokenHolder().reset();
+            tokenHolder.reset();
             receiveTokens();
             betScreen.setNumberBoxQuantity();
-            betScreen.setYourTokens(stage.getTokenHolder().getTokens());
+            betScreen.setYourTokens(tokenHolder.getTokens());
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
@@ -128,7 +139,6 @@ class MenuManager extends BuilderService {
     private void receiveTokens() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
-        Stage stage = sceneBuilder.getStage();
 
         Preferences pref = gameSave.getPreferences();
         String[] keys = gameSave.getTokenKey();
@@ -136,15 +146,16 @@ class MenuManager extends BuilderService {
 
         int initTokens = 50;
         if (pref.getInteger(keys[characterIndex]) <= 0)
-            stage.getTokenHolder().gain(initTokens);
+            tokenHolder.gain(initTokens);
         else
-            stage.getTokenHolder().gain(pref.getInteger(keys[characterIndex]));
+            tokenHolder.gain(pref.getInteger(keys[characterIndex]));
     }
 }
 
 class BetManager extends BuilderService {
     private GameScene gameScene = GameScene.BET;
     private GameRecorder gameRecorder;
+    private TokenHolder tokenHolder;
 
     public BetManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -156,6 +167,10 @@ class BetManager extends BuilderService {
 
     public GameScene getGameScene() {
         return gameScene;
+    }
+
+    public void setTokenHolder(TokenHolder tokenHolder) {
+        this.tokenHolder = tokenHolder;
     }
 
     public void initScene() {
@@ -170,7 +185,7 @@ class BetManager extends BuilderService {
         if (betScreen.isStartGame()) {
             gameScene = GameScene.STAGE;
             gameRecorder.getTokenRecorder().reset();
-            gameRecorder.getTokenRecorder().update(stage.getTokenHolder().getTokens());
+            gameRecorder.getTokenRecorder().update(tokenHolder.getTokens());
             gameRecorder.getStagesRecorder().update(1);
 
             stage.setCardLimit(betScreen.getCardLimit());
@@ -184,6 +199,7 @@ class StageManager extends BuilderService {
     int cursor = 0;
     int[] boxQuantityList;
     private final StageAction stageAction;
+    private TokenHolder tokenHolder;
 
     public StageManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -193,6 +209,10 @@ class StageManager extends BuilderService {
 
     public void setGameRecorder(GameRecorder gameRecorder) {
         this.gameRecorder = gameRecorder;
+    }
+
+    public void setTokenHolder(TokenHolder tokenHolder) {
+        this.tokenHolder = tokenHolder;
     }
 
     public GameScene getGameScene() {
@@ -225,7 +245,7 @@ class StageManager extends BuilderService {
         }
         if (stageAction.isWin()) {
             cursor++;
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            resultScreen.setRemainingTokens(tokenHolder.getTokens());
             stage.init();
 
         }
@@ -233,20 +253,20 @@ class StageManager extends BuilderService {
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.WIN);
 
-            stage.getTokenHolder().gain(betScreen.getBet());
+            tokenHolder.gain(betScreen.getBet());
             gameRecorder.getWinRecorder().update(1);
 
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            resultScreen.setRemainingTokens(tokenHolder.getTokens());
             resetStage();
             stage.init();
         }
         if (stageAction.isLose()) {
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
-            stage.getTokenHolder().lose(betScreen.getBet());
+            tokenHolder.lose(betScreen.getBet());
             gameRecorder.getLoseRecorder().update(1);
             resetStage();
-            resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
+            resultScreen.setRemainingTokens(tokenHolder.getTokens());
             stage.init();
         }
     }
@@ -301,6 +321,7 @@ class ResultManager extends BuilderService {
     private GameScene gameScene = GameScene.RESULT;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
+    private TokenHolder tokenHolder;
 
     public ResultManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -320,6 +341,10 @@ class ResultManager extends BuilderService {
 
     public void initScene() {
         gameScene = GameScene.RESULT;
+    }
+
+    public void setTokenHolder(TokenHolder tokenHolder) {
+        this.tokenHolder = tokenHolder;
     }
 
     public void run() {
@@ -349,10 +374,9 @@ class ResultManager extends BuilderService {
     private void setBetScreen() {
         SceneBuilder sceneBuilder = getSceneBuilder();
         BetScreen betScreen = sceneBuilder.getBetScreen();
-        Stage stage = sceneBuilder.getStage();
 
         betScreen.setNumberBoxQuantity();
-        betScreen.setYourTokens(stage.getTokenHolder().getTokens());
+        betScreen.setYourTokens(tokenHolder.getTokens());
     }
 
     private void doBeforeLeave() {
@@ -367,15 +391,14 @@ class ResultManager extends BuilderService {
 
     private void saveTokens() {
         SceneBuilder sceneBuilder = getSceneBuilder();
-        Stage stage = sceneBuilder.getStage();
         CharacterMenu characterMenu = sceneBuilder.getCharacterMenu();
 
         Preferences pref = gameSave.getPreferences();
         String[] keys = gameSave.getTokenKey();
         int characterIndex = characterMenu.getSelectIndex();
 
-        if (stage.getTokenHolder().getTokens() >= 0) {
-            pref.putInteger(keys[characterIndex], stage.getTokenHolder().getTokens());
+        if (tokenHolder.getTokens() >= 0) {
+            pref.putInteger(keys[characterIndex], tokenHolder.getTokens());
             pref.flush();
         }
     }

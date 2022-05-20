@@ -21,7 +21,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final GameDataDisplacer dataDisplacer;
-    private final TokenHolder tokenHolder;
     private final StageMessage stageMessage;
     private final RecordDisplacer recordDisplacer;
     private int numberBoxQuantity;
@@ -39,8 +38,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         gamePlayComponent = new GamePlayComponent(textures, spriteSheet, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
-
-        tokenHolder = new TokenHolder();//the initValue there doesn't matter
 
         playerCollection = new PlayerCollection(
                 textures,
@@ -78,10 +75,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public PauseMenu getPauseMenu() {
         return pauseMenu;
-    }
-
-    public TokenHolder getTokenHolder() {
-        return tokenHolder;
     }
 
     public StageMessage getStageMessage() {
@@ -144,7 +137,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         dataDisplacer.setCardPlayTimes(cardLimitManager.getPlayRecord().getRecord());
         dataDisplacer.setEnergy(playerCollection.getPlayers()[index].getEnergy());
         dataDisplacer.setCursorPoint(getCursorPos().getX(), getCursorPos().getY());
-        dataDisplacer.setToken(tokenHolder.getTokens());
+        //dataDisplacer.setToken(tokenHolder.getTokens());
         dataDisplacer.setCardLimit(cardLimitManager.getCardLimit());
         dataDisplacer.draw(getBatch());
     }
