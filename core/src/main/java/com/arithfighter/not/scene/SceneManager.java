@@ -183,12 +183,12 @@ class StageManager extends BuilderService {
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
-    private final Stage stage;
+    private final StageAction stageAction;
 
     public StageManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
 
-        stage = sceneBuilder.getStage();
+        stageAction = new StageAction(sceneBuilder);
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -197,22 +197,6 @@ class StageManager extends BuilderService {
 
     public GameScene getGameScene() {
         return gameScene;
-    }
-
-    private boolean isWin() {
-        return stage.getStageMessage().isWin();
-    }
-
-    private boolean isLose() {
-        return stage.getStageMessage().isLose();
-    }
-
-    private boolean isOpenOption() {
-        return stage.getPauseMenu().isOpenOption();
-    }
-
-    private boolean isQuit() {
-        return stage.getPauseMenu().isReturnToMainMenu();
     }
 
     public void initScene() {
@@ -228,18 +212,18 @@ class StageManager extends BuilderService {
 
         setBoxQuantityList();
 
-        if (isQuit()) {
+        if (stageAction.isQuit()) {
             gameScene = GameScene.MENU;
             resetStage();
             betScreen.init();
             stage.init();
         }
-        if (isOpenOption()) {
+        if (stageAction.isOpenOption()) {
             gameScene = GameScene.OPTION;
             optionMenu.setSceneTemp(GameScene.STAGE);
             stage.getPauseMenu().init();
         }
-        if (isWin()) {
+        if (stageAction.isWin()) {
             cursor++;
             resultScreen.setRemainingTokens(stage.getTokenHolder().getTokens());
             stage.init();
@@ -256,7 +240,7 @@ class StageManager extends BuilderService {
             resetStage();
             stage.init();
         }
-        if (isLose()) {
+        if (stageAction.isLose()) {
             gameScene = GameScene.RESULT;
             resultScreen.setState(ResultState.LOOSE);
             stage.getTokenHolder().lose(betScreen.getBet());
@@ -286,6 +270,30 @@ class StageManager extends BuilderService {
 
     private boolean isAllGameCompleted() {
         return cursor > boxQuantityList.length - 1;
+    }
+}
+
+class StageAction {
+    private final Stage stage;
+
+    public StageAction(SceneBuilder sceneBuilder) {
+        this.stage = sceneBuilder.getStage();
+    }
+
+    public boolean isWin() {
+        return stage.getStageMessage().isWin();
+    }
+
+    public boolean isLose() {
+        return stage.getStageMessage().isLose();
+    }
+
+    public boolean isOpenOption() {
+        return stage.getPauseMenu().isOpenOption();
+    }
+
+    public boolean isQuit() {
+        return stage.getPauseMenu().isReturnToMainMenu();
     }
 }
 
@@ -321,7 +329,7 @@ class ResultManager extends BuilderService {
         int totalStages = 6;
 
         if (resultScreen.isContinue()) {
-            if (gameRecorder.getStagesRecorder().getRecord() == totalStages)
+            if (isEnd(totalStages))
                 gameScene = GameScene.ENDING;
             else
                 gameScene = GameScene.BET;
@@ -332,6 +340,10 @@ class ResultManager extends BuilderService {
             gameScene = GameScene.GAME_OVER;
             doBeforeLeave();
         }
+    }
+
+    private boolean isEnd(int condition){
+        return gameRecorder.getStagesRecorder().getRecord() == condition;
     }
 
     private void setBetScreen() {
