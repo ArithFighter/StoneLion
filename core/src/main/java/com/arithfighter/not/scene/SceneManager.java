@@ -4,7 +4,6 @@ import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 
 public class SceneManager {
     private final MenuManager menuManager;
@@ -18,22 +17,27 @@ public class SceneManager {
         TokenHolder tokenHolder = new TokenHolder();
 
         stageManager = new StageManager(sceneBuilder);
+        stageManager.initScene();
         stageManager.setGameRecorder(gameRecorder);
         stageManager.setTokenHolder(tokenHolder);
 
         menuManager = new MenuManager(sceneBuilder);
+        menuManager.initScene();
         menuManager.setGameRecorder(gameRecorder);
         menuManager.setTokenHolder(tokenHolder);
 
         betManager = new BetManager(sceneBuilder);
+        betManager.initScene();
         betManager.setGameRecorder(gameRecorder);
         betManager.setTokenHolder(tokenHolder);
 
         resultManager = new ResultManager(sceneBuilder);
+        resultManager.initScene();
         resultManager.setGameRecorder(gameRecorder);
         resultManager.setTokenHolder(tokenHolder);
 
         optionManager = new OptionManager(sceneBuilder);
+        optionManager.initScene();
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -86,7 +90,6 @@ public class SceneManager {
 }
 
 class MenuManager extends BuilderAccessor {
-    private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -103,16 +106,12 @@ class MenuManager extends BuilderAccessor {
         this.gameRecorder = gameRecorder;
     }
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
     public void setTokenHolder(TokenHolder tokenHolder) {
         this.tokenHolder = tokenHolder;
     }
 
     public void initScene() {
-        gameScene = GameScene.MENU;
+        setGameScene(GameScene.MENU);
     }
 
     public void run() {
@@ -122,7 +121,7 @@ class MenuManager extends BuilderAccessor {
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
         if (characterMenu.isGameStart()) {
-            gameScene = GameScene.BET;
+            setGameScene(GameScene.BET);
             gameRecorder.init();
             tokenHolder.reset();
             receiveTokens();
@@ -131,7 +130,7 @@ class MenuManager extends BuilderAccessor {
             characterMenu.init();
         }
         if (characterMenu.isOpenOption()) {
-            gameScene = GameScene.OPTION;
+            setGameScene(GameScene.OPTION);
             optionMenu.setSceneTemp(GameScene.MENU);
             characterMenu.init();
         }
@@ -154,7 +153,6 @@ class MenuManager extends BuilderAccessor {
 }
 
 class BetManager extends BuilderAccessor {
-    private GameScene gameScene = GameScene.BET;
     private GameRecorder gameRecorder;
     private TokenHolder tokenHolder;
 
@@ -166,16 +164,12 @@ class BetManager extends BuilderAccessor {
         this.gameRecorder = gameRecorder;
     }
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
     public void setTokenHolder(TokenHolder tokenHolder) {
         this.tokenHolder = tokenHolder;
     }
 
     public void initScene() {
-        gameScene = GameScene.BET;
+        setGameScene(GameScene.BET);
     }
 
     public void run() {
@@ -184,7 +178,7 @@ class BetManager extends BuilderAccessor {
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
         if (betScreen.isStartGame()) {
-            gameScene = GameScene.STAGE;
+            setGameScene(GameScene.STAGE);
             gameRecorder.getTokenRecorder().reset();
             gameRecorder.getTokenRecorder().update(tokenHolder.getTokens());
             gameRecorder.getStagesRecorder().update(1);
@@ -195,7 +189,6 @@ class BetManager extends BuilderAccessor {
 }
 
 class StageManager extends BuilderAccessor {
-    private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
@@ -216,12 +209,8 @@ class StageManager extends BuilderAccessor {
         this.tokenHolder = tokenHolder;
     }
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
     public void initScene() {
-        gameScene = GameScene.STAGE;
+        setGameScene(GameScene.STAGE);
     }
 
     public void run() {
@@ -234,13 +223,13 @@ class StageManager extends BuilderAccessor {
         setBoxQuantityList();
 
         if (stageAction.isQuit()) {
-            gameScene = GameScene.MENU;
+            setGameScene(GameScene.MENU);
             resetStage();
             betScreen.init();
             stage.init();
         }
         if (stageAction.isOpenOption()) {
-            gameScene = GameScene.OPTION;
+            setGameScene(GameScene.OPTION);
             optionMenu.setSceneTemp(GameScene.STAGE);
             stage.getPauseMenu().init();
         }
@@ -251,7 +240,7 @@ class StageManager extends BuilderAccessor {
 
         }
         if (isAllGameCompleted()) {
-            gameScene = GameScene.RESULT;
+            setGameScene(GameScene.RESULT);
             resultScreen.setState(ResultState.WIN);
 
             tokenHolder.gain(betScreen.getBet());
@@ -262,7 +251,7 @@ class StageManager extends BuilderAccessor {
             stage.init();
         }
         if (stageAction.isLose()) {
-            gameScene = GameScene.RESULT;
+            setGameScene(GameScene.RESULT);
             resultScreen.setState(ResultState.LOOSE);
             tokenHolder.lose(betScreen.getBet());
             gameRecorder.getLoseRecorder().update(1);
@@ -319,17 +308,12 @@ class StageAction {
 }
 
 class ResultManager extends BuilderAccessor {
-    private GameScene gameScene = GameScene.RESULT;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
     public ResultManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
-    }
-
-    public GameScene getGameScene() {
-        return gameScene;
     }
 
     public void setGameRecorder(GameRecorder gameRecorder) {
@@ -341,7 +325,7 @@ class ResultManager extends BuilderAccessor {
     }
 
     public void initScene() {
-        gameScene = GameScene.RESULT;
+        setGameScene(GameScene.RESULT);
     }
 
     public void setTokenHolder(TokenHolder tokenHolder) {
@@ -356,19 +340,19 @@ class ResultManager extends BuilderAccessor {
 
         if (resultScreen.isContinue()) {
             if (isEnd(totalStages))
-                gameScene = GameScene.ENDING;
+                setGameScene(GameScene.ENDING);
             else
-                gameScene = GameScene.BET;
+                setGameScene(GameScene.BET);
             setBetScreen();
             doBeforeLeave();
         }
         if (resultScreen.isQuit()) {
-            gameScene = GameScene.GAME_OVER;
+            setGameScene(GameScene.GAME_OVER);
             doBeforeLeave();
         }
     }
 
-    private boolean isEnd(int condition){
+    private boolean isEnd(int condition) {
         return gameRecorder.getStagesRecorder().getRecord() == condition;
     }
 
@@ -405,19 +389,11 @@ class ResultManager extends BuilderAccessor {
     }
 }
 
-class GameOverManager extends BuilderAccessor{
-
-    public GameOverManager(SceneBuilder sceneBuilder) {
-        super(sceneBuilder);
-    }
-}
-
 class OptionManager extends BuilderAccessor {
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
-        setGameScene(GameScene.OPTION);
     }
 
     public void setGameSave(GameSave gameSave) {
