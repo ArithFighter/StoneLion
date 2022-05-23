@@ -80,24 +80,25 @@ public class SceneManager {
         optionManager.setGameSave(gameSave);
     }
 
-    public void update(int index){
-        for (SceneManageable s: sceneManageable)
+    public void update(int index) {
+        for (SceneManageable s : sceneManageable)
             s.initScene();
         sceneManageable[index].run();
         gameScene = sceneFactories[index].getGamaScene();
     }
 }
 
-interface SceneFactory{
+interface SceneFactory {
     GameScene getGamaScene();
 }
 
 interface SceneManageable {
     void initScene();
+
     void run();
 }
 
-class MenuManager extends BuilderAccessor implements SceneManageable{
+class MenuManager extends BuilderAccessor implements SceneManageable {
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -161,7 +162,7 @@ class MenuManager extends BuilderAccessor implements SceneManageable{
 
 }
 
-class BetManager extends BuilderAccessor implements SceneManageable{
+class BetManager extends BuilderAccessor implements SceneManageable {
     private GameRecorder gameRecorder;
     private TokenHolder tokenHolder;
 
@@ -197,7 +198,7 @@ class BetManager extends BuilderAccessor implements SceneManageable{
     }
 }
 
-class StageManager extends BuilderAccessor implements SceneManageable{
+class StageManager extends BuilderAccessor implements SceneManageable {
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
@@ -229,7 +230,9 @@ class StageManager extends BuilderAccessor implements SceneManageable{
         Stage stage = sceneBuilder.getStage();
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
-        setBoxQuantityList();
+        boxQuantityList = betScreen.getNumberBoxQuantity();
+
+        setBoxQuantityToStage();
 
         if (stageAction.isQuit()) {
             setGameScene(GameScene.MENU);
@@ -276,17 +279,15 @@ class StageManager extends BuilderAccessor implements SceneManageable{
         stage.getCardLimitManager().getPlayRecord().reset();
     }
 
-    private void setBoxQuantityList() {
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        BetScreen betScreen = sceneBuilder.getBetScreen();
+    private void setBoxQuantityToStage(){
+        Stage stage = getSceneBuilder().getStage();
 
-        boxQuantityList = betScreen.getNumberBoxQuantity();
-
-        Stage stage = sceneBuilder.getStage();
-        if (boxQuantityList[cursor]>0)
+        if (boxQuantityList[cursor] > 0)
             stage.setNumberBoxQuantity(boxQuantityList[cursor]);
-        else
+        else{
             cursor++;
+            stage.init();
+        }
     }
 
     private boolean isAllGameCompleted() {
@@ -318,7 +319,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderAccessor implements SceneManageable{
+class ResultManager extends BuilderAccessor implements SceneManageable {
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -400,7 +401,7 @@ class ResultManager extends BuilderAccessor implements SceneManageable{
     }
 }
 
-class GameOverManager extends BuilderAccessor implements SceneManageable{
+class GameOverManager extends BuilderAccessor implements SceneManageable {
 
     public GameOverManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -420,7 +421,7 @@ class GameOverManager extends BuilderAccessor implements SceneManageable{
     }
 }
 
-class EndingManager extends BuilderAccessor implements SceneManageable{
+class EndingManager extends BuilderAccessor implements SceneManageable {
 
     public EndingManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -439,7 +440,7 @@ class EndingManager extends BuilderAccessor implements SceneManageable{
     }
 }
 
-class OptionManager extends BuilderAccessor implements SceneManageable{
+class OptionManager extends BuilderAccessor implements SceneManageable {
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
@@ -479,7 +480,7 @@ class OptionManager extends BuilderAccessor implements SceneManageable{
     }
 }
 
-class BuilderAccessor implements SceneFactory{
+class BuilderAccessor implements SceneFactory {
     private final SceneBuilder sceneBuilder;
     private GameScene gameScene;
 
