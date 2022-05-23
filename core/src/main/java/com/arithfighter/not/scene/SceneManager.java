@@ -10,6 +10,8 @@ public class SceneManager {
     private final BetManager betManager;
     private final StageManager stageManager;
     private final ResultManager resultManager;
+    private final GameOverManager gameOverManager;
+    private final EndingManager endingManager;
     private final OptionManager optionManager;
     private GameScene gameScene;
 
@@ -38,6 +40,12 @@ public class SceneManager {
 
         optionManager = new OptionManager(sceneBuilder);
         optionManager.initScene();
+
+        gameOverManager = new GameOverManager(sceneBuilder);
+        gameOverManager.initGameScene();
+
+        endingManager = new EndingManager(sceneBuilder);
+        endingManager.initScene();
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -79,6 +87,19 @@ public class SceneManager {
         stageManager.initScene();
         resultManager.run();
         gameScene = resultManager.getGameScene();
+    }
+
+    public void manageGameOver(){
+        resultManager.initScene();
+        gameOverManager.run();
+        gameScene = gameOverManager.getGameScene();
+    }
+
+    public void manageEnding(){
+        stageManager.initScene();
+        resultManager.initScene();
+        endingManager.run();
+        gameScene = endingManager.getGameScene();
     }
 
     public void manageOption() {
@@ -385,6 +406,44 @@ class ResultManager extends BuilderAccessor {
         if (tokenHolder.getTokens() >= 0) {
             pref.putInteger(keys[characterIndex], tokenHolder.getTokens());
             pref.flush();
+        }
+    }
+}
+
+class GameOverManager extends BuilderAccessor {
+
+    public GameOverManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    public void initGameScene() {
+        setGameScene(GameScene.GAME_OVER);
+    }
+
+    public void run() {
+        GameOver gameOver = getSceneBuilder().getGameOver();
+        if (gameOver.isQuit()) {
+            setGameScene(GameScene.MENU);
+            gameOver.init();
+        }
+    }
+}
+
+class EndingManager extends BuilderAccessor {
+
+    public EndingManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    public void initScene() {
+        setGameScene(GameScene.ENDING);
+    }
+
+    public void run() {
+        Ending ending = getSceneBuilder().getEnding();
+        if (ending.isLeave()) {
+            setGameScene(GameScene.MENU);
+            ending.init();
         }
     }
 }

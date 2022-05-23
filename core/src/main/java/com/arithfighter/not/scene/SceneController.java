@@ -5,15 +5,12 @@ import com.arithfighter.not.pojo.GameRecorder;
 
 public class SceneController {
     private GameScene gameScene;
-    private final SceneBuilder sceneBuilder;
     private final SceneManager sceneManager;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
 
         GameRecorder gameRecorder = new GameRecorder();
-
-        this.sceneBuilder = sceneBuilder;
 
         sceneManager = new SceneManager(sceneBuilder, gameRecorder);
         sceneManager.setGameScene(gameScene);
@@ -49,19 +46,12 @@ public class SceneController {
                 gameScene = sceneManager.getGameScene();
                 break;
             case GAME_OVER:
-                GameOver gameOver = sceneBuilder.getGameOver();
-
-                if (gameOver.isQuit()) {
-                    gameScene = GameScene.MENU;
-                    gameOver.init();
-                }
+                sceneManager.manageGameOver();
+                gameScene = sceneManager.getGameScene();
                 break;
             case ENDING:
-                Ending ending = sceneBuilder.getEnding();
-                if (ending.isLeave()) {
-                    gameScene = GameScene.MENU;
-                    ending.init();
-                }
+                sceneManager.manageEnding();
+                gameScene = sceneManager.getGameScene();
                 break;
             case OPTION:
                 sceneManager.manageOption();
