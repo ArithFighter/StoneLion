@@ -80,53 +80,11 @@ public class SceneManager {
         optionManager.setGameSave(gameSave);
     }
 
-    public void manageMenu() {
+    public void update(int index){
         for (SceneManageable s: sceneManageable)
             s.initScene();
-        sceneManageable[0].run();
-        gameScene = sceneFactories[0].getGamaScene();
-    }
-
-    public void manageBet() {
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[1].run();
-        gameScene = sceneFactories[1].getGamaScene();
-    }
-
-    public void manageStage() {
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[2].run();
-        gameScene = sceneFactories[2].getGamaScene();
-    }
-
-    public void manageResult() {
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[3].run();
-        gameScene = sceneFactories[3].getGamaScene();
-    }
-
-    public void manageGameOver(){
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[4].run();
-        gameScene = sceneFactories[4].getGamaScene();
-    }
-
-    public void manageEnding(){
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[5].run();
-        gameScene = sceneFactories[5].getGamaScene();
-    }
-
-    public void manageOption() {
-        for (SceneManageable s: sceneManageable)
-            s.initScene();
-        sceneManageable[6].run();
-        gameScene = sceneFactories[6].getGamaScene();
+        sceneManageable[index].run();
+        gameScene = sceneFactories[index].getGamaScene();
     }
 }
 

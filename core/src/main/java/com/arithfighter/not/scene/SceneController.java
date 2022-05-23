@@ -28,35 +28,11 @@ public class SceneController {
     }
 
     public void updateScene() {
-        switch (gameScene) {
-            case MENU:
-                sceneManager.manageMenu();
+        for (int i = 0;i<GameScene.values().length;i++){
+            if (gameScene == GameScene.values()[i]){
+                sceneManager.update(i);
                 gameScene = sceneManager.getGameScene();
-                break;
-            case BET:
-                sceneManager.manageBet();
-                gameScene = sceneManager.getGameScene();
-                break;
-            case STAGE:
-                sceneManager.manageStage();
-                gameScene = sceneManager.getGameScene();
-                break;
-            case RESULT:
-                sceneManager.manageResult();
-                gameScene = sceneManager.getGameScene();
-                break;
-            case GAME_OVER:
-                sceneManager.manageGameOver();
-                gameScene = sceneManager.getGameScene();
-                break;
-            case ENDING:
-                sceneManager.manageEnding();
-                gameScene = sceneManager.getGameScene();
-                break;
-            case OPTION:
-                sceneManager.manageOption();
-                gameScene = sceneManager.getGameScene();
-                break;
+            }
         }
     }
 }
