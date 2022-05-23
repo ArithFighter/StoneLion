@@ -4,6 +4,7 @@ import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
+import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 
 public class SceneManager {
     private final MenuManager menuManager;
@@ -84,7 +85,7 @@ public class SceneManager {
     }
 }
 
-class MenuManager extends BuilderService {
+class MenuManager extends BuilderAccessor {
     private GameScene gameScene = GameScene.MENU;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
@@ -152,7 +153,7 @@ class MenuManager extends BuilderService {
     }
 }
 
-class BetManager extends BuilderService {
+class BetManager extends BuilderAccessor {
     private GameScene gameScene = GameScene.BET;
     private GameRecorder gameRecorder;
     private TokenHolder tokenHolder;
@@ -193,7 +194,7 @@ class BetManager extends BuilderService {
     }
 }
 
-class StageManager extends BuilderService {
+class StageManager extends BuilderAccessor {
     private GameScene gameScene = GameScene.STAGE;
     private GameRecorder gameRecorder;
     int cursor = 0;
@@ -317,7 +318,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderService {
+class ResultManager extends BuilderAccessor {
     private GameScene gameScene = GameScene.RESULT;
     private GameRecorder gameRecorder;
     private GameSave gameSave;
@@ -404,24 +405,27 @@ class ResultManager extends BuilderService {
     }
 }
 
-class OptionManager extends BuilderService {
-    private GameScene gameScene = GameScene.OPTION;
+class GameOverManager extends BuilderAccessor{
+
+    public GameOverManager(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+}
+
+class OptionManager extends BuilderAccessor {
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
+        setGameScene(GameScene.OPTION);
     }
 
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
     }
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
     public void initScene() {
-        gameScene = GameScene.OPTION;
+        setGameScene(GameScene.OPTION);
     }
 
     public void run() {
@@ -429,7 +433,7 @@ class OptionManager extends BuilderService {
         OptionMenu optionMenu = sceneBuilder.getOptionMenu();
 
         if (optionMenu.isLeaving()) {
-            gameScene = optionMenu.getSceneTemp();
+            setGameScene(optionMenu.getSceneTemp());
             saveOption();
             optionMenu.init();
         }
@@ -449,14 +453,23 @@ class OptionManager extends BuilderService {
     }
 }
 
-class BuilderService {
+class BuilderAccessor {
     private final SceneBuilder sceneBuilder;
+    private GameScene gameScene;
 
-    public BuilderService(SceneBuilder sceneBuilder) {
+    public BuilderAccessor(SceneBuilder sceneBuilder) {
         this.sceneBuilder = sceneBuilder;
     }
 
     public SceneBuilder getSceneBuilder() {
         return sceneBuilder;
+    }
+
+    public void setGameScene(GameScene gameScene) {
+        this.gameScene = gameScene;
+    }
+
+    public GameScene getGameScene() {
+        return gameScene;
     }
 }
