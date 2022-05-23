@@ -138,9 +138,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void init() {
         startButton.init();
+        warningDialog.disable();
         for(GameCard card: gameCards.getGameCards())
             card.init();
-        warningDialog.disable();
     }
 
     @Override

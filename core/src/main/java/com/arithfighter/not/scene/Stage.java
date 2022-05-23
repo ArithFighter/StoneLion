@@ -137,7 +137,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (isStageNotComplete() && stageMessage.isNeutral()) {
+        if (isPlaying() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDown(x, y);
             else {
@@ -148,7 +148,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void touchDragged() {
-        if (isStageNotComplete() && stageMessage.isNeutral()) {
+        if (isPlaying() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchDragged();
             else {
@@ -159,7 +159,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void touchUp() {
-        if (isStageNotComplete() && stageMessage.isNeutral()) {
+        if (isPlaying() && stageMessage.isNeutral()) {
             if (pauseButton.isStart())
                 pauseMenu.touchUp();
             else {
@@ -169,7 +169,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         }
     }
 
-    private boolean isStageNotComplete() {
+    private boolean isPlaying() {
         return !stageMessage.isStageComplete() && !stageMessage.isExceedCardLimitAndStageNotComplete();
     }
 

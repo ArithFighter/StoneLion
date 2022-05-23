@@ -244,9 +244,7 @@ class StageManager extends BuilderAccessor implements SceneManageable{
         }
         if (stageAction.isWin()) {
             cursor++;
-            resultScreen.setRemainingTokens(tokenHolder.getTokens());
             stage.init();
-
         }
         if (isAllGameCompleted()) {
             setGameScene(GameScene.RESULT);
