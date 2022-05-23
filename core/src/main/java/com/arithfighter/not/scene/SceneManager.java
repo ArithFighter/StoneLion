@@ -284,7 +284,11 @@ class StageManager extends BuilderAccessor implements SceneManageable{
         BetScreen betScreen = sceneBuilder.getBetScreen();
 
         boxQuantityList = betScreen.getNumberBoxQuantity();
-        stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+
+        if (boxQuantityList[cursor]>0)
+            stage.setNumberBoxQuantity(boxQuantityList[cursor]);
+        else
+            cursor++;
     }
 
     private boolean isAllGameCompleted() {
