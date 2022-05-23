@@ -14,6 +14,7 @@ public class SceneManager {
     private final EndingManager endingManager;
     private final OptionManager optionManager;
     private GameScene gameScene;
+    private final SceneFactory[] sceneFactories;
 
     public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
         TokenHolder tokenHolder = new TokenHolder();
@@ -46,6 +47,16 @@ public class SceneManager {
 
         endingManager = new EndingManager(sceneBuilder);
         endingManager.initScene();
+
+        sceneFactories = new SceneFactory[]{
+                menuManager,
+                betManager,
+                stageManager,
+                resultManager,
+                gameOverManager,
+                endingManager,
+                optionManager
+        };
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -65,20 +76,20 @@ public class SceneManager {
     public void manageMenu() {
         optionManager.initScene();
         menuManager.run();
-        gameScene = menuManager.getGameScene();
+        gameScene = sceneFactories[0].getGamaScene();
     }
 
     public void manageBet() {
         stageManager.initScene();
         resultManager.initScene();
         betManager.run();
-        gameScene = betManager.getGameScene();
+        gameScene = sceneFactories[1].getGamaScene();
     }
 
     public void manageStage() {
         optionManager.initScene();
         stageManager.run();
-        gameScene = stageManager.getGameScene();
+        gameScene = sceneFactories[2].getGamaScene();
         menuManager.initScene();
         betManager.initScene();
     }
@@ -86,31 +97,40 @@ public class SceneManager {
     public void manageResult() {
         stageManager.initScene();
         resultManager.run();
-        gameScene = resultManager.getGameScene();
+        gameScene = sceneFactories[3].getGamaScene();
     }
 
     public void manageGameOver(){
         resultManager.initScene();
         gameOverManager.run();
-        gameScene = gameOverManager.getGameScene();
+        gameScene = sceneFactories[4].getGamaScene();
     }
 
     public void manageEnding(){
         stageManager.initScene();
         resultManager.initScene();
         endingManager.run();
-        gameScene = endingManager.getGameScene();
+        gameScene = sceneFactories[5].getGamaScene();
     }
 
     public void manageOption() {
         stageManager.initScene();
         optionManager.run();
-        gameScene = optionManager.getGameScene();
+        gameScene = sceneFactories[6].getGamaScene();
         menuManager.initScene();
     }
 }
 
-class MenuManager extends BuilderAccessor {
+interface SceneFactory{
+    GameScene getGamaScene();
+}
+
+interface SceneManageable {
+    void initScene();
+    void run();
+}
+
+class MenuManager extends BuilderAccessor{
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -171,6 +191,7 @@ class MenuManager extends BuilderAccessor {
         else
             tokenHolder.gain(pref.getInteger(keys[characterIndex]));
     }
+
 }
 
 class BetManager extends BuilderAccessor {
@@ -488,7 +509,7 @@ class OptionManager extends BuilderAccessor {
     }
 }
 
-class BuilderAccessor {
+class BuilderAccessor implements SceneFactory{
     private final SceneBuilder sceneBuilder;
     private GameScene gameScene;
 
@@ -504,7 +525,8 @@ class BuilderAccessor {
         this.gameScene = gameScene;
     }
 
-    public GameScene getGameScene() {
+    @Override
+    public GameScene getGamaScene() {
         return gameScene;
     }
 }
