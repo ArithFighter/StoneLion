@@ -66,7 +66,6 @@ public class NumberBoxDisplacer {
         randomNumListProducer.clear();
         numberList.clear();
         maskAnimation.init();
-        isAllNumZero = false;
         randomIndexPicker.clear();
     }
 
@@ -131,9 +130,7 @@ public class NumberBoxDisplacer {
 
         numberListInspector.inspectNumberList(numbers);
 
-        if (numberListInspector.isAllNumberAreZero()) {
-            isAllNumZero = true;
-        }
+        isAllNumZero = numberListInspector.isAllNumberAreZero();
     }
 
     public void draw(SpriteBatch batch) {
