@@ -7,19 +7,16 @@ import com.badlogic.gdx.Preferences;
 
 public class SceneManager {
     private final MenuManager menuManager;
-    private final BetManager betManager;
-    private final StageManager stageManager;
     private final ResultManager resultManager;
-    private final GameOverManager gameOverManager;
-    private final EndingManager endingManager;
     private final OptionManager optionManager;
     private GameScene gameScene;
     private final SceneFactory[] sceneFactories;
+    private final SceneManageable[] sceneManageable;
 
     public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
         TokenHolder tokenHolder = new TokenHolder();
 
-        stageManager = new StageManager(sceneBuilder);
+        StageManager stageManager = new StageManager(sceneBuilder);
         stageManager.initScene();
         stageManager.setGameRecorder(gameRecorder);
         stageManager.setTokenHolder(tokenHolder);
@@ -29,7 +26,7 @@ public class SceneManager {
         menuManager.setGameRecorder(gameRecorder);
         menuManager.setTokenHolder(tokenHolder);
 
-        betManager = new BetManager(sceneBuilder);
+        BetManager betManager = new BetManager(sceneBuilder);
         betManager.initScene();
         betManager.setGameRecorder(gameRecorder);
         betManager.setTokenHolder(tokenHolder);
@@ -42,13 +39,23 @@ public class SceneManager {
         optionManager = new OptionManager(sceneBuilder);
         optionManager.initScene();
 
-        gameOverManager = new GameOverManager(sceneBuilder);
-        gameOverManager.initGameScene();
+        GameOverManager gameOverManager = new GameOverManager(sceneBuilder);
+        gameOverManager.initScene();
 
-        endingManager = new EndingManager(sceneBuilder);
+        EndingManager endingManager = new EndingManager(sceneBuilder);
         endingManager.initScene();
 
         sceneFactories = new SceneFactory[]{
+                menuManager,
+                betManager,
+                stageManager,
+                resultManager,
+                gameOverManager,
+                endingManager,
+                optionManager
+        };
+
+        sceneManageable = new SceneManageable[]{
                 menuManager,
                 betManager,
                 stageManager,
@@ -74,50 +81,52 @@ public class SceneManager {
     }
 
     public void manageMenu() {
-        optionManager.initScene();
-        menuManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[0].run();
         gameScene = sceneFactories[0].getGamaScene();
     }
 
     public void manageBet() {
-        stageManager.initScene();
-        resultManager.initScene();
-        betManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[1].run();
         gameScene = sceneFactories[1].getGamaScene();
     }
 
     public void manageStage() {
-        optionManager.initScene();
-        stageManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[2].run();
         gameScene = sceneFactories[2].getGamaScene();
-        menuManager.initScene();
-        betManager.initScene();
     }
 
     public void manageResult() {
-        stageManager.initScene();
-        resultManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[3].run();
         gameScene = sceneFactories[3].getGamaScene();
     }
 
     public void manageGameOver(){
-        resultManager.initScene();
-        gameOverManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[4].run();
         gameScene = sceneFactories[4].getGamaScene();
     }
 
     public void manageEnding(){
-        stageManager.initScene();
-        resultManager.initScene();
-        endingManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[5].run();
         gameScene = sceneFactories[5].getGamaScene();
     }
 
     public void manageOption() {
-        stageManager.initScene();
-        optionManager.run();
+        for (SceneManageable s: sceneManageable)
+            s.initScene();
+        sceneManageable[6].run();
         gameScene = sceneFactories[6].getGamaScene();
-        menuManager.initScene();
     }
 }
 
@@ -130,7 +139,7 @@ interface SceneManageable {
     void run();
 }
 
-class MenuManager extends BuilderAccessor{
+class MenuManager extends BuilderAccessor implements SceneManageable{
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -194,7 +203,7 @@ class MenuManager extends BuilderAccessor{
 
 }
 
-class BetManager extends BuilderAccessor {
+class BetManager extends BuilderAccessor implements SceneManageable{
     private GameRecorder gameRecorder;
     private TokenHolder tokenHolder;
 
@@ -230,7 +239,7 @@ class BetManager extends BuilderAccessor {
     }
 }
 
-class StageManager extends BuilderAccessor {
+class StageManager extends BuilderAccessor implements SceneManageable{
     private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
@@ -349,7 +358,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderAccessor {
+class ResultManager extends BuilderAccessor implements SceneManageable{
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -431,13 +440,14 @@ class ResultManager extends BuilderAccessor {
     }
 }
 
-class GameOverManager extends BuilderAccessor {
+class GameOverManager extends BuilderAccessor implements SceneManageable{
 
     public GameOverManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
-    public void initGameScene() {
+    @Override
+    public void initScene() {
         setGameScene(GameScene.GAME_OVER);
     }
 
@@ -450,7 +460,7 @@ class GameOverManager extends BuilderAccessor {
     }
 }
 
-class EndingManager extends BuilderAccessor {
+class EndingManager extends BuilderAccessor implements SceneManageable{
 
     public EndingManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -469,7 +479,7 @@ class EndingManager extends BuilderAccessor {
     }
 }
 
-class OptionManager extends BuilderAccessor {
+class OptionManager extends BuilderAccessor implements SceneManageable{
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
