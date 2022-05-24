@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
+    private Font pauseFont;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final StageMessage stageMessage;
@@ -28,6 +29,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         Texture[] cards = textureManager.getTextures(textureManager.getKeys()[1]);
         Texture[] spriteSheet = textureManager.getTextures(textureManager.getKeys()[3]);
+
+        pauseFont = new Font(22);
+        pauseFont.setColor(Color.WHITE);
 
         cardLimitManager = new CardLimitManager();
 
@@ -45,6 +49,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
+        pauseButton.getButton().setFont(pauseFont);
 
         stageMessage = new StageMessage(450, 500) {
             @Override
@@ -180,6 +185,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.dispose();
         cardLimitManager.dispose();
         recordDisplacer.dispose();
+        pauseFont.dispose();
     }
 }
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class ResultScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font winOrLost;
     private final Font tokenMessage;
+    private final Font buttonFont;
     private final SceneControlButton continueButton;
     private final SceneControlButton quitButton;
     private int remainingTokens = 0;
@@ -22,11 +23,16 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         textProvider = new TextProvider();
 
+        buttonFont = new Font(22);
+        buttonFont.setColor(Color.WHITE);
+
         continueButton = new SceneControlButton(textures[6], 2);
         continueButton.getButton().setPosition(600, 150);
+        continueButton.getButton().setFont(buttonFont);
 
         quitButton = new SceneControlButton(textures[6], 2);
         quitButton.getButton().setPosition(600, 150);
+        quitButton.getButton().setFont(buttonFont);
 
         winOrLost = new Font(40);
         winOrLost.setColor(Color.WHITE);
@@ -127,6 +133,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
 
     @Override
     public void dispose() {
+        buttonFont.dispose();
         winOrLost.dispose();
         tokenMessage.dispose();
         continueButton.dispose();

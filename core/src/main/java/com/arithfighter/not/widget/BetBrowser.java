@@ -7,18 +7,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BetBrowser {
-    private final Font font;
+    private Font font;
     private final ArrowButtons arrows;
-    private final int fontSize;
     private boolean isButtonLock = false;
     private int[] betList;
     private int cursor = 0;
 
     public BetBrowser(Texture[] textures) {
         arrows = new ArrowButtons(textures, 0.8f);
+    }
 
-        fontSize = 25;
-        font = new Font(fontSize);
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public int getBet(){
@@ -41,6 +41,7 @@ public class BetBrowser {
     }
 
     public void draw(SpriteBatch batch){
+        int fontSize = font.getSize();
         int width = fontSize*9;
             String content = String.valueOf(getBet());
 
@@ -74,7 +75,6 @@ public class BetBrowser {
     }
 
     public void dispose() {
-        font.dispose();
         arrows.dispose();
     }
 }

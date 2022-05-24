@@ -60,6 +60,5 @@ public class SumBox {
     }
 
     public void dispose() {
-        font.dispose();
     }
 }

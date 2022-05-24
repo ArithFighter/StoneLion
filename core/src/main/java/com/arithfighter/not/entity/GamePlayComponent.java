@@ -4,12 +4,14 @@ import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.CardAnimation;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.gecko.GeckoAnimate;
 import com.arithfighter.not.gecko.GeckoController;
 import com.arithfighter.not.gecko.GeckoState;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.gecko.GeckoSprite;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,6 +19,7 @@ import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
+    private Font sumFont;
     private Player player;
     private final SumBox sumBox;
     private final CardAnimation cardFadeOut;
@@ -30,9 +33,13 @@ public class GamePlayComponent {
 
         cardReset = new CardAnimation(spriteSheets[1]);
 
+        sumFont = new Font(24);
+        sumFont.setColor(Color.WHITE);
+
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
         sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
+        sumBox.setFont(sumFont);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures) {
             @Override
@@ -169,6 +176,7 @@ public class GamePlayComponent {
     }
 
     public void dispose() {
+        sumFont.dispose();
         numberBoxDisplacer.dispose();
         sumBox.dispose();
     }

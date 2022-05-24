@@ -1,11 +1,13 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.widget.dialog.OptionDialog;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -15,6 +17,7 @@ public class PauseMenu {
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
+    private Font font;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
@@ -27,9 +30,13 @@ public class PauseMenu {
         int y = 300;
         int margin = 100;
 
+        font = new Font(22);
+        font.setColor(Color.WHITE);
+
         dialog = new OptionDialog(textures);
         dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
         dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
+        dialog.setFont(font);
 
         background = new SpriteWidget(textures[1], 5f);
         background.setPosition(x, y - margin);
@@ -124,18 +131,25 @@ public class PauseMenu {
         for (SceneControlButton button : buttons.getButtons())
             button.dispose();
         dialog.disposeTexts();
+        buttons.dispose();
+        font.dispose();
     }
 }
 
 class ButtonProducer {
     private final SceneControlButton[] buttons;
+    private Font font;
 
     public ButtonProducer(Texture[] textures) {
+        font = new Font(22);
+        font.setColor(Color.WHITE);
+
         buttons = new SceneControlButton[3];
 
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new SceneControlButton(textures[6], 1.8f);
             buttons[i].getButton().setPosition(540, 250 + 150 * i);
+            buttons[i].getButton().setFont(font);
         }
     }
 
@@ -160,5 +174,9 @@ class ButtonProducer {
             Button b = buttons[i].getButton();
             b.draw(batch, texts[i]);
         }
+    }
+
+    public void dispose(){
+        font.dispose();
     }
 }

@@ -31,17 +31,22 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
+    private Font font;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         this.soundManager = soundManager;
 
+        font = new Font(22);
+
         betBrowser = new BetBrowser(textures);
+        betBrowser.setFont(font);
         betBrowser.setPosition(500, 200);
         int[] betList = {5, 10, 20, 50, 100};
         betBrowser.setBetList(betList);
 
         startButton = new SceneControlButton(textures[6], 2f);
+        startButton.getButton().setFont(font);
         startButton.getButton().setPosition(1000, 80);
 
         fontManager = new FontManager();
@@ -296,6 +301,7 @@ class WarningDialog {
 
 class GameCard {
     private final Font codeFont;
+    private final Font cardFont;
     private final Button gameCard;
     private final Rectangle rectangle;
     private final int fontSize;
@@ -304,7 +310,11 @@ class GameCard {
     private String cardCode;
 
     public GameCard(Texture texture) {
+        cardFont = new Font(24);
+        cardFont.setColor(Color.WHITE);
+
         gameCard = new Button(texture, 3f);
+        gameCard.setFont(cardFont);
 
         rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
 
