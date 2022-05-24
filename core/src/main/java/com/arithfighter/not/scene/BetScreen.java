@@ -375,21 +375,15 @@ class GameCard {
 }
 
 class FontManager {
-    private final Font[] fonts;
+    private final Font font;
     private String cardLimit;
     private String betHint;
     private String tokens;
     private String totalBet;
 
     public FontManager() {
-        fonts = new Font[]{
-                new Font(24),
-                new Font(24),
-                new Font(30),
-                new Font(24)
-        };
-        for (Font f:fonts)
-            f.setColor(Color.WHITE);
+        font = new Font(24);
+        font.setColor(Color.WHITE);
     }
 
     public void setCardLimit(String cardLimit) {
@@ -409,18 +403,17 @@ class FontManager {
     }
 
     public void draw(SpriteBatch batch) {
-        fonts[0].draw(batch, cardLimit, 800, 650);
+        font.draw(batch, cardLimit, 800, 650);
 
-        fonts[1].draw(batch, tokens, 800, 600);
+        font.draw(batch, tokens, 800, 600);
 
-        fonts[2].draw(batch, betHint, 400, 300);
+        font.draw(batch, betHint, 400, 300);
 
-        fonts[3].draw(batch, totalBet, 100, 150);
+        font.draw(batch, totalBet, 100, 150);
     }
 
     public void dispose() {
-        for (Font f:fonts)
-            f.dispose();
+        font.dispose();
     }
 }
 
