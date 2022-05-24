@@ -18,7 +18,8 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private GameScene sceneTemp;
-    private final Font font;
+    private final Font buttonFont;
+    private final Font controlFont;
 
     public OptionMenu(TextureManager textureManager, SoundManager soundManager){
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -26,19 +27,22 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         textProvider = new TextProvider();
 
-        font= new Font(22);
-        font.setColor(Color.WHITE);
+        buttonFont = new Font(22);
+        buttonFont.setColor(Color.WHITE);
+
+        controlFont = new Font(22);
+        controlFont.setColor(Color.WHITE);
 
         leaveButton = new SceneControlButton(textures[6], 1.8f);
-        leaveButton.getButton().setFont(font);
+        leaveButton.getButton().setFont(buttonFont);
         leaveButton.getButton().setPosition(500,120);
 
         soundControl = new ControlBar(textures, 6);
-        soundControl.setFont(font);
+        soundControl.setFont(controlFont);
         soundControl.setPosition(500,600);
 
         musicControl = new ControlBar(textures, 6);
-        musicControl.setFont(font);
+        musicControl.setFont(controlFont);
         musicControl.setPosition(500,400);
 
     }
@@ -119,9 +123,7 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     }
 
     public void dispose() {
-        soundControl.dispose();
-        musicControl.dispose();
-        leaveButton.getButton().dispose();
-        font.dispose();
+        buttonFont.dispose();
+        controlFont.dispose();
     }
 }

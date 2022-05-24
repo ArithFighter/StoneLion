@@ -182,7 +182,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         gamePlayComponent.dispose();
         pauseMenu.dispose();
         playerCollection.dispose();
-        pauseButton.dispose();
         cardLimitManager.dispose();
         recordDisplacer.dispose();
         pauseFont.dispose();

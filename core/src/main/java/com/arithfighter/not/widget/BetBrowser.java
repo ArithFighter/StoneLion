@@ -73,8 +73,4 @@ public class BetBrowser {
     public void deactivate() {
         arrows.off();
     }
-
-    public void dispose() {
-        arrows.dispose();
-    }
 }

@@ -128,8 +128,6 @@ public class PauseMenu {
     }
 
     public void dispose() {
-        for (SceneControlButton button : buttons.getButtons())
-            button.dispose();
         dialog.disposeTexts();
         buttons.dispose();
         font.dispose();

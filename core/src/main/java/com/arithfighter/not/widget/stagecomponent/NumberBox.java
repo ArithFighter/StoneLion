@@ -68,6 +68,5 @@ public class NumberBox{
         else if (number < yellowNum) font.setColor(Color.YELLOW);
     }
 
-    public void dispose() {
-    }
+
 }

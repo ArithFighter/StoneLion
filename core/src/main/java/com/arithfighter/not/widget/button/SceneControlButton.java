@@ -31,8 +31,4 @@ public class SceneControlButton{
     public void init(){
         sceneChange = SceneChange.NEUTRAL;
     }
-
-    public void dispose(){
-        button.dispose();
-    }
 }

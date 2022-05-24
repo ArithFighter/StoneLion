@@ -219,8 +219,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void dispose() {
         fontManager.dispose();
-        betBrowser.dispose();
-        startButton.dispose();
         for (GameCard card : gameCards.getGameCards())
             card.dispose();
         warningDialog.dispose();
@@ -380,7 +378,6 @@ class GameCard {
 
     public void dispose() {
         codeFont.dispose();
-        gameCard.dispose();
     }
 }
 

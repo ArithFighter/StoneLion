@@ -72,7 +72,4 @@ public class Button{
     public void off(){
         buttonState = State.OFF;
     }
-
-    public void dispose(){
-    }
 }

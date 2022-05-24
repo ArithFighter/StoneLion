@@ -87,9 +87,4 @@ public class ControlBar {
     public void deactivate() {
         arrows.off();
     }
-
-    public void dispose() {
-        font.dispose();
-        arrows.dispose();
-    }
 }

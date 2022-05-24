@@ -14,10 +14,12 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 
 public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font largeFont;
     private final Font smallFont;
+    private final Font tokenFont;
     private final VisibleWidget highLight;
     private final SceneControlButton optionButton;
     private final SceneControlButton startButton;
@@ -43,6 +45,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         smallFont = new Font(22);
         smallFont.setColor(Color.WHITE);
+
+        tokenFont = new Font(22);
+        tokenFont.setColor(Color.WHITE);
 
         startButton = new SceneControlButton(textures[6], 1.8f);
         startButton.getButton().setFont(smallFont);
@@ -99,7 +104,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         animation.draw(batch, 0.1f);
 
-        smallFont.draw(batch, "tokens: "+ savedTokens[getSelectIndex()], 900,450);
+        tokenFont.draw(batch, "tokens: "+ savedTokens[getSelectIndex()], 900,450);
     }
 
     private void setButtonHighLightPosition(){
@@ -156,6 +161,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     public void dispose() {
         largeFont.dispose();
         smallFont.dispose();
+        tokenFont.dispose();
     }
 }
 

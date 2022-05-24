@@ -50,7 +50,4 @@ public class ArrowButtons {
         leftArrow.off();
         rightArrow.off();
     }
-
-    public void dispose() {
-    }
 }

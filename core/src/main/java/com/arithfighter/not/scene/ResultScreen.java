@@ -136,7 +136,5 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         buttonFont.dispose();
         winOrLost.dispose();
         tokenMessage.dispose();
-        continueButton.dispose();
-        quitButton.dispose();
     }
 }

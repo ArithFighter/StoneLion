@@ -46,6 +46,5 @@ public class ConversationDialog extends Dialog{
 
     public void dispose(){
         disposeTexts();
-        skipButton.dispose();
     }
 }

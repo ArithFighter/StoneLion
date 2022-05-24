@@ -70,7 +70,5 @@ public class OptionDialog extends Dialog {
 
     public void dispose(){
         disposeTexts();
-        yesButton.dispose();
-        noButton.dispose();
     }
 }

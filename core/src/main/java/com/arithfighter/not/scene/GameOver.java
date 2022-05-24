@@ -59,6 +59,5 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     @Override
     public void dispose() {
         text.dispose();
-        quitButton.dispose();
     }
 }

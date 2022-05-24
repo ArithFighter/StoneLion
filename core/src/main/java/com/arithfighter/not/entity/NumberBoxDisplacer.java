@@ -283,8 +283,6 @@ class NumberBoxProducer {
 
     public void dispose(){
         font.dispose();
-        for (NumberBox numberBox : numberBoxes)
-            numberBox.dispose();
     }
 }
 
