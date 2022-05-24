@@ -246,7 +246,7 @@ class NumberBoxAnimation {
 
 class NumberBoxProducer {
     private final NumberBox[] numberBoxes;
-    private Font font;
+    private final Font font;
     private final static int maxQuantity = 9;
 
     public NumberBoxProducer(Texture texture){
@@ -254,7 +254,7 @@ class NumberBoxProducer {
 
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
 
-        font = new Font(24);
+        font = new Font(30);
 
         for (int i = 0; i < maxQuantity; i++) {
             numberBoxes[i] = new NumberBox(texture);

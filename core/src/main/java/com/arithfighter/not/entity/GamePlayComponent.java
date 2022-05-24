@@ -19,7 +19,7 @@ import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private Font sumFont;
+    private final Font sumFont;
     private Player player;
     private final SumBox sumBox;
     private final CardAnimation cardFadeOut;
@@ -33,7 +33,7 @@ public class GamePlayComponent {
 
         cardReset = new CardAnimation(spriteSheets[1]);
 
-        sumFont = new Font(24);
+        sumFont = new Font(30);
         sumFont.setColor(Color.WHITE);
 
         sumBox = new SumBox(textures[2]);

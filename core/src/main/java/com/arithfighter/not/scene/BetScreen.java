@@ -31,16 +31,21 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
-    private Font font;
+    private final Font font;
+    private final Font browserFont;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         this.soundManager = soundManager;
 
         font = new Font(22);
+        font.setColor(Color.WHITE);
+
+        browserFont = new Font(22);
+        browserFont.setColor(Color.WHITE);
 
         betBrowser = new BetBrowser(textures);
-        betBrowser.setFont(font);
+        betBrowser.setFont(browserFont);
         betBrowser.setPosition(500, 200);
         int[] betList = {5, 10, 20, 50, 100};
         betBrowser.setBetList(betList);
@@ -222,6 +227,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         for (GameCard card : gameCards.getGameCards())
             card.dispose();
         warningDialog.dispose();
+        font.dispose();
+        browserFont.dispose();
     }
 }
 
