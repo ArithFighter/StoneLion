@@ -16,7 +16,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent {
-    private final Font characterName;
+    private final Font largeFont;
+    private final Font smallFont;
     private final VisibleWidget highLight;
     private final SceneControlButton optionButton;
     private final SceneControlButton startButton;
@@ -24,7 +25,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final MaskAnimation animation;
     private final PanelButtonProducer buttonProducer;
     private final SoundManager soundManager;
-    private final Font savedTokensText;
     private final int[] savedTokens = new int[CharacterList.values().length];
 
     public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
@@ -38,19 +38,21 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         highLight = new SpriteWidget(textures[7], 1.8f);
 
+        largeFont = new Font(36);
+        largeFont.setColor(Color.WHITE);
+
+        smallFont = new Font(22);
+        smallFont.setColor(Color.WHITE);
+
         startButton = new SceneControlButton(textures[6], 1.8f);
+        startButton.getButton().setFont(smallFont);
         startButton.getButton().setPosition(900, 120);
 
         optionButton = new SceneControlButton(textures[6], 1.8f);
+        optionButton.getButton().setFont(smallFont);
         optionButton.getButton().setPosition(1000, 600);
 
-        characterName = new Font(36);
-        characterName.setColor(Color.WHITE);
-
         animation = new MaskAnimation(getMasks(panelQuantity, textures[5]));
-
-        savedTokensText = new Font(20);
-        savedTokensText.setColor(Color.WHITE);
     }
 
     private Mask[] getMasks(int quantity, Texture texture){
@@ -93,11 +95,11 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         optionButton.getButton().draw(batch, "Option");
 
-        characterName.draw(batch, CharacterList.values()[getSelectIndex()].name(), 900, 500);
+        largeFont.draw(batch, CharacterList.values()[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);
 
-        savedTokensText.draw(batch, "tokens: "+ savedTokens[getSelectIndex()], 900,450);
+        smallFont.draw(batch, "tokens: "+ savedTokens[getSelectIndex()], 900,450);
     }
 
     private void setButtonHighLightPosition(){
@@ -152,10 +154,8 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     }
 
     public void dispose() {
-        startButton.getButton().dispose();
-        optionButton.getButton().dispose();
-        characterName.dispose();
-        savedTokensText.dispose();
+        largeFont.dispose();
+        smallFont.dispose();
     }
 }
 

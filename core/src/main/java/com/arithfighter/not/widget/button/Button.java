@@ -74,6 +74,5 @@ public class Button{
     }
 
     public void dispose(){
-        font.dispose();
     }
 }

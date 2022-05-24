@@ -9,9 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ControlBar {
     private final VisibleWidget[] grids;
-    private final Font font;
+    private Font font;
     private final ArrowButtons arrows;
-    private final int fontSize;
     private final ValueHolder valueHolder;
     private boolean isButtonLock = false;
 
@@ -24,9 +23,10 @@ public class ControlBar {
             grids[i] = new SpriteWidget(textures[5], 0.5f);
 
         arrows = new ArrowButtons(textures, 0.8f);
+    }
 
-        fontSize = 25;
-        font = new Font(fontSize);
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public void setValue(int value){
@@ -58,6 +58,7 @@ public class ControlBar {
         RawWidget widget = grids[0].getWidget();
         Point point = widget.getPoint();
 
+        int fontSize = font.getSize();
         font.draw(batch, content, point.getX() - content.length() * fontSize - 50, point.getY() + fontSize / 2f);
 
         Point arrowPoint = new Point(point.getX()-50, point.getY());

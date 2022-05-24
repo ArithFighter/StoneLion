@@ -8,13 +8,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SumBox {
-    private final Font text;
+    private Font font;
     private final FontWidget widget;
     private int capacity;
 
     public SumBox(Texture texture) {
         widget = new SpriteWidget(texture, 8, 36);
-        text = new Font(widget.getFontSize());
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public void setPosition(float x, float y) {
@@ -22,6 +25,7 @@ public class SumBox {
     }
 
     public void draw(int number, SpriteBatch batch) {
+        widget.setFontSize(font.getSize());
         widget.draw(batch);
 
         changeColor();
@@ -35,8 +39,8 @@ public class SumBox {
         float textX = widget.getCenterX(sum);
         float textY = widget.getCenterY();
 
-        text.setColor(Color.WHITE);
-        text.draw(batch, sum, textX, textY);
+        font.setColor(Color.WHITE);
+        font.draw(batch, sum, textX, textY);
     }
 
     public void setCapacity(int capacity) {
@@ -56,6 +60,6 @@ public class SumBox {
     }
 
     public void dispose() {
-        text.dispose();
+        font.dispose();
     }
 }

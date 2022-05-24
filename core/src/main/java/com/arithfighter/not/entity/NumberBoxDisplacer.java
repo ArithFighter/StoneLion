@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.animate.Animator;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
@@ -245,6 +246,7 @@ class NumberBoxAnimation {
 
 class NumberBoxProducer {
     private final NumberBox[] numberBoxes;
+    private Font font;
     private final static int maxQuantity = 9;
 
     public NumberBoxProducer(Texture texture){
@@ -252,8 +254,11 @@ class NumberBoxProducer {
 
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
 
+        font = new Font(24);
+
         for (int i = 0; i < maxQuantity; i++) {
             numberBoxes[i] = new NumberBox(texture);
+            numberBoxes[i].setFont(font);
             numberBoxes[i].setPosition(
                     numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
                     numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
@@ -277,6 +282,7 @@ class NumberBoxProducer {
     }
 
     public void dispose(){
+        font.dispose();
         for (NumberBox numberBox : numberBoxes)
             numberBox.dispose();
     }

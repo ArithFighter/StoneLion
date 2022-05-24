@@ -3,9 +3,11 @@ package com.arithfighter.not.scene;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureManager;
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.pojo.TextProvider;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,6 +18,7 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private GameScene sceneTemp;
+    private final Font font;
 
     public OptionMenu(TextureManager textureManager, SoundManager soundManager){
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -23,13 +26,19 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
 
         textProvider = new TextProvider();
 
+        font= new Font(22);
+        font.setColor(Color.WHITE);
+
         leaveButton = new SceneControlButton(textures[6], 1.8f);
+        leaveButton.getButton().setFont(font);
         leaveButton.getButton().setPosition(500,120);
 
         soundControl = new ControlBar(textures, 6);
+        soundControl.setFont(font);
         soundControl.setPosition(500,600);
 
         musicControl = new ControlBar(textures, 6);
+        musicControl.setFont(font);
         musicControl.setPosition(500,400);
 
     }
@@ -113,5 +122,6 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
         soundControl.dispose();
         musicControl.dispose();
         leaveButton.getButton().dispose();
+        font.dispose();
     }
 }

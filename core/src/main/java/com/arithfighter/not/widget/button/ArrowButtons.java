@@ -5,14 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ArrowButtons {
-    private final Button leftArrow;
-    private final Button rightArrow;
+    private final PanelButton leftArrow;
+    private final PanelButton rightArrow;
     private Point point;
 
     public ArrowButtons(Texture[] textures, float scale) {
-        leftArrow = new Button(textures[8], scale);
+        leftArrow = new PanelButton(textures[8], scale);
 
-        rightArrow = new Button(textures[9], scale);
+        rightArrow = new PanelButton(textures[9], scale);
     }
 
     public void setPoint(Point point) {
@@ -25,12 +25,12 @@ public class ArrowButtons {
 
     public void drawLeftArrow(SpriteBatch batch) {
         leftArrow.setPosition(point.getX(), point.getY());
-        leftArrow.draw(batch, "");
+        leftArrow.draw(batch);
     }
 
     public void drawRightArrow(SpriteBatch batch, float width) {
         rightArrow.setPosition(point.getX() + width, point.getY());
-        rightArrow.draw(batch, "");
+        rightArrow.draw(batch);
     }
 
     public boolean isLeftActive() {
@@ -52,7 +52,5 @@ public class ArrowButtons {
     }
 
     public void dispose() {
-        leftArrow.dispose();
-        rightArrow.dispose();
     }
 }

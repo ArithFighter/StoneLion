@@ -8,13 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBox{
-    private final Font text;
+    private Font font;
     private final FontWidget widget;
 
     public NumberBox(Texture texture) {
         widget = new SpriteWidget(texture, 3.5f, 32);
+    }
 
-        text = new Font(widget.getFontSize());
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public void setPosition(float x, float y){
@@ -30,6 +32,8 @@ public class NumberBox{
     }
 
     public void draw(SpriteBatch batch, int number) {
+        widget.setFontSize(font.getSize());
+
         setSprite();
 
         widget.draw(batch);
@@ -49,7 +53,7 @@ public class NumberBox{
 
         changeNumColor(number);
 
-        text.draw(batch, content, textX, textY);
+        font.draw(batch, content, textX, textY);
     }
 
     private void changeNumColor(int number) {
@@ -57,14 +61,13 @@ public class NumberBox{
         int blueNum = 21;
         int yellowNum = 99;
 
-        if (number < purpleNum) text.setColor(Color.PURPLE);
+        if (number < purpleNum) font.setColor(Color.PURPLE);
 
-        else if (number <= blueNum) text.setColor(Color.BLUE);
+        else if (number <= blueNum) font.setColor(Color.BLUE);
 
-        else if (number < yellowNum) text.setColor(Color.YELLOW);
+        else if (number < yellowNum) font.setColor(Color.YELLOW);
     }
 
     public void dispose() {
-        text.dispose();
     }
 }
