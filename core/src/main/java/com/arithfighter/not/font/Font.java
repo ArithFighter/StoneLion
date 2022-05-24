@@ -8,17 +8,21 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Font {
     private final FreeTypeFontGenerator fontGenerator;
+    private final FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private final BitmapFont font;
 
     public Font(int size){
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fontstyle/pcsenior.ttf"));
 
-        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter =
-                new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         fontParameter.size = size;
 
         font = fontGenerator.generateFont(fontParameter);
+    }
+
+    public int getSize(){
+        return fontParameter.size;
     }
 
     public void setColor(Color color){
