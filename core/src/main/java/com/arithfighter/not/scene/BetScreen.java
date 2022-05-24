@@ -434,7 +434,7 @@ class NumberBoxQuantityGenerator {
     private final int quantityArrayLength = 3;
 
     public NumberBoxQuantityGenerator() {
-        quantityCandidates = new int[]{1, 3, 6, 9};
+        quantityCandidates = new int[]{2, 4, 7, 9};
 
         RandomNumProducer indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
 
