@@ -31,6 +31,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final GameCardCollection gameCards;
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
+    private int totalActiveGames;
 
     public BetScreen(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
@@ -75,7 +76,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getBet() {
-        return betBrowser.getBet();
+        int q = 0;
+
+        for (int i = 0;i<gameCards.getGameCards().length;i++){
+            if (gameCards.getGameCards()[i].isOn())
+                q++;
+        }
+        return betBrowser.getBet()*q;
     }
 
     public boolean isStartGame() {
@@ -148,6 +155,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.update();
         betBrowser.update();
 
+        totalActiveGames = getBet()/ betBrowser.getBet();
+
         if (startButton.getButton().isOn()){
             checkBetIsLegalOrShowWarning();
             if (isNoGameCardOn()){
@@ -180,11 +189,13 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public void draw() {
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
+        String totalBetCalculation =
+                "total bet = "+betBrowser.getBet()+ " X "+totalActiveGames+" = "+getBet();
 
         fontManager.setCardLimit(texts[0] + cardLimit);
         fontManager.setBetHint(texts[1]);
         fontManager.setTokens("Your tokens: "+yourTokens);
-        fontManager.setTotalBet("total bet = ");
+        fontManager.setTotalBet(totalBetCalculation);
         fontManager.draw(batch);
 
         betBrowser.draw(batch);
