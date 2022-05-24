@@ -9,8 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Dialog {
-    private final Font text1;
-    private final Font text2;
+    private final Font text;
     private final VisibleWidget dialog;
     private String content1;
     private String content2;
@@ -20,11 +19,8 @@ public class Dialog {
     public Dialog(Texture texture, float scale, int fontSize){
         dialog = new SpriteWidget(texture, scale);
 
-        text1 = new Font(fontSize);
-        text1.setColor(Color.BLACK);
-
-        text2 = new Font(fontSize);
-        text2.setColor(Color.BLACK);
+        text = new Font(fontSize);
+        text.setColor(Color.BLACK);
 
         point = new Point();
 
@@ -56,12 +52,11 @@ public class Dialog {
         float width = dialog.getWidget().getWidth();
         float height = dialog.getWidget().getHeight();
 
-        text1.draw(batch, content1, point.getX()+width/9, point.getY()+height*3/4);
-        text2.draw(batch, content2, point.getX()+width/9, point.getY()+height*5/8-fontSize/2f);
+        text.draw(batch, content1, point.getX()+width/9, point.getY()+height*3/4);
+        text.draw(batch, content2, point.getX()+width/9, point.getY()+height*5/8-fontSize/2f);
     }
 
     public void disposeTexts(){
-        text1.dispose();
-        text2.dispose();
+        text.dispose();
     }
 }
