@@ -41,7 +41,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         betBrowser = new BetBrowser(textures);
         betBrowser.setPosition(500, 200);
-        betBrowser.setBetList(new int[]{5,10,20,50,100});
+        betBrowser.setBetList(new int[]{5, 10, 20, 50, 100});
 
         startButton = new SceneControlButton(textures[6], 2f);
         startButton.getButton().setPosition(1000, 80);
@@ -67,7 +67,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int length = gameCards.getGameCards().length;
         int[] array = new int[length];
 
-        for (int i = 0;i< length;i++){
+        for (int i = 0; i < length; i++) {
             if (gameCards.getGameCards()[i].isOn())
                 array[i] = gameCards.getGameCards()[i].getBoxQuantity();
         }
@@ -78,11 +78,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public int getBet() {
         int q = 0;
 
-        for (int i = 0;i<gameCards.getGameCards().length;i++){
+        for (int i = 0; i < gameCards.getGameCards().length; i++) {
             if (gameCards.getGameCards()[i].isOn())
                 q++;
         }
-        return betBrowser.getBet()*q;
+        return betBrowser.getBet() * q;
     }
 
     public boolean isStartGame() {
@@ -95,11 +95,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int x = cursorPos.getX();
         int y = cursorPos.getY();
 
-        if (warningDialog.isNotShow()){
+        if (warningDialog.isNotShow()) {
             betBrowser.activate(x, y);
 
             startButton.getButton().on(x, y);
-        }else{
+        } else {
             startButton.getButton().off();
             startButton.init();
             warningDialog.disable();
@@ -108,7 +108,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void touchDragged() {
-        if (warningDialog.isNotShow()){
+        if (warningDialog.isNotShow()) {
             betBrowser.deactivate();
 
             startButton.getButton().off();
@@ -117,7 +117,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void touchUp() {
-        if (warningDialog.isNotShow()){
+        if (warningDialog.isNotShow()) {
             if (betBrowser.isButtonActive())
                 soundManager.playTouchedSound();
 
@@ -128,7 +128,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
             startButton.getButton().off();
 
-            for (GameCard card: gameCards.getGameCards())
+            for (GameCard card : gameCards.getGameCards())
                 card.touchDown(getCursorPos().getX(), getCursorPos().getY());
         }
     }
@@ -138,7 +138,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         numberBoxQuantityGenerator.update();
 
         int[] array = numberBoxQuantityGenerator.getQuantityGroup();
-        for (int i = 0;i<array.length;i++)
+        for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
     }
 
@@ -146,7 +146,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public void init() {
         startButton.init();
         warningDialog.disable();
-        for(GameCard card: gameCards.getGameCards())
+        for (GameCard card : gameCards.getGameCards())
             card.init();
     }
 
@@ -155,29 +155,29 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         startButton.update();
         betBrowser.update();
 
-        totalActiveGames = getBet()/ betBrowser.getBet();
+        totalActiveGames = getBet() / betBrowser.getBet();
 
-        if (startButton.getButton().isOn()){
+        if (startButton.getButton().isOn()) {
             checkBetIsLegalOrShowWarning();
-            if (isNoGameCardOn()){
+            if (isNoGameCardOn()) {
                 warningDialog.setNoGameChoose();
                 warningDialog.setShow();
             }
         }
     }
 
-    private void checkBetIsLegalOrShowWarning(){
-        if (getBet()>yourTokens){
+    private void checkBetIsLegalOrShowWarning() {
+        if (getBet() > yourTokens) {
             warningDialog.setNoEnoughToken();
             warningDialog.setShow();
         }
     }
 
-    private boolean isNoGameCardOn(){
+    private boolean isNoGameCardOn() {
         boolean flag = true;
         int length = gameCards.getGameCards().length;
 
-        for (int i =0;i<length;i++){
+        for (int i = 0; i < length; i++) {
             if (gameCards.getGameCards()[i].isOn())
                 flag = false;
         }
@@ -189,11 +189,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         SpriteBatch batch = getBatch();
         String[] texts = textProvider.getBetScreenTexts();
         String totalBetCalculation =
-                "total bet = "+betBrowser.getBet()+ " X "+totalActiveGames+" = "+getBet();
+                "total bet = " + betBrowser.getBet() + " X " + totalActiveGames + " = " + getBet();
 
         fontManager.setCardLimit(texts[0] + cardLimit);
         fontManager.setBetHint(texts[1]);
-        fontManager.setTokens("Your tokens: "+yourTokens);
+        fontManager.setTokens("Your tokens: " + yourTokens);
         fontManager.setTotalBet(totalBetCalculation);
         fontManager.draw(batch);
 
@@ -201,7 +201,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        for (GameCard card: gameCards.getGameCards())
+        for (GameCard card : gameCards.getGameCards())
             card.draw(batch);
 
         warningDialog.draw(batch);
@@ -212,7 +212,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontManager.dispose();
         betBrowser.dispose();
         startButton.dispose();
-        for (GameCard card: gameCards.getGameCards())
+        for (GameCard card : gameCards.getGameCards())
             card.dispose();
         warningDialog.dispose();
     }
@@ -226,7 +226,7 @@ class GameCardCollection {
         gameCards = new GameCard[totalCards];
 
         String[] codeArray = {"A", "B", "C"};
-        for (int i = 0; i < totalCards; i++){
+        for (int i = 0; i < totalCards; i++) {
             gameCards[i] = new GameCard(textures[1]);
             gameCards[i].setCardCode(codeArray[i]);
         }
@@ -235,18 +235,10 @@ class GameCardCollection {
         gameCards[0].setPoint(point);
 
         int margin = 15;
-        gameCards[1].setPoint(
-                new Point(
-                        gameCards[0].getRectangle().getWidth() + point.getX() + margin,
-                        point.getY()
-                )
-        );
-        gameCards[2].setPoint(
-                new Point(
-                        gameCards[0].getRectangle().getWidth()*2 + point.getX() + margin*2,
-                        point.getY()
-                )
-        );
+        float x = gameCards[0].getRectangle().getWidth() + margin;
+
+        for (int i = 1; i < totalCards; i++)
+            gameCards[i].setPoint(new Point(point.getX() + x * i, point.getY()));
     }
 
     public GameCard[] getGameCards() {
@@ -254,12 +246,12 @@ class GameCardCollection {
     }
 }
 
-class WarningDialog{
+class WarningDialog {
     private final Dialog dialog;
     private boolean isShow = false;
 
-    public WarningDialog(Texture texture){
-        dialog = new Dialog(texture, 35,20);
+    public WarningDialog(Texture texture) {
+        dialog = new Dialog(texture, 35, 20);
         Dialog dialog = this.dialog;
         this.dialog.getPoint().set(
                 WindowSetting.CENTER_X - dialog.getDialog().getWidget().getWidth() / 2,
@@ -271,7 +263,7 @@ class WarningDialog{
         isShow = true;
     }
 
-    public void disable(){
+    public void disable() {
         isShow = false;
     }
 
@@ -279,22 +271,22 @@ class WarningDialog{
         return !isShow;
     }
 
-    public void setNoEnoughToken(){
+    public void setNoEnoughToken() {
         dialog.setContent1("You don't have enough ");
         dialog.setContent2("tokens.");
     }
 
-    public void setNoGameChoose(){
+    public void setNoGameChoose() {
         dialog.setContent1("Please choose one game ");
         dialog.setContent2("at least.");
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         if (isShow)
             dialog.drawDialog(batch);
     }
 
-    public void dispose(){
+    public void dispose() {
         dialog.disposeTexts();
     }
 }
@@ -335,7 +327,7 @@ class GameCard {
         return boxQuantity;
     }
 
-    public boolean isOn(){
+    public boolean isOn() {
         return gameCard.isOn();
     }
 
@@ -422,7 +414,7 @@ class FontManager {
     public void draw(SpriteBatch batch) {
         cardLimitFont.draw(batch, cardLimit, 800, 650);
 
-        tokensFont.draw(batch, tokens, 800,600);
+        tokensFont.draw(batch, tokens, 800, 600);
 
         betHintFont.draw(batch, betHint, 400, 300);
 
