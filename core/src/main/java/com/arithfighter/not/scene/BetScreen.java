@@ -6,6 +6,7 @@ import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.BetBrowser;
 import com.arithfighter.not.widget.button.Button;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
@@ -135,9 +135,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     public void setNumberBoxQuantity() {
         numberBoxQuantityGenerator.init();
-        numberBoxQuantityGenerator.update();
 
-        int[] array = numberBoxQuantityGenerator.getQuantityGroup();
+        int[] array = numberBoxQuantityGenerator.getQuantityArray();
         for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
     }
@@ -431,35 +430,29 @@ class FontManager {
 
 class NumberBoxQuantityGenerator {
     private final int[] quantityCandidates;
-    private final List<Integer> quantityGroup;
-    private final RandomNumProducer indexPicker;
+    private final RandomNumListProducer indexListProducer;
     private final int quantityArrayLength = 3;
 
     public NumberBoxQuantityGenerator() {
         quantityCandidates = new int[]{1, 3, 6, 9};
 
-        quantityGroup = new LinkedList<>();
+        RandomNumProducer indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
 
-        indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
+        indexListProducer = new RandomNumListProducer(indexPicker);
+        indexListProducer.setMaxQuantity(quantityArrayLength);
     }
 
-    public int[] getQuantityGroup() {
+    public int[] getQuantityArray() {
         int[] quantityArray = new int[quantityArrayLength];
+        List<Integer> indexArray = indexListProducer.getNumbers();
 
         for (int i = 0; i < quantityArrayLength; i++)
-            quantityArray[i] = quantityGroup.get(i);
+            quantityArray[i] = quantityCandidates[indexArray.get(i)];
 
         return quantityArray;
     }
 
-    public void update() {
-        while (quantityGroup.size() < quantityArrayLength) {
-            int candidateCursor = indexPicker.getRandomNum();
-            quantityGroup.add(quantityCandidates[candidateCursor]);
-        }
-    }
-
     public void init() {
-        quantityGroup.clear();
+        indexListProducer.clear();
     }
 }
