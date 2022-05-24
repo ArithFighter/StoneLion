@@ -167,8 +167,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     private void checkBetIsLegalOrShowWarning(){
-        if (betBrowser.getBet()>yourTokens||
-                betBrowser.getBet()<=0){
+        if (getBet()>yourTokens){
             warningDialog.setNoEnoughToken();
             warningDialog.setShow();
         }
@@ -286,8 +285,8 @@ class WarningDialog{
     }
 
     public void setNoGameChoose(){
-        dialog.setContent1("Please choose the game");
-        dialog.setContent2("cards.");
+        dialog.setContent1("Please choose one game ");
+        dialog.setContent2("at least.");
     }
 
     public void draw(SpriteBatch batch){
