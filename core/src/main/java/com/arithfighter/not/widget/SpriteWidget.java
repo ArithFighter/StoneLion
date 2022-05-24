@@ -54,8 +54,9 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
         return point.getY() + midHeight;
     }
 
-    public int getFontSize(){
-        return fontSize;
+    @Override
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
     }
 
     private void setSprite(){

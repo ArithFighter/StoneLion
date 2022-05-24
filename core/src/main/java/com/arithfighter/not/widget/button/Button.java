@@ -8,16 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Button{
-    private final Font font;
+    private Font font;
     private final DetectableFontWidget button;
 
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
     public Button(Texture texture, float scale){
-        button = new SpriteWidget(texture, scale, 22);
+        button = new SpriteWidget(texture, scale);
+    }
 
-        font = new Font(button.getFontSize());
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public void setPosition(float x, float y){
@@ -25,6 +27,7 @@ public class Button{
     }
 
     public void draw(SpriteBatch batch, String content){
+        button.setFontSize(font.getSize());
         if (isOn())
             changeColor(batch, content);
         else
