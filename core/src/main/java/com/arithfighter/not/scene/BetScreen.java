@@ -39,7 +39,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textProvider = new TextProvider();
 
         betBrowser = new BetBrowser(textures);
-        betBrowser.setPosition(500, 150);
+        betBrowser.setPosition(500, 200);
         betBrowser.setBetList(new int[]{5,10,20,50,100});
 
         startButton = new SceneControlButton(textures[6], 2f);
@@ -182,8 +182,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         String[] texts = textProvider.getBetScreenTexts();
 
         fontManager.setCardLimit(texts[0] + cardLimit);
-        fontManager.setBet(texts[1]);
+        fontManager.setBetHint(texts[1]);
         fontManager.setTokens("Your tokens: "+yourTokens);
+        fontManager.setTotalBet("total bet = ");
         fontManager.draw(batch);
 
         betBrowser.draw(batch);
@@ -370,33 +371,42 @@ class GameCard {
 
 class FontManager {
     private final Font cardLimitFont;
-    private final Font betFont;
+    private final Font betHintFont;
     private final Font tokensFont;
+    private final Font totalBetFont;
     private String cardLimit;
-    private String bet;
+    private String betHint;
     private String tokens;
+    private String totalBet;
 
     public FontManager() {
         cardLimitFont = new Font(24);
         cardLimitFont.setColor(Color.WHITE);
 
-        betFont = new Font(30);
-        betFont.setColor(Color.WHITE);
+        betHintFont = new Font(30);
+        betHintFont.setColor(Color.WHITE);
 
         tokensFont = new Font(24);
         tokensFont.setColor(Color.WHITE);
+
+        totalBetFont = new Font(24);
+        totalBetFont.setColor(Color.WHITE);
     }
 
     public void setCardLimit(String cardLimit) {
         this.cardLimit = cardLimit;
     }
 
-    public void setBet(String bet) {
-        this.bet = bet;
+    public void setBetHint(String betHint) {
+        this.betHint = betHint;
     }
 
     public void setTokens(String tokens) {
         this.tokens = tokens;
+    }
+
+    public void setTotalBet(String totalBet) {
+        this.totalBet = totalBet;
     }
 
     public void draw(SpriteBatch batch) {
@@ -404,13 +414,16 @@ class FontManager {
 
         tokensFont.draw(batch, tokens, 800,600);
 
-        betFont.draw(batch, bet, 400, 250);
+        betHintFont.draw(batch, betHint, 400, 300);
+
+        totalBetFont.draw(batch, totalBet, 100, 150);
     }
 
     public void dispose() {
         cardLimitFont.dispose();
         tokensFont.dispose();
-        betFont.dispose();
+        betHintFont.dispose();
+        totalBetFont.dispose();
     }
 }
 
