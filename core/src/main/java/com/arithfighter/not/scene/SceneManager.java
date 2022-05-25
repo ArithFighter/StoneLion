@@ -348,7 +348,7 @@ class ResultManager extends BuilderAccessor implements SceneManageable {
         SceneBuilder sceneBuilder = getSceneBuilder();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
-        int totalStages = 6;
+        int totalStages = 2;
 
         if (resultScreen.isContinue()) {
             if (isEnd(totalStages))

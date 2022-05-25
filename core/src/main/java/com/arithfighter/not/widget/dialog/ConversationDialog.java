@@ -1,6 +1,7 @@
 package com.arithfighter.not.widget.dialog;
 
 import com.arithfighter.not.WindowSetting;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.button.Button;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,10 @@ public class ConversationDialog extends Dialog{
         buttonWidth = textures[6].getWidth()*1.2f;
 
         getPoint().set(WindowSetting.CENTER_X-getDialog().getWidget().getWidth()/2,0);
+    }
+
+    public void setButtonFont(Font font){
+        skipButton.setFont(font);
     }
 
     public Button getSkipButton(){

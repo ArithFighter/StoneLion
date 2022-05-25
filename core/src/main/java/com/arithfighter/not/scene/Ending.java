@@ -2,7 +2,6 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureService;
-import com.arithfighter.not.pojo.ConversationHolder;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
@@ -14,15 +13,10 @@ public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
 
         textAdventure = new TextAdventure(widgets, panels);
 
-        ConversationHolder conversationHolder = new ConversationHolder();
-        conversationHolder.setConversations(
-                new String[][]{
+        textAdventure.setConversations(new String[][]{
                         {"This is the ending","when you finish all stages"},
                         {"The content would be depend", "on character or your score"}
-                }
-        );
-
-        textAdventure.setConversationHolder(conversationHolder);
+                });
     }
 
     public boolean isLeave(){

@@ -1,7 +1,6 @@
 package com.arithfighter.not;
 
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.pojo.ConversationHolder;
 import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
@@ -14,18 +13,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TextAdventure{
     private final Font font;
+    private final Font buttonFont;
     private final ConversationDialog conversationDialog;
     private int cursor = 0;
     private boolean isButtonLock = false;
-    private ConversationHolder conversationHolder;
     private final MugShot mugShot;
+    private String[][] conversations;
 
     public TextAdventure(Texture[] widgets, Texture[] panels){
         font = new Font(28);
         font.setColor(Color.BLACK);
 
+        buttonFont = new Font(22);
+        buttonFont.setColor(Color.BLACK);
+
         conversationDialog = new ConversationDialog(widgets);
         conversationDialog.setFont(font);
+        conversationDialog.setButtonFont(buttonFont);
 
         mugShot = new MugShot(widgets[3], panels[0]);
 
@@ -33,8 +37,8 @@ public class TextAdventure{
         mugShot.setPosition(widget.getWidth()*9/10, widget.getHeight()*0.7f);
     }
 
-    public void setConversationHolder(ConversationHolder conversationHolder){
-        this.conversationHolder = conversationHolder;
+    public void setConversations(String[][] conversations){
+        this.conversations = conversations;
     }
 
     public void init(){
@@ -42,8 +46,6 @@ public class TextAdventure{
     }
 
     public void update(){
-        String[][] conversations = conversationHolder.getConversations();
-
         handleSkipButton();
 
         //reset cursor with key R
@@ -57,7 +59,7 @@ public class TextAdventure{
     }
 
     public boolean isAllConversationFinished(){
-        return cursor>=conversationHolder.getConversations().length;
+        return cursor>=conversations.length;
     }
 
     private void handleSkipButton(){
@@ -91,6 +93,7 @@ public class TextAdventure{
 
     public void dispose(){
         font.dispose();
+        buttonFont.dispose();
     }
 }
 
