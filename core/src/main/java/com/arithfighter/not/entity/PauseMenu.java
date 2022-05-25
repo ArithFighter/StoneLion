@@ -18,22 +18,16 @@ public class PauseMenu {
     private final SoundManager soundManager;
     private final TextProvider textProvider;
     private final Font font;
-    private final Font buttonFont;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
 
-
         textProvider = new TextProvider();
 
-        buttons = new ButtonProducer(textures);
-
-
         font = new Font(20);
-        font.setColor(Color.WHITE);
-
-        buttonFont = new Font(22);
         font.setColor(Color.BLACK);
+
+        buttons = new ButtonProducer(textures, font);
 
         dialog = new OptionDialog(textures);
         dialog.setFont(font);
@@ -135,20 +129,14 @@ public class PauseMenu {
     }
 
     public void dispose() {
-        buttons.dispose();
         font.dispose();
-        buttonFont.dispose();
     }
 }
 
 class ButtonProducer {
     private final SceneControlButton[] buttons;
-    private final Font font;
 
-    public ButtonProducer(Texture[] textures) {
-        font = new Font(22);
-        font.setColor(Color.WHITE);
-
+    public ButtonProducer(Texture[] textures, Font font) {
         buttons = new SceneControlButton[3];
 
         for (int i = 0; i < buttons.length; i++) {
@@ -179,9 +167,5 @@ class ButtonProducer {
             Button b = buttons[i].getButton();
             b.draw(batch, texts[i]);
         }
-    }
-
-    public void dispose(){
-        font.dispose();
     }
 }
