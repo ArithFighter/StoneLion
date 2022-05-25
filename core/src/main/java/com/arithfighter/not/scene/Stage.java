@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
-    private Font pauseFont;
+    private final Font pauseFont;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final StageMessage stageMessage;
@@ -28,14 +28,13 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     public Stage(TextureManager textureManager, SoundManager soundManager) {
         Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
         Texture[] cards = textureManager.getTextures(textureManager.getKeys()[1]);
-        Texture[] spriteSheet = textureManager.getTextures(textureManager.getKeys()[3]);
 
         pauseFont = new Font(22);
         pauseFont.setColor(Color.WHITE);
 
         cardLimitManager = new CardLimitManager();
 
-        gamePlayComponent = new GamePlayComponent(textures, spriteSheet, soundManager);
+        gamePlayComponent = new GamePlayComponent(textureManager, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
 
