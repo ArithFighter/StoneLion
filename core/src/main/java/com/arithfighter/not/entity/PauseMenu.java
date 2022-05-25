@@ -17,26 +17,33 @@ public class PauseMenu {
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
-    private Font font;
+    private final Font font;
+    private final Font buttonFont;
 
     public PauseMenu(Texture[] textures, SoundManager soundManager) {
         this.soundManager = soundManager;
+
 
         textProvider = new TextProvider();
 
         buttons = new ButtonProducer(textures);
 
+
+        font = new Font(20);
+        font.setColor(Color.WHITE);
+
+        buttonFont = new Font(22);
+        font.setColor(Color.BLACK);
+
+        dialog = new OptionDialog(textures);
+        dialog.setFont(font);
+        dialog.setButtonFont(font);
+        dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
+        dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
+
         int x = 500;
         int y = 300;
         int margin = 100;
-
-        font = new Font(22);
-        font.setColor(Color.WHITE);
-
-        dialog = new OptionDialog(textures);
-        dialog.setContent1(textProvider.getPauseMenuTexts()[3]);
-        dialog.setContent2(textProvider.getPauseMenuTexts()[4]);
-        dialog.setFont(font);
 
         background = new SpriteWidget(textures[1], 5f);
         background.setPosition(x, y - margin);
@@ -128,15 +135,15 @@ public class PauseMenu {
     }
 
     public void dispose() {
-        dialog.disposeTexts();
         buttons.dispose();
         font.dispose();
+        buttonFont.dispose();
     }
 }
 
 class ButtonProducer {
     private final SceneControlButton[] buttons;
-    private Font font;
+    private final Font font;
 
     public ButtonProducer(Texture[] textures) {
         font = new Font(22);

@@ -10,7 +10,7 @@ public class ConversationDialog extends Dialog{
     private final float buttonWidth;
 
     public ConversationDialog(Texture[] textures) {
-        super(textures[11], 25, 28);
+        super(textures[11], 25);
 
         skipButton = new Button(textures[6], 1.2f);
 
@@ -42,9 +42,5 @@ public class ConversationDialog extends Dialog{
 
     public void deactivate(){
         skipButton.off();
-    }
-
-    public void dispose(){
-        disposeTexts();
     }
 }

@@ -12,7 +12,7 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton noButton;
 
     public OptionDialog(Texture[] textures){
-        super(textures[10], 35, 20);
+        super(textures[10], 35);
         getPoint().set(
                 WindowSetting.CENTER_X - getDialog().getWidget().getWidth() / 2,
                 WindowSetting.CENTER_Y - getDialog().getWidget().getHeight() / 2
@@ -21,7 +21,7 @@ public class OptionDialog extends Dialog {
         noButton = new SceneControlButton(textures[6], 1.2f);
     }
 
-    public void setFont(Font font) {
+    public void setButtonFont(Font font) {
         yesButton.getButton().setFont(font);
         noButton.getButton().setFont(font);
     }
@@ -66,9 +66,5 @@ public class OptionDialog extends Dialog {
     public void deactivate(){
         yesButton.getButton().off();
         noButton.getButton().off();
-    }
-
-    public void dispose(){
-        disposeTexts();
     }
 }

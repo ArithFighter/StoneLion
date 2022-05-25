@@ -262,10 +262,15 @@ class GameCardCollection {
 
 class WarningDialog {
     private final Dialog dialog;
+    private final Font font;
     private boolean isShow = false;
 
     public WarningDialog(Texture texture) {
-        dialog = new Dialog(texture, 35, 20);
+        font = new Font(20);
+        font.setColor(Color.BLACK);
+
+        dialog = new Dialog(texture, 35);
+        dialog.setFont(font);
         dialog.getPoint().set(
                 WindowSetting.CENTER_X - dialog.getDialog().getWidget().getWidth() / 2,
                 WindowSetting.CENTER_Y - dialog.getDialog().getWidget().getHeight() / 2
@@ -300,7 +305,7 @@ class WarningDialog {
     }
 
     public void dispose() {
-        dialog.disposeTexts();
+        font.dispose();
     }
 }
 
@@ -309,7 +314,6 @@ class GameCard {
     private final Font cardFont;
     private final Button gameCard;
     private final Rectangle rectangle;
-    private final int fontSize;
     private Point point;
     private int boxQuantity;
     private String cardCode;
@@ -323,8 +327,7 @@ class GameCard {
 
         rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
 
-        fontSize = 36;
-        codeFont = new Font(fontSize);
+        codeFont = new Font(36);
         codeFont.setColor(Color.PURPLE);
     }
 
@@ -362,6 +365,8 @@ class GameCard {
                 batch,
                 boxQuantity + " box"
         );
+
+        int fontSize = codeFont.getSize();
         codeFont.draw(
                 batch,
                 cardCode,
@@ -385,6 +390,7 @@ class GameCard {
 
     public void dispose() {
         codeFont.dispose();
+        cardFont.dispose();
     }
 }
 

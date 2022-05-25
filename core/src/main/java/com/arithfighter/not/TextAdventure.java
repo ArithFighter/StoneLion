@@ -1,5 +1,6 @@
 package com.arithfighter.not;
 
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.ConversationHolder;
 import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
@@ -7,10 +8,12 @@ import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.dialog.ConversationDialog;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TextAdventure{
+    private final Font font;
     private final ConversationDialog conversationDialog;
     private int cursor = 0;
     private boolean isButtonLock = false;
@@ -18,7 +21,11 @@ public class TextAdventure{
     private final MugShot mugShot;
 
     public TextAdventure(Texture[] widgets, Texture[] panels){
+        font = new Font(28);
+        font.setColor(Color.BLACK);
+
         conversationDialog = new ConversationDialog(widgets);
+        conversationDialog.setFont(font);
 
         mugShot = new MugShot(widgets[3], panels[0]);
 
@@ -83,7 +90,7 @@ public class TextAdventure{
     }
 
     public void dispose(){
-        conversationDialog.dispose();
+        font.dispose();
     }
 }
 
