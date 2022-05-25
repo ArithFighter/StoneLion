@@ -4,12 +4,11 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.widget.GameCard;
+import com.arithfighter.not.entity.GameCardCollection;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.BetBrowser;
-import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
@@ -223,34 +222,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 }
 
-class GameCardCollection {
-    private final GameCard[] gameCards;
-
-    public GameCardCollection(Texture[] textures) {
-        int totalCards = 3;
-        gameCards = new GameCard[totalCards];
-
-        String[] codeArray = {"A", "B", "C"};
-        for (int i = 0; i < totalCards; i++) {
-            gameCards[i] = new GameCard(textures[1]);
-            gameCards[i].setCardCode(codeArray[i]);
-        }
-
-        Point point = new Point(100, 400);
-        gameCards[0].setPoint(point);
-
-        int margin = 15;
-        float x = gameCards[0].getRectangle().getWidth() + margin;
-
-        for (int i = 1; i < totalCards; i++)
-            gameCards[i].setPoint(new Point(point.getX() + x * i, point.getY()));
-    }
-
-    public GameCard[] getGameCards() {
-        return gameCards;
-    }
-}
-
 class WarningDialog {
     private final Dialog dialog;
     private final Font font;
@@ -300,91 +271,6 @@ class WarningDialog {
     }
 }
 
-class GameCard {
-    private final Font codeFont;
-    private final Font cardFont;
-    private final Button gameCard;
-    private final Rectangle rectangle;
-    private Point point;
-    private int boxQuantity;
-    private String cardCode;
-
-    public GameCard(Texture texture) {
-        cardFont = new Font(24);
-        cardFont.setColor(Color.WHITE);
-
-        gameCard = new Button(texture, 3f);
-        gameCard.setFont(cardFont);
-
-        rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
-
-        codeFont = new Font(36);
-        codeFont.setColor(Color.PURPLE);
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
-        gameCard.setPosition(point.getX(), point.getY());
-    }
-
-    public Point getPoint() {
-        return point;
-    }
-
-    public int getBoxQuantity() {
-        return boxQuantity;
-    }
-
-    public boolean isOn() {
-        return gameCard.isOn();
-    }
-
-    public void setBoxQuantity(int boxQuantity) {
-        this.boxQuantity = boxQuantity;
-    }
-
-    public void setCardCode(String cardCode) {
-        this.cardCode = cardCode;
-    }
-
-    public void draw(SpriteBatch batch) {
-        gameCard.draw(
-                batch,
-                boxQuantity + " box"
-        );
-
-        int fontSize = codeFont.getSize();
-        codeFont.draw(
-                batch,
-                cardCode,
-                point.getX() + rectangle.getWidth() - fontSize,
-                point.getY() + rectangle.getHeight() - fontSize / 2f
-        );
-    }
-
-    public void init() {
-        gameCard.off();
-    }
-
-    public void touchDown(float x, float y) {
-        if (gameCard.isOnButton(x, y)) {
-            if (gameCard.isOn())
-                gameCard.off();
-            else
-                gameCard.on(x, y);
-        }
-    }
-
-    public void dispose() {
-        codeFont.dispose();
-        cardFont.dispose();
-    }
-}
-
 class TextDisplacer {
     private Font font;
     private String cardLimit;
@@ -424,34 +310,31 @@ class TextDisplacer {
 }
 
 class FontService{
-    private final Font font22;
-    private final Font browserFont;
-    private final Font font24;
+    private final Font[] fonts;
 
     public FontService(){
-        font22 = new Font(22);
-
-        font24 = new Font(24);
-
-        browserFont = new Font(28);
+        fonts = new Font[]{
+                new Font(22),
+                new Font(24),
+                new Font(28),
+        };
     }
 
     public Font getFont24() {
-        return font24;
+        return fonts[0];
     }
 
     public Font getFont22() {
-        return font22;
+        return fonts[1];
     }
 
     public Font getBrowserFont() {
-        return browserFont;
+        return fonts[2];
     }
 
     public void dispose(){
-        font22.dispose();
-        browserFont.dispose();
-        font24.dispose();
+        for (Font f:fonts)
+            f.dispose();
     }
 }
 
