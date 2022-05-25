@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.pojo.Point;
@@ -34,8 +34,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final Font font;
     private final Font browserFont;
 
-    public BetScreen(TextureManager textureManager, SoundManager soundManager) {
-        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
+    public BetScreen(TextureService textureService, SoundManager soundManager) {
+        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         this.soundManager = soundManager;
 
         font = new Font(22);

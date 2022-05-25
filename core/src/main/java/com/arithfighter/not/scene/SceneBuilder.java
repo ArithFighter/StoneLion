@@ -2,7 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.badlogic.gdx.Preferences;
@@ -12,8 +12,8 @@ public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
 
-    public SceneBuilder(TextureManager textureManager, SoundManager soundManager){
-        super(textureManager, soundManager);
+    public SceneBuilder(TextureService textureService, SoundManager soundManager){
+        super(textureService, soundManager);
 
         mouseEvents = new MouseEvent[]{
                 getCharacterMenu(),
@@ -81,20 +81,20 @@ class SceneCollection{
     private final Ending ending;
     private final GameOver gameOver;
 
-    public SceneCollection(TextureManager textureManager, SoundManager soundManager){
-        characterMenu = new CharacterMenu(textureManager, soundManager);
+    public SceneCollection(TextureService textureService, SoundManager soundManager){
+        characterMenu = new CharacterMenu(textureService, soundManager);
 
-        stage = new Stage(textureManager, soundManager);
+        stage = new Stage(textureService, soundManager);
 
-        optionMenu = new OptionMenu(textureManager, soundManager);
+        optionMenu = new OptionMenu(textureService, soundManager);
 
-        betScreen = new BetScreen(textureManager, soundManager);
+        betScreen = new BetScreen(textureService, soundManager);
 
-        resultScreen = new ResultScreen(textureManager);
+        resultScreen = new ResultScreen(textureService);
 
-        ending = new Ending(textureManager);
+        ending = new Ending(textureService);
 
-        gameOver = new GameOver(textureManager);
+        gameOver = new GameOver(textureService);
     }
 
     public void setAudioVolume(GameSave gameSave){

@@ -1,6 +1,6 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
@@ -25,16 +25,16 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private int numberBoxQuantity;
     private final CardLimitManager cardLimitManager;
 
-    public Stage(TextureManager textureManager, SoundManager soundManager) {
-        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
-        Texture[] cards = textureManager.getTextures(textureManager.getKeys()[1]);
+    public Stage(TextureService textureService, SoundManager soundManager) {
+        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
 
         pauseFont = new Font(22);
         pauseFont.setColor(Color.WHITE);
 
         cardLimitManager = new CardLimitManager();
 
-        gamePlayComponent = new GamePlayComponent(textureManager, soundManager);
+        gamePlayComponent = new GamePlayComponent(textureService, soundManager);
 
         pauseMenu = new PauseMenu(textures, soundManager);
 

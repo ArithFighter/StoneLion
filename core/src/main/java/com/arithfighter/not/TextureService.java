@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextureManager {
+public class TextureService {
     private final Map<String, Texture[]> textureMap;
     private final String[] keys = {
             "Widgets",
@@ -15,7 +15,7 @@ public class TextureManager {
             "SpriteSheets"
     };
 
-    public TextureManager(MyAssetProcessor assetProcessor) {
+    public TextureService(MyAssetProcessor assetProcessor) {
         textureMap = new HashMap<>();
 
         textureMap.put(keys[0], assetProcessor.getWidgets());

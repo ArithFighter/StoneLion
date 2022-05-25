@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.ControlBar;
@@ -21,8 +21,8 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     private final Font buttonFont;
     private final Font controlFont;
 
-    public OptionMenu(TextureManager textureManager, SoundManager soundManager){
-        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
+    public OptionMenu(TextureService textureService, SoundManager soundManager){
+        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         this.soundManager = soundManager;
 
         textProvider = new TextProvider();

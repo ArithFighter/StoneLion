@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity;
 
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.CardAnimation;
 import com.arithfighter.not.audio.SoundManager;
@@ -29,9 +29,9 @@ public class GamePlayComponent {
     private final GeckoController geckoController;
     private SpriteBatch batch;
 
-    public GamePlayComponent(TextureManager textureManager, SoundManager soundManager) {
-        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
-        Texture[] spriteSheets = textureManager.getTextures(textureManager.getKeys()[3]);
+    public GamePlayComponent(TextureService textureService, SoundManager soundManager) {
+        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
         cardFadeOut = new CardAnimation(spriteSheets[1]);
 

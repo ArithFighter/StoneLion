@@ -23,7 +23,7 @@ public class Main extends ApplicationAdapter {
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
-    private TextureManager textureManager;
+    private TextureService textureService;
     private GameSave gameSave;
     private GameDataDisplacer gameDataDisplacer;
 
@@ -33,7 +33,7 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.load();
 
-        textureManager = new TextureManager(assetProcessor);
+        textureService = new TextureService(assetProcessor);
 
         batch = new SpriteBatch();
 
@@ -41,7 +41,7 @@ public class Main extends ApplicationAdapter {
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(textureManager, audioHandler.getSoundManager());
+        sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager());
 
         sceneBuilder.setBatch(batch);
 
@@ -145,6 +145,6 @@ public class Main extends ApplicationAdapter {
 
         audioHandler.dispose();
 
-        textureManager.dispose();
+        textureService.dispose();
     }
 }

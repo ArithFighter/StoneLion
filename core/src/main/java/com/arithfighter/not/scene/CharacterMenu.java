@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.widget.VisibleWidget;
@@ -14,7 +14,6 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 
 public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font largeFont;
@@ -29,9 +28,9 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
     private final SoundManager soundManager;
     private final int[] savedTokens = new int[CharacterList.values().length];
 
-    public CharacterMenu(TextureManager textureManager, SoundManager soundManager) {
-        Texture[] textures = textureManager.getTextures(textureManager.getKeys()[0]);
-        Texture[] panels = textureManager.getTextures(textureManager.getKeys()[2]);
+    public CharacterMenu(TextureService textureService, SoundManager soundManager) {
+        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
         this.soundManager = soundManager;
 
         int panelQuantity = CharacterList.values().length;

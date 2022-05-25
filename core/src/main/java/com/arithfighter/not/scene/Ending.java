@@ -1,16 +1,16 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.TextAdventure;
-import com.arithfighter.not.TextureManager;
+import com.arithfighter.not.TextureService;
 import com.arithfighter.not.pojo.ConversationHolder;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
     private final TextAdventure textAdventure;
 
-    public Ending(TextureManager textureManager){
-        Texture[] widgets = textureManager.getTextures(textureManager.getKeys()[0]);
-        Texture[] panels = textureManager.getTextures(textureManager.getKeys()[2]);
+    public Ending(TextureService textureService){
+        Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
 
         textAdventure = new TextAdventure(widgets, panels);
 
