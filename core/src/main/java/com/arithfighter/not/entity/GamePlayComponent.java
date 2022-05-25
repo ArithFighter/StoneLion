@@ -177,7 +177,5 @@ public class GamePlayComponent {
 
     public void dispose() {
         font.dispose();
-        numberBoxDisplacer.dispose();
-        sumBox.dispose();
     }
 }

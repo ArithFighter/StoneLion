@@ -142,10 +142,6 @@ public class NumberBoxDisplacer {
 
         maskAnimation.draw(batch, 0.1f);
     }
-
-    public void dispose() {
-
-    }
 }
 
 class RandomIndexPicker{

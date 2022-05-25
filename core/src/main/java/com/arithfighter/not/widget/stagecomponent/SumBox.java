@@ -58,7 +58,4 @@ public class SumBox {
         int capacityWarning = 4;
         return capacity < capacityWarning;
     }
-
-    public void dispose() {
-    }
 }
