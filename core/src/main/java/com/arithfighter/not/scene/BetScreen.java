@@ -26,35 +26,31 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final SoundManager soundManager;
     private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
     private final int cardLimit = 15;
-    private final FontManager fontManager;
+    private final TextDisplacer textDisplacer;
     private final GameCardCollection gameCards;
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
-    private final Font font;
-    private final Font browserFont;
+    private final FontService fontService;
 
     public BetScreen(TextureService textureService, SoundManager soundManager) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         this.soundManager = soundManager;
 
-        font = new Font(22);
-        font.setColor(Color.WHITE);
-
-        browserFont = new Font(22);
-        browserFont.setColor(Color.WHITE);
+        fontService = new FontService();
 
         betBrowser = new BetBrowser(textures);
-        betBrowser.setFont(browserFont);
+        betBrowser.setFont(fontService.getBrowserFont());
         betBrowser.setPosition(500, 200);
         int[] betList = {5, 10, 20, 50, 100};
         betBrowser.setBetList(betList);
 
         startButton = new SceneControlButton(textures[6], 2f);
-        startButton.getButton().setFont(font);
+        startButton.getButton().setFont(fontService.getFont22());
         startButton.getButton().setPosition(1000, 80);
 
-        fontManager = new FontManager();
+        textDisplacer = new TextDisplacer();
+        textDisplacer.setFont(fontService.getFont24());
 
         numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
 
@@ -104,7 +100,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int y = cursorPos.getY();
 
         if (warningDialog.isNotShow()) {
-            betBrowser.activate(x, y);
+            betBrowser.on(x, y);
 
             startButton.getButton().on(x, y);
         } else {
@@ -117,7 +113,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void touchDragged() {
         if (warningDialog.isNotShow()) {
-            betBrowser.deactivate();
+            betBrowser.off();
 
             startButton.getButton().off();
         }
@@ -132,7 +128,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
             if (startButton.getButton().isOn())
                 soundManager.playAcceptSound();
 
-            betBrowser.deactivate();
+            betBrowser.off();
 
             startButton.getButton().off();
 
@@ -166,7 +162,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         totalActiveGames = getBet() / betBrowser.getBet();
 
         if (startButton.getButton().isOn()) {
-            if (isBetMinimalThanYourTokens()) {
+            if (getBet() > yourTokens) {
                 warningDialog.setNoEnoughToken();
                 warningDialog.setShow();
             }
@@ -175,10 +171,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
                 warningDialog.setShow();
             }
         }
-    }
-
-    private boolean isBetMinimalThanYourTokens(){
-        return getBet() > yourTokens;
     }
 
     private boolean isNoGameCardOn() {
@@ -199,7 +191,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         String[] texts = textProvider.getBetScreenTexts();
 
         setFontManager(texts);
-        fontManager.draw(batch);
+
+        textDisplacer.draw(batch);
 
         betBrowser.draw(batch);
 
@@ -215,20 +208,18 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         String totalBetCalculation =
                 "total bet = " + betBrowser.getBet() + " X " + totalActiveGames + " = " + getBet();
 
-        fontManager.setCardLimit(texts[0] + cardLimit);
-        fontManager.setBetHint(texts[1]);
-        fontManager.setTokens("Your tokens: " + yourTokens);
-        fontManager.setTotalBet(totalBetCalculation);
+        textDisplacer.setCardLimit(texts[0] + cardLimit);
+        textDisplacer.setBetHint(texts[1]);
+        textDisplacer.setTokens("Your tokens: " + yourTokens);
+        textDisplacer.setTotalBet(totalBetCalculation);
     }
 
     @Override
     public void dispose() {
-        fontManager.dispose();
         for (GameCard card : gameCards.getGameCards())
             card.dispose();
         warningDialog.dispose();
-        font.dispose();
-        browserFont.dispose();
+        fontService.dispose();
     }
 }
 
@@ -394,16 +385,15 @@ class GameCard {
     }
 }
 
-class FontManager {
-    private final Font font;
+class TextDisplacer {
+    private Font font;
     private String cardLimit;
     private String betHint;
     private String tokens;
     private String totalBet;
 
-    public FontManager() {
-        font = new Font(24);
-        font.setColor(Color.WHITE);
+    public void setFont(Font font) {
+        this.font = font;
     }
 
     public void setCardLimit(String cardLimit) {
@@ -431,9 +421,37 @@ class FontManager {
 
         font.draw(batch, totalBet, 100, 150);
     }
+}
 
-    public void dispose() {
-        font.dispose();
+class FontService{
+    private final Font font22;
+    private final Font browserFont;
+    private final Font font24;
+
+    public FontService(){
+        font22 = new Font(22);
+
+        font24 = new Font(24);
+
+        browserFont = new Font(28);
+    }
+
+    public Font getFont24() {
+        return font24;
+    }
+
+    public Font getFont22() {
+        return font22;
+    }
+
+    public Font getBrowserFont() {
+        return browserFont;
+    }
+
+    public void dispose(){
+        font22.dispose();
+        browserFont.dispose();
+        font24.dispose();
     }
 }
 

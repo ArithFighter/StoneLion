@@ -66,11 +66,11 @@ public class BetBrowser {
         isButtonLock = arrows.isLeftActive() || arrows.isRightActive();
     }
 
-    public void activate(float x, float y) {
+    public void on(float x, float y) {
         arrows.on(x, y);
     }
 
-    public void deactivate() {
+    public void off() {
         arrows.off();
     }
 }
