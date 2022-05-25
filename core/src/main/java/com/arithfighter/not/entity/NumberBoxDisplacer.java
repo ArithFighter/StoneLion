@@ -28,8 +28,8 @@ public class NumberBoxDisplacer {
     private boolean isAllNumZero = false;
     private final RandomIndexPicker randomIndexPicker;
 
-    public NumberBoxDisplacer(Texture[] textures) {
-        numberBoxProducer = new NumberBoxProducer(textures[3]);
+    public NumberBoxDisplacer(Texture[] textures, Font font) {
+        numberBoxProducer = new NumberBoxProducer(textures[3], font);
         
         maxQuantity = numberBoxProducer.getMaxQuantity();
         
@@ -144,7 +144,7 @@ public class NumberBoxDisplacer {
     }
 
     public void dispose() {
-        numberBoxProducer.dispose();
+
     }
 }
 
@@ -246,15 +246,12 @@ class NumberBoxAnimation {
 
 class NumberBoxProducer {
     private final NumberBox[] numberBoxes;
-    private final Font font;
     private final static int maxQuantity = 9;
 
-    public NumberBoxProducer(Texture texture){
+    public NumberBoxProducer(Texture texture, Font font){
         numberBoxes = new NumberBox[maxQuantity];
 
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
-
-        font = new Font(30);
 
         for (int i = 0; i < maxQuantity; i++) {
             numberBoxes[i] = new NumberBox(texture);
@@ -279,10 +276,6 @@ class NumberBoxProducer {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(batch, numbers[i]);
         }
-    }
-
-    public void dispose(){
-        font.dispose();
     }
 }
 

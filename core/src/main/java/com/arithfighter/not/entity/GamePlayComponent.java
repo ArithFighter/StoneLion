@@ -19,7 +19,7 @@ import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private final Font sumFont;
+    private final Font font;
     private Player player;
     private final SumBox sumBox;
     private final CardAnimation cardFadeOut;
@@ -33,15 +33,15 @@ public class GamePlayComponent {
 
         cardReset = new CardAnimation(spriteSheets[1]);
 
-        sumFont = new Font(30);
-        sumFont.setColor(Color.WHITE);
+        font = new Font(32);
+        font.setColor(Color.WHITE);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
         sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
-        sumBox.setFont(sumFont);
+        sumBox.setFont(font);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures) {
+        numberBoxDisplacer = new NumberBoxDisplacer(textures, font) {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
@@ -176,7 +176,7 @@ public class GamePlayComponent {
     }
 
     public void dispose() {
-        sumFont.dispose();
+        font.dispose();
         numberBoxDisplacer.dispose();
         sumBox.dispose();
     }
