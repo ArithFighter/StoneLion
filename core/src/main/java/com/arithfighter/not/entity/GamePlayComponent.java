@@ -151,19 +151,6 @@ public class GamePlayComponent {
         if (sumBox.isCapacityWarning())
             if (geckoController.isNotFullEating())
                 geckoController.setGeckoState(GeckoState.TOO_FULL);
-
-        if (player.isCapacityManagerEmpty())
-            setGeckoToNeutralOrSpit();
-    }
-
-    private void setGeckoToNeutralOrSpit() {
-        if (geckoController.isNotFullEating() && geckoController.isNotNeutral()) {
-
-            geckoController.setGeckoState(GeckoState.SPIT);
-
-            if (geckoController.isNotSpitting() && geckoController.isNotNeutral())
-                geckoController.setGeckoState(GeckoState.NEUTRAL);
-        }
     }
 
     public void touchDragged(int mouseX, int mouseY) {
@@ -176,6 +163,10 @@ public class GamePlayComponent {
         if (isCardDrag) {
             geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+        }
+        if (player.isCapacityFull()){
+            player.resetSum();
+            geckoController.setGeckoState(GeckoState.SPIT);
         }
     }
 
