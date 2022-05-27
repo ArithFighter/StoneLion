@@ -28,6 +28,7 @@ public class GamePlayComponent {
     private boolean isCardDrag = false;
     private final GeckoController geckoController;
     private SpriteBatch batch;
+    private boolean isReadyToResetSum = false;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -152,6 +153,11 @@ public class GamePlayComponent {
             if (geckoController.isNotFullEating())
                 geckoController.setGeckoState(GeckoState.TOO_FULL);
         }
+        if (isReadyToResetSum){
+            player.resetSum();
+            geckoController.setGeckoState(GeckoState.SPIT);
+            isReadyToResetSum = false;
+        }
     }
 
     public void touchDragged(int mouseX, int mouseY) {
@@ -166,8 +172,7 @@ public class GamePlayComponent {
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (player.isCapacityFull()){
-            player.resetSum();
-            geckoController.setGeckoState(GeckoState.SPIT);
+            isReadyToResetSum = true;
         }
     }
 

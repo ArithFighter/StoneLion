@@ -31,16 +31,12 @@ public class GeckoController {
         this.batch = batch;
     }
 
-    public boolean isNotFullEating(){
-        return geckoState!=GeckoState.FULL_EATING;
+    public boolean isNotFullEating() {
+        return geckoState != GeckoState.FULL_EATING;
     }
 
-    public boolean isNotSpitting(){
-        return geckoState!=GeckoState.SPIT;
-    }
-
-    public boolean isNotNeutral(){
-        return geckoState!=GeckoState.NEUTRAL;
+    public boolean isNotSpitting() {
+        return geckoState != GeckoState.SPIT;
     }
 
     public void drawGecko() {
@@ -56,19 +52,14 @@ public class GeckoController {
                 break;
             case FULL_EATING:
                 geckoAnimate.eatWhenFull(batch);
-                if (geckoAnimate.isAllActionEnd()){
+                if (geckoAnimate.isAllActionEnd()) {
                     geckoState = GeckoState.TOO_FULL;
                     geckoSprite.drawFull(batch);
                     geckoAnimate.init();
                 }
                 break;
             case SPIT:
-                geckoAnimate.spit(batch);
-                if (geckoAnimate.isAllActionEnd()){
-                    geckoState = GeckoState.NEUTRAL;
-                    geckoSprite.drawFull(batch);
-                    geckoAnimate.init();
-                }
+                handleSpitting();
                 break;
         }
     }
@@ -87,10 +78,13 @@ public class GeckoController {
 
         if (pastedTime > initTime)
             geckoAnimate.blink(batch);
+
         if (pastedTime > initTime + 1)
             geckoAnimate.swing(batch);
+
         if (pastedTime > initTime + 1.64f && geckoAnimate.isAllActionEnd())
             init();
+
         if (geckoAnimate.isAllActionEnd())
             geckoSprite.drawDefault(batch);
     }
@@ -102,11 +96,21 @@ public class GeckoController {
 
         geckoAnimate.eat(batch);
 
-        if (pastedTime > 1.2) {
+        if (pastedTime > 1.2)
             geckoAnimate.lick(batch);
-        }
+
         if (geckoAnimate.isAllActionEnd() && pastedTime > 2) {
             init();
+            geckoState = GeckoState.NEUTRAL;
+            geckoSprite.drawDefault(batch);
+        }
+    }
+
+    private void handleSpitting() {
+        geckoAnimate.spit(batch);
+
+        if (geckoAnimate.isAllActionEnd()) {
+            geckoAnimate.init();
             geckoState = GeckoState.NEUTRAL;
             geckoSprite.drawDefault(batch);
         }
