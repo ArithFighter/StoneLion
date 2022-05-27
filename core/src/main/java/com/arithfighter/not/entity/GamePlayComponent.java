@@ -154,6 +154,7 @@ public class GamePlayComponent {
                 geckoController.setGeckoState(GeckoState.TOO_FULL);
         }
         if (isReadyToResetSum){
+            geckoController.init();
             player.resetSum();
             geckoController.setGeckoState(GeckoState.SPIT);
             isReadyToResetSum = false;
@@ -171,9 +172,8 @@ public class GamePlayComponent {
             geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
-        if (player.isCapacityFull()){
+        if (player.isCapacityFull())
             isReadyToResetSum = true;
-        }
     }
 
     public void dispose() {
