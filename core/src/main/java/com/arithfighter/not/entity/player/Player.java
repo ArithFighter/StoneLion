@@ -38,10 +38,6 @@ public class Player {
         energyBarController.reset();
     }
 
-    public boolean isCapacityManagerEmpty(){
-        return capacityManager.isEmpty();
-    }
-
     public boolean isCardActive(){
         return hand.isCardActive();
     }
@@ -67,8 +63,6 @@ public class Player {
         energyBarController.draw(batch);
 
         hand.draw(batch);
-
-        checkCapacity();
     }
 
     public void updateWhenTouchCard(int mouseX, int mouseY) {
@@ -96,14 +90,6 @@ public class Player {
         sumAccessor.reset();
         capacityManager.initialize();
         skillState = SkillState.NEUTRAL;
-    }
-
-    private void checkCapacity() {
-        if (capacityManager.isFull()) {
-            sumAccessor.reset();
-            capacityManager.initialize();
-            skillState = SkillState.NEUTRAL;
-        }
     }
 
     public final void initHand() {

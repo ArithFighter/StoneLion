@@ -148,9 +148,10 @@ public class GamePlayComponent {
         player.activateCard(mouseX, mouseY);
         cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
 
-        if (sumBox.isCapacityWarning())
+        if (sumBox.isCapacityWarning()){
             if (geckoController.isNotFullEating())
                 geckoController.setGeckoState(GeckoState.TOO_FULL);
+        }
     }
 
     public void touchDragged(int mouseX, int mouseY) {
