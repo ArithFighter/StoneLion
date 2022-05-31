@@ -10,40 +10,34 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Dialog {
     private Font font;
     private final VisibleWidget dialog;
+    private String originString = "";
     private String content1;
     private String content2;
     private final Point point;
 
-    public Dialog(Texture texture, float scale){
+    public Dialog(Texture texture, float scale) {
         dialog = new SpriteWidget(texture, scale);
 
         point = new Point();
-
-        content1 = "";
-        content2 = "";
     }
 
-    public void setFont(Font font){
+    public void setFont(Font font) {
         this.font = font;
     }
 
-    public void setContent1(String content1) {
-        this.content1 = content1;
-    }
-
-    public void setContent2(String content2) {
-        this.content2 = content2;
+    public void setOriginString(String s) {
+        originString = s;
     }
 
     public Point getPoint() {
         return point;
     }
 
-    public VisibleWidget getDialog(){
+    public VisibleWidget getDialog() {
         return dialog;
     }
 
-    public void drawDialog(SpriteBatch batch){
+    public void drawDialog(SpriteBatch batch) {
         int fontSize = font.getSize();
         dialog.setPosition(point.getX(), point.getY());
         dialog.draw(batch);
@@ -51,7 +45,28 @@ public class Dialog {
         float width = dialog.getWidget().getWidth();
         float height = dialog.getWidget().getHeight();
 
-        font.draw(batch, content1, point.getX()+width/9, point.getY()+height*3/4);
-        font.draw(batch, content2, point.getX()+width/9, point.getY()+height*5/8-fontSize/2f);
+        if (originString.length() * fontSize > width)
+            splitOriginString();
+
+        font.draw(batch, content1, point.getX() + width / 9, point.getY() + height * 3 / 4);
+        font.draw(batch, content2, point.getX() + width / 9, point.getY() + height * 5 / 8 - fontSize / 2f);
+    }
+
+    private void splitOriginString() {
+        float width = dialog.getWidget().getWidth();
+        String[] array = originString.split(" ");
+
+        StringBuilder temp1 = new StringBuilder();
+        StringBuilder temp2 = new StringBuilder();
+
+        for (String s : array) {
+            if (temp1.length() * font.getSize() < width) {
+                temp1.append(s).append(" ");
+            } else
+                temp2.append(s).append(" ");
+        }
+
+        content1 = temp1.toString();
+        content2 = temp2.toString();
     }
 }

@@ -54,8 +54,7 @@ public class TextAdventure{
             cursor = 0;
 
         try{
-            conversationDialog.setContent1(conversations[cursor][0]);
-            conversationDialog.setContent2(conversations[cursor][1]);
+            conversationDialog.setOriginString(conversations[cursor][0]+conversations[cursor][1]);
         }catch (ArrayIndexOutOfBoundsException ignored){}
     }
 

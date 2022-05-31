@@ -169,6 +169,10 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         totalActiveGames = getBet() / betBrowser.getBet();
 
+        handleStartButton();
+    }
+
+    private void handleStartButton(){
         if (startButton.getButton().isOn()) {
             if (getBet() > yourTokens) {
                 warningDialog.setNoEnoughToken();
@@ -250,13 +254,11 @@ class WarningDialog {
     }
 
     public void setNoEnoughToken() {
-        dialog.setContent1("You don't have enough ");
-        dialog.setContent2("tokens.");
+        dialog.setOriginString("You don't have enough tokens.");
     }
 
     public void setNoGameChoose() {
-        dialog.setContent1("Please choose one card ");
-        dialog.setContent2("at least.");
+        dialog.setOriginString("Please choose one card at least.");
     }
 
     public void draw(SpriteBatch batch) {
