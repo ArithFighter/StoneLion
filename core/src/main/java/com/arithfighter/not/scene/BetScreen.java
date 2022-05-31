@@ -30,6 +30,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final WarningDialog warningDialog;
     private int totalActiveGames;
     private final FontService fontService;
+    private final int[] candidates = new int[]{2,4,7,9};
+    private final int[] betList = {5, 10, 20, 50, 100};
 
     public BetScreen(TextureService textureService, SoundManager soundManager) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -40,7 +42,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         betBrowser = new BetBrowser(textures);
         betBrowser.setFont(fontService.getBrowserFont());
         betBrowser.setPosition(500, 200);
-        int[] betList = {5, 10, 20, 50, 100};
         betBrowser.setBetList(betList);
 
         startButton = new SceneControlButton(textures[6], 2f);
@@ -50,7 +51,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textDisplacer = new TextDisplacer();
         textDisplacer.setFont(fontService.getFont24());
 
-        int[] candidates = new int[]{2,4,7,9};
         numberBoxQuantityPicker = new NumberBoxQuantityPicker(candidates);
 
         gameCards = new GameCardController(textures);
@@ -156,6 +156,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
+
+        if (yourTokens<betList[1])
+            gameCards.getGameCards()[0].setBoxQuantity(candidates[0]);
     }
 
     @Override
