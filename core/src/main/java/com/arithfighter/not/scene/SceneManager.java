@@ -6,12 +6,10 @@ import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
 
 public class SceneManager {
-    private final MenuManager menuManager;
-    private final ResultManager resultManager;
-    private final OptionManager optionManager;
     private GameScene gameScene;
     private final SceneFactory[] sceneFactories;
     private final SceneManageable[] sceneManageable;
+    private final Savable[] savable;
 
     public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
         TokenHolder tokenHolder = new TokenHolder();
@@ -21,7 +19,7 @@ public class SceneManager {
         stageManager.setGameRecorder(gameRecorder);
         stageManager.setTokenHolder(tokenHolder);
 
-        menuManager = new MenuManager(sceneBuilder);
+        MenuManager menuManager = new MenuManager(sceneBuilder);
         menuManager.initScene();
         menuManager.setGameRecorder(gameRecorder);
         menuManager.setTokenHolder(tokenHolder);
@@ -31,12 +29,12 @@ public class SceneManager {
         betManager.setGameRecorder(gameRecorder);
         betManager.setTokenHolder(tokenHolder);
 
-        resultManager = new ResultManager(sceneBuilder);
+        ResultManager resultManager = new ResultManager(sceneBuilder);
         resultManager.initScene();
         resultManager.setGameRecorder(gameRecorder);
         resultManager.setTokenHolder(tokenHolder);
 
-        optionManager = new OptionManager(sceneBuilder);
+        OptionManager optionManager = new OptionManager(sceneBuilder);
         optionManager.initScene();
 
         GameOverManager gameOverManager = new GameOverManager(sceneBuilder);
@@ -64,6 +62,12 @@ public class SceneManager {
                 endingManager,
                 optionManager
         };
+
+        savable = new Savable[]{
+                menuManager,
+                resultManager,
+                optionManager
+        };
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -75,9 +79,8 @@ public class SceneManager {
     }
 
     public void setGameSave(GameSave gameSave) {
-        menuManager.setGameSave(gameSave);
-        resultManager.setGameSave(gameSave);
-        optionManager.setGameSave(gameSave);
+        for (Savable s: savable)
+            s.setGameSave(gameSave);
     }
 
     public void update(int index) {
@@ -94,11 +97,14 @@ interface SceneFactory {
 
 interface SceneManageable {
     void initScene();
-
     void run();
 }
 
-class MenuManager extends BuilderAccessor implements SceneManageable {
+interface Savable{
+    void setGameSave(GameSave gameSave);
+}
+
+class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -107,6 +113,7 @@ class MenuManager extends BuilderAccessor implements SceneManageable {
         super(sceneBuilder);
     }
 
+    @Override
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
     }
@@ -159,7 +166,6 @@ class MenuManager extends BuilderAccessor implements SceneManageable {
         else
             tokenHolder.gain(pref.getInteger(keys[characterIndex]));
     }
-
 }
 
 class BetManager extends BuilderAccessor implements SceneManageable {
@@ -319,7 +325,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderAccessor implements SceneManageable {
+class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
     private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
@@ -328,12 +334,13 @@ class ResultManager extends BuilderAccessor implements SceneManageable {
         super(sceneBuilder);
     }
 
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        this.gameRecorder = gameRecorder;
-    }
-
+    @Override
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
+    }
+
+    public void setGameRecorder(GameRecorder gameRecorder) {
+        this.gameRecorder = gameRecorder;
     }
 
     public void initScene() {
@@ -440,13 +447,14 @@ class EndingManager extends BuilderAccessor implements SceneManageable {
     }
 }
 
-class OptionManager extends BuilderAccessor implements SceneManageable {
+class OptionManager extends BuilderAccessor implements SceneManageable, Savable {
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
+    @Override
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
     }
