@@ -48,7 +48,7 @@ public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     @Override
-    public void draw() {
+    public void render() {
         textAdventure.draw(getBatch());
     }
 

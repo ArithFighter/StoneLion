@@ -85,8 +85,6 @@ public class Main extends ApplicationAdapter {
 
             playBackgroundMusic();
 
-            sceneBuilder.updateScene(gameScene);
-
             drawGame();
 
             //This is for developer, will remove in launched version
@@ -116,7 +114,7 @@ public class Main extends ApplicationAdapter {
     private void drawGame() {
         batch.begin();
 
-        sceneBuilder.drawScene(gameScene);
+        sceneBuilder.renderScene(gameScene);
 
         gameDataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
         gameDataDisplacer.draw(batch);

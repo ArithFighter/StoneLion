@@ -111,7 +111,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
     }
 
     @Override
-    public void draw() {
+    public void render() {
         SpriteBatch batch = getBatch();
         String message = "";
         String[] texts = textProvider.getResultScreenTexts();

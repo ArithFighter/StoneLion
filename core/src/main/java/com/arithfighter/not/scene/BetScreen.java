@@ -196,7 +196,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     @Override
-    public void draw() {
+    public void render() {
         SpriteBatch batch = getBatch();
         TextProvider textProvider = new TextProvider();
         String[] texts = textProvider.getBetScreenTexts();

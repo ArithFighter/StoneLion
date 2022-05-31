@@ -113,7 +113,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         }
     }
 
-    public void draw() {
+    public void render() {
         SpriteBatch batch = getBatch();
         if (stageMessage.isNeutral()) {
             cardLimitManager.draw(batch);

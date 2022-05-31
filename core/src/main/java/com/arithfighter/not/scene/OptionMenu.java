@@ -71,7 +71,7 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
         return musicControl.getValue();
     }
 
-    public void draw() {
+    public void render() {
         String[] texts = textProvider.getOptionMenuTexts();
         SpriteBatch batch = getBatch();
 
