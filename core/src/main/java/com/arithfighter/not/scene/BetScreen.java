@@ -152,6 +152,10 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
 
+        setFirstGameCardIfTokensTooFew();
+    }
+
+    private void setFirstGameCardIfTokensTooFew(){
         if (yourTokens<betList[1])
             gameCards.getGameCards()[0].setBoxQuantity(candidates[0]);
     }
@@ -174,22 +178,11 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
                 warningDialog.setNoEnoughToken();
                 warningDialog.setShow();
             }
-            if (isNoGameCardOn()) {
+            if (gameCards.isNoGameCardOn()) {
                 warningDialog.setNoGameChoose();
                 warningDialog.setShow();
             }
         }
-    }
-
-    private boolean isNoGameCardOn() {
-        boolean flag = true;
-        int length = gameCards.getGameCards().length;
-
-        for (int i = 0; i < length; i++) {
-            if (gameCards.getGameCards()[i].isOn())
-                flag = false;
-        }
-        return flag;
     }
 
     @Override
@@ -266,7 +259,7 @@ class WarningDialog {
     }
 
     public void setNoGameChoose() {
-        dialog.setContent1("Please choose one game ");
+        dialog.setContent1("Please choose one card ");
         dialog.setContent2("at least.");
     }
 

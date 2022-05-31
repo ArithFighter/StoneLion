@@ -15,6 +15,17 @@ public class GameCardController{
         return gameCardCollection.getGameCards();
     }
 
+    public boolean isNoGameCardOn() {
+        boolean flag = true;
+        int length = getGameCards().length;
+
+        for (int i = 0; i < length; i++) {
+            if (getGameCards()[i].isOn())
+                flag = false;
+        }
+        return flag;
+    }
+
     public void draw(SpriteBatch batch){
         for (GameCard card : getGameCards())
             card.draw(batch);
