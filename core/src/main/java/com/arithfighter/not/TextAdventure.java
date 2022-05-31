@@ -18,7 +18,7 @@ public class TextAdventure{
     private int cursor = 0;
     private boolean isButtonLock = false;
     private final MugShot mugShot;
-    private String[][] conversations;
+    private String[] conversations;
 
     public TextAdventure(Texture[] widgets, Texture[] panels){
         font = new Font(28);
@@ -37,7 +37,7 @@ public class TextAdventure{
         mugShot.setPosition(widget.getWidth()*9/10, widget.getHeight()*0.7f);
     }
 
-    public void setConversations(String[][] conversations){
+    public void setConversations(String[] conversations){
         this.conversations = conversations;
     }
 
@@ -54,7 +54,7 @@ public class TextAdventure{
             cursor = 0;
 
         try{
-            conversationDialog.setOriginString(conversations[cursor][0]+conversations[cursor][1]);
+            conversationDialog.setOriginString(conversations[cursor]);
         }catch (ArrayIndexOutOfBoundsException ignored){}
     }
 

@@ -13,9 +13,9 @@ public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
 
         textAdventure = new TextAdventure(widgets, panels);
 
-        textAdventure.setConversations(new String[][]{
-                        {"This is the ending","when you finish all stages"},
-                        {"The content would be depend", "on character or your score"}
+        textAdventure.setConversations(new String[]{
+                        "This is the ending when you finish all stages",
+                        "The content would be depend on character or your score"
                 });
     }
 

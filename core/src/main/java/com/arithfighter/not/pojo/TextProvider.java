@@ -26,8 +26,7 @@ public class TextProvider {
             "Quit",
             "Option",
             "Resume",
-            "the game progress will",
-            "be lose. Are you sure?"
+            "the game progress will be lose. Are you sure?"
     };
 
     public String[] getPauseMenuTexts() {

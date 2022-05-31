@@ -32,7 +32,7 @@ public class PauseMenu {
         dialog = new OptionDialog(textures);
         dialog.setFont(font);
         dialog.setButtonFont(font);
-        dialog.setOriginString(textProvider.getPauseMenuTexts()[3]+textProvider.getPauseMenuTexts()[4]);
+        dialog.setOriginString(textProvider.getPauseMenuTexts()[3]);
 
         int x = 500;
         int y = 300;

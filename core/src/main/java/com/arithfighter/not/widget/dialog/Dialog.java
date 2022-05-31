@@ -48,8 +48,8 @@ public class Dialog {
         if (originString.length() * fontSize > width)
             splitOriginString();
 
-        font.draw(batch, content1, point.getX() + width / 9, point.getY() + height * 3 / 4);
-        font.draw(batch, content2, point.getX() + width / 9, point.getY() + height * 5 / 8 - fontSize / 2f);
+        font.draw(batch, content1, point.getX() + width / 15, point.getY() + height * 3 / 4);
+        font.draw(batch, content2, point.getX() + width / 15, point.getY() + height * 5 / 8 - fontSize / 2f);
     }
 
     private void splitOriginString() {
@@ -59,8 +59,9 @@ public class Dialog {
         StringBuilder temp1 = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
 
+        int fontSize = font.getSize();
         for (String s : array) {
-            if (temp1.length() * font.getSize() < width) {
+            if (temp1.length() * fontSize < width - s.length() * fontSize) {
                 temp1.append(s).append(" ");
             } else
                 temp2.append(s).append(" ");
