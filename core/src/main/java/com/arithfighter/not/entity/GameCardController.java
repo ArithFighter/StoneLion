@@ -1,10 +1,42 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.widget.GameCard;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GameCardCollection {
+public class GameCardController{
+    private final GameCardCollection gameCardCollection;
+
+    public GameCardController(Texture[] textures){
+        gameCardCollection = new GameCardCollection(textures);
+    }
+
+    public GameCard[] getGameCards(){
+        return gameCardCollection.getGameCards();
+    }
+
+    public void draw(SpriteBatch batch){
+        for (GameCard card : getGameCards())
+            card.draw(batch);
+    }
+
+    public void touchDown(int x, int y){
+        for (GameCard card : getGameCards())
+                card.touchDown(x,y);
+    }
+
+    public void init(){
+        for (GameCard card : getGameCards())
+            card.init();
+    }
+
+    public void dispose(){
+        for (GameCard card:getGameCards())
+            card.dispose();
+    }
+}
+
+class GameCardCollection {
     private final GameCard[] gameCards;
 
     public GameCardCollection(Texture[] textures) {

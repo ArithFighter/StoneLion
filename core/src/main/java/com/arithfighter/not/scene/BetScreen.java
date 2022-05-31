@@ -4,8 +4,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.widget.GameCard;
-import com.arithfighter.not.entity.GameCardCollection;
+import com.arithfighter.not.entity.GameCardController;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.BetBrowser;
@@ -26,7 +25,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final NumberBoxQuantityPicker numberBoxQuantityPicker;
     private final int cardLimit = 15;
     private final TextDisplacer textDisplacer;
-    private final GameCardCollection gameCards;
+    private final GameCardController gameCards;
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
@@ -54,7 +53,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int[] candidates = new int[]{2,4,7,9};
         numberBoxQuantityPicker = new NumberBoxQuantityPicker(candidates);
 
-        gameCards = new GameCardCollection(textures);
+        gameCards = new GameCardController(textures);
 
         warningDialog = new WarningDialog(textures[10]);
     }
@@ -117,6 +116,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
             betBrowser.on(x, y);
 
             startButton.getButton().on(x, y);
+
+            gameCards.touchDown(x,y);
         } else {
             startButton.getButton().off();
             startButton.init();
@@ -145,9 +146,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
             betBrowser.off();
 
             startButton.getButton().off();
-
-            for (GameCard card : gameCards.getGameCards())
-                card.touchDown(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 
@@ -164,8 +162,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     public void init() {
         startButton.init();
         warningDialog.disable();
-        for (GameCard card : gameCards.getGameCards())
-            card.init();
+        gameCards.init();
     }
 
     @Override
@@ -212,8 +209,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         startButton.getButton().draw(batch, texts[2]);
 
-        for (GameCard card : gameCards.getGameCards())
-            card.draw(batch);
+        gameCards.draw(batch);
 
         warningDialog.draw(batch);
     }
@@ -230,8 +226,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void dispose() {
-        for (GameCard card : gameCards.getGameCards())
-            card.dispose();
+        gameCards.dispose();
         warningDialog.dispose();
         fontService.dispose();
     }
