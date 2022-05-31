@@ -43,6 +43,7 @@ public class TextAdventure{
 
     public void init(){
         cursor-=cursor;
+        conversationDialog.getSkipButton().off();
     }
 
     public void update(){
