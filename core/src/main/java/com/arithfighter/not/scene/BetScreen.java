@@ -88,17 +88,12 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     private int getQuantityTier(int quantity){
-        int value;
+        int value = 0;
 
-        if (quantity<3)
-            value = 1;
-        else if (quantity<5)
-            value = 2;
-        else if (quantity<8)
-            value = 3;
-        else
-            value = 4;
-
+        for (int i = candidates.length-1;i>=0;i--){
+            if (quantity<candidates[i]+1)
+                value = i+1;
+        }
         return value;
     }
 
