@@ -30,7 +30,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final WarningDialog warningDialog;
     private int totalActiveGames;
     private final FontService fontService;
-    private final int[] candidates = new int[]{2,4,7,9};
+    private final QuantityCandidateService quantityCandidates;
     private final int[] betList = {5, 10, 20, 50, 100};
 
     public BetScreen(TextureService textureService, SoundManager soundManager) {
@@ -51,7 +51,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textDisplacer = new TextDisplacer();
         textDisplacer.setFont(fontService.getFont24());
 
-        numberBoxQuantityPicker = new NumberBoxQuantityPicker(candidates);
+        quantityCandidates = new QuantityCandidateService();
+
+        numberBoxQuantityPicker = new NumberBoxQuantityPicker(quantityCandidates.getCandidates());
 
         gameCards = new GameCardController(textures);
 
@@ -81,20 +83,14 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         int q = 0;
 
         for (int i = 0; i < gameCards.getGameCards().length; i++) {
-            if (gameCards.getGameCards()[i].isOn())
-                q+=getQuantityTier(gameCards.getGameCards()[i].getBoxQuantity());
+
+            if (gameCards.getGameCards()[i].isOn()){
+                int b = gameCards.getGameCards()[i].getBoxQuantity();
+
+                q+= quantityCandidates.getQuantityTier(b);
+            }
         }
         return betBrowser.getBet() * q;
-    }
-
-    private int getQuantityTier(int quantity){
-        int value = 0;
-
-        for (int i = candidates.length-1;i>=0;i--){
-            if (quantity<candidates[i]+1)
-                value = i+1;
-        }
-        return value;
     }
 
     public boolean isStartGame() {
@@ -157,7 +153,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     private void setFirstGameCardIfTokensTooFew(){
         if (yourTokens<betList[1])
-            gameCards.getGameCards()[0].setBoxQuantity(candidates[0]);
+            gameCards.getGameCards()[0].setBoxQuantity(quantityCandidates.getCandidates()[0]);
     }
 
     @Override
@@ -337,6 +333,24 @@ class FontService{
     public void dispose(){
         for (Font f:fonts)
             f.dispose();
+    }
+}
+
+class QuantityCandidateService{
+    private final int[] candidates = new int[]{2,4,7,9};
+
+    public int[] getCandidates(){
+        return candidates;
+    }
+
+    public int getQuantityTier(int quantity){
+        int value = 0;
+
+        for (int i = candidates.length-1;i>=0;i--){
+            if (quantity<candidates[i]+1)
+                value = i+1;
+        }
+        return value;
     }
 }
 
