@@ -23,7 +23,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private final BetBrowser betBrowser;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
-    private final NumberBoxQuantityGenerator numberBoxQuantityGenerator;
+    private final NumberBoxQuantityPicker numberBoxQuantityPicker;
     private final int cardLimit = 15;
     private final TextDisplacer textDisplacer;
     private final GameCardCollection gameCards;
@@ -51,7 +51,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textDisplacer = new TextDisplacer();
         textDisplacer.setFont(fontService.getFont24());
 
-        numberBoxQuantityGenerator = new NumberBoxQuantityGenerator();
+        int[] candidates = new int[]{2,4,7,9};
+        numberBoxQuantityPicker = new NumberBoxQuantityPicker(candidates);
 
         gameCards = new GameCardCollection(textures);
 
@@ -74,7 +75,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
             if (gameCards.getGameCards()[i].isOn())
                 array[i] = gameCards.getGameCards()[i].getBoxQuantity();
         }
-
         return array;
     }
 
@@ -137,9 +137,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
-        numberBoxQuantityGenerator.init();
+        numberBoxQuantityPicker.init();
 
-        int[] array = numberBoxQuantityGenerator.getQuantityArray();
+        int[] array = numberBoxQuantityPicker.getQuantityArray();
 
         for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
@@ -338,13 +338,13 @@ class FontService{
     }
 }
 
-class NumberBoxQuantityGenerator {
+class NumberBoxQuantityPicker {
     private final int[] quantityCandidates;
     private final RandomNumListProducer indexListProducer;
     private final int quantityArrayLength = 3;
 
-    public NumberBoxQuantityGenerator() {
-        quantityCandidates = new int[]{2, 4, 7, 9};
+    public NumberBoxQuantityPicker(int[] candidates) {
+        quantityCandidates = candidates;
 
         RandomNumProducer indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
 
