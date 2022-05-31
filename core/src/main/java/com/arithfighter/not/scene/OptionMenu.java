@@ -72,6 +72,8 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
     }
 
     public void render() {
+        update();
+
         String[] texts = textProvider.getOptionMenuTexts();
         SpriteBatch batch = getBatch();
 
@@ -80,7 +82,7 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
         leaveButton.getButton().draw(batch, texts[2]);
     }
 
-    public void update() {
+    private void update() {
         soundControl.update();
         musicControl.update();
         leaveButton.update();

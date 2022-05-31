@@ -82,12 +82,14 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
         startButton.init();
     }
 
-    public void update() {
+    private void update() {
         optionButton.update();
         startButton.update();
     }
 
     public void render() {
+        update();
+
         SpriteBatch batch = getBatch();
 
         setButtonHighLightPosition();

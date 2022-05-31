@@ -45,12 +45,9 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     @Override
-    public void update() {
-        quitButton.update();
-    }
-
-    @Override
     public void render() {
+        quitButton.update();
+
         SpriteBatch batch = getBatch();
         font.draw(batch, "Game Over", 600,500);
         quitButton.getButton().draw(batch, "Quit");

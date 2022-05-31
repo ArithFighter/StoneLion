@@ -96,7 +96,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         numberBoxQuantity = quantity;
     }
 
-    public void update() {
+    private void update() {
         if (pauseButton.isStart()) {
             pauseMenu.update();
 
@@ -114,6 +114,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void render() {
+        update();
+
         SpriteBatch batch = getBatch();
         if (stageMessage.isNeutral()) {
             cardLimitManager.draw(batch);

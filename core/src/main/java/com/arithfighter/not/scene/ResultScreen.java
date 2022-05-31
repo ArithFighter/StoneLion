@@ -94,8 +94,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         quitButton.init();
     }
 
-    @Override
-    public void update() {
+    private void update() {
         if (isNoTokens())
             quitButton.update();
         else
@@ -112,6 +111,8 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
 
     @Override
     public void render() {
+        update();
+
         SpriteBatch batch = getBatch();
         String message = "";
         String[] texts = textProvider.getResultScreenTexts();

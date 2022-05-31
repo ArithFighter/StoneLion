@@ -165,8 +165,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         gameCards.init();
     }
 
-    @Override
-    public void update() {
+    private void update() {
         startButton.update();
         betBrowser.update();
 
@@ -197,6 +196,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void render() {
+        update();
+
         SpriteBatch batch = getBatch();
         TextProvider textProvider = new TextProvider();
         String[] texts = textProvider.getBetScreenTexts();
