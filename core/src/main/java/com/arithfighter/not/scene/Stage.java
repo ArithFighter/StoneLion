@@ -28,7 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
 
-        cardLimitManager = new CardLimitManager();
+        cardLimitManager = new CardLimitManager(fontService.getFont22());
 
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
 
@@ -170,7 +170,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
     public void dispose() {
         playerCollection.dispose();
-        cardLimitManager.dispose();
     }
 }
 
@@ -179,9 +178,8 @@ class CardLimitManager {
     private final Font cardLimitText;
     private int cardLimit;
 
-    public CardLimitManager() {
-        cardLimitText = new Font(22);
-        cardLimitText.setColor(Color.WHITE);
+    public CardLimitManager(Font font) {
+        cardLimitText = font;
 
         playRecord = new Recorder();
     }
@@ -195,6 +193,7 @@ class CardLimitManager {
     }
 
     public void draw(SpriteBatch batch) {
+        cardLimitText.setColor(Color.WHITE);
         cardLimitText.draw(
                 batch,
                 "cards: " + (cardLimit - playRecord.getRecord()),
@@ -204,10 +203,6 @@ class CardLimitManager {
 
     public boolean isExceedCardLimit() {
         return playRecord.getRecord() >= cardLimit;
-    }
-
-    public void dispose() {
-        cardLimitText.dispose();
     }
 }
 
