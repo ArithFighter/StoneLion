@@ -117,7 +117,4 @@ public class OptionMenu extends SceneComponent implements SceneEvent, MouseEvent
         musicControl.deactivate();
         leaveButton.getButton().off();
     }
-
-    public void dispose() {
-    }
 }

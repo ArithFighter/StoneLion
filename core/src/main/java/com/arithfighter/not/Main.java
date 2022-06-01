@@ -143,8 +143,6 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.dispose();
 
-        sceneBuilder.dispose();
-
         audioHandler.dispose();
 
         textureService.dispose();

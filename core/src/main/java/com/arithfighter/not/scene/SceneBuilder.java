@@ -59,11 +59,6 @@ public class SceneBuilder extends SceneCollection{
                 sceneEvents[i].render();
             }
     }
-
-    public void dispose(){
-        for (SceneEvent sceneEvent:sceneEvents)
-            sceneEvent.dispose();
-    }
 }
 
 class SceneCollection{

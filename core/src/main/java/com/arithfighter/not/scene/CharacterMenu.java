@@ -155,9 +155,6 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         startButton.getButton().off();
     }
-
-    public void dispose() {
-    }
 }
 
 class PanelButtonProducer {

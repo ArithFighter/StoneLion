@@ -6,6 +6,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -118,6 +119,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         if (state == ResultState.LOOSE)
             message = texts[1];
 
+        winOrLost.setColor(Color.WHITE);
         winOrLost.draw(batch, message, 600, 500);
 
         tokenMessage.draw(batch, remainingTokens + texts[2], 600, 400);
@@ -126,9 +128,5 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
             quitButton.getButton().draw(batch, texts[5]);
         else
             continueButton.getButton().draw(batch, texts[3]);
-    }
-
-    @Override
-    public void dispose() {
     }
 }

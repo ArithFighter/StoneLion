@@ -6,5 +6,4 @@ public interface SceneEvent {
     void setBatch(SpriteBatch batch);
     void init();
     void render();
-    void dispose();
 }

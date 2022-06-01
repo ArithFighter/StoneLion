@@ -4,6 +4,7 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -53,6 +54,7 @@ public class Dialog {
 
         float height = dialog.getWidget().getHeight();
 
+        font.setColor(Color.BLACK);
         font.draw(batch, content1, point.getX() + width / 15, point.getY() + height * 3 / 4);
         font.draw(batch, content2, point.getX() + width / 15, point.getY() + height * 5 / 8 - fontSize / 2f);
     }

@@ -214,10 +214,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         textDisplacer.setTokens("Your tokens: " + yourTokens);
         textDisplacer.setTotalBet(totalBetCalculation);
     }
-
-    @Override
-    public void dispose() {
-    }
 }
 
 class WarningDialog {

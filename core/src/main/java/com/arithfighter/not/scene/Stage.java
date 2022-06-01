@@ -165,9 +165,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private boolean isPlaying() {
         return !stageMessage.isStageComplete() && !stageMessage.isExceedCardLimitAndStageNotComplete();
     }
-
-    public void dispose() {
-    }
 }
 
 class CardLimitManager {
