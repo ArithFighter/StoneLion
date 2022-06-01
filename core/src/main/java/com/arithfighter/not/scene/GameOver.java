@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,13 +12,12 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font font;
     private final SceneControlButton quitButton;
 
-    public GameOver(TextureService textureService){
+    public GameOver(TextureService textureService, FontService fontService){
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         quitButton = new SceneControlButton(textures[6], 2);
         quitButton.getButton().setPosition(600,150);
 
-        font = new Font(40);
-        font.setColor(Color.WHITE);
+        font = fontService.getFont36();
     }
 
     public boolean isQuit(){
@@ -55,6 +55,5 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
 
     @Override
     public void dispose() {
-        font.dispose();
     }
 }

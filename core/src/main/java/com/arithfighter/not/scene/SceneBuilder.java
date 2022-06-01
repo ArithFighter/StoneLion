@@ -88,7 +88,7 @@ class SceneCollection{
 
         ending = new Ending(textureService, fontService);
 
-        gameOver = new GameOver(textureService);
+        gameOver = new GameOver(textureService, fontService);
     }
 
     public void setAudioVolume(GameSave gameSave){
