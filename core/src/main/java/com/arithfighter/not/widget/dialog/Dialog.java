@@ -38,13 +38,12 @@ public class Dialog {
     }
 
     public void drawDialog(SpriteBatch batch) {
-        int fontSize = font.getSize();
         dialog.setPosition(point.getX(), point.getY());
         dialog.draw(batch);
 
         float width = dialog.getWidget().getWidth();
-        float height = dialog.getWidget().getHeight();
 
+        int fontSize = font.getSize();
         if (originString.length() * fontSize > width)
             splitOriginString();
         else{
@@ -52,22 +51,29 @@ public class Dialog {
             content2 = "";
         }
 
+        float height = dialog.getWidget().getHeight();
+
         font.draw(batch, content1, point.getX() + width / 15, point.getY() + height * 3 / 4);
         font.draw(batch, content2, point.getX() + width / 15, point.getY() + height * 5 / 8 - fontSize / 2f);
     }
 
     private void splitOriginString() {
-        float width = dialog.getWidget().getWidth();
         String[] array = originString.split(" ");
 
+        regroupString(array);
+    }
+
+    private void regroupString(String[] array){
         StringBuilder temp1 = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
 
         int fontSize = font.getSize();
+        float width = dialog.getWidget().getWidth();
+
         for (String s : array) {
-            if (temp1.length() * fontSize < width - (s.length() +1 )* fontSize*2) {
+            if (temp1.length() * fontSize < width - (s.length() + 5 )* fontSize)
                 temp1.append(s).append(" ");
-            } else
+            else
                 temp2.append(s).append(" ");
         }
 
