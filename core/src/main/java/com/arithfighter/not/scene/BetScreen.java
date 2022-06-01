@@ -40,7 +40,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         fontService = new FontService();
 
         betBrowser = new BetBrowser(textures);
-        betBrowser.setFont(fontService.getBrowserFont());
+        betBrowser.setFont(fontService.getFont28());
         betBrowser.setPosition(500, 200);
         betBrowser.setBetList(betList);
 
@@ -58,6 +58,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
         gameCards = new GameCardController(textures);
 
         warningDialog = new WarningDialog(textures[10]);
+        warningDialog.setFont(fontService.getFont20());
     }
 
     public void setYourTokens(int yourTokens) {
@@ -219,26 +220,25 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void dispose() {
         gameCards.dispose();
-        warningDialog.dispose();
         fontService.dispose();
     }
 }
 
 class WarningDialog {
     private final Dialog dialog;
-    private final Font font;
     private boolean isShow = false;
 
     public WarningDialog(Texture texture) {
-        font = new Font(20);
-        font.setColor(Color.BLACK);
-
         dialog = new Dialog(texture, 35);
-        dialog.setFont(font);
         dialog.getPoint().set(
                 WindowSetting.CENTER_X - dialog.getDialog().getWidget().getWidth() / 2,
                 WindowSetting.CENTER_Y - dialog.getDialog().getWidget().getHeight() / 2
         );
+    }
+
+    public void setFont(Font font){
+        font.setColor(Color.BLACK);
+        dialog.setFont(font);
     }
 
     public void setShow() {
@@ -265,10 +265,6 @@ class WarningDialog {
         if (isShow)
             dialog.drawDialog(batch);
     }
-
-    public void dispose() {
-        font.dispose();
-    }
 }
 
 class TextDisplacer {
@@ -279,6 +275,7 @@ class TextDisplacer {
     private String totalBet;
 
     public void setFont(Font font) {
+        font.setColor(Color.WHITE);
         this.font = font;
     }
 
@@ -314,6 +311,7 @@ class FontService{
 
     public FontService(){
         fonts = new Font[]{
+                new Font(20),
                 new Font(22),
                 new Font(24),
                 new Font(28),
@@ -321,15 +319,19 @@ class FontService{
     }
 
     public Font getFont24() {
-        return fonts[0];
-    }
-
-    public Font getFont22() {
         return fonts[1];
     }
 
-    public Font getBrowserFont() {
+    public Font getFont22() {
         return fonts[2];
+    }
+
+    public Font getFont28() {
+        return fonts[3];
+    }
+
+    public Font getFont20(){
+        return fonts[0];
     }
 
     public void dispose(){
