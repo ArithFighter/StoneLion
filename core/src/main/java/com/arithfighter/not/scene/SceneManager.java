@@ -14,28 +14,21 @@ public class SceneManager {
         TokenHolder tokenHolder = new TokenHolder();
 
         StageManager stageManager = new StageManager(sceneBuilder);
-        stageManager.initScene();
         stageManager.setTokenHolder(tokenHolder);
 
         MenuManager menuManager = new MenuManager(sceneBuilder);
-        menuManager.initScene();
         menuManager.setTokenHolder(tokenHolder);
 
         BetManager betManager = new BetManager(sceneBuilder);
-        betManager.initScene();
 
         ResultManager resultManager = new ResultManager(sceneBuilder);
-        resultManager.initScene();
         resultManager.setTokenHolder(tokenHolder);
 
         OptionManager optionManager = new OptionManager(sceneBuilder);
-        optionManager.initScene();
 
         GameOverManager gameOverManager = new GameOverManager(sceneBuilder);
-        gameOverManager.initScene();
 
         EndingManager endingManager = new EndingManager(sceneBuilder);
-        endingManager.initScene();
 
         sceneFactories = new SceneFactory[]{
                 menuManager,
@@ -56,6 +49,9 @@ public class SceneManager {
                 endingManager,
                 optionManager
         };
+
+        for (SceneManageable s : sceneManageable)
+            s.initScene();
 
         savable = new Savable[]{
                 menuManager,
@@ -334,7 +330,7 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
     }
 
     private boolean isEnd(int condition) {
-        return tokenHolder.getTokens() == condition;
+        return tokenHolder.getTokens() >= condition;
     }
 
     private void setBetScreen() {
