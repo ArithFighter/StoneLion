@@ -86,7 +86,7 @@ class SceneCollection{
 
         resultScreen = new ResultScreen(textureService, fontService);
 
-        ending = new Ending(textureService);
+        ending = new Ending(textureService, fontService);
 
         gameOver = new GameOver(textureService);
     }

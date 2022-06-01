@@ -1,31 +1,26 @@
 package com.arithfighter.not;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.dialog.ConversationDialog;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TextAdventure{
-    private final Font font;
-    private final Font buttonFont;
     private final ConversationDialog conversationDialog;
     private int cursor = 0;
     private boolean isButtonLock = false;
     private final MugShot mugShot;
     private String[] conversations;
 
-    public TextAdventure(Texture[] widgets, Texture[] panels){
-        font = new Font(28);
-        font.setColor(Color.BLACK);
-
-        buttonFont = new Font(22);
-        buttonFont.setColor(Color.BLACK);
+    public TextAdventure(Texture[] widgets, Texture[] panels, FontService fontService){
+        Font font = fontService.getFont28();
+        Font buttonFont = fontService.getFont22();
 
         conversationDialog = new ConversationDialog(widgets);
         conversationDialog.setFont(font);
@@ -89,11 +84,6 @@ public class TextAdventure{
 
     public void touchUp() {
         conversationDialog.deactivate();
-    }
-
-    public void dispose(){
-        font.dispose();
-        buttonFont.dispose();
     }
 }
 
