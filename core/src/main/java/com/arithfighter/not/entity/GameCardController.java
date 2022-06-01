@@ -1,5 +1,6 @@
 package com.arithfighter.not.entity;
 
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameCardController{
     private final GameCardCollection gameCardCollection;
 
-    public GameCardController(Texture[] textures){
-        gameCardCollection = new GameCardCollection(textures);
+    public GameCardController(Texture[] textures, FontService fontService){
+        gameCardCollection = new GameCardCollection(textures, fontService);
     }
 
     public GameCard[] getGameCards(){
@@ -40,23 +41,18 @@ public class GameCardController{
         for (GameCard card : getGameCards())
             card.init();
     }
-
-    public void dispose(){
-        for (GameCard card:getGameCards())
-            card.dispose();
-    }
 }
 
 class GameCardCollection {
     private final GameCard[] gameCards;
 
-    public GameCardCollection(Texture[] textures) {
+    public GameCardCollection(Texture[] textures, FontService fontService) {
         int totalCards = 3;
         gameCards = new GameCard[totalCards];
 
         String[] codeArray = {"A", "B", "C"};
         for (int i = 0; i < totalCards; i++) {
-            gameCards[i] = new GameCard(textures[1]);
+            gameCards[i] = new GameCard(textures[1], fontService.getFont22(), fontService.getFont36());
             gameCards[i].setCardCode(codeArray[i]);
         }
 

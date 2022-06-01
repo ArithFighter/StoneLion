@@ -53,7 +53,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         numberBoxQuantityPicker = new NumberBoxQuantityPicker(quantityCandidates.getCandidates());
 
-        gameCards = new GameCardController(textures);
+        gameCards = new GameCardController(textures, fontService);
 
         warningDialog = new WarningDialog(textures[10]);
         warningDialog.setFont(fontService.getFont20());
@@ -217,7 +217,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     @Override
     public void dispose() {
-        gameCards.dispose();
     }
 }
 

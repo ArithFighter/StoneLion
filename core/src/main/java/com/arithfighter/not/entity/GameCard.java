@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.widget.button.Button;
@@ -10,23 +11,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameCard {
     private final Font codeFont;
-    private final Font cardFont;
     private final Button gameCard;
     private final Rectangle rectangle;
     private Point point;
     private int boxQuantity;
     private String cardCode;
 
-    public GameCard(Texture texture) {
-        cardFont = new Font(24);
-        cardFont.setColor(Color.WHITE);
+    public GameCard(Texture texture, Font font24, Font font36) {
+        font24.setColor(Color.WHITE);
 
         gameCard = new Button(texture, 3f);
-        gameCard.setFont(cardFont);
+        gameCard.setFont(font24);
 
         rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
 
-        codeFont = new Font(36);
+        codeFont = font36;
         codeFont.setColor(Color.PURPLE);
     }
 
@@ -85,10 +84,5 @@ public class GameCard {
             else
                 gameCard.on(x, y);
         }
-    }
-
-    public void dispose() {
-        codeFont.dispose();
-        cardFont.dispose();
     }
 }
