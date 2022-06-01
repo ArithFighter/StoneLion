@@ -96,6 +96,7 @@ public class CharacterMenu extends SceneComponent implements SceneEvent, MouseEv
 
         optionButton.getButton().draw(batch, "Option");
 
+        largeFont.setColor(Color.WHITE);
         largeFont.draw(batch, CharacterList.values()[getSelectIndex()].name(), 900, 500);
 
         animation.draw(batch, 0.1f);

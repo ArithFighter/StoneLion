@@ -15,8 +15,7 @@ public class PlayerCollection {
     private NumberBoxDisplacer numberBoxDisplacer;
     private int characterQuantity;
 
-    public PlayerCollection(Texture[] textures, Texture[] cards) {
-        createPlayers(textures, cards);
+    public PlayerCollection() {
     }
 
     public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
@@ -31,7 +30,7 @@ public class PlayerCollection {
         this.playRecord = playRecord;
     }
 
-    private void createPlayers(Texture[] textures, Texture[] cards) {
+    public void createPlayers(Texture[] textures, Texture[] cards) {
         players = new Player[characterQuantity];
         SkillHandler skillHandler = new SkillHandler(numberBoxDisplacer);
 

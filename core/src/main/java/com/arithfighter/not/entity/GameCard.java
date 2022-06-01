@@ -26,7 +26,6 @@ public class GameCard {
         rectangle = new Rectangle(texture.getWidth() * 3, texture.getHeight() * 3);
 
         codeFont = font36;
-        codeFont.setColor(Color.PURPLE);
     }
 
     public Rectangle getRectangle() {
@@ -65,6 +64,7 @@ public class GameCard {
         );
 
         int fontSize = codeFont.getSize();
+        codeFont.setColor(Color.PURPLE);
         codeFont.draw(
                 batch,
                 cardCode,
