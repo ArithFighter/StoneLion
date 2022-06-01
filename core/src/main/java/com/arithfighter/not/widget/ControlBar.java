@@ -4,6 +4,7 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.ValueHolder;
 import com.arithfighter.not.widget.button.ArrowButtons;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -59,6 +60,7 @@ public class ControlBar {
         Point point = widget.getPoint();
 
         int fontSize = font.getSize();
+        font.setColor(Color.WHITE);
         font.draw(batch, content, point.getX() - content.length() * fontSize - 50, point.getY() + fontSize / 2f);
 
         Point arrowPoint = new Point(point.getX()-50, point.getY());

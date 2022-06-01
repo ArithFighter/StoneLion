@@ -80,7 +80,7 @@ class SceneCollection{
 
         stage = new Stage(textureService, soundManager, fontService);
 
-        optionMenu = new OptionMenu(textureService, soundManager);
+        optionMenu = new OptionMenu(textureService, soundManager, fontService);
 
         betScreen = new BetScreen(textureService, soundManager, fontService);
 
