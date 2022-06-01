@@ -9,6 +9,7 @@ public class FontService {
                 new Font(22),
                 new Font(24),
                 new Font(28),
+                new Font(32)
         };
     }
 
@@ -26,6 +27,10 @@ public class FontService {
 
     public Font getFont28() {
         return fonts[3];
+    }
+
+    public Font getFont32(){
+        return fonts[4];
     }
 
     public void dispose(){

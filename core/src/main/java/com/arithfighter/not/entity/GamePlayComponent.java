@@ -12,7 +12,6 @@ import com.arithfighter.not.gecko.GeckoState;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.gecko.GeckoSprite;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -20,7 +19,6 @@ import static com.arithfighter.not.WindowSetting.*;
 
 public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
-    private final Font font;
     private Player player;
     private final SumBox sumBox;
     private final CardAnimation cardFadeOut;
@@ -30,16 +28,13 @@ public class GamePlayComponent {
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
 
-    public GamePlayComponent(TextureService textureService, SoundManager soundManager) {
+    public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
         cardFadeOut = new CardAnimation(spriteSheets[1]);
 
         cardReset = new CardAnimation(spriteSheets[1]);
-
-        font = new Font(32);
-        font.setColor(Color.WHITE);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
@@ -174,9 +169,5 @@ public class GamePlayComponent {
         }
         if (player.isCapacityFull())
             isReadyToResetSum = true;
-    }
-
-    public void dispose() {
-        font.dispose();
     }
 }
