@@ -84,7 +84,7 @@ class SceneCollection{
 
         betScreen = new BetScreen(textureService, soundManager, fontService);
 
-        resultScreen = new ResultScreen(textureService);
+        resultScreen = new ResultScreen(textureService, fontService);
 
         ending = new Ending(textureService);
 

@@ -2,29 +2,27 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ResultScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font winOrLost;
     private final Font tokenMessage;
-    private final Font buttonFont;
     private final SceneControlButton continueButton;
     private final SceneControlButton quitButton;
     private int remainingTokens = 0;
     private ResultState state = ResultState.WIN;
     private final TextProvider textProvider;
 
-    public ResultScreen(TextureService textureService) {
+    public ResultScreen(TextureService textureService, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         textProvider = new TextProvider();
 
-        buttonFont = new Font(22);
-        buttonFont.setColor(Color.WHITE);
+        Font buttonFont = fontService.getFont22();
 
         continueButton = new SceneControlButton(textures[6], 2);
         continueButton.getButton().setPosition(600, 150);
@@ -34,11 +32,9 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         quitButton.getButton().setPosition(600, 150);
         quitButton.getButton().setFont(buttonFont);
 
-        winOrLost = new Font(40);
-        winOrLost.setColor(Color.WHITE);
+        winOrLost = fontService.getFont36();
 
-        tokenMessage = new Font(32);
-        tokenMessage.setColor(Color.WHITE);
+        tokenMessage = fontService.getFont32();
     }
 
     public void setState(ResultState state) {
@@ -134,8 +130,5 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
 
     @Override
     public void dispose() {
-        buttonFont.dispose();
-        winOrLost.dispose();
-        tokenMessage.dispose();
     }
 }

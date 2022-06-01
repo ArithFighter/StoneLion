@@ -10,7 +10,7 @@ public class FontService {
                 new Font(24),
                 new Font(28),
                 new Font(32),
-                new Font(36)
+                new Font(36),
         };
     }
 

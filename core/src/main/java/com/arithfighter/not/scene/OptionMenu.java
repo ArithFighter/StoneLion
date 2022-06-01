@@ -8,7 +8,6 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.pojo.TextProvider;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
