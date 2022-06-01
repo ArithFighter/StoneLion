@@ -7,7 +7,6 @@ import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.widget.dialog.OptionDialog;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,15 +16,11 @@ public class PauseMenu {
     private final VisibleWidget background;
     private final SoundManager soundManager;
     private final TextProvider textProvider;
-    private final Font font;
 
-    public PauseMenu(Texture[] textures, SoundManager soundManager) {
+    public PauseMenu(Texture[] textures, SoundManager soundManager, Font font) {
         this.soundManager = soundManager;
 
         textProvider = new TextProvider();
-
-        font = new Font(20);
-        font.setColor(Color.BLACK);
 
         buttons = new ButtonProducer(textures, font);
 
@@ -125,10 +120,6 @@ public class PauseMenu {
             if (b.isOn())
                 soundManager.playAcceptSound();
         }
-    }
-
-    public void dispose() {
-        font.dispose();
     }
 }
 

@@ -31,10 +31,6 @@ public class EnergyBarController {
         energyRecorder.reset();
     }
 
-    public int getEnergy() {
-        return energyRecorder.getRecord();
-    }
-
     public void update() {
         if (energyBar.isNotFull())
             energyRecorder.update(energyGain);
@@ -47,9 +43,5 @@ public class EnergyBarController {
 
     public boolean isMaxEnergy() {
         return energyRecorder.getRecord() >= energyBar.getMax();
-    }
-
-    public void dispose() {
-        energyBar.dispose();
     }
 }

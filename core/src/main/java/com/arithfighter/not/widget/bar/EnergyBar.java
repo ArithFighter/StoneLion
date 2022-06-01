@@ -1,13 +1,11 @@
 package com.arithfighter.not.widget.bar;
 
-import com.arithfighter.not.font.Font;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EnergyBar {
     private final EmptyBar emptyBar;
     private final BarGrid barGrid;
-    private final Font maxSign;
     private static final int maxEnergy = 30;
     private int energy;
 
@@ -20,8 +18,6 @@ public class EnergyBar {
 
         barGrid = new BarGrid(textures[5]);
         barGrid.setPosition(barX+barGrid.getWidth()+9, barY+barGrid.getHeight()*3);
-
-        maxSign = new Font(32);
     }
 
     public int getMax(){
@@ -37,26 +33,9 @@ public class EnergyBar {
         emptyBar.draw(batch);
 
         barGrid.updateWidth((emptyBar.getWidth()-71)* energy / maxEnergy);
-
-        drawMaxSign(energy, batch);
-    }
-
-    private void drawMaxSign(int energy, SpriteBatch batch) {
-        String content = "MAX";
-        if (energy >= maxEnergy){
-            maxSign.draw(
-                    batch,content,
-                    emptyBar.getWidth()/2,
-                    emptyBar.getHeight()/2
-            );
-        }
     }
 
     public boolean isNotFull(){
         return energy<maxEnergy;
-    }
-
-    public void dispose(){
-        maxSign.dispose();
     }
 }

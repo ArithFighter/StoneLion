@@ -161,7 +161,6 @@ public class Player {
 
     public final void dispose() {
         hand.dispose();
-        energyBarController.dispose();
     }
 }
 

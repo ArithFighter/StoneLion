@@ -32,7 +32,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
 
-        pauseMenu = new PauseMenu(textures, soundManager);
+        pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
         playerCollection = new PlayerCollection(
                 textures,
@@ -169,7 +169,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void dispose() {
-        pauseMenu.dispose();
         playerCollection.dispose();
         cardLimitManager.dispose();
     }
