@@ -47,6 +47,10 @@ public class Dialog {
 
         if (originString.length() * fontSize > width)
             splitOriginString();
+        else{
+            content1 = originString;
+            content2 = "";
+        }
 
         font.draw(batch, content1, point.getX() + width / 15, point.getY() + height * 3 / 4);
         font.draw(batch, content2, point.getX() + width / 15, point.getY() + height * 5 / 8 - fontSize / 2f);
@@ -61,7 +65,7 @@ public class Dialog {
 
         int fontSize = font.getSize();
         for (String s : array) {
-            if (temp1.length() * fontSize < width - s.length() * fontSize) {
+            if (temp1.length() * fontSize < width - (s.length() +1 )* fontSize*2) {
                 temp1.append(s).append(" ");
             } else
                 temp2.append(s).append(" ");

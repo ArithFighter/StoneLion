@@ -75,8 +75,8 @@ public class TextAdventure{
     }
 
     public void draw(SpriteBatch batch){
-        conversationDialog.draw(batch);
         mugShot.draw(batch);
+        conversationDialog.draw(batch);
     }
 
     public void touchDown(int x, int y) {
