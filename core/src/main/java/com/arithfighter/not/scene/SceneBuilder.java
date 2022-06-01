@@ -76,7 +76,7 @@ class SceneCollection{
     private final GameOver gameOver;
 
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService){
-        characterMenu = new CharacterMenu(textureService, soundManager);
+        characterMenu = new CharacterMenu(textureService, soundManager, fontService);
 
         stage = new Stage(textureService, soundManager, fontService);
 
