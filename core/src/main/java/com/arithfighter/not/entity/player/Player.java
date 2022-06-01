@@ -158,10 +158,6 @@ public class Player {
         capacityManager.update();
         skillState = SkillState.READY;
     }
-
-    public final void dispose() {
-        hand.dispose();
-    }
 }
 
 class CapacityManager {

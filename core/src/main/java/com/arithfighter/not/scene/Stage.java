@@ -34,12 +34,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
-        playerCollection = new PlayerCollection(
-                textures,
-                cards,
-                CharacterList.values().length,
-                gamePlayComponent.getNumberBoxDisplacer()
-        );
+        playerCollection = new PlayerCollection(textures, cards);
+        playerCollection.setCharacterQuantity(CharacterList.values().length);
+        playerCollection.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
         playerCollection.setPlayRecord(cardLimitManager.getPlayRecord());
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
@@ -169,7 +166,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void dispose() {
-        playerCollection.dispose();
     }
 }
 

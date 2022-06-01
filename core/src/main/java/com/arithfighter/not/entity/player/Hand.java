@@ -69,10 +69,6 @@ public class Hand {
         }
         return index;
     }
-
-    public void dispose() {
-        texturesExtractor.dispose();
-    }
 }
 
 class CardTexturesExtractor {
@@ -94,10 +90,5 @@ class CardTexturesExtractor {
             }
 
         return cardSet;
-    }
-
-    public void dispose() {
-        for (Texture texture : cardTextures)
-            texture.dispose();
     }
 }

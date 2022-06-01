@@ -10,17 +10,21 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 public class PlayerCollection {
-    private final Player[] players;
+    private Player[] players;
     private Recorder playRecord;
-    private final NumberBoxDisplacer numberBoxDisplacer;
-    private final int characterQuantity;
+    private NumberBoxDisplacer numberBoxDisplacer;
+    private int characterQuantity;
 
-    public PlayerCollection(Texture[] textures, Texture[] cards,
-                            int characterQuantity, NumberBoxDisplacer numberBoxDisplacer) {
-        this.characterQuantity = characterQuantity;
-        players = new Player[characterQuantity];
-        this.numberBoxDisplacer = numberBoxDisplacer;
+    public PlayerCollection(Texture[] textures, Texture[] cards) {
         createPlayers(textures, cards);
+    }
+
+    public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
+        this.numberBoxDisplacer = numberBoxDisplacer;
+    }
+
+    public void setCharacterQuantity(int characterQuantity) {
+        this.characterQuantity = characterQuantity;
     }
 
     public void setPlayRecord(Recorder playRecord) {
@@ -28,6 +32,7 @@ public class PlayerCollection {
     }
 
     private void createPlayers(Texture[] textures, Texture[] cards) {
+        players = new Player[characterQuantity];
         SkillHandler skillHandler = new SkillHandler(numberBoxDisplacer);
 
         for (int i = 0; i < characterQuantity; i++)
@@ -49,10 +54,6 @@ public class PlayerCollection {
 
     public Player[] getPlayers() {
         return players;
-    }
-
-    public void dispose() {
-        for (Player player : players) player.dispose();
     }
 }
 
