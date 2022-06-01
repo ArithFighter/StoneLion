@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
-import com.arithfighter.not.pojo.GameRecorder;
 
 public class SceneController {
     private GameScene gameScene;
@@ -10,13 +9,8 @@ public class SceneController {
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
 
-        GameRecorder gameRecorder = new GameRecorder();
-
-        sceneManager = new SceneManager(sceneBuilder, gameRecorder);
+        sceneManager = new SceneManager(sceneBuilder);
         sceneManager.setGameScene(gameScene);
-
-        Stage stage = sceneBuilder.getStage();
-        stage.getRecordDisplacer().setGameRecorder(gameRecorder);
     }
 
     public void setGameSave(GameSave gameSave) {

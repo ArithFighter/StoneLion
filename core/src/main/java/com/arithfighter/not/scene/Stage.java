@@ -21,7 +21,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final StageMessage stageMessage;
-    private final RecordDisplacer recordDisplacer;
     private int numberBoxQuantity;
     private final CardLimitManager cardLimitManager;
 
@@ -61,16 +60,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 return gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
             }
         };
-
-        recordDisplacer = new RecordDisplacer(textures);
     }
 
     public void setCardLimit(int limit) {
         cardLimitManager.setCardLimit(limit);
-    }
-
-    public RecordDisplacer getRecordDisplacer() {
-        return recordDisplacer;
     }
 
     public PauseMenu getPauseMenu() {
@@ -125,7 +118,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
             if (pauseButton.isStart()){
                 pauseMenu.draw(batch);
-                recordDisplacer.draw(batch);
             }
             else
                 pauseButton.getButton().draw(batch, "Pause");
@@ -184,7 +176,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseMenu.dispose();
         playerCollection.dispose();
         cardLimitManager.dispose();
-        recordDisplacer.dispose();
         pauseFont.dispose();
     }
 }

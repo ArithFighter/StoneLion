@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
-import com.arithfighter.not.pojo.GameRecorder;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
 
@@ -11,27 +10,22 @@ public class SceneManager {
     private final SceneManageable[] sceneManageable;
     private final Savable[] savable;
 
-    public SceneManager(SceneBuilder sceneBuilder, GameRecorder gameRecorder) {
+    public SceneManager(SceneBuilder sceneBuilder) {
         TokenHolder tokenHolder = new TokenHolder();
 
         StageManager stageManager = new StageManager(sceneBuilder);
         stageManager.initScene();
-        stageManager.setGameRecorder(gameRecorder);
         stageManager.setTokenHolder(tokenHolder);
 
         MenuManager menuManager = new MenuManager(sceneBuilder);
         menuManager.initScene();
-        menuManager.setGameRecorder(gameRecorder);
         menuManager.setTokenHolder(tokenHolder);
 
         BetManager betManager = new BetManager(sceneBuilder);
         betManager.initScene();
-        betManager.setGameRecorder(gameRecorder);
-        betManager.setTokenHolder(tokenHolder);
 
         ResultManager resultManager = new ResultManager(sceneBuilder);
         resultManager.initScene();
-        resultManager.setGameRecorder(gameRecorder);
         resultManager.setTokenHolder(tokenHolder);
 
         OptionManager optionManager = new OptionManager(sceneBuilder);
@@ -105,7 +99,6 @@ interface Savable{
 }
 
 class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
-    private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
@@ -116,10 +109,6 @@ class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
     @Override
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
-    }
-
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        this.gameRecorder = gameRecorder;
     }
 
     public void setTokenHolder(TokenHolder tokenHolder) {
@@ -138,7 +127,6 @@ class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
 
         if (characterMenu.isGameStart()) {
             setGameScene(GameScene.BET);
-            gameRecorder.init();
             tokenHolder.reset();
             receiveTokens();
             betScreen.setNumberBoxQuantity();
@@ -169,19 +157,9 @@ class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
 }
 
 class BetManager extends BuilderAccessor implements SceneManageable {
-    private GameRecorder gameRecorder;
-    private TokenHolder tokenHolder;
 
     public BetManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
-    }
-
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        this.gameRecorder = gameRecorder;
-    }
-
-    public void setTokenHolder(TokenHolder tokenHolder) {
-        this.tokenHolder = tokenHolder;
     }
 
     public void initScene() {
@@ -195,17 +173,12 @@ class BetManager extends BuilderAccessor implements SceneManageable {
 
         if (betScreen.isStartGame()) {
             setGameScene(GameScene.STAGE);
-            gameRecorder.getTokenRecorder().reset();
-            gameRecorder.getTokenRecorder().update(tokenHolder.getTokens());
-            gameRecorder.getStagesRecorder().update(1);
-
             stage.setCardLimit(betScreen.getCardLimit());
         }
     }
 }
 
 class StageManager extends BuilderAccessor implements SceneManageable {
-    private GameRecorder gameRecorder;
     int cursor = 0;
     int[] boxQuantityList;
     private final StageAction stageAction;
@@ -215,10 +188,6 @@ class StageManager extends BuilderAccessor implements SceneManageable {
         super(sceneBuilder);
 
         stageAction = new StageAction(sceneBuilder);
-    }
-
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        this.gameRecorder = gameRecorder;
     }
 
     public void setTokenHolder(TokenHolder tokenHolder) {
@@ -260,7 +229,6 @@ class StageManager extends BuilderAccessor implements SceneManageable {
             resultScreen.setState(ResultState.WIN);
 
             tokenHolder.gain(betScreen.getBet());
-            gameRecorder.getWinRecorder().update(1);
 
             resultScreen.setRemainingTokens(tokenHolder.getTokens());
             resetStage();
@@ -270,7 +238,6 @@ class StageManager extends BuilderAccessor implements SceneManageable {
             setGameScene(GameScene.RESULT);
             resultScreen.setState(ResultState.LOOSE);
             tokenHolder.lose(betScreen.getBet());
-            gameRecorder.getLoseRecorder().update(1);
             resetStage();
             resultScreen.setRemainingTokens(tokenHolder.getTokens());
             stage.init();
@@ -326,7 +293,6 @@ class StageAction {
 }
 
 class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
-    private GameRecorder gameRecorder;
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
@@ -337,10 +303,6 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
     @Override
     public void setGameSave(GameSave gameSave) {
         this.gameSave = gameSave;
-    }
-
-    public void setGameRecorder(GameRecorder gameRecorder) {
-        this.gameRecorder = gameRecorder;
     }
 
     public void initScene() {
@@ -355,10 +317,10 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
         SceneBuilder sceneBuilder = getSceneBuilder();
         ResultScreen resultScreen = sceneBuilder.getResultScreen();
 
-        int totalStages = 2;
+        int maxTokens = 500;
 
         if (resultScreen.isContinue()) {
-            if (isEnd(totalStages))
+            if (isEnd(maxTokens))
                 setGameScene(GameScene.ENDING);
             else
                 setGameScene(GameScene.BET);
@@ -372,7 +334,7 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
     }
 
     private boolean isEnd(int condition) {
-        return gameRecorder.getStagesRecorder().getRecord() == condition;
+        return tokenHolder.getTokens() == condition;
     }
 
     private void setBetScreen() {
