@@ -7,6 +7,7 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.button.SceneControlButton;
@@ -17,19 +18,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PlayerCollection playerCollection;
     private final GamePlayComponent gamePlayComponent;
-    private final Font pauseFont;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final StageMessage stageMessage;
     private int numberBoxQuantity;
     private final CardLimitManager cardLimitManager;
 
-    public Stage(TextureService textureService, SoundManager soundManager) {
+    public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
-
-        pauseFont = new Font(22);
-        pauseFont.setColor(Color.WHITE);
 
         cardLimitManager = new CardLimitManager();
 
@@ -47,7 +44,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
-        pauseButton.getButton().setFont(pauseFont);
+        pauseButton.getButton().setFont(fontService.getFont22());
 
         stageMessage = new StageMessage(450, 500) {
             @Override
@@ -176,7 +173,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseMenu.dispose();
         playerCollection.dispose();
         cardLimitManager.dispose();
-        pauseFont.dispose();
     }
 }
 

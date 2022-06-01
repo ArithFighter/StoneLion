@@ -78,7 +78,7 @@ class SceneCollection{
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService){
         characterMenu = new CharacterMenu(textureService, soundManager);
 
-        stage = new Stage(textureService, soundManager);
+        stage = new Stage(textureService, soundManager, fontService);
 
         optionMenu = new OptionMenu(textureService, soundManager);
 
