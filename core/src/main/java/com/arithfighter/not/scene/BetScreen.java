@@ -5,6 +5,7 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.GameCardController;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.BetBrowser;
@@ -29,15 +30,12 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
-    private final FontService fontService;
     private final QuantityCandidateService quantityCandidates;
     private final int[] betList = {5, 10, 20, 50, 100};
 
-    public BetScreen(TextureService textureService, SoundManager soundManager) {
+    public BetScreen(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         this.soundManager = soundManager;
-
-        fontService = new FontService();
 
         betBrowser = new BetBrowser(textures);
         betBrowser.setFont(fontService.getFont28());
@@ -220,7 +218,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     @Override
     public void dispose() {
         gameCards.dispose();
-        fontService.dispose();
     }
 }
 
@@ -303,40 +300,6 @@ class TextDisplacer {
         font.draw(batch, betHint, 400, 300);
 
         font.draw(batch, totalBet, 100, 150);
-    }
-}
-
-class FontService{
-    private final Font[] fonts;
-
-    public FontService(){
-        fonts = new Font[]{
-                new Font(20),
-                new Font(22),
-                new Font(24),
-                new Font(28),
-        };
-    }
-
-    public Font getFont24() {
-        return fonts[1];
-    }
-
-    public Font getFont22() {
-        return fonts[2];
-    }
-
-    public Font getFont28() {
-        return fonts[3];
-    }
-
-    public Font getFont20(){
-        return fonts[0];
-    }
-
-    public void dispose(){
-        for (Font f:fonts)
-            f.dispose();
     }
 }
 

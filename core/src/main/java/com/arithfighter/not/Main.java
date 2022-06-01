@@ -4,6 +4,7 @@ import com.arithfighter.not.audio.AudioHandler;
 import com.arithfighter.not.audio.MusicManager;
 import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
+import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -26,6 +27,7 @@ public class Main extends ApplicationAdapter {
     private TextureService textureService;
     private GameSave gameSave;
     private GameDataDisplacer gameDataDisplacer;
+    private FontService fontService;
 
     @Override
     public void create() {
@@ -39,9 +41,11 @@ public class Main extends ApplicationAdapter {
 
         cursorPos = new CursorPositionAccessor();
 
+        fontService = new FontService();
+
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager());
+        sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager(), fontService);
 
         sceneBuilder.setBatch(batch);
 
@@ -144,5 +148,7 @@ public class Main extends ApplicationAdapter {
         audioHandler.dispose();
 
         textureService.dispose();
+
+        fontService.dispose();
     }
 }
