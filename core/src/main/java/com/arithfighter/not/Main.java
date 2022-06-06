@@ -62,6 +62,7 @@ public class Main extends ApplicationAdapter {
 
         gameSave = new GameSave();
         sceneBuilder.setAudioVolume(gameSave);
+        sceneBuilder.setHighScore(gameSave);
 
         sceneController.setGameSave(gameSave);
 
@@ -90,8 +91,6 @@ public class Main extends ApplicationAdapter {
         sceneController.updateScene();
 
         updateScene();
-
-        sceneBuilder.setHighScore(gameSave);
 
         cursorPos.update();
 

@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
+import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
 
@@ -69,7 +70,7 @@ public class SceneManager {
     }
 
     public void setGameSave(GameSave gameSave) {
-        for (Savable s: savable)
+        for (Savable s : savable)
             s.setGameSave(gameSave);
     }
 
@@ -87,10 +88,11 @@ interface SceneFactory {
 
 interface SceneManageable {
     void initScene();
+
     void run();
 }
 
-interface Savable{
+interface Savable {
     void setGameSave(GameSave gameSave);
 }
 
@@ -248,12 +250,12 @@ class StageManager extends BuilderAccessor implements SceneManageable {
         stage.getCardLimitManager().getPlayRecord().reset();
     }
 
-    private void setBoxQuantityToStage(){
+    private void setBoxQuantityToStage() {
         Stage stage = getSceneBuilder().getStage();
 
         if (boxQuantityList[cursor] > 0)
             stage.setNumberBoxQuantity(boxQuantityList[cursor]);
-        else{
+        else {
             cursor++;
             stage.init();
         }
@@ -288,7 +290,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
+class ResultManager extends BuilderAccessor implements SceneManageable, Savable {
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
@@ -363,6 +365,11 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable{
             pref.putInteger(keys[characterIndex], tokenHolder.getTokens());
             pref.flush();
         }
+
+        characterMenu.setSavedTokens(
+                CharacterList.values()[characterIndex],
+                pref.getInteger(gameSave.getTokenKey()[characterIndex])
+        );
     }
 }
 
