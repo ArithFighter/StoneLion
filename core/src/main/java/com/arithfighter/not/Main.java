@@ -5,10 +5,12 @@ import com.arithfighter.not.audio.MusicController;
 import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.scene.*;
+import com.arithfighter.not.scene.GameScene;
+import com.arithfighter.not.scene.SceneBuilder;
+import com.arithfighter.not.scene.SceneController;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -75,29 +77,34 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        assetProcessor.update(17);
+        AssetManager assetManager = assetProcessor.getAssetManager();
 
-        if (assetProcessor.getAssetManager().update()){
-            updateScene();
+        assetManager.update(17);
 
-            sceneBuilder.setHighScore(gameSave);
-
-            cursorPos.update();
-
-            audioHandler.setAudioVolume();
-
-            setSelectedCharacter();
-
-            mouseAdapter.setGameScene(gameScene);
-
-            musicController.setGameScene(gameScene);
-            musicController.playBackgroundMusic();
-
-            drawGame();
-
-            //This is for developer, will remove in launched version
-            manualReset();
+        if (assetManager.update()){
+            runGame();
         }
+    }
+
+    private void runGame(){
+        sceneController.updateScene();
+
+        updateScene();
+
+        sceneBuilder.setHighScore(gameSave);
+
+        cursorPos.update();
+
+        audioHandler.setAudioVolume();
+
+        setSelectedCharacter();
+
+        mouseAdapter.setGameScene(gameScene);
+
+        musicController.setGameScene(gameScene);
+        musicController.playBackgroundMusic();
+
+        drawGame();
     }
 
     private void setSelectedCharacter() {
@@ -107,16 +114,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void updateScene() {
-        sceneController.updateScene();
-
         gameScene = sceneController.getGameScene();
-    }
-
-    private void manualReset() {
-        if (gameScene == GameScene.STAGE) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.R))
-                sceneBuilder.getStage().init();
-        }
     }
 
     private void drawGame() {
