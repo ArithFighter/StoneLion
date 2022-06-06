@@ -1,7 +1,7 @@
 package com.arithfighter.not;
 
 import com.arithfighter.not.audio.AudioHandler;
-import com.arithfighter.not.audio.MusicManager;
+import com.arithfighter.not.audio.MusicController;
 import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.font.FontService;
@@ -28,6 +28,7 @@ public class Main extends ApplicationAdapter {
     private GameSave gameSave;
     private GameDataDisplacer gameDataDisplacer;
     private FontService fontService;
+    private MusicController musicController;
 
     @Override
     public void create() {
@@ -65,6 +66,8 @@ public class Main extends ApplicationAdapter {
         Gdx.input.setInputProcessor(mouseAdapter);
 
         gameDataDisplacer = new GameDataDisplacer();
+
+        musicController = new MusicController(audioHandler);
     }
 
     @Override
@@ -87,7 +90,8 @@ public class Main extends ApplicationAdapter {
 
             mouseAdapter.setGameScene(gameScene);
 
-            playBackgroundMusic();
+            musicController.setGameScene(gameScene);
+            musicController.playBackgroundMusic();
 
             drawGame();
 
@@ -124,17 +128,6 @@ public class Main extends ApplicationAdapter {
         gameDataDisplacer.draw(batch);
 
         batch.end();
-    }
-
-    public void playBackgroundMusic() {
-        MusicManager musicManager = audioHandler.getMusicManager();
-        if (gameScene == GameScene.MENU ||
-                gameScene == GameScene.OPTION ||
-                gameScene == GameScene.BET)
-            musicManager.playMenuMusic();
-
-        if (gameScene == GameScene.STAGE)
-            musicManager.playTheme();
     }
 
     @Override
