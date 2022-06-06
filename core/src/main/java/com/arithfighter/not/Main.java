@@ -22,12 +22,9 @@ public class Main extends ApplicationAdapter {
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
     private SceneBuilder sceneBuilder;
-    private GameScene gameScene;
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
-    private TextureService textureService;
-    private GameSave gameSave;
     private GameDataDisplacer gameDataDisplacer;
     private FontService fontService;
     private MusicController musicController;
@@ -38,8 +35,6 @@ public class Main extends ApplicationAdapter {
 
         assetProcessor.load();
 
-        textureService = new TextureService(assetProcessor);
-
         batch = new SpriteBatch();
 
         cursorPos = new CursorPositionAccessor();
@@ -47,6 +42,8 @@ public class Main extends ApplicationAdapter {
         fontService = new FontService();
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
+
+        TextureService textureService = new TextureService(assetProcessor);
 
         sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager(), fontService);
 
@@ -60,10 +57,10 @@ public class Main extends ApplicationAdapter {
 
         sceneController = new SceneController(sceneBuilder, GameScene.MENU);
 
-        gameSave = new GameSave();
+        GameSave gameSave = new GameSave();
+
         sceneBuilder.setAudioVolume(gameSave);
         sceneBuilder.setHighScore(gameSave);
-
         sceneController.setGameSave(gameSave);
 
         Gdx.input.setInputProcessor(mouseAdapter);
@@ -88,9 +85,9 @@ public class Main extends ApplicationAdapter {
     }
 
     private void runGame(){
-        sceneController.updateScene();
+        GameScene gameScene = sceneController.getGameScene();
 
-        updateScene();
+        sceneController.updateScene();
 
         cursorPos.update();
 
@@ -103,7 +100,7 @@ public class Main extends ApplicationAdapter {
         musicController.setGameScene(gameScene);
         musicController.playBackgroundMusic();
 
-        drawGame();
+        drawGame(gameScene);
     }
 
     private void setSelectedCharacter() {
@@ -112,11 +109,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
     }
 
-    private void updateScene() {
-        gameScene = sceneController.getGameScene();
-    }
-
-    private void drawGame() {
+    private void drawGame(GameScene gameScene) {
         batch.begin();
 
         sceneBuilder.renderScene(gameScene);
@@ -134,8 +127,6 @@ public class Main extends ApplicationAdapter {
         assetProcessor.dispose();
 
         audioHandler.dispose();
-
-        textureService.dispose();
 
         fontService.dispose();
     }
