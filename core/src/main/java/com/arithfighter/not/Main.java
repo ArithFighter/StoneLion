@@ -65,7 +65,7 @@ public class Main extends ApplicationAdapter {
 
         Gdx.input.setInputProcessor(mouseAdapter);
 
-        gameDataDisplacer = new GameDataDisplacer();
+        gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
 
         musicController = new MusicController(audioHandler);
     }

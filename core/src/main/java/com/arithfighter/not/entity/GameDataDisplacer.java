@@ -10,10 +10,9 @@ public class GameDataDisplacer {
     private final Font font;
     private final Point cursorPoint = new Point();
 
-    public GameDataDisplacer(){
-        int fontSize = 16;
-        font = new Font(fontSize);
+    public GameDataDisplacer(Font font){
         font.setColor(Color.WHITE);
+        this.font = font;
     }
 
     public void setCursorPoint(int x, int y){
@@ -24,9 +23,5 @@ public class GameDataDisplacer {
         String posText = "X: " + cursorPoint.getX() + " Y: " + cursorPoint.getY();
 
         font.draw(batch,posText,0, Gdx.graphics.getHeight());
-    }
-
-    public void dispose(){
-        font.dispose();
     }
 }
