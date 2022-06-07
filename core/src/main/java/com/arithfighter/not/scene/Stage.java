@@ -44,7 +44,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.getButton().setPosition(1000, 600);
         pauseButton.getButton().setFont(fontService.getFont22());
 
-        stageMessage = new StageMessage(450, 500) {
+        stageMessage = new StageMessage(450, 500, fontService.getFont45()) {
             @Override
             public boolean isExceedCardLimitAndStageNotComplete() {
                 return cardLimitManager.isExceedCardLimit() && !gamePlayComponent.getNumberBoxDisplacer().isAllNumZero();
@@ -210,10 +210,10 @@ class StageMessage {
     private final float x;
     private final float y;
 
-    public StageMessage(float x, float y) {
+    public StageMessage(float x, float y, Font font) {
         this.x = x;
         this.y = y;
-        text = new Font(45);
+        text = font;
         text.setColor(Color.WHITE);
 
         transitionHandler = new TimeHandler();
@@ -291,9 +291,5 @@ class StageMessage {
 
     public boolean isStageComplete() {
         return false;
-    }
-
-    public final void dispose() {
-        text.dispose();
     }
 }

@@ -14,10 +14,11 @@ public class FontService {
                 new Font(28),
                 new Font(32),
                 new Font(36),
+                new Font(45)
         };
 
         int[] keys = new int[]{
-                16, 20, 22, 24, 28, 32, 36
+                16, 20, 22, 24, 28, 32, 36, 45
         };
 
         fontMap= new HashMap<>();
@@ -52,6 +53,10 @@ public class FontService {
 
     public Font getFont36(){
         return fontMap.get(36);
+    }
+
+    public Font getFont45(){
+        return fontMap.get(45);
     }
 
     public void dispose(){
