@@ -28,9 +28,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
 
-        cardLimitManager = new CardLimitManager(fontService.getFont22());
-
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
+
+        cardLimitManager = new CardLimitManager(fontService.getFont22());
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 

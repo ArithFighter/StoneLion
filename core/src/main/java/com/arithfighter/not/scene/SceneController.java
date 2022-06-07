@@ -4,17 +4,17 @@ import com.arithfighter.not.GameSave;
 
 public class SceneController {
     private GameScene gameScene;
-    private final SceneManager sceneManager;
+    private final SceneControllerService sceneControllerService;
 
     public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
         gameScene = initScene;
 
-        sceneManager = new SceneManager(sceneBuilder);
-        sceneManager.setGameScene(gameScene);
+        sceneControllerService = new SceneControllerService(sceneBuilder);
+        sceneControllerService.setGameScene(gameScene);
     }
 
     public void setGameSave(GameSave gameSave) {
-        sceneManager.setGameSave(gameSave);
+        sceneControllerService.setGameSave(gameSave);
     }
 
     public GameScene getGameScene() {
@@ -24,8 +24,8 @@ public class SceneController {
     public void updateScene() {
         for (int i = 0;i<GameScene.values().length;i++){
             if (gameScene == GameScene.values()[i]){
-                sceneManager.update(i);
-                gameScene = sceneManager.getGameScene();
+                sceneControllerService.update(i);
+                gameScene = sceneControllerService.getGameScene();
             }
         }
     }

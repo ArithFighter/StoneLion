@@ -5,13 +5,13 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.pojo.TokenHolder;
 import com.badlogic.gdx.Preferences;
 
-public class SceneManager {
+public class SceneControllerService {
     private GameScene gameScene;
     private final SceneFactory[] sceneFactories;
-    private final SceneManageable[] sceneManageable;
+    private final SceneControllable[] sceneManageable;
     private final Savable[] savable;
 
-    public SceneManager(SceneBuilder sceneBuilder) {
+    public SceneControllerService(SceneBuilder sceneBuilder) {
         TokenHolder tokenHolder = new TokenHolder();
 
         StageManager stageManager = new StageManager(sceneBuilder);
@@ -41,7 +41,7 @@ public class SceneManager {
                 optionManager
         };
 
-        sceneManageable = new SceneManageable[]{
+        sceneManageable = new SceneControllable[]{
                 menuManager,
                 betManager,
                 stageManager,
@@ -51,7 +51,7 @@ public class SceneManager {
                 optionManager
         };
 
-        for (SceneManageable s : sceneManageable)
+        for (SceneControllable s : sceneManageable)
             s.initScene();
 
         savable = new Savable[]{
@@ -75,7 +75,7 @@ public class SceneManager {
     }
 
     public void update(int index) {
-        for (SceneManageable s : sceneManageable)
+        for (SceneControllable s : sceneManageable)
             s.initScene();
         sceneManageable[index].run();
         gameScene = sceneFactories[index].getGamaScene();
@@ -86,7 +86,7 @@ interface SceneFactory {
     GameScene getGamaScene();
 }
 
-interface SceneManageable {
+interface SceneControllable {
     void initScene();
 
     void run();
@@ -96,7 +96,7 @@ interface Savable {
     void setGameSave(GameSave gameSave);
 }
 
-class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
+class MenuManager extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
@@ -154,7 +154,7 @@ class MenuManager extends BuilderAccessor implements SceneManageable, Savable {
     }
 }
 
-class BetManager extends BuilderAccessor implements SceneManageable {
+class BetManager extends BuilderAccessor implements SceneControllable {
 
     public BetManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -176,7 +176,7 @@ class BetManager extends BuilderAccessor implements SceneManageable {
     }
 }
 
-class StageManager extends BuilderAccessor implements SceneManageable {
+class StageManager extends BuilderAccessor implements SceneControllable {
     int cursor = 0;
     int[] boxQuantityList;
     private final StageAction stageAction;
@@ -290,7 +290,7 @@ class StageAction {
     }
 }
 
-class ResultManager extends BuilderAccessor implements SceneManageable, Savable {
+class ResultManager extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
@@ -373,7 +373,7 @@ class ResultManager extends BuilderAccessor implements SceneManageable, Savable 
     }
 }
 
-class GameOverManager extends BuilderAccessor implements SceneManageable {
+class GameOverManager extends BuilderAccessor implements SceneControllable {
 
     public GameOverManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -393,7 +393,7 @@ class GameOverManager extends BuilderAccessor implements SceneManageable {
     }
 }
 
-class EndingManager extends BuilderAccessor implements SceneManageable {
+class EndingManager extends BuilderAccessor implements SceneControllable {
 
     public EndingManager(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -412,7 +412,7 @@ class EndingManager extends BuilderAccessor implements SceneManageable {
     }
 }
 
-class OptionManager extends BuilderAccessor implements SceneManageable, Savable {
+class OptionManager extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
 
     public OptionManager(SceneBuilder sceneBuilder) {
