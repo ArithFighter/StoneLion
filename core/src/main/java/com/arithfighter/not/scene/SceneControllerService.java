@@ -14,50 +14,50 @@ public class SceneControllerService {
     public SceneControllerService(SceneBuilder sceneBuilder) {
         TokenHolder tokenHolder = new TokenHolder();
 
-        StageManager stageManager = new StageManager(sceneBuilder);
-        stageManager.setTokenHolder(tokenHolder);
+        StageController stageController = new StageController(sceneBuilder);
+        stageController.setTokenHolder(tokenHolder);
 
-        MenuManager menuManager = new MenuManager(sceneBuilder);
-        menuManager.setTokenHolder(tokenHolder);
+        MenuController menuController = new MenuController(sceneBuilder);
+        menuController.setTokenHolder(tokenHolder);
 
-        BetManager betManager = new BetManager(sceneBuilder);
+        BetController betController = new BetController(sceneBuilder);
 
-        ResultManager resultManager = new ResultManager(sceneBuilder);
-        resultManager.setTokenHolder(tokenHolder);
+        ResultController resultController = new ResultController(sceneBuilder);
+        resultController.setTokenHolder(tokenHolder);
 
-        OptionManager optionManager = new OptionManager(sceneBuilder);
+        OptionController optionController = new OptionController(sceneBuilder);
 
-        GameOverManager gameOverManager = new GameOverManager(sceneBuilder);
+        GameOverController gameOverController = new GameOverController(sceneBuilder);
 
-        EndingManager endingManager = new EndingManager(sceneBuilder);
+        EndingController endingController = new EndingController(sceneBuilder);
 
         sceneFactories = new SceneFactory[]{
-                menuManager,
-                betManager,
-                stageManager,
-                resultManager,
-                gameOverManager,
-                endingManager,
-                optionManager
+                menuController,
+                betController,
+                stageController,
+                resultController,
+                gameOverController,
+                endingController,
+                optionController
         };
 
         sceneManageable = new SceneControllable[]{
-                menuManager,
-                betManager,
-                stageManager,
-                resultManager,
-                gameOverManager,
-                endingManager,
-                optionManager
+                menuController,
+                betController,
+                stageController,
+                resultController,
+                gameOverController,
+                endingController,
+                optionController
         };
 
         for (SceneControllable s : sceneManageable)
             s.initScene();
 
         savable = new Savable[]{
-                menuManager,
-                resultManager,
-                optionManager
+                menuController,
+                resultController,
+                optionController
         };
     }
 
@@ -96,11 +96,11 @@ interface Savable {
     void setGameSave(GameSave gameSave);
 }
 
-class MenuManager extends BuilderAccessor implements SceneControllable, Savable {
+class MenuController extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
-    public MenuManager(SceneBuilder sceneBuilder) {
+    public MenuController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -154,9 +154,9 @@ class MenuManager extends BuilderAccessor implements SceneControllable, Savable 
     }
 }
 
-class BetManager extends BuilderAccessor implements SceneControllable {
+class BetController extends BuilderAccessor implements SceneControllable {
 
-    public BetManager(SceneBuilder sceneBuilder) {
+    public BetController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -176,16 +176,16 @@ class BetManager extends BuilderAccessor implements SceneControllable {
     }
 }
 
-class StageManager extends BuilderAccessor implements SceneControllable {
+class StageController extends BuilderAccessor implements SceneControllable {
     int cursor = 0;
     int[] boxQuantityList;
     private final StageAction stageAction;
     private TokenHolder tokenHolder;
 
-    public StageManager(SceneBuilder sceneBuilder) {
+    public StageController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
 
-        stageAction = new StageAction(sceneBuilder);
+        stageAction = new StageAction(sceneBuilder.getStage());
     }
 
     public void setTokenHolder(TokenHolder tokenHolder) {
@@ -264,37 +264,37 @@ class StageManager extends BuilderAccessor implements SceneControllable {
     private boolean isAllGameCompleted() {
         return cursor > boxQuantityList.length - 1;
     }
+
+    static class StageAction {
+        private final Stage stage;
+
+        public StageAction(Stage stage) {
+            this.stage = stage;
+        }
+
+        public boolean isWin() {
+            return stage.getStageMessage().isWin();
+        }
+
+        public boolean isLose() {
+            return stage.getStageMessage().isLose();
+        }
+
+        public boolean isOpenOption() {
+            return stage.getPauseMenu().isOpenOption();
+        }
+
+        public boolean isQuit() {
+            return stage.getPauseMenu().isReturnToMainMenu();
+        }
+    }
 }
 
-class StageAction {
-    private final Stage stage;
-
-    public StageAction(SceneBuilder sceneBuilder) {
-        this.stage = sceneBuilder.getStage();
-    }
-
-    public boolean isWin() {
-        return stage.getStageMessage().isWin();
-    }
-
-    public boolean isLose() {
-        return stage.getStageMessage().isLose();
-    }
-
-    public boolean isOpenOption() {
-        return stage.getPauseMenu().isOpenOption();
-    }
-
-    public boolean isQuit() {
-        return stage.getPauseMenu().isReturnToMainMenu();
-    }
-}
-
-class ResultManager extends BuilderAccessor implements SceneControllable, Savable {
+class ResultController extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
     private TokenHolder tokenHolder;
 
-    public ResultManager(SceneBuilder sceneBuilder) {
+    public ResultController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -373,9 +373,9 @@ class ResultManager extends BuilderAccessor implements SceneControllable, Savabl
     }
 }
 
-class GameOverManager extends BuilderAccessor implements SceneControllable {
+class GameOverController extends BuilderAccessor implements SceneControllable {
 
-    public GameOverManager(SceneBuilder sceneBuilder) {
+    public GameOverController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -393,9 +393,9 @@ class GameOverManager extends BuilderAccessor implements SceneControllable {
     }
 }
 
-class EndingManager extends BuilderAccessor implements SceneControllable {
+class EndingController extends BuilderAccessor implements SceneControllable {
 
-    public EndingManager(SceneBuilder sceneBuilder) {
+    public EndingController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
@@ -412,10 +412,10 @@ class EndingManager extends BuilderAccessor implements SceneControllable {
     }
 }
 
-class OptionManager extends BuilderAccessor implements SceneControllable, Savable {
+class OptionController extends BuilderAccessor implements SceneControllable, Savable {
     private GameSave gameSave;
 
-    public OptionManager(SceneBuilder sceneBuilder) {
+    public OptionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
 
