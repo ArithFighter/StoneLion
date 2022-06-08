@@ -14,50 +14,38 @@ public class SceneControllerService {
     public SceneControllerService(SceneBuilder sceneBuilder) {
         TokenHolder tokenHolder = new TokenHolder();
 
-        StageController stageController = new StageController(sceneBuilder);
-        stageController.setTokenHolder(tokenHolder);
-
-        MenuController menuController = new MenuController(sceneBuilder);
-        menuController.setTokenHolder(tokenHolder);
-
-        BetController betController = new BetController(sceneBuilder);
-
-        ResultController resultController = new ResultController(sceneBuilder);
-        resultController.setTokenHolder(tokenHolder);
-
-        OptionController optionController = new OptionController(sceneBuilder);
-
-        GameOverController gameOverController = new GameOverController(sceneBuilder);
-
-        EndingController endingController = new EndingController(sceneBuilder);
+        SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
+        scc.getStageController().setTokenHolder(tokenHolder);
+        scc.getMenuController().setTokenHolder(tokenHolder);
+        scc.getResultController().setTokenHolder(tokenHolder);
 
         sceneFactories = new SceneFactory[]{
-                menuController,
-                betController,
-                stageController,
-                resultController,
-                gameOverController,
-                endingController,
-                optionController
+                scc.getMenuController(),
+                scc.getBetController(),
+                scc.getStageController(),
+                scc.getResultController(),
+                scc.getGameOverController(),
+                scc.getEndingController(),
+                scc.getOptionController()
         };
 
         sceneManageable = new SceneControllable[]{
-                menuController,
-                betController,
-                stageController,
-                resultController,
-                gameOverController,
-                endingController,
-                optionController
+                scc.getMenuController(),
+                scc.getBetController(),
+                scc.getStageController(),
+                scc.getResultController(),
+                scc.getGameOverController(),
+                scc.getEndingController(),
+                scc.getOptionController()
         };
 
         for (SceneControllable s : sceneManageable)
             s.initScene();
 
         savable = new Savable[]{
-                menuController,
-                resultController,
-                optionController
+                scc.getMenuController(),
+                scc.getResultController(),
+                scc.getOptionController()
         };
     }
 
@@ -79,6 +67,54 @@ public class SceneControllerService {
             s.initScene();
         sceneManageable[index].run();
         gameScene = sceneFactories[index].getGamaScene();
+    }
+}
+
+class SceneControllerCollection {
+    private final StageController stageController;
+    private final MenuController menuController;
+    private final BetController betController;
+    private final ResultController resultController;
+    private final OptionController optionController;
+    private final GameOverController gameOverController;
+    private final EndingController endingController;
+
+    public SceneControllerCollection(SceneBuilder sceneBuilder) {
+        stageController = new StageController(sceneBuilder);
+        menuController = new MenuController(sceneBuilder);
+        betController = new BetController(sceneBuilder);
+        resultController = new ResultController(sceneBuilder);
+        optionController = new OptionController(sceneBuilder);
+        gameOverController = new GameOverController(sceneBuilder);
+        endingController = new EndingController(sceneBuilder);
+    }
+
+    public StageController getStageController() {
+        return stageController;
+    }
+
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
+    public BetController getBetController() {
+        return betController;
+    }
+
+    public ResultController getResultController() {
+        return resultController;
+    }
+
+    public OptionController getOptionController() {
+        return optionController;
+    }
+
+    public GameOverController getGameOverController() {
+        return gameOverController;
+    }
+
+    public EndingController getEndingController() {
+        return endingController;
     }
 }
 
