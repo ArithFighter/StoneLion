@@ -3,6 +3,7 @@ package com.arithfighter.not.widget;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.ArrowButtons;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -42,6 +43,7 @@ public class BetBrowser {
 
     public void draw(SpriteBatch batch){
         int fontSize = font.getSize();
+        font.setColor(Color.WHITE);
         int width = fontSize*9;
             String content = String.valueOf(getBet());
 
