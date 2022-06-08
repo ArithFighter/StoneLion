@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
+import com.arithfighter.not.pojo.CapacityManager;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,7 @@ public class Player {
 
         hand = new Hand(cards, character);
 
-        capacityManager = new CapacityManager();
+        capacityManager = new CapacityManager(7);
 
         sumAccessor = new Recorder();
 
@@ -160,27 +161,3 @@ public class Player {
     }
 }
 
-class CapacityManager {
-    private final static int initCapacity = 7;
-    private int capacity = initCapacity;
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void update() {
-        capacity--;
-    }
-
-    public void initialize() {
-        capacity = initCapacity;
-    }
-
-    public boolean isEmpty(){
-        return capacity==initCapacity;
-    }
-
-    public boolean isFull() {
-        return capacity == 0;
-    }
-}
