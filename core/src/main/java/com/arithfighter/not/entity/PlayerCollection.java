@@ -13,9 +13,14 @@ public class PlayerCollection {
     private Player[] players;
     private Recorder playRecord;
     private NumberBoxDisplacer numberBoxDisplacer;
+    private SumBoxController sumBoxController;
     private int characterQuantity;
 
     public PlayerCollection() {
+    }
+
+    public void setSumBoxController(SumBoxController sumBoxController) {
+        this.sumBoxController = sumBoxController;
     }
 
     public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
@@ -39,6 +44,17 @@ public class PlayerCollection {
                     textures,
                     cards,
                     CharacterList.values()[i]) {
+                @Override
+                public void checkNumberCardPlayed() {
+                    sumBoxController.update(getHand().getCardNumber());
+                }
+
+                @Override
+                public void doWhenResettingCardPlay() {
+                    sumBoxController.init();
+                    sumBoxController.update(getHand().getCardNumber());
+                }
+
                 @Override
                 public void doWhenAnyCardPlayed() {
                     playRecord.update(1);

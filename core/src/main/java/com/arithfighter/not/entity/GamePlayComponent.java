@@ -21,6 +21,7 @@ public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
+    private  final SumBoxController sumBoxController;
     private final CardAnimation cardFadeOut;
     private final CardAnimation cardReset;
     private boolean isCardDrag = false;
@@ -75,6 +76,12 @@ public class GamePlayComponent {
         geckoController = new GeckoController();
         geckoController.setGeckoSprite(geckoSprite);
         geckoController.setGeckoAnimate(geckoAnimate);
+
+        sumBoxController = new SumBoxController();
+    }
+
+    public SumBoxController getSumBoxController() {
+        return sumBoxController;
     }
 
     private void changeGeckoStateWhenPlayCard() {
@@ -97,6 +104,7 @@ public class GamePlayComponent {
 
     public void init() {
         numberBoxDisplacer.init();
+        sumBoxController.init();
         player.init();
         cardFadeOut.init();
         cardReset.init();
@@ -113,7 +121,7 @@ public class GamePlayComponent {
     }
 
     public void update(int mouseX, int mouseY) {
-        numberBoxDisplacer.update(player.getSum());
+        numberBoxDisplacer.update(sumBoxController.getSum());
 
         player.updateWhenTouchCard(mouseX, mouseY);
     }
@@ -121,8 +129,8 @@ public class GamePlayComponent {
     public void draw() {
         numberBoxDisplacer.draw(batch);
 
-        sumBox.setCapacity(player.getCardCapacity());
-        sumBox.draw(player.getSum(), batch);
+        sumBox.setCapacity(sumBoxController.getCardCapacity());
+        sumBox.draw(sumBoxController.getSum(), batch);
 
         geckoController.setBatch(batch);
 
@@ -150,6 +158,7 @@ public class GamePlayComponent {
         }
         if (isReadyToResetSum){
             geckoController.init();
+            sumBoxController.init();
             player.setSkillStateToNeutral();
             geckoController.setGeckoState(GeckoState.SPIT);
             isReadyToResetSum = false;
@@ -167,7 +176,7 @@ public class GamePlayComponent {
             geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
-        if (player.isCapacityFull())
+        if (sumBoxController.isCapacityFull())
             isReadyToResetSum = true;
     }
 }
