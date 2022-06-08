@@ -40,7 +40,7 @@ public class PlayerCollection {
                     cards,
                     CharacterList.values()[i]) {
                 @Override
-                public void doWhenCardPlayed() {
+                public void doWhenAnyCardPlayed() {
                     playRecord.update(1);
                 }
 

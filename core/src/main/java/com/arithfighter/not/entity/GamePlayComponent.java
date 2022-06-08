@@ -150,7 +150,7 @@ public class GamePlayComponent {
         }
         if (isReadyToResetSum){
             geckoController.init();
-            player.resetSum();
+            player.setSkillStateToNeutral();
             geckoController.setGeckoState(GeckoState.SPIT);
             isReadyToResetSum = false;
         }

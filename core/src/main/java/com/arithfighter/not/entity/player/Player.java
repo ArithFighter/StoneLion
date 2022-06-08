@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final CapacityManager capacityManager;
-    private final Recorder sumAccessor;
     private final CharacterList character;
     private final EnergyBarController energyBarController;
 
@@ -26,16 +24,14 @@ public class Player {
 
         hand = new Hand(cards, character);
 
-        capacityManager = new CapacityManager(7);
-
-        sumAccessor = new Recorder();
-
         this.character = character;
     }
 
+    public Hand getHand() {
+        return hand;
+    }
+
     public void init() {
-        sumAccessor.reset();
-        capacityManager.initialize();
         energyBarController.reset();
     }
 
@@ -83,13 +79,7 @@ public class Player {
             card.setPosition(card.getPoint().getX(), card.getPoint().getY()+speed);
     }
 
-    public boolean isCapacityFull(){
-        return capacityManager.isFull();
-    }
-
-    public void resetSum(){
-        sumAccessor.reset();
-        capacityManager.initialize();
+    public void setSkillStateToNeutral(){
         skillState = SkillState.NEUTRAL;
     }
 
@@ -98,38 +88,29 @@ public class Player {
             card.initCard();
     }
 
-    public final int getSum() {
-        return sumAccessor.getRecord();
-    }
-
-    public final int getCardCapacity() {
-        return capacityManager.getCapacity();
-    }
-
     public final void playCard() {
         if (hand.isCardActive()) {
-            doWhenCardPlayed();
+            doWhenAnyCardPlayed();
 
             energyBarController.update();
 
-            if (hand.isResettingCard())
+            if (hand.isResettingCard()){
                 checkResettingCardPlay();
-            else
-                checkNormalCardPlayed();
+                skillState = SkillState.READY;
+            }
+            else{
+                if (skillState == SkillState.READY)
+                    skillState = SkillState.NEUTRAL;
+                checkNumberCardPlayed();
+            }
         }
     }
 
-    public void doWhenCardPlayed() {
+    public void doWhenAnyCardPlayed() {
 
     }
 
-    private void checkNormalCardPlayed() {
-        if (skillState == SkillState.READY)
-            skillState = SkillState.NEUTRAL;
-
-        sumAccessor.update(hand.getCardNumber());
-
-        capacityManager.update();
+    public void checkNumberCardPlayed() {
     }
 
     private void checkResettingCardPlay() {
@@ -150,14 +131,7 @@ public class Player {
     public void castSkill(CharacterList character) {
     }
 
-    private void doWhenResettingCardPlay() {
-        //when resetting card played means sum reset, then add a number to sum.
-        sumAccessor.reset();
-        sumAccessor.update(hand.getCardNumber());
-        //playing resetting card count as a card, thus capacityManager initializes then update.
-        capacityManager.initialize();
-        capacityManager.update();
-        skillState = SkillState.READY;
+    public void doWhenResettingCardPlay() {
     }
 }
 
