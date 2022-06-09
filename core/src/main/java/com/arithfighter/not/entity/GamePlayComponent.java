@@ -2,7 +2,7 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
-import com.arithfighter.not.animate.CardAnimation;
+import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.font.Font;
@@ -22,8 +22,8 @@ public class GamePlayComponent {
     private Player player;
     private final SumBox sumBox;
     private  final SumBoxController sumBoxController;
-    private final CardAnimation cardFadeOut;
-    private final CardAnimation cardReset;
+    private final VisualEffect cardFadeOut;
+    private final VisualEffect cardReset;
     private boolean isCardDrag = false;
     private final GeckoController geckoController;
     private SpriteBatch batch;
@@ -33,12 +33,12 @@ public class GamePlayComponent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
-        cardFadeOut = new CardAnimation(spriteSheets[1],3,3);
+        cardFadeOut = new VisualEffect(spriteSheets[1],3,3);
         cardFadeOut.setScale(16);
         cardFadeOut.setFrameDuration(0.08f);
         cardFadeOut.setDuration(0.4f);
 
-        cardReset = new CardAnimation(spriteSheets[0],3,3);
+        cardReset = new VisualEffect(spriteSheets[0],3,3);
         cardReset.setScale(16);
         cardReset.setFrameDuration(0.08f);
         cardReset.setDuration(0.48f);

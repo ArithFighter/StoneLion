@@ -5,7 +5,7 @@ import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CardAnimation {
+public class VisualEffect {
     private final AnimationProcessor processor;
     private boolean isStart = false;
     private final TimeHandler timeHandler;
@@ -14,7 +14,7 @@ public class CardAnimation {
     private Point lastMousePoint;
     private Point drawPoint;
 
-    public CardAnimation(Texture texture, int cols, int rows) {
+    public VisualEffect(Texture texture, int cols, int rows) {
         processor = new AnimationProcessor(texture, cols, rows);
         timeHandler = new TimeHandler();
         drawPoint = new Point();
