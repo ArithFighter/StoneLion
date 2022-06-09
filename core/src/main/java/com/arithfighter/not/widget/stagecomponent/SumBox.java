@@ -47,6 +47,10 @@ public class SumBox {
         this.capacity = capacity;
     }
 
+    public void init(){
+        capacity = 0;
+    }
+
     private void changeColor() {
         if (isCapacityWarning())
             widget.getSprite().setColor(Color.RED);

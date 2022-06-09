@@ -103,13 +103,15 @@ public class GamePlayComponent {
     }
 
     public void init() {
+        geckoController.init();
+        geckoController.setGeckoState(GeckoState.NEUTRAL);
+        sumBox.init();
         numberBoxDisplacer.init();
         sumBoxController.init();
         player.init();
         cardFadeOut.init();
         cardReset.init();
-        geckoController.init();
-        geckoController.setGeckoState(GeckoState.NEUTRAL);
+        isReadyToResetSum = false;
     }
 
     public NumberBoxDisplacer getNumberBoxDisplacer() {
