@@ -6,11 +6,8 @@ import com.arithfighter.not.animate.CardVisualEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.gecko.GeckoAnimate;
-import com.arithfighter.not.gecko.GeckoController;
-import com.arithfighter.not.gecko.GeckoState;
+import com.arithfighter.not.gecko.*;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.gecko.GeckoSprite;
 import com.arithfighter.not.widget.stagecomponent.SumBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -75,7 +72,9 @@ public class GamePlayComponent {
         };
         geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
 
-        GeckoAnimate geckoAnimate = new GeckoAnimate(spriteSheets);
+        GeckoAnimationService geckoAnimationService = new GeckoAnimationService(spriteSheets);
+
+        GeckoAnimate geckoAnimate = new GeckoAnimate(geckoAnimationService.getCharacterAnimatable());
         geckoAnimate.setDrawPoint(geckoPoint);
         geckoAnimate.setScale(geckoSprite.getScale());
 
