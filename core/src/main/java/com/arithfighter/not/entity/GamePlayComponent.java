@@ -18,24 +18,24 @@ public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private  final SumBoxController sumBoxController;
+    private final SumBoxController sumBoxController;
     private final VisualEffect cardFadeOut;
     private final VisualEffect cardReset;
     private boolean isCardDrag = false;
-    private final GeckoController geckoController;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
+    private final GeckoEntity gecko;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
-        cardFadeOut = new VisualEffect(spriteSheets[1],3,3);
+        cardFadeOut = new VisualEffect(spriteSheets[1], 3, 3);
         cardFadeOut.setScale(16);
         cardFadeOut.setFrameDuration(0.08f);
         cardFadeOut.setDuration(0.4f);
 
-        cardReset = new VisualEffect(spriteSheets[0],3,3);
+        cardReset = new VisualEffect(spriteSheets[0], 3, 3);
         cardReset.setScale(16);
         cardReset.setFrameDuration(0.08f);
         cardReset.setDuration(0.48f);
@@ -52,8 +52,6 @@ public class GamePlayComponent {
             }
         };
 
-        Point geckoPoint = new Point(CENTER_X + GRID_X * 5, GRID_Y * 6);
-
         GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
             @Override
             public void initCardPosition() {
@@ -63,24 +61,13 @@ public class GamePlayComponent {
 
             @Override
             public void checkCardPlayed() {
-                if (geckoController.isNotFullEating() && geckoController.isNotSpitting()) {
-                    player.playCard();
-                    cardFadeOut.setStart();
-                    changeGeckoStateWhenPlayCard();
-                }
+                player.playCard();
+                cardFadeOut.setStart();
+                changeGeckoStateWhenPlayCard();
             }
         };
-        geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
 
-        GeckoAnimationService geckoAnimationService = new GeckoAnimationService(spriteSheets);
-
-        GeckoAnimate geckoAnimate = new GeckoAnimate(geckoAnimationService.getCharacterAnimatable());
-        geckoAnimate.setDrawPoint(geckoPoint);
-        geckoAnimate.setScale(geckoSprite.getScale());
-
-        geckoController = new GeckoController();
-        geckoController.setGeckoSprite(geckoSprite);
-        geckoController.setGeckoAnimate(geckoAnimate);
+        gecko = new GeckoEntity(geckoSprite, spriteSheets);
 
         sumBoxController = new SumBoxController();
     }
@@ -91,11 +78,9 @@ public class GamePlayComponent {
 
     private void changeGeckoStateWhenPlayCard() {
         if (sumBox.isCapacityWarning()) {
-            geckoController.init();
-            geckoController.setGeckoState(GeckoState.FULL_EATING);
+            gecko.setFullEating();
         } else {
-            geckoController.init();
-            geckoController.setGeckoState(GeckoState.EATING);
+            gecko.setEating();
         }
     }
 
@@ -108,8 +93,7 @@ public class GamePlayComponent {
     }
 
     public void init() {
-        geckoController.init();
-        geckoController.setGeckoState(GeckoState.NEUTRAL);
+        gecko.setNeutral();
         sumBox.init();
         numberBoxDisplacer.init();
         sumBoxController.init();
@@ -139,9 +123,7 @@ public class GamePlayComponent {
         sumBox.setCapacity(sumBoxController.getCardCapacity());
         sumBox.draw(sumBoxController.getSum(), batch);
 
-        geckoController.setBatch(batch);
-
-        geckoController.drawGecko();
+        gecko.draw(batch);
 
         player.draw(batch);
 
@@ -159,15 +141,13 @@ public class GamePlayComponent {
         player.activateCard(mouseX, mouseY);
         cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
 
-        if (sumBox.isCapacityWarning()){
-            if (geckoController.isNotFullEating())
-                geckoController.setGeckoState(GeckoState.TOO_FULL);
+        if (sumBox.isCapacityWarning()) {
+            gecko.setTooFull();
         }
-        if (isReadyToResetSum){
-            geckoController.init();
+        if (isReadyToResetSum) {
+            gecko.setSpitting();
             sumBoxController.init();
             player.setSkillStateToNeutral();
-            geckoController.setGeckoState(GeckoState.SPIT);
             isReadyToResetSum = false;
         }
     }
@@ -180,10 +160,65 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDrag) {
-            geckoController.getGeckoSprite().playCardToGecko(mouseX, mouseY);
+            gecko.touchUp(mouseX, mouseY);
             cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxController.isCapacityFull())
             isReadyToResetSum = true;
+    }
+}
+
+class GeckoEntity {
+    private final GeckoController geckoController;
+
+    public GeckoEntity(GeckoSprite geckoSprite, Texture[] spriteSheets) {
+        Point geckoPoint = new Point(CENTER_X + GRID_X * 5, GRID_Y * 6);
+
+        geckoSprite.setPosition(geckoPoint.getX(), geckoPoint.getY());
+
+        GeckoAnimationService geckoAnimationService = new GeckoAnimationService(spriteSheets);
+
+        GeckoAnimate geckoAnimate = new GeckoAnimate(geckoAnimationService.getCharacterAnimatable());
+        geckoAnimate.setDrawPoint(geckoPoint);
+        geckoAnimate.setScale(geckoSprite.getScale());
+
+        geckoController = new GeckoController();
+        geckoController.setGeckoSprite(geckoSprite);
+        geckoController.setGeckoAnimate(geckoAnimate);
+    }
+
+    public void setEating() {
+        geckoController.init();
+        geckoController.setGeckoState(GeckoState.EATING);
+    }
+
+    public void setFullEating() {
+        geckoController.init();
+        geckoController.setGeckoState(GeckoState.FULL_EATING);
+    }
+
+    public void setNeutral() {
+        geckoController.init();
+        geckoController.setGeckoState(GeckoState.NEUTRAL);
+    }
+
+    public void setTooFull() {
+        if (geckoController.isNotFullEating())
+            geckoController.setGeckoState(GeckoState.TOO_FULL);
+    }
+
+    public void setSpitting() {
+        geckoController.init();
+        geckoController.setGeckoState(GeckoState.SPIT);
+    }
+
+    public void touchUp(int x, int y) {
+        geckoController.getGeckoSprite().playCardToGecko(x, y);
+    }
+
+    public void draw(SpriteBatch batch) {
+        geckoController.setBatch(batch);
+
+        geckoController.drawGecko();
     }
 }
