@@ -34,8 +34,14 @@ public class GamePlayComponent {
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
         cardFadeOut = new CardAnimation(spriteSheets[1],3,3);
+        cardFadeOut.setScale(16);
+        cardFadeOut.setFrameDuration(0.08f);
+        cardFadeOut.setDuration(0.4f);
 
         cardReset = new CardAnimation(spriteSheets[1],3,3);
+        cardReset.setScale(16);
+        cardReset.setFrameDuration(0.08f);
+        cardReset.setDuration(0.4f);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
@@ -144,9 +150,9 @@ public class GamePlayComponent {
     }
 
     private void drawCardAnimate() {
-        cardFadeOut.draw(batch, 0.4f, AnimationPos.CENTER);
+        cardFadeOut.draw(batch, AnimationPos.CENTER);
 
-        cardReset.draw(batch, 0.4f, AnimationPos.TOP_RIGHT);
+        cardReset.draw(batch, AnimationPos.TOP_RIGHT);
     }
 
     public void touchDown(int mouseX, int mouseY) {
