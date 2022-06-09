@@ -7,19 +7,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TimeLimitedAnimation{
     private final AnimationProcessor processor;
-    private Point drawPoint;
     private final TimeHandler timeHandler;
-    private float duration;
+    private final AnimationModel model;
     private boolean isEnd = true;
 
     public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
         processor = new AnimationProcessor(spriteSheet, cols, rows);
 
+        model = new AnimationModel();
+
         timeHandler = new TimeHandler();
     }
 
     public void setDrawPoint(Point point){
-        drawPoint = point;
+        model.setDrawPoint(point);
     }
 
     public void setFrameDuration(float perSec) {
@@ -27,7 +28,7 @@ public class TimeLimitedAnimation{
     }
 
     public void setDuration(float second) {
-        this.duration = second;
+        model.setDuration(second);
     }
 
     public boolean isEnd() {
@@ -41,9 +42,11 @@ public class TimeLimitedAnimation{
     public void draw(SpriteBatch batch) {
         processor.setBatch(batch);
 
+        Point drawPoint = model.getDrawPoint();
+
         processor.setPoint(drawPoint);
 
-        if (timeHandler.getPastedTime() < duration) {
+        if (timeHandler.getPastedTime() < model.getDuration()) {
             timeHandler.updatePastedTime();
             processor.draw(drawPoint.getX(), drawPoint.getY());
             isEnd = false;
@@ -55,5 +58,26 @@ public class TimeLimitedAnimation{
         isEnd = true;
         timeHandler.resetPastedTime();
         processor.init();
+    }
+}
+
+class AnimationModel{
+    private Point drawPoint;
+    private float duration;
+
+    public Point getDrawPoint() {
+        return drawPoint;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
+
+    public void setDrawPoint(Point drawPoint) {
+        this.drawPoint = drawPoint;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
     }
 }
