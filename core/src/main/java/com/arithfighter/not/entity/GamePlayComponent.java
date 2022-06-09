@@ -38,10 +38,10 @@ public class GamePlayComponent {
         cardFadeOut.setFrameDuration(0.08f);
         cardFadeOut.setDuration(0.4f);
 
-        cardReset = new CardAnimation(spriteSheets[1],3,3);
+        cardReset = new CardAnimation(spriteSheets[0],3,3);
         cardReset.setScale(16);
         cardReset.setFrameDuration(0.08f);
-        cardReset.setDuration(0.4f);
+        cardReset.setDuration(0.48f);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
