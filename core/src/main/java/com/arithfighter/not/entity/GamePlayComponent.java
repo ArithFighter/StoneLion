@@ -20,29 +20,18 @@ public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
     private final SumBox sumBox;
-    private final SumBoxController sumBoxController;
-    private final CardAnimate cardAnimate;
+    private final SumBoxModel sumBoxModel;
+    private CardAnimate cardAnimate;
     private boolean isCardDrag = false;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
-    private final GeckoEntity gecko;
+    private GeckoEntity gecko;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
-        CardAnimationService cas = new CardAnimationService(spriteSheets);
-        VisualEffect[] visualEffects = new VisualEffect[cas.getVisualEffects().length];
-
-        for (int i = 0; i< visualEffects.length;i++)
-            visualEffects[i] = cas.getVisualEffects()[i].getVisualEffect();
-
-        cardAnimate = new CardAnimate(visualEffects);
-
-        sumBox = new SumBox(textures[2]);
-        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
-        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
-        sumBox.setFont(font);
+        createCardAnimate(spriteSheets);
 
         numberBoxDisplacer = new NumberBoxDisplacer(textures, font) {
             @Override
@@ -51,6 +40,27 @@ public class GamePlayComponent {
             }
         };
 
+        createGecko(spriteSheets);
+
+        sumBox = new SumBox(textures[2]);
+        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
+        sumBox.setFont(font);
+
+        sumBoxModel = new SumBoxModel();
+    }
+
+    private void createCardAnimate(Texture[] spriteSheets){
+        CardAnimationService cas = new CardAnimationService(spriteSheets);
+        VisualEffect[] visualEffects = new VisualEffect[cas.getVisualEffects().length];
+
+        for (int i = 0; i< visualEffects.length;i++)
+            visualEffects[i] = cas.getVisualEffects()[i].getVisualEffect();
+
+        cardAnimate = new CardAnimate(visualEffects);
+    }
+
+    public void createGecko(Texture[] spriteSheets){
         GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
             @Override
             public void initCardPosition() {
@@ -67,12 +77,10 @@ public class GamePlayComponent {
         };
 
         gecko = new GeckoEntity(geckoSprite, spriteSheets);
-
-        sumBoxController = new SumBoxController();
     }
 
-    public SumBoxController getSumBoxController() {
-        return sumBoxController;
+    public SumBoxModel getSumBoxModel() {
+        return sumBoxModel;
     }
 
     private void changeGeckoStateWhenPlayCard() {
@@ -95,7 +103,7 @@ public class GamePlayComponent {
         gecko.setNeutral();
         sumBox.init();
         numberBoxDisplacer.init();
-        sumBoxController.init();
+        sumBoxModel.init();
         player.init();
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
@@ -111,7 +119,7 @@ public class GamePlayComponent {
     }
 
     public void update(int mouseX, int mouseY) {
-        numberBoxDisplacer.update(sumBoxController.getSum());
+        numberBoxDisplacer.update(sumBoxModel.getSum());
 
         player.updateWhenTouchCard(mouseX, mouseY);
     }
@@ -119,8 +127,8 @@ public class GamePlayComponent {
     public void draw() {
         numberBoxDisplacer.draw(batch);
 
-        sumBox.setCapacity(sumBoxController.getCardCapacity());
-        sumBox.draw(sumBoxController.getSum(), batch);
+        sumBox.setCapacity(sumBoxModel.getCardCapacity());
+        sumBox.draw(sumBoxModel.getSum(), batch);
 
         gecko.draw(batch);
 
@@ -144,7 +152,7 @@ public class GamePlayComponent {
         }
         if (isReadyToResetSum) {
             gecko.setSpitting();
-            sumBoxController.init();
+            sumBoxModel.init();
             player.setSkillStateToNeutral();
             isReadyToResetSum = false;
         }
@@ -161,7 +169,7 @@ public class GamePlayComponent {
             gecko.touchUp(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
-        if (sumBoxController.isCapacityFull())
+        if (sumBoxModel.isCapacityFull())
             isReadyToResetSum = true;
     }
 }

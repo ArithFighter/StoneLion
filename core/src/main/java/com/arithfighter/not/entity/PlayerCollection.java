@@ -13,14 +13,14 @@ public class PlayerCollection {
     private Player[] players;
     private Recorder playRecord;
     private NumberBoxDisplacer numberBoxDisplacer;
-    private SumBoxController sumBoxController;
+    private SumBoxModel sumBoxModel;
     private int characterQuantity;
 
     public PlayerCollection() {
     }
 
-    public void setSumBoxController(SumBoxController sumBoxController) {
-        this.sumBoxController = sumBoxController;
+    public void setSumBoxModel(SumBoxModel sumBoxModel) {
+        this.sumBoxModel = sumBoxModel;
     }
 
     public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
@@ -46,13 +46,13 @@ public class PlayerCollection {
                     CharacterList.values()[i]) {
                 @Override
                 public void checkNumberCardPlayed() {
-                    sumBoxController.update(getHand().getCardNumber());
+                    sumBoxModel.update(getHand().getCardNumber());
                 }
 
                 @Override
                 public void doWhenResettingCardPlay() {
-                    sumBoxController.init();
-                    sumBoxController.update(getHand().getCardNumber());
+                    sumBoxModel.init();
+                    sumBoxModel.update(getHand().getCardNumber());
                 }
 
                 @Override
