@@ -52,12 +52,10 @@ public class GamePlayComponent {
 
     private void createCardAnimate(Texture[] spriteSheets){
         CardAnimationService cas = new CardAnimationService(spriteSheets);
-        VisualEffect[] visualEffects = new VisualEffect[cas.getVisualEffects().length];
 
-        for (int i = 0; i< visualEffects.length;i++)
-            visualEffects[i] = cas.getVisualEffects()[i].getVisualEffect();
-
-        cardAnimate = new CardAnimate(visualEffects);
+        cardAnimate = new CardAnimate(cas.getVisualEffects());
+        for (VisualEffect ve: cardAnimate.getVisualEffects())
+            ve.setScale(16);
     }
 
     public void createGecko(Texture[] spriteSheets){

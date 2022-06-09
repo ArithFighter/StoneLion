@@ -9,6 +9,6 @@ public class VisualEffectService implements VisualAnimatable{
 
     @Override
     public VisualEffect getVisualEffect() {
-        return null;
+        return visualEffect;
     }
 }
