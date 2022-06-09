@@ -5,14 +5,14 @@ import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CardVisualEffect {
+public class VisualEffect {
     private final AnimationProcessor processor;
     private boolean isStart = false;
     private final TimeHandler timeHandler;
     private final AnimatePointAccessor pointAccessor;
     private final AnimationModel model;
 
-    public CardVisualEffect(Texture texture, int cols, int rows) {
+    public VisualEffect(Texture texture, int cols, int rows) {
         processor = new AnimationProcessor(texture, cols, rows);
 
         timeHandler = new TimeHandler();
