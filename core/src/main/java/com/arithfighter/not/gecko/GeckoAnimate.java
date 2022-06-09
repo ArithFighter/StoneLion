@@ -1,66 +1,35 @@
 package com.arithfighter.not.gecko;
 
 import com.arithfighter.not.animate.CharacterAnimatable;
-import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.animate.CharacterAnimateController;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GeckoAnimate {
-    private final CharacterAnimatable[] characterAnimatable;
-
+public class GeckoAnimate extends CharacterAnimateController {
     public GeckoAnimate(CharacterAnimatable[] characterAnimatable) {
-        this.characterAnimatable = characterAnimatable;
-    }
-
-    public void setScale(int scale){
-        for (CharacterAnimatable ga: characterAnimatable)
-            ga.getAnimation().setScale(scale);
-    }
-
-    public void setDrawPoint(Point point){
-        for (CharacterAnimatable ga: characterAnimatable)
-            ga.getAnimation().setDrawPoint(point);
-    }
-
-    public boolean isAllActionEnd(){
-        boolean condition = false;
-        int x = 0;
-
-        for (CharacterAnimatable ga: characterAnimatable){
-            if (ga.getAnimation().isEnd())
-                x++;
-        }
-        if (x == characterAnimatable.length)
-            condition = true;
-
-        return condition;
+        super(characterAnimatable);
     }
 
     public void blink(SpriteBatch batch) {
-        characterAnimatable[0].getAnimation().draw(batch);
+        getCharacterAnimatable()[0].getAnimation().draw(batch);
     }
 
     public void swing(SpriteBatch batch){
-        characterAnimatable[1].getAnimation().draw(batch);
+        getCharacterAnimatable()[1].getAnimation().draw(batch);
     }
 
     public void eat(SpriteBatch batch){
-        characterAnimatable[2].getAnimation().draw(batch);
+        getCharacterAnimatable()[2].getAnimation().draw(batch);
     }
 
     public void lick(SpriteBatch batch){
-        characterAnimatable[3].getAnimation().draw(batch);
+        getCharacterAnimatable()[3].getAnimation().draw(batch);
     }
 
     public void eatWhenFull(SpriteBatch batch){
-        characterAnimatable[4].getAnimation().draw(batch);
+        getCharacterAnimatable()[4].getAnimation().draw(batch);
     }
 
     public void spit(SpriteBatch batch){
-        characterAnimatable[5].getAnimation().draw(batch);
-    }
-
-    public void init(){
-        for (CharacterAnimatable ga: characterAnimatable)
-            ga.getAnimation().init();
+        getCharacterAnimatable()[5].getAnimation().draw(batch);
     }
 }

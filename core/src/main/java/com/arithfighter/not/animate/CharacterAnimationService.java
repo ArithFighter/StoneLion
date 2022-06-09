@@ -1,6 +1,6 @@
 package com.arithfighter.not.animate;
 
-public class CharacterAnimationEditor implements CharacterAnimatable {
+public class CharacterAnimationService implements CharacterAnimatable {
     private CharacterAnimation animation;
 
     public void setAnimation(CharacterAnimation animation) {
