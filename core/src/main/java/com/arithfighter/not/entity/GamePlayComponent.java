@@ -33,9 +33,9 @@ public class GamePlayComponent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
-        cardFadeOut = new CardAnimation(spriteSheets[1]);
+        cardFadeOut = new CardAnimation(spriteSheets[1],3,3);
 
-        cardReset = new CardAnimation(spriteSheets[1]);
+        cardReset = new CardAnimation(spriteSheets[1],3,3);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);

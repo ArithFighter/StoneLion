@@ -9,16 +9,18 @@ public class CardAnimation {
     private final AnimationProcessor processor;
     private boolean isStart = false;
     private final TimeHandler timeHandler;
+    private final AnimatePointAccessor pointAccessor;
     private Point lastMousePoint;
     private Point drawPoint;
 
-    public CardAnimation(Texture texture) {
-        processor = new AnimationProcessor(texture, 3, 3);
+    public CardAnimation(Texture texture, int cols, int rows) {
+        processor = new AnimationProcessor(texture, cols, rows);
         processor.setScale(16);
         processor.setFrameDuration(0.08f);
         timeHandler = new TimeHandler();
         drawPoint = new Point();
         lastMousePoint = new Point();
+        pointAccessor = new AnimatePointAccessor(processor);
     }
 
     public void setLastMousePoint(Point point) {
@@ -48,7 +50,7 @@ public class CardAnimation {
 
         if (timeHandler.getPastedTime() < duration) {
             processor.setPoint(lastMousePoint);
-            drawPoint = getPoint(pos);
+            drawPoint = pointAccessor.getPoint(pos);
             processor.draw(drawPoint.getX(), drawPoint.getY());
         } else
             isStart = false;
@@ -58,8 +60,16 @@ public class CardAnimation {
         timeHandler.resetPastedTime();
         processor.init();
     }
+}
 
-    private Point getPoint(AnimationPos pos) {
+class AnimatePointAccessor{
+    private final AnimationProcessor processor;
+
+    public AnimatePointAccessor(AnimationProcessor processor){
+        this.processor = processor;
+    }
+
+    public Point getPoint(AnimationPos pos) {
         float x = 0;
         float y = 0;
 
