@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {
-    private final GeckoAction[] geckoActions;
+    private final CharacterAnimatable[] characterAnimatable;
 
     public GeckoAnimate(Texture[] spriteSheets) {
-        geckoActions = new GeckoAction[]{
+        characterAnimatable = new CharacterAnimatable[]{
                 new Blink(spriteSheets),
                 new Swing(spriteSheets),
                 new Eating(spriteSheets),
@@ -20,12 +20,12 @@ public class GeckoAnimate {
     }
 
     public void setScale(int scale){
-        for (GeckoAction ga:geckoActions)
+        for (CharacterAnimatable ga: characterAnimatable)
             ga.getAnimation().setScale(scale);
     }
 
     public void setDrawPoint(Point point){
-        for (GeckoAction ga:geckoActions)
+        for (CharacterAnimatable ga: characterAnimatable)
             ga.getAnimation().setDrawPoint(point);
     }
 
@@ -33,51 +33,70 @@ public class GeckoAnimate {
         boolean condition = false;
         int x = 0;
 
-        for (GeckoAction ga:geckoActions){
+        for (CharacterAnimatable ga: characterAnimatable){
             if (ga.getAnimation().isEnd())
                 x++;
         }
-        if (x == geckoActions.length)
+        if (x == characterAnimatable.length)
             condition = true;
 
         return condition;
     }
 
     public void blink(SpriteBatch batch) {
-        geckoActions[0].getAnimation().draw(batch);
+        characterAnimatable[0].getAnimation().draw(batch);
     }
 
     public void swing(SpriteBatch batch){
-        geckoActions[1].getAnimation().draw(batch);
+        characterAnimatable[1].getAnimation().draw(batch);
     }
 
     public void eat(SpriteBatch batch){
-        geckoActions[2].getAnimation().draw(batch);
+        characterAnimatable[2].getAnimation().draw(batch);
     }
 
     public void lick(SpriteBatch batch){
-        geckoActions[3].getAnimation().draw(batch);
+        characterAnimatable[3].getAnimation().draw(batch);
     }
 
     public void eatWhenFull(SpriteBatch batch){
-        geckoActions[4].getAnimation().draw(batch);
+        characterAnimatable[4].getAnimation().draw(batch);
     }
 
     public void spit(SpriteBatch batch){
-        geckoActions[5].getAnimation().draw(batch);
+        characterAnimatable[5].getAnimation().draw(batch);
     }
 
     public void init(){
-        for (GeckoAction ga:geckoActions)
+        for (CharacterAnimatable ga: characterAnimatable)
             ga.getAnimation().init();
     }
 }
 
-interface GeckoAction {
+class GeckoAnimationService{
+    private final CharacterAnimatable[] characterAnimatable;
+
+    public GeckoAnimationService(Texture[] spriteSheets){
+        characterAnimatable = new CharacterAnimatable[]{
+                new Blink(spriteSheets),
+                new Swing(spriteSheets),
+                new Eating(spriteSheets),
+                new Licking(spriteSheets),
+                new FullEating(spriteSheets),
+                new Spitting(spriteSheets)
+        };
+    }
+
+    public CharacterAnimatable[] getCharacterAnimatable() {
+        return characterAnimatable;
+    }
+}
+
+interface CharacterAnimatable {
     CharacterAnimation getAnimation();
 }
 
-class Animation implements GeckoAction{
+class CharacterAnimationModel implements CharacterAnimatable {
     private CharacterAnimation animation;
 
     public void setAnimation(CharacterAnimation animation) {
@@ -90,7 +109,7 @@ class Animation implements GeckoAction{
     }
 }
 
-class Blink extends Animation {
+class Blink extends CharacterAnimationModel {
     public Blink(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[3], 2, 3));
         getAnimation().setDuration(1);
@@ -98,7 +117,7 @@ class Blink extends Animation {
     }
 }
 
-class Swing extends Animation{
+class Swing extends CharacterAnimationModel {
     public Swing(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[4], 2, 4));
         getAnimation().setDuration(1.2f);
@@ -106,7 +125,7 @@ class Swing extends Animation{
     }
 }
 
-class Eating extends Animation{
+class Eating extends CharacterAnimationModel {
     public Eating(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[5], 2, 4));
         getAnimation().setDuration(1.2f);
@@ -114,7 +133,7 @@ class Eating extends Animation{
     }
 }
 
-class Licking extends Animation{
+class Licking extends CharacterAnimationModel {
     public Licking(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[6], 2, 4));
         getAnimation().setDuration(0.8f);
@@ -122,7 +141,7 @@ class Licking extends Animation{
     }
 }
 
-class FullEating extends Animation{
+class FullEating extends CharacterAnimationModel {
     public FullEating(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[8], 2, 4));
         getAnimation().setDuration(1.5f);
@@ -130,7 +149,7 @@ class FullEating extends Animation{
     }
 }
 
-class Spitting extends Animation{
+class Spitting extends CharacterAnimationModel {
     public Spitting(Texture[] spriteSheets){
         setAnimation(new CharacterAnimation(spriteSheets[9], 2, 3));
         getAnimation().setDuration(1f);
