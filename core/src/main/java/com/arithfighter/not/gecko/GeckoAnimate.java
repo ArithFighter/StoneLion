@@ -1,10 +1,7 @@
 package com.arithfighter.not.gecko;
 
 import com.arithfighter.not.animate.CharacterAnimatable;
-import com.arithfighter.not.animate.CharacterAnimation;
-import com.arithfighter.not.animate.CharacterAnimationModel;
 import com.arithfighter.not.pojo.Point;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate {

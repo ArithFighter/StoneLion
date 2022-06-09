@@ -2,7 +2,7 @@ package com.arithfighter.not.gecko;
 
 import com.arithfighter.not.animate.CharacterAnimatable;
 import com.arithfighter.not.animate.CharacterAnimation;
-import com.arithfighter.not.animate.CharacterAnimationModel;
+import com.arithfighter.not.animate.CharacterAnimationEditor;
 import com.badlogic.gdx.graphics.Texture;
 
 public class GeckoAnimationService {
@@ -24,7 +24,7 @@ public class GeckoAnimationService {
     }
 }
 
-class Blink extends CharacterAnimationModel {
+class Blink extends CharacterAnimationEditor {
     public Blink(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 3));
         getAnimation().setDuration(1);
@@ -32,7 +32,7 @@ class Blink extends CharacterAnimationModel {
     }
 }
 
-class Swing extends CharacterAnimationModel {
+class Swing extends CharacterAnimationEditor {
     public Swing(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 4));
         getAnimation().setDuration(1.2f);
@@ -40,7 +40,7 @@ class Swing extends CharacterAnimationModel {
     }
 }
 
-class Eating extends CharacterAnimationModel {
+class Eating extends CharacterAnimationEditor {
     public Eating(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 4));
         getAnimation().setDuration(1.2f);
@@ -48,7 +48,7 @@ class Eating extends CharacterAnimationModel {
     }
 }
 
-class Licking extends CharacterAnimationModel {
+class Licking extends CharacterAnimationEditor {
     public Licking(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 4));
         getAnimation().setDuration(0.8f);
@@ -56,7 +56,7 @@ class Licking extends CharacterAnimationModel {
     }
 }
 
-class FullEating extends CharacterAnimationModel {
+class FullEating extends CharacterAnimationEditor {
     public FullEating(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 4));
         getAnimation().setDuration(1.5f);
@@ -64,7 +64,7 @@ class FullEating extends CharacterAnimationModel {
     }
 }
 
-class Spitting extends CharacterAnimationModel {
+class Spitting extends CharacterAnimationEditor {
     public Spitting(Texture spriteSheet){
         setAnimation(new CharacterAnimation(spriteSheet, 2, 3));
         getAnimation().setDuration(1f);
