@@ -5,13 +5,13 @@ import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TimeLimitedAnimation{
+public class CharacterAnimation {
     private final AnimationProcessor processor;
     private final TimeHandler timeHandler;
     private final AnimationModel model;
     private boolean isEnd = true;
 
-    public TimeLimitedAnimation(Texture spriteSheet, int cols, int rows) {
+    public CharacterAnimation(Texture spriteSheet, int cols, int rows) {
         processor = new AnimationProcessor(spriteSheet, cols, rows);
 
         model = new AnimationModel();

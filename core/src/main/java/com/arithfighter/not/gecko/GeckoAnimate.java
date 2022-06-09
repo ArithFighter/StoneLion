@@ -1,6 +1,6 @@
 package com.arithfighter.not.gecko;
 
-import com.arithfighter.not.animate.TimeLimitedAnimation;
+import com.arithfighter.not.animate.CharacterAnimation;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -74,25 +74,25 @@ public class GeckoAnimate {
 }
 
 interface GeckoAction {
-    TimeLimitedAnimation getAnimation();
+    CharacterAnimation getAnimation();
 }
 
 class Animation implements GeckoAction{
-    private TimeLimitedAnimation animation;
+    private CharacterAnimation animation;
 
-    public void setAnimation(TimeLimitedAnimation animation) {
+    public void setAnimation(CharacterAnimation animation) {
         this.animation = animation;
     }
 
     @Override
-    public TimeLimitedAnimation getAnimation() {
+    public CharacterAnimation getAnimation() {
         return animation;
     }
 }
 
 class Blink extends Animation {
     public Blink(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[3], 2, 3));
+        setAnimation(new CharacterAnimation(spriteSheets[3], 2, 3));
         getAnimation().setDuration(1);
         getAnimation().setFrameDuration(0.08f);
     }
@@ -100,7 +100,7 @@ class Blink extends Animation {
 
 class Swing extends Animation{
     public Swing(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[4], 2, 4));
+        setAnimation(new CharacterAnimation(spriteSheets[4], 2, 4));
         getAnimation().setDuration(1.2f);
         getAnimation().setFrameDuration(0.08f);
     }
@@ -108,7 +108,7 @@ class Swing extends Animation{
 
 class Eating extends Animation{
     public Eating(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[5], 2, 4));
+        setAnimation(new CharacterAnimation(spriteSheets[5], 2, 4));
         getAnimation().setDuration(1.2f);
         getAnimation().setFrameDuration(0.16f);
     }
@@ -116,7 +116,7 @@ class Eating extends Animation{
 
 class Licking extends Animation{
     public Licking(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[6], 2, 4));
+        setAnimation(new CharacterAnimation(spriteSheets[6], 2, 4));
         getAnimation().setDuration(0.8f);
         getAnimation().setFrameDuration(0.1f);
     }
@@ -124,7 +124,7 @@ class Licking extends Animation{
 
 class FullEating extends Animation{
     public FullEating(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[8], 2, 4));
+        setAnimation(new CharacterAnimation(spriteSheets[8], 2, 4));
         getAnimation().setDuration(1.5f);
         getAnimation().setFrameDuration(0.18f);
     }
@@ -132,7 +132,7 @@ class FullEating extends Animation{
 
 class Spitting extends Animation{
     public Spitting(Texture[] spriteSheets){
-        setAnimation(new TimeLimitedAnimation(spriteSheets[9], 2, 3));
+        setAnimation(new CharacterAnimation(spriteSheets[9], 2, 3));
         getAnimation().setDuration(1f);
         getAnimation().setFrameDuration(0.08f);
     }
