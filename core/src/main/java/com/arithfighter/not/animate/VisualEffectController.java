@@ -14,17 +14,22 @@ public class VisualEffectController {
     }
 
     public void setScale(int scale){
-        for (VisualAnimatable ga: visualAnimatable)
-            ga.getVisualEffect().setScale(scale);
+        for (VisualAnimatable va: visualAnimatable)
+            va.getVisualEffect().setScale(scale);
     }
 
     public void setLastMousePoint(Point point){
-        for (VisualAnimatable ga: visualAnimatable)
-            ga.getVisualEffect().setLastMousePoint(point);
+        for (VisualAnimatable va: visualAnimatable)
+            va.getVisualEffect().setLastMousePoint(point);
+    }
+    
+    public void setStart(){
+        for (VisualAnimatable va: visualAnimatable)
+            va.getVisualEffect().setStart();
     }
 
     public void init(){
-        for (VisualAnimatable ga: visualAnimatable)
-            ga.getVisualEffect().init();
+        for (VisualAnimatable va: visualAnimatable)
+            va.getVisualEffect().init();
     }
 }

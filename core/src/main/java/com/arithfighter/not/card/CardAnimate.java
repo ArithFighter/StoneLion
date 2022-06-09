@@ -1,13 +1,19 @@
 package com.arithfighter.not.card;
 
-import com.arithfighter.not.animate.VisualAnimatable;
-import com.arithfighter.not.animate.VisualEffectController;
+import com.arithfighter.not.animate.VisualEffect;
 
-public class CardAnimate extends VisualEffectController {
-
-    public CardAnimate(VisualAnimatable[] visualAnimatable) {
-        super(visualAnimatable);
+public class CardAnimate{
+    private final VisualEffect[] visualEffects;
+    
+    public CardAnimate(VisualEffect[] visualEffects) {
+        this.visualEffects = visualEffects;
+    }
+    
+    public VisualEffect getCardReset(){
+        return visualEffects[0];
     }
 
-
+    public VisualEffect getCardFadeOut(){
+        return visualEffects[1];
+    }
 }

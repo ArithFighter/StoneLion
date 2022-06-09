@@ -4,6 +4,8 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.card.CardAnimate;
+import com.arithfighter.not.card.CardAnimationService;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.gecko.*;
@@ -19,8 +21,7 @@ public class GamePlayComponent {
     private Player player;
     private final SumBox sumBox;
     private final SumBoxController sumBoxController;
-    private final VisualEffect cardFadeOut;
-    private final VisualEffect cardReset;
+    private final CardAnimate cardAnimate;
     private boolean isCardDrag = false;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
@@ -30,15 +31,13 @@ public class GamePlayComponent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
-        cardFadeOut = new VisualEffect(spriteSheets[1], 3, 3);
-        cardFadeOut.setScale(16);
-        cardFadeOut.setFrameDuration(0.08f);
-        cardFadeOut.setDuration(0.4f);
+        CardAnimationService cas = new CardAnimationService(spriteSheets);
+        VisualEffect[] visualEffects = new VisualEffect[cas.getVisualEffects().length];
 
-        cardReset = new VisualEffect(spriteSheets[0], 3, 3);
-        cardReset.setScale(16);
-        cardReset.setFrameDuration(0.08f);
-        cardReset.setDuration(0.48f);
+        for (int i = 0; i< visualEffects.length;i++)
+            visualEffects[i] = cas.getVisualEffects()[i].getVisualEffect();
+
+        cardAnimate = new CardAnimate(visualEffects);
 
         sumBox = new SumBox(textures[2]);
         Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
@@ -55,14 +54,14 @@ public class GamePlayComponent {
         GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
             @Override
             public void initCardPosition() {
-                cardReset.setStart();
+                cardAnimate.getCardReset().setStart();
                 player.initHand();
             }
 
             @Override
             public void checkCardPlayed() {
                 player.playCard();
-                cardFadeOut.setStart();
+                cardAnimate.getCardFadeOut().setStart();
                 changeGeckoStateWhenPlayCard();
             }
         };
@@ -98,8 +97,8 @@ public class GamePlayComponent {
         numberBoxDisplacer.init();
         sumBoxController.init();
         player.init();
-        cardFadeOut.init();
-        cardReset.init();
+        cardAnimate.getCardFadeOut().init();
+        cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
     }
 
@@ -131,15 +130,14 @@ public class GamePlayComponent {
     }
 
     private void drawCardAnimate() {
-        cardFadeOut.draw(batch, AnimationPos.CENTER);
-
-        cardReset.draw(batch, AnimationPos.TOP_RIGHT);
+        cardAnimate.getCardFadeOut().draw(batch, AnimationPos.CENTER);
+        cardAnimate.getCardReset().draw(batch, AnimationPos.TOP_RIGHT);
     }
 
     public void touchDown(int mouseX, int mouseY) {
         isCardDrag = false;
         player.activateCard(mouseX, mouseY);
-        cardReset.setLastMousePoint(player.getActiveCard().getInitPoint());
+        cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
 
         if (sumBox.isCapacityWarning()) {
             gecko.setTooFull();
@@ -161,7 +159,7 @@ public class GamePlayComponent {
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDrag) {
             gecko.touchUp(mouseX, mouseY);
-            cardFadeOut.setLastMousePoint(new Point(mouseX, mouseY));
+            cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxController.isCapacityFull())
             isReadyToResetSum = true;
