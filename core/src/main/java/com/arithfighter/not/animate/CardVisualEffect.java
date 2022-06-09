@@ -5,20 +5,20 @@ import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class VisualEffect {
+public class CardVisualEffect {
     private final AnimationProcessor processor;
     private boolean isStart = false;
     private final TimeHandler timeHandler;
     private final AnimatePointAccessor pointAccessor;
-    private float duration;
-    private Point lastMousePoint;
-    private Point drawPoint;
+    private final AnimationModel model;
 
-    public VisualEffect(Texture texture, int cols, int rows) {
+    public CardVisualEffect(Texture texture, int cols, int rows) {
         processor = new AnimationProcessor(texture, cols, rows);
+
         timeHandler = new TimeHandler();
-        drawPoint = new Point();
-        lastMousePoint = new Point();
+
+        model = new AnimationModel();
+
         pointAccessor = new AnimatePointAccessor(processor);
     }
 
@@ -27,7 +27,7 @@ public class VisualEffect {
     }
 
     public void setDuration(float second) {
-        this.duration = second;
+        model.setDuration(second);
     }
 
     public void setScale(float scale){
@@ -35,7 +35,7 @@ public class VisualEffect {
     }
 
     public void setLastMousePoint(Point point) {
-        lastMousePoint = point;
+        model.setLastMousePoint(point);
     }
 
     public void setStart() {
@@ -59,9 +59,12 @@ public class VisualEffect {
     private void handleAnimation(AnimationPos pos) {
         timeHandler.updatePastedTime();
 
-        if (timeHandler.getPastedTime() < duration) {
-            processor.setPoint(lastMousePoint);
-            drawPoint = pointAccessor.getPoint(pos);
+        if (timeHandler.getPastedTime() < model.getDuration()) {
+            processor.setPoint(model.getLastMousePoint());
+
+            model.setDrawPoint(pointAccessor.getPoint(pos));
+
+            Point drawPoint = model.getDrawPoint();
             processor.draw(drawPoint.getX(), drawPoint.getY());
         } else
             isStart = false;

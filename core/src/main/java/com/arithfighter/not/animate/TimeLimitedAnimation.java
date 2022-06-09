@@ -60,24 +60,3 @@ public class TimeLimitedAnimation{
         processor.init();
     }
 }
-
-class AnimationModel{
-    private Point drawPoint;
-    private float duration;
-
-    public Point getDrawPoint() {
-        return drawPoint;
-    }
-
-    public float getDuration() {
-        return duration;
-    }
-
-    public void setDrawPoint(Point drawPoint) {
-        this.drawPoint = drawPoint;
-    }
-
-    public void setDuration(float duration) {
-        this.duration = duration;
-    }
-}
