@@ -17,7 +17,7 @@ import java.util.List;
 import static com.arithfighter.not.WindowSetting.GRID_X;
 import static com.arithfighter.not.WindowSetting.GRID_Y;
 
-public class NumberBoxDisplacer {
+public class NumberBoxEntity {
     private final NumberBoxProducer numberBoxProducer;
     private final int maxQuantity;
     private final int[] numbers;
@@ -28,7 +28,7 @@ public class NumberBoxDisplacer {
     private boolean isAllNumZero = false;
     private final RandomIndexPicker randomIndexPicker;
 
-    public NumberBoxDisplacer(Texture[] textures, Font font) {
+    public NumberBoxEntity(Texture[] textures, Font font) {
         numberBoxProducer = new NumberBoxProducer(textures[3], font);
         
         maxQuantity = numberBoxProducer.getMaxQuantity();
@@ -37,6 +37,11 @@ public class NumberBoxDisplacer {
 
         NumberBoxPlacer placer = new NumberBoxPlacer();
 
+        randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
+        randomNumListProducer.setMaxQuantity(maxQuantity);
+
+        animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
+
         Mask[] masks = new Mask[maxQuantity];
         for (int i = 0; i< maxQuantity;i++){
             masks[i] = new Mask(textures[5], 2.4f);
@@ -44,11 +49,6 @@ public class NumberBoxDisplacer {
                     placer.getNumberBoxX(i, masks[i].getWidth()),
                     placer.getNumberBoxY(i, masks[i].getHeight()));
         }
-
-        randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
-        randomNumListProducer.setMaxQuantity(maxQuantity);
-
-        animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
         maskAnimation = new MaskAnimation(masks);
 

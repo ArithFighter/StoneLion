@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.entity.numberbox.NumberBoxDisplacer;
+import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumProducer;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PlayerService {
     private Player[] players;
     private Recorder playRecord;
-    private NumberBoxDisplacer numberBoxDisplacer;
+    private NumberBoxEntity numberBoxEntity;
     private SumBoxModel sumBoxModel;
     private int characterQuantity;
 
@@ -23,8 +23,8 @@ public class PlayerService {
         this.sumBoxModel = sumBoxModel;
     }
 
-    public void setNumberBoxDisplacer(NumberBoxDisplacer numberBoxDisplacer) {
-        this.numberBoxDisplacer = numberBoxDisplacer;
+    public void setNumberBoxDisplacer(NumberBoxEntity numberBoxEntity) {
+        this.numberBoxEntity = numberBoxEntity;
     }
 
     public void setCharacterQuantity(int characterQuantity) {
@@ -37,7 +37,7 @@ public class PlayerService {
 
     public void createPlayers(Texture[] textures, Texture[] cards) {
         players = new Player[characterQuantity];
-        SkillHandler skillHandler = new SkillHandler(numberBoxDisplacer);
+        SkillHandler skillHandler = new SkillHandler(numberBoxEntity);
 
         for (int i = 0; i < characterQuantity; i++)
             players[i] = new Player(
@@ -73,12 +73,12 @@ public class PlayerService {
 }
 
 class SkillHandler {
-    private final NumberBoxDisplacer numberBoxDisplacer;
+    private final NumberBoxEntity numberBoxEntity;
     private final NumberBoxPicker numberBoxPicker;
 
-    public SkillHandler(NumberBoxDisplacer numberBoxDisplacer) {
-        this.numberBoxDisplacer = numberBoxDisplacer;
-        numberBoxPicker = new NumberBoxPicker(numberBoxDisplacer);
+    public SkillHandler(NumberBoxEntity numberBoxEntity) {
+        this.numberBoxEntity = numberBoxEntity;
+        numberBoxPicker = new NumberBoxPicker(numberBoxEntity);
     }
 
     public void cast(CharacterList character) {
@@ -104,34 +104,34 @@ class SkillHandler {
     private void increaseAllValueBy11() {
         int gain = 11;
 
-        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
+        for (int i = 0; i < numberBoxEntity.getMaxQuantity(); i++) {
             if (getNumberBoxValue(i) > 0 &&
                     getNumberBoxValue(i) < new GameNumProducer().getMaxNumber() - gain)
-                numberBoxDisplacer.set(i, getNumberBoxValue(i) + gain);
+                numberBoxEntity.set(i, getNumberBoxValue(i) + gain);
         }
     }
 
     private void changeANumberBoxValue(int value){
-        numberBoxDisplacer.set(numberBoxPicker.getRandomNonZeroValueIndex(), value);
+        numberBoxEntity.set(numberBoxPicker.getRandomNonZeroValueIndex(), value);
     }
 
     private int getNumberBoxValue(int i) {
-        return numberBoxDisplacer.getNumberBoxValue(i);
+        return numberBoxEntity.getNumberBoxValue(i);
     }
 }
 
 class NumberBoxPicker {
-    private final NumberBoxDisplacer numberBoxDisplacer;
+    private final NumberBoxEntity numberBoxEntity;
 
-    public NumberBoxPicker(NumberBoxDisplacer numberBoxDisplacer) {
-        this.numberBoxDisplacer = numberBoxDisplacer;
+    public NumberBoxPicker(NumberBoxEntity numberBoxEntity) {
+        this.numberBoxEntity = numberBoxEntity;
     }
 
     public int getRandomNonZeroValueIndex() {
         ArrayList<Integer> indexList = new ArrayList<>();
 
-        for (int i = 0; i < numberBoxDisplacer.getMaxQuantity(); i++) {
-            if (numberBoxDisplacer.getNumberBoxValue(i) > 0)
+        for (int i = 0; i < numberBoxEntity.getMaxQuantity(); i++) {
+            if (numberBoxEntity.getNumberBoxValue(i) > 0)
                 indexList.add(i);
         }
         RandomNumProducer rnp = new RandomNumProducer(indexList.size() - 1,0);

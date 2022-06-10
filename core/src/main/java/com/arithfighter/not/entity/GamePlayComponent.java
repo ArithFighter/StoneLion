@@ -6,7 +6,7 @@ import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
-import com.arithfighter.not.entity.numberbox.NumberBoxDisplacer;
+import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GamePlayComponent {
-    private final NumberBoxDisplacer numberBoxDisplacer;
+    private final NumberBoxEntity numberBoxEntity;
     private Player player;
     private CardAnimate cardAnimate;
     private boolean isCardDragging = false;
@@ -32,7 +32,7 @@ public class GamePlayComponent {
 
         createCardAnimate(spriteSheets);
 
-        numberBoxDisplacer = new NumberBoxDisplacer(textures, font) {
+        numberBoxEntity = new NumberBoxEntity(textures, font) {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
@@ -94,30 +94,30 @@ public class GamePlayComponent {
     public void init() {
         gecko.setNeutral();
         sumBoxEntity.init();
-        numberBoxDisplacer.init();
+        numberBoxEntity.init();
         player.init();
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
     }
 
-    public NumberBoxDisplacer getNumberBoxDisplacer() {
-        return numberBoxDisplacer;
+    public NumberBoxEntity getNumberBoxDisplacer() {
+        return numberBoxEntity;
     }
 
     public void setNumberQuantity(int quantity) {
-        numberBoxDisplacer.setBoxQuantity(quantity);
+        numberBoxEntity.setBoxQuantity(quantity);
     }
 
     public void update(int mouseX, int mouseY) {
         int sum = sumBoxEntity.getSumBoxModel().getSum();
-        numberBoxDisplacer.update(sum);
+        numberBoxEntity.update(sum);
 
         player.updateWhenTouchCard(mouseX, mouseY);
     }
 
     public void draw() {
-        numberBoxDisplacer.draw(batch);
+        numberBoxEntity.draw(batch);
 
         sumBoxEntity.draw(batch);
 
