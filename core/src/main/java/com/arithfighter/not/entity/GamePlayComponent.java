@@ -19,13 +19,12 @@ import static com.arithfighter.not.WindowSetting.*;
 public class GamePlayComponent {
     private final NumberBoxDisplacer numberBoxDisplacer;
     private Player player;
-    private final SumBox sumBox;
-    private final SumBoxModel sumBoxModel;
     private CardAnimate cardAnimate;
-    private boolean isCardDrag = false;
+    private boolean isCardDragging = false;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
     private GeckoEntity gecko;
+    private final SumBoxEntity sumBoxEntity;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -42,12 +41,7 @@ public class GamePlayComponent {
 
         createGecko(spriteSheets);
 
-        sumBox = new SumBox(textures[2]);
-        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
-        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
-        sumBox.setFont(font);
-
-        sumBoxModel = new SumBoxModel();
+        sumBoxEntity = new SumBoxEntity(textures[2], font);
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -78,11 +72,11 @@ public class GamePlayComponent {
     }
 
     public SumBoxModel getSumBoxModel() {
-        return sumBoxModel;
+        return sumBoxEntity.getSumBoxModel();
     }
 
     private void changeGeckoStateWhenPlayCard() {
-        if (sumBox.isCapacityWarning()) {
+        if (sumBoxEntity.isCapacityWarning()) {
             gecko.setFullEating();
         } else {
             gecko.setEating();
@@ -99,9 +93,8 @@ public class GamePlayComponent {
 
     public void init() {
         gecko.setNeutral();
-        sumBox.init();
+        sumBoxEntity.init();
         numberBoxDisplacer.init();
-        sumBoxModel.init();
         player.init();
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
@@ -117,7 +110,8 @@ public class GamePlayComponent {
     }
 
     public void update(int mouseX, int mouseY) {
-        numberBoxDisplacer.update(sumBoxModel.getSum());
+        int sum = sumBoxEntity.getSumBoxModel().getSum();
+        numberBoxDisplacer.update(sum);
 
         player.updateWhenTouchCard(mouseX, mouseY);
     }
@@ -125,8 +119,7 @@ public class GamePlayComponent {
     public void draw() {
         numberBoxDisplacer.draw(batch);
 
-        sumBox.setCapacity(sumBoxModel.getCardCapacity());
-        sumBox.draw(sumBoxModel.getSum(), batch);
+        sumBoxEntity.draw(batch);
 
         gecko.draw(batch);
 
@@ -141,16 +134,16 @@ public class GamePlayComponent {
     }
 
     public void touchDown(int mouseX, int mouseY) {
-        isCardDrag = false;
+        isCardDragging = false;
         player.activateCard(mouseX, mouseY);
         cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
 
-        if (sumBox.isCapacityWarning()) {
+        if (sumBoxEntity.isCapacityWarning()) {
             gecko.setTooFull();
         }
         if (isReadyToResetSum) {
             gecko.setSpitting();
-            sumBoxModel.init();
+            sumBoxEntity.init();
             player.setSkillStateToNeutral();
             isReadyToResetSum = false;
         }
@@ -158,17 +151,52 @@ public class GamePlayComponent {
 
     public void touchDragged(int mouseX, int mouseY) {
         if (player.isCardActive())
-            isCardDrag = true;
+            isCardDragging = true;
         player.updateWhenDrag(mouseX, mouseY);
     }
 
     public void touchUp(int mouseX, int mouseY) {
-        if (isCardDrag) {
+        if (isCardDragging) {
             gecko.touchUp(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
-        if (sumBoxModel.isCapacityFull())
+        if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
     }
 }
 
+class SumBoxEntity{
+    private final SumBox sumBox;
+    private final SumBoxModel sumBoxModel;
+
+    public SumBoxEntity(Texture texture, Font font){
+        sumBox = new SumBox(texture);
+        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
+        sumBox.setFont(font);
+
+        sumBoxModel = new SumBoxModel();
+    }
+
+    public SumBoxModel getSumBoxModel() {
+        return sumBoxModel;
+    }
+
+    public boolean isCapacityWarning(){
+        return sumBox.isCapacityWarning();
+    }
+
+    public boolean isCapacityFull(){
+        return sumBoxModel.isCapacityFull();
+    }
+
+    public void init(){
+        sumBox.init();
+        sumBoxModel.init();
+    }
+
+    public void draw(SpriteBatch batch){
+        sumBox.setCapacity(sumBoxModel.getCardCapacity());
+        sumBox.draw(sumBoxModel.getSum(), batch);
+    }
+}
