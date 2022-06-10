@@ -4,7 +4,8 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.entity.GameCardController;
+import com.arithfighter.not.entity.gamecard.GameCardController;
+import com.arithfighter.not.entity.gamecard.GameCardService;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.system.RandomNumProducer;
@@ -53,7 +54,8 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         numberBoxQuantityPicker = new NumberBoxQuantityPicker(quantityCandidates.getCandidates());
 
-        gameCards = new GameCardController(textures, fontService);
+        GameCardService gameCardService = new GameCardService(textures, fontService);
+        gameCards = new GameCardController(gameCardService);
 
         warningDialog = new WarningDialog(textures[10]);
         warningDialog.setFont(fontService.getFont20());
