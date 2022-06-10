@@ -1,4 +1,4 @@
-package com.arithfighter.not.widget.stagecomponent;
+package com.arithfighter.not.entity.sumbox;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.FontWidget;
