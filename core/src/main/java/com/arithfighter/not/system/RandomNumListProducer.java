@@ -33,7 +33,7 @@ public class RandomNumListProducer {
 
     private void addNumbersToList() {
         if (numberList.size() < maxQuantity) {
-            numberSetGenerator.addNumberUntilEqualToQuantity(maxQuantity);
+            numberSetGenerator.addNumberUntilReachQuantity(maxQuantity);
 
             numberList.addAll(numberSetGenerator.getNumberSet());
         }
@@ -56,11 +56,11 @@ class NumberSetGenerator {
         return numberSet;
     }
 
-    public void addNumberUntilEqualToQuantity(int quantity) {
+    public void addNumberUntilReachQuantity(int quantity) {
         addRandomNumberToSet(quantity);
 
         while (numberSet.size() < quantity)
-            addNumberUntilEqualToQuantity(quantity - numberSet.size());
+            addNumberUntilReachQuantity(quantity - numberSet.size());
     }
 
     private void addRandomNumberToSet(int quantity) {
