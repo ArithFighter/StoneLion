@@ -6,6 +6,7 @@ import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
+import com.arithfighter.not.entity.numberbox.NumberBoxDisplacer;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;

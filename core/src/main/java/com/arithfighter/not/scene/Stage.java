@@ -6,6 +6,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Recorder;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
-    private final PlayerCollection playerCollection;
+    private final PlayerService playerService;
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
@@ -34,12 +35,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
-        playerCollection = new PlayerCollection();
-        playerCollection.setCharacterQuantity(CharacterList.values().length);
-        playerCollection.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
-        playerCollection.setPlayRecord(cardLimitManager.getPlayRecord());
-        playerCollection.setSumBoxModel(gamePlayComponent.getSumBoxModel());
-        playerCollection.createPlayers(textures, cards);
+        playerService = new PlayerService();
+        playerService.setCharacterQuantity(CharacterList.values().length);
+        playerService.setNumberBoxDisplacer(gamePlayComponent.getNumberBoxDisplacer());
+        playerService.setPlayRecord(cardLimitManager.getPlayRecord());
+        playerService.setSumBoxModel(gamePlayComponent.getSumBoxModel());
+        playerService.createPlayers(textures, cards);
 
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
@@ -123,7 +124,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void setSelectedPlayerToGame(int i) {
-        gamePlayComponent.setPlayer(playerCollection.getPlayers()[i]);
+        gamePlayComponent.setPlayer(playerService.getPlayers()[i]);
     }
 
     public void touchDown() {

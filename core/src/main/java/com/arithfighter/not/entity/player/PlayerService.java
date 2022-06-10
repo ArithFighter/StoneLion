@@ -1,7 +1,6 @@
-package com.arithfighter.not.entity;
+package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.entity.player.CharacterList;
-import com.arithfighter.not.entity.player.Player;
+import com.arithfighter.not.entity.numberbox.NumberBoxDisplacer;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumProducer;
@@ -10,14 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
-public class PlayerCollection {
+public class PlayerService {
     private Player[] players;
     private Recorder playRecord;
     private NumberBoxDisplacer numberBoxDisplacer;
     private SumBoxModel sumBoxModel;
     private int characterQuantity;
 
-    public PlayerCollection() {
+    public PlayerService() {
     }
 
     public void setSumBoxModel(SumBoxModel sumBoxModel) {

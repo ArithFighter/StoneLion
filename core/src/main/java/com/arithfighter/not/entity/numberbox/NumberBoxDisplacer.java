@@ -1,13 +1,13 @@
-package com.arithfighter.not.entity;
+package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.animate.Animator;
+import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
-import com.arithfighter.not.widget.stagecomponent.NumberBox;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
