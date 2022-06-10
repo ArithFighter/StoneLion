@@ -81,17 +81,21 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getBet() {
+        return betBrowser.getBet() * getQuantityTier();
+    }
+
+    private int getQuantityTier(){
         int q = 0;
 
         for (int i = 0; i < gameCards.getGameCards().length; i++) {
-
             if (gameCards.getGameCards()[i].isOn()){
                 int b = gameCards.getGameCards()[i].getBoxQuantity();
 
                 q+= quantityCandidates.getQuantityTier(b);
             }
         }
-        return betBrowser.getBet() * q;
+
+        return q;
     }
 
     public boolean isStartGame() {
