@@ -19,12 +19,13 @@ public class GameCardController{
         numberBoxQuantityPicker = new NumberBoxQuantityPicker(quantityCandidates.getCandidates());
     }
 
-    public void initQuantityPicker(){
+    public void setNumberBoxQuantity(){
         numberBoxQuantityPicker.init();
-    }
 
-    public int[] getQuantityArray(){
-        return numberBoxQuantityPicker.getQuantityArray();
+        int[] array = numberBoxQuantityPicker.getQuantityArray();
+
+        for (int i = 0; i < array.length; i++)
+            getGameCards()[i].setBoxQuantity(array[i]);
     }
 
     public GameCard[] getGameCards(){
@@ -56,7 +57,6 @@ public class GameCardController{
                 q+= quantityCandidates.getQuantityTier(b);
             }
         }
-
         return q;
     }
 

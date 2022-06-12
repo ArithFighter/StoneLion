@@ -122,12 +122,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
-        gameCards.initQuantityPicker();
-
-        int[] array = gameCards.getQuantityArray();
-
-        for (int i = 0; i < array.length; i++)
-            gameCards.getGameCards()[i].setBoxQuantity(array[i]);
+        gameCards.setNumberBoxQuantity();
 
         setFirstGameCardIfTokensTooFew();
     }
