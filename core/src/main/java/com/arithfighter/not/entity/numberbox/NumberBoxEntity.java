@@ -24,7 +24,7 @@ public class NumberBoxEntity {
     private final RandomNumListProducer randomNumListProducer;
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
-    private final MaskAnimation maskAnimation;
+    private MaskAnimation maskAnimation;
     private final RandomIndexPicker randomIndexPicker;
     private final NumberListInspector numberListInspector = new NumberListInspector();
 
@@ -42,17 +42,21 @@ public class NumberBoxEntity {
 
         animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
 
+        createMaskAnimation(textures[5], placer);
+
+        randomIndexPicker = new RandomIndexPicker(maxQuantity);
+    }
+
+    private void createMaskAnimation(Texture texture, NumberBoxPlacer placer){
         Mask[] masks = new Mask[maxQuantity];
         for (int i = 0; i< maxQuantity;i++){
-            masks[i] = new Mask(textures[5], 2.4f);
+            masks[i] = new Mask(texture, 2.4f);
             masks[i].setPosition(
                     placer.getNumberBoxX(i, masks[i].getWidth()),
                     placer.getNumberBoxY(i, masks[i].getHeight()));
         }
 
         maskAnimation = new MaskAnimation(masks);
-
-        randomIndexPicker = new RandomIndexPicker(maxQuantity);
     }
 
     public boolean isAllNumZero(){
@@ -99,10 +103,14 @@ public class NumberBoxEntity {
 
         randomIndexPicker.setQuantity(zeroValueQuantity);
 
-        if (numberList.size() >= maxQuantity){
+        if (isSizeEqualToMaxQuantity(numberList.size())){
             for (int i=0;i<zeroValueQuantity;i++)
                 set(randomIndexPicker.getIndexes().get(i), 0);
         }
+    }
+
+    private boolean isSizeEqualToMaxQuantity(int size){
+        return size >= maxQuantity;
     }
 
     private void updateNumberList(){
@@ -117,7 +125,7 @@ public class NumberBoxEntity {
 
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numbers.length; i++) {
-            if (sum == numbers[i] && numbers[i] > 0 && numberList.size() > 0) {
+            if (isNonZeroNumMatchedSum(i, sum)) {
                 animation.setMatchedBoxIndex(i);
 
                 doWhenSumAndNumMatched();
@@ -125,6 +133,10 @@ public class NumberBoxEntity {
                 set(i, 0);
             }
         }
+    }
+
+    private boolean isNonZeroNumMatchedSum(int i, int sum){
+        return sum == numbers[i] && numbers[i] > 0 && numberList.size() > 0;
     }
 
     public void doWhenSumAndNumMatched() {
