@@ -7,8 +7,6 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.gamecard.GameCardController;
 import com.arithfighter.not.entity.gamecard.GameCardService;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.system.RandomNumListProducer;
-import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.widget.BetBrowser;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
@@ -18,20 +16,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.List;
-
 public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent {
     private final BetBrowser betBrowser;
     private final SceneControlButton startButton;
     private final SoundManager soundManager;
-    private final NumberBoxQuantityPicker numberBoxQuantityPicker;
     private final int cardLimit = 15;
     private final TextDisplacer textDisplacer;
     private final GameCardController gameCards;
     private int yourTokens = 0;
     private final WarningDialog warningDialog;
     private int totalActiveGames;
-    private final QuantityCandidateService quantityCandidates;
     private final int[] betList = {5, 10, 20, 50, 100};
 
     public BetScreen(TextureService textureService, SoundManager soundManager, FontService fontService) {
@@ -49,10 +43,6 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
         textDisplacer = new TextDisplacer();
         textDisplacer.setFont(fontService.getFont24());
-
-        quantityCandidates = new QuantityCandidateService();
-
-        numberBoxQuantityPicker = new NumberBoxQuantityPicker(quantityCandidates.getCandidates());
 
         GameCardService gameCardService = new GameCardService(textures, fontService);
         gameCards = new GameCardController(gameCardService);
@@ -81,21 +71,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public int getBet() {
-        return betBrowser.getBet() * getQuantityTier();
-    }
-
-    private int getQuantityTier(){
-        int q = 0;
-
-        for (int i = 0; i < gameCards.getGameCards().length; i++) {
-            if (gameCards.getGameCards()[i].isOn()){
-                int b = gameCards.getGameCards()[i].getBoxQuantity();
-
-                q+= quantityCandidates.getQuantityTier(b);
-            }
-        }
-
-        return q;
+        return betBrowser.getBet() * gameCards.getQuantityTier();
     }
 
     public boolean isStartGame() {
@@ -146,9 +122,9 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
     }
 
     public void setNumberBoxQuantity() {
-        numberBoxQuantityPicker.init();
+        gameCards.initQuantityPicker();
 
-        int[] array = numberBoxQuantityPicker.getQuantityArray();
+        int[] array = gameCards.getQuantityArray();
 
         for (int i = 0; i < array.length; i++)
             gameCards.getGameCards()[i].setBoxQuantity(array[i]);
@@ -158,7 +134,7 @@ public class BetScreen extends SceneComponent implements SceneEvent, MouseEvent 
 
     private void setFirstGameCardIfTokensTooFew(){
         if (yourTokens<betList[1])
-            gameCards.getGameCards()[0].setBoxQuantity(quantityCandidates.getCandidates()[0]);
+            gameCards.getGameCards()[0].setBoxQuantity(gameCards.getFirstGameCardValue());
     }
 
     @Override
@@ -301,52 +277,5 @@ class TextDisplacer {
         font.draw(batch, betHint, 400, 300);
 
         font.draw(batch, totalBet, 100, 150);
-    }
-}
-
-class QuantityCandidateService{
-    private final int[] candidates = new int[]{2,4,7,9};
-
-    public int[] getCandidates(){
-        return candidates;
-    }
-
-    public int getQuantityTier(int quantity){
-        int value = 0;
-
-        for (int i = candidates.length-1;i>=0;i--){
-            if (quantity<candidates[i]+1)
-                value = i+1;
-        }
-        return value;
-    }
-}
-
-class NumberBoxQuantityPicker {
-    private final int[] quantityCandidates;
-    private final RandomNumListProducer indexListProducer;
-    private final int quantityArrayLength = 3;
-
-    public NumberBoxQuantityPicker(int[] candidates) {
-        quantityCandidates = candidates;
-
-        RandomNumProducer indexPicker = new RandomNumProducer(quantityCandidates.length - 1, 0);
-
-        indexListProducer = new RandomNumListProducer(indexPicker);
-        indexListProducer.setMaxQuantity(quantityArrayLength);
-    }
-
-    public int[] getQuantityArray() {
-        int[] quantityArray = new int[quantityArrayLength];
-        List<Integer> indexArray = indexListProducer.getNumbers();
-
-        for (int i = 0; i < quantityArrayLength; i++)
-            quantityArray[i] = quantityCandidates[indexArray.get(i)];
-
-        return quantityArray;
-    }
-
-    public void init() {
-        indexListProducer.clear();
     }
 }
