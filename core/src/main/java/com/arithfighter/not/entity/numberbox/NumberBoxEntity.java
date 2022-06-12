@@ -25,8 +25,8 @@ public class NumberBoxEntity {
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
     private final MaskAnimation maskAnimation;
-    private boolean isAllNumZero = false;
     private final RandomIndexPicker randomIndexPicker;
+    private final NumberListInspector numberListInspector = new NumberListInspector();
 
     public NumberBoxEntity(Texture[] textures, Font font) {
         numberBoxProducer = new NumberBoxProducer(textures[3], font);
@@ -56,7 +56,7 @@ public class NumberBoxEntity {
     }
 
     public boolean isAllNumZero(){
-        return isAllNumZero;
+        return numberListInspector.isAllNumberAreZero();
     }
 
     public int getMaxQuantity() {
@@ -82,11 +82,13 @@ public class NumberBoxEntity {
     }
 
     public void update(int sum) {
+        updateNumberList();
+
         updateNumbers();
 
         handleWhenNumMatchedSum(sum);
 
-        checkEveryNumMatched();
+        numberListInspector.inspectNumberList(numbers);
 
         animation.setNumbers(numbers);
     }
@@ -103,10 +105,12 @@ public class NumberBoxEntity {
         }
     }
 
-    private void updateNumbers() {
+    private void updateNumberList(){
         if (numberList.size() < maxQuantity)
             numberList.addAll(randomNumListProducer.getNumbers());
+    }
 
+    private void updateNumbers() {
         for (int i = 0; i < maxQuantity; i++)
             numbers[i] = numberList.get(i);
     }
@@ -124,14 +128,6 @@ public class NumberBoxEntity {
     }
 
     public void doWhenSumAndNumMatched() {
-    }
-
-    private void checkEveryNumMatched() {
-        NumberListInspector numberListInspector = new NumberListInspector();
-
-        numberListInspector.inspectNumberList(numbers);
-
-        isAllNumZero = numberListInspector.isAllNumberAreZero();
     }
 
     public void draw(SpriteBatch batch) {
