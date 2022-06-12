@@ -103,14 +103,10 @@ public class NumberBoxEntity {
 
         randomIndexPicker.setQuantity(zeroValueQuantity);
 
-        if (isSizeEqualToMaxQuantity(numberList.size())){
+        if (numberList.size() >= maxQuantity){
             for (int i=0;i<zeroValueQuantity;i++)
                 set(randomIndexPicker.getIndexes().get(i), 0);
         }
-    }
-
-    private boolean isSizeEqualToMaxQuantity(int size){
-        return size >= maxQuantity;
     }
 
     private void updateNumberList(){
