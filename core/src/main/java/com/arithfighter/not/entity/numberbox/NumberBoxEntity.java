@@ -25,9 +25,8 @@ public class NumberBoxEntity {
         numberBoxService = new NumberBoxService(textures[3], font);
         numberBoxService.setPosition(placer);
 
-        createMaskAnimation(textures[5], placer);
-
         maxQuantity = numberBoxService.getQuantity();
+        createMaskAnimation(textures[5], placer);
 
         randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
         randomNumListProducer.setMaxQuantity(maxQuantity);
