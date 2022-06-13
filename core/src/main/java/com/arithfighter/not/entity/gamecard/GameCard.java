@@ -1,7 +1,6 @@
 package com.arithfighter.not.entity.gamecard;
 
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.widget.button.Button;

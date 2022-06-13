@@ -35,10 +35,6 @@ public class GeckoController {
         return geckoState != GeckoState.FULL_EATING;
     }
 
-    public boolean isNotSpitting() {
-        return geckoState != GeckoState.SPIT;
-    }
-
     public void drawGecko() {
         switch (geckoState) {
             case NEUTRAL:
@@ -78,13 +74,10 @@ public class GeckoController {
 
         if (pastedTime > initTime)
             geckoAnimate.blink(batch);
-
         if (pastedTime > initTime + 1)
             geckoAnimate.swing(batch);
-
         if (pastedTime > initTime + 1.64f && geckoAnimate.isAllActionEnd())
             init();
-
         if (geckoAnimate.isAllActionEnd())
             geckoSprite.drawDefault(batch);
     }
@@ -98,7 +91,6 @@ public class GeckoController {
 
         if (pastedTime > 1.2)
             geckoAnimate.lick(batch);
-
         if (geckoAnimate.isAllActionEnd() && pastedTime > 2) {
             init();
             geckoState = GeckoState.NEUTRAL;

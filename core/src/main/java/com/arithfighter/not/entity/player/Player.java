@@ -1,8 +1,6 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
-import com.arithfighter.not.pojo.CapacityManager;
-import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

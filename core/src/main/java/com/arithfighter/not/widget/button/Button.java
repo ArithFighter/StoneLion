@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Button{
     private Font font;
     private final DetectableFontWidget button;
-
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
