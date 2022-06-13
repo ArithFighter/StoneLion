@@ -22,17 +22,16 @@ public class NumberBoxEntity {
     private final int maxQuantity;
     private final int[] numbers;
     private final RandomNumListProducer randomNumListProducer;
-    private final LinkedList<Integer> numberList = new LinkedList<>();
     private final NumberBoxAnimation animation;
     private MaskAnimation maskAnimation;
-    private final RandomIndexPicker randomIndexPicker;
+    private final NumberListController numberListController;
     private final NumberListInspector numberListInspector = new NumberListInspector();
 
     public NumberBoxEntity(Texture[] textures, Font font) {
         numberBoxProducer = new NumberBoxProducer(textures[3], font);
-        
+
         maxQuantity = numberBoxProducer.getMaxQuantity();
-        
+
         numbers = new int[maxQuantity];
 
         NumberBoxPlacer placer = new NumberBoxPlacer();
@@ -44,12 +43,12 @@ public class NumberBoxEntity {
 
         createMaskAnimation(textures[5], placer);
 
-        randomIndexPicker = new RandomIndexPicker(maxQuantity);
+        numberListController = new NumberListController(maxQuantity);
     }
 
-    private void createMaskAnimation(Texture texture, NumberBoxPlacer placer){
+    private void createMaskAnimation(Texture texture, NumberBoxPlacer placer) {
         Mask[] masks = new Mask[maxQuantity];
-        for (int i = 0; i< maxQuantity;i++){
+        for (int i = 0; i < maxQuantity; i++) {
             masks[i] = new Mask(texture, 2.4f);
             masks[i].setPosition(
                     placer.getNumberBoxX(i, masks[i].getWidth()),
@@ -59,7 +58,7 @@ public class NumberBoxEntity {
         maskAnimation = new MaskAnimation(masks);
     }
 
-    public boolean isAllNumZero(){
+    public boolean isAllNumZero() {
         return numberListInspector.isAllNumberAreZero();
     }
 
@@ -69,20 +68,16 @@ public class NumberBoxEntity {
 
     public void init() {
         randomNumListProducer.clear();
-        numberList.clear();
         maskAnimation.init();
-        randomIndexPicker.clear();
+        numberListController.init();
     }
 
     public int getNumberBoxValue(int index) {
-        return numberList.get(index);
+        return numberListController.getNumberList().get(index);
     }
 
     public void set(int index, int value) {
-        if (index>=0){
-            int i = Math.min(index, maxQuantity-1);
-            numberList.set(i, value);
-        }
+        numberListController.set(index, value);
     }
 
     public void update(int sum) {
@@ -98,25 +93,18 @@ public class NumberBoxEntity {
     }
 
     public void setBoxQuantity(int boxQuantity) {
-        int quantity = Math.min(boxQuantity, maxQuantity);
-        int zeroValueQuantity = maxQuantity-quantity;
-
-        randomIndexPicker.setQuantity(zeroValueQuantity);
-
-        if (numberList.size() >= maxQuantity){
-            for (int i=0;i<zeroValueQuantity;i++)
-                set(randomIndexPicker.getIndexes().get(i), 0);
-        }
+        numberListController.setBoxQuantity(boxQuantity);
     }
 
-    private void updateNumberList(){
+    private void updateNumberList() {
+        LinkedList<Integer> numberList = numberListController.getNumberList();
         if (numberList.size() < maxQuantity)
             numberList.addAll(randomNumListProducer.getNumbers());
     }
 
     private void updateNumbers() {
         for (int i = 0; i < maxQuantity; i++)
-            numbers[i] = numberList.get(i);
+            numbers[i] = numberListController.getNumberList().get(i);
     }
 
     private void handleWhenNumMatchedSum(int sum) {
@@ -131,8 +119,8 @@ public class NumberBoxEntity {
         }
     }
 
-    private boolean isNonZeroNumMatchedSum(int i, int sum){
-        return sum == numbers[i] && numbers[i] > 0 && numberList.size() > 0;
+    private boolean isNonZeroNumMatchedSum(int i, int sum) {
+        return sum == numbers[i] && numbers[i] > 0 && numberListController.getNumberList().size() > 0;
     }
 
     public void doWhenSumAndNumMatched() {
@@ -148,24 +136,63 @@ public class NumberBoxEntity {
     }
 }
 
-class RandomIndexPicker{
+class NumberListController {
+    private final LinkedList<Integer> numberList = new LinkedList<>();
+    private final RandomIndexPicker randomIndexPicker;
+    private final int maxQuantity;
+
+    public NumberListController(int maxQuantity) {
+        this.maxQuantity = maxQuantity;
+        randomIndexPicker = new RandomIndexPicker(maxQuantity);
+    }
+
+    public void init() {
+        numberList.clear();
+        randomIndexPicker.clear();
+    }
+
+    public void set(int index, int value) {
+        if (index >= 0) {
+            int i = Math.min(index, maxQuantity - 1);
+            numberList.set(i, value);
+        }
+    }
+
+    public void setBoxQuantity(int boxQuantity) {
+        int quantity = Math.min(boxQuantity, maxQuantity);
+        int zeroValueQuantity = maxQuantity - quantity;
+
+        randomIndexPicker.setQuantity(zeroValueQuantity);
+
+        if (numberList.size() >= maxQuantity) {
+            for (int i = 0; i < zeroValueQuantity; i++)
+                set(randomIndexPicker.getIndexes().get(i), 0);
+        }
+    }
+
+    public LinkedList<Integer> getNumberList() {
+        return numberList;
+    }
+}
+
+class RandomIndexPicker {
     RandomNumProducer randomNumProducer;
     RandomNumListProducer randomNumListProducer;
 
-    public RandomIndexPicker(int size){
-        randomNumProducer = new RandomNumProducer(size-1, 0);
+    public RandomIndexPicker(int size) {
+        randomNumProducer = new RandomNumProducer(size - 1, 0);
         randomNumListProducer = new RandomNumListProducer(randomNumProducer);
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         randomNumListProducer.setMaxQuantity(quantity);
     }
 
-    public List<Integer> getIndexes(){
+    public List<Integer> getIndexes() {
         return randomNumListProducer.getNumbers();
     }
 
-    public void clear(){
+    public void clear() {
         randomNumListProducer.clear();
     }
 }
@@ -180,17 +207,17 @@ class NumberListInspector {
     }
 
     private void resetInspector() {
-        sumOfNumInspector =-1;
+        sumOfNumInspector = -1;
     }
 
     private void checkEveryNumInListAreZero(int[] numberList) {
-        for (int number : numberList){
+        for (int number : numberList) {
             sumOfNumInspector += number;
         }
         allNumAreZero = sumOfNumInspector == -1;
     }
 
-    public boolean isAllNumberAreZero(){
+    public boolean isAllNumberAreZero() {
         return allNumAreZero;
     }
 }
@@ -248,7 +275,7 @@ class NumberBoxProducer {
     private final NumberBox[] numberBoxes;
     private final static int maxQuantity = 9;
 
-    public NumberBoxProducer(Texture texture, Font font){
+    public NumberBoxProducer(Texture texture, Font font) {
         numberBoxes = new NumberBox[maxQuantity];
 
         NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
@@ -263,15 +290,15 @@ class NumberBoxProducer {
         }
     }
 
-    public int getMaxQuantity(){
+    public int getMaxQuantity() {
         return maxQuantity;
     }
 
-    public NumberBox[] getNumberBoxes(){
+    public NumberBox[] getNumberBoxes() {
         return numberBoxes;
     }
 
-    public void draw(SpriteBatch batch, int[] numbers){
+    public void draw(SpriteBatch batch, int[] numbers) {
         for (int i = 0; i < maxQuantity; i++) {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(batch, numbers[i]);
