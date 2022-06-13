@@ -14,9 +14,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.arithfighter.not.WindowSetting.GRID_X;
-import static com.arithfighter.not.WindowSetting.GRID_Y;
-
 public class NumberBoxEntity {
     private final NumberBoxService numberBoxService;
     private final int maxQuantity;
@@ -27,18 +24,19 @@ public class NumberBoxEntity {
     private final NumberListInspector numberListInspector = new NumberListInspector();
 
     public NumberBoxEntity(Texture[] textures, Font font) {
-        numberBoxService = new NumberBoxService(textures[3], font);
-
-        maxQuantity = numberBoxService.getMaxQuantity();
-
         NumberBoxPlacer placer = new NumberBoxPlacer();
+
+        numberBoxService = new NumberBoxService(textures[3], font);
+        numberBoxService.setPosition(placer);
+
+        createMaskAnimation(textures[5], placer);
+
+        maxQuantity = numberBoxService.getQuantity();
 
         randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
         randomNumListProducer.setMaxQuantity(maxQuantity);
 
         animation = new NumberBoxAnimation(numberBoxService.getNumberBoxes());
-
-        createMaskAnimation(textures[5], placer);
 
         numberListController = new NumberListController(maxQuantity);
     }
@@ -278,27 +276,3 @@ class NumberBoxAnimation {
     }
 }
 
-class NumberBoxPlacer {
-    private final float initX = GRID_X * 7.5f;
-    private final float initY = GRID_Y * 5;
-    private final float margin = GRID_X;
-
-    public float getNumberBoxX(int i, float width) {
-        float x = initX;
-
-        for (int j = 0; j < 3; j++)
-            if (i % 3 == j) x += (margin + width) * j;
-
-        return x;
-    }
-
-    public float getNumberBoxY(int i, float height) {
-        float y = initY;
-
-        for (int j = 0; j < 5; j++)
-            if (i / 3 == j)
-                y += (margin + height) * j;
-
-        return y;
-    }
-}

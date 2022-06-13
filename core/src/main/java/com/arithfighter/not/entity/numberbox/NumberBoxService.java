@@ -6,25 +6,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBoxService {
     private final NumberBox[] numberBoxes;
-    private final static int maxQuantity = 9;
+    private final static int quantity = 9;
 
     public NumberBoxService(Texture texture, Font font) {
-        numberBoxes = new NumberBox[maxQuantity];
+        numberBoxes = new NumberBox[quantity];
 
-        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
-
-        for (int i = 0; i < maxQuantity; i++) {
+        for (int i = 0; i < quantity; i++) {
             numberBoxes[i] = new NumberBox(texture);
             numberBoxes[i].setFont(font);
-            numberBoxes[i].setPosition(
-                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
-            );
         }
     }
 
-    public int getMaxQuantity() {
-        return maxQuantity;
+    public void setPosition(NumberBoxPlacer placer) {
+        for (int i = 0; i < quantity; i++)
+            numberBoxes[i].setPosition(
+                    placer.getNumberBoxX(i, numberBoxes[i].getWidth()),
+                    placer.getNumberBoxY(i, numberBoxes[i].getHeight())
+            );
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public NumberBox[] getNumberBoxes() {
@@ -32,7 +34,7 @@ public class NumberBoxService {
     }
 
     public void draw(SpriteBatch batch, int[] numbers) {
-        for (int i = 0; i < maxQuantity; i++) {
+        for (int i = 0; i < quantity; i++) {
             if (numbers[i] > 0)
                 numberBoxes[i].draw(batch, numbers[i]);
         }
