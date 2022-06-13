@@ -18,7 +18,7 @@ import static com.arithfighter.not.WindowSetting.GRID_X;
 import static com.arithfighter.not.WindowSetting.GRID_Y;
 
 public class NumberBoxEntity {
-    private final NumberBoxProducer numberBoxProducer;
+    private final NumberBoxService numberBoxService;
     private final int maxQuantity;
     private final int[] numbers;
     private final RandomNumListProducer randomNumListProducer;
@@ -28,9 +28,9 @@ public class NumberBoxEntity {
     private final NumberListInspector numberListInspector = new NumberListInspector();
 
     public NumberBoxEntity(Texture[] textures, Font font) {
-        numberBoxProducer = new NumberBoxProducer(textures[3], font);
+        numberBoxService = new NumberBoxService(textures[3], font);
 
-        maxQuantity = numberBoxProducer.getMaxQuantity();
+        maxQuantity = numberBoxService.getMaxQuantity();
 
         numbers = new int[maxQuantity];
 
@@ -39,7 +39,7 @@ public class NumberBoxEntity {
         randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
         randomNumListProducer.setMaxQuantity(maxQuantity);
 
-        animation = new NumberBoxAnimation(numberBoxProducer.getNumberBoxes());
+        animation = new NumberBoxAnimation(numberBoxService.getNumberBoxes());
 
         createMaskAnimation(textures[5], placer);
 
@@ -98,6 +98,7 @@ public class NumberBoxEntity {
 
     private void updateNumberList() {
         LinkedList<Integer> numberList = numberListController.getNumberList();
+
         if (numberList.size() < maxQuantity)
             numberList.addAll(randomNumListProducer.getNumbers());
     }
@@ -127,7 +128,7 @@ public class NumberBoxEntity {
     }
 
     public void draw(SpriteBatch batch) {
-        numberBoxProducer.draw(batch, numbers);
+        numberBoxService.draw(batch, numbers);
 
         animation.setBatch(batch);
         animation.draw();
@@ -268,41 +269,6 @@ class NumberBoxAnimation {
     private void init() {
         timeHandler.resetPastedTime();
         matchedBoxIndex -= matchedBoxIndex + 1;
-    }
-}
-
-class NumberBoxProducer {
-    private final NumberBox[] numberBoxes;
-    private final static int maxQuantity = 9;
-
-    public NumberBoxProducer(Texture texture, Font font) {
-        numberBoxes = new NumberBox[maxQuantity];
-
-        NumberBoxPlacer numberBoxPlacer = new NumberBoxPlacer();
-
-        for (int i = 0; i < maxQuantity; i++) {
-            numberBoxes[i] = new NumberBox(texture);
-            numberBoxes[i].setFont(font);
-            numberBoxes[i].setPosition(
-                    numberBoxPlacer.getNumberBoxX(i, numberBoxes[i].getWidth()),
-                    numberBoxPlacer.getNumberBoxY(i, numberBoxes[i].getHeight())
-            );
-        }
-    }
-
-    public int getMaxQuantity() {
-        return maxQuantity;
-    }
-
-    public NumberBox[] getNumberBoxes() {
-        return numberBoxes;
-    }
-
-    public void draw(SpriteBatch batch, int[] numbers) {
-        for (int i = 0; i < maxQuantity; i++) {
-            if (numbers[i] > 0)
-                numberBoxes[i].draw(batch, numbers[i]);
-        }
     }
 }
 
