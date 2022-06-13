@@ -20,7 +20,6 @@ import static com.arithfighter.not.WindowSetting.GRID_Y;
 public class NumberBoxEntity {
     private final NumberBoxService numberBoxService;
     private final int maxQuantity;
-    private final int[] numbers;
     private final RandomNumListProducer randomNumListProducer;
     private final NumberBoxAnimation animation;
     private MaskAnimation maskAnimation;
@@ -31,8 +30,6 @@ public class NumberBoxEntity {
         numberBoxService = new NumberBoxService(textures[3], font);
 
         maxQuantity = numberBoxService.getMaxQuantity();
-
-        numbers = new int[maxQuantity];
 
         NumberBoxPlacer placer = new NumberBoxPlacer();
 
@@ -83,9 +80,11 @@ public class NumberBoxEntity {
     public void update(int sum) {
         updateNumberList();
 
-        updateNumbers();
+        numberListController.updateNumbers();
 
         handleWhenNumMatchedSum(sum);
+
+        int[] numbers = numberListController.getNumbers();
 
         numberListInspector.inspectNumberList(numbers);
 
@@ -103,13 +102,8 @@ public class NumberBoxEntity {
             numberList.addAll(randomNumListProducer.getNumbers());
     }
 
-    private void updateNumbers() {
-        for (int i = 0; i < maxQuantity; i++)
-            numbers[i] = numberListController.getNumberList().get(i);
-    }
-
     private void handleWhenNumMatchedSum(int sum) {
-        for (int i = 0; i < numbers.length; i++) {
+        for (int i = 0; i < numberListController.getNumbers().length; i++) {
             if (isNonZeroNumMatchedSum(i, sum)) {
                 animation.setMatchedBoxIndex(i);
 
@@ -121,6 +115,7 @@ public class NumberBoxEntity {
     }
 
     private boolean isNonZeroNumMatchedSum(int i, int sum) {
+        int[] numbers = numberListController.getNumbers();
         return sum == numbers[i] && numbers[i] > 0 && numberListController.getNumberList().size() > 0;
     }
 
@@ -128,7 +123,7 @@ public class NumberBoxEntity {
     }
 
     public void draw(SpriteBatch batch) {
-        numberBoxService.draw(batch, numbers);
+        numberBoxService.draw(batch, numberListController.getNumbers());
 
         animation.setBatch(batch);
         animation.draw();
@@ -140,11 +135,13 @@ public class NumberBoxEntity {
 class NumberListController {
     private final LinkedList<Integer> numberList = new LinkedList<>();
     private final RandomIndexPicker randomIndexPicker;
+    private final int[] numbers;
     private final int maxQuantity;
 
     public NumberListController(int maxQuantity) {
         this.maxQuantity = maxQuantity;
         randomIndexPicker = new RandomIndexPicker(maxQuantity);
+        numbers = new int[maxQuantity];
     }
 
     public void init() {
@@ -173,6 +170,15 @@ class NumberListController {
 
     public LinkedList<Integer> getNumberList() {
         return numberList;
+    }
+
+    public void updateNumbers() {
+        for (int i = 0; i < maxQuantity; i++)
+            numbers[i] = numberList.get(i);
+    }
+
+    public int[] getNumbers() {
+        return numbers;
     }
 }
 
