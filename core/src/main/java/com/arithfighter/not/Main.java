@@ -25,9 +25,7 @@ public class Main extends ApplicationAdapter {
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
-    private GameDataDisplacer gameDataDisplacer;
     private FontService fontService;
-    private MusicController musicController;
 
     @Override
     public void create() {
@@ -44,30 +42,25 @@ public class Main extends ApplicationAdapter {
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
         TextureService textureService = new TextureService(assetProcessor);
-
         sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager(), fontService);
-
         sceneBuilder.setBatch(batch);
-
         sceneBuilder.setCursorPos(cursorPos);
 
         audioHandler.setOptionMenu(sceneBuilder.getOptionMenu());
 
-        mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
-
         sceneController = new SceneController(sceneBuilder, GameScene.MENU);
 
-        GameSave gameSave = new GameSave();
+        setGameSave();
 
+        mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
+        Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void setGameSave(){
+        GameSave gameSave = new GameSave();
         sceneBuilder.setAudioVolume(gameSave);
         sceneBuilder.setHighScore(gameSave);
         sceneController.setGameSave(gameSave);
-
-        Gdx.input.setInputProcessor(mouseAdapter);
-
-        gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
-
-        musicController = new MusicController(audioHandler);
     }
 
     @Override
@@ -97,6 +90,7 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.setGameScene(gameScene);
 
+        MusicController musicController = new MusicController(audioHandler);
         musicController.setGameScene(gameScene);
         musicController.playBackgroundMusic();
 
@@ -114,6 +108,7 @@ public class Main extends ApplicationAdapter {
 
         sceneBuilder.renderScene(gameScene);
 
+        GameDataDisplacer gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
         gameDataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
         gameDataDisplacer.draw(batch);
 
