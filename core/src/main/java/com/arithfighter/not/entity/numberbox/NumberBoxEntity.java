@@ -1,18 +1,14 @@
 package com.arithfighter.not.entity.numberbox;
 
-import com.arithfighter.not.animate.Animator;
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.system.GameNumProducer;
-import com.arithfighter.not.system.RandomNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class NumberBoxEntity {
     private final NumberBoxService numberBoxService;
@@ -180,28 +176,6 @@ class NumberListController {
     }
 }
 
-class RandomIndexPicker {
-    RandomNumProducer randomNumProducer;
-    RandomNumListProducer randomNumListProducer;
-
-    public RandomIndexPicker(int size) {
-        randomNumProducer = new RandomNumProducer(size - 1, 0);
-        randomNumListProducer = new RandomNumListProducer(randomNumProducer);
-    }
-
-    public void setQuantity(int quantity) {
-        randomNumListProducer.setMaxQuantity(quantity);
-    }
-
-    public List<Integer> getIndexes() {
-        return randomNumListProducer.getNumbers();
-    }
-
-    public void clear() {
-        randomNumListProducer.clear();
-    }
-}
-
 class NumberListInspector {
     private int sumOfNumInspector = -1;
     private boolean allNumAreZero = false;
@@ -224,55 +198,6 @@ class NumberListInspector {
 
     public boolean isAllNumberAreZero() {
         return allNumAreZero;
-    }
-}
-
-class NumberBoxAnimation {
-    private int[] numbers;
-    private final Animator animator;
-    private final TimeHandler timeHandler;
-    private SpriteBatch batch;
-    private int matchedBoxIndex = -1;
-
-    public NumberBoxAnimation(NumberBox[] numberBoxes) {
-        animator = new Animator() {
-            @Override
-            public void renderEffect() {
-                numberBoxes[matchedBoxIndex].draw(batch, numbers[matchedBoxIndex]);
-            }
-        };
-        timeHandler = new TimeHandler();
-    }
-
-    public void setNumbers(int[] numbers) {
-        this.numbers = numbers;
-    }
-
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
-    public void setMatchedBoxIndex(int i) {
-        matchedBoxIndex = i;
-    }
-
-    public void draw() {
-        int ratePerSec = 8;
-        float durationSec = 1.2f;
-
-        if (matchedBoxIndex >= 0) {
-            timeHandler.updatePastedTime();
-
-            animator.animateFlashy(ratePerSec);
-
-            if (timeHandler.getPastedTime() > durationSec)
-                init();
-        }
-    }
-
-    private void init() {
-        timeHandler.resetPastedTime();
-        matchedBoxIndex -= matchedBoxIndex + 1;
     }
 }
 
