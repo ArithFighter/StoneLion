@@ -5,7 +5,7 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GeckoSprite {
+public class GeckoSprite extends DetectCardArea{
     private final DetectableWidget defaultGecko;
     private final DetectableWidget fullGecko;
     private final int scale = 8;
@@ -33,21 +33,13 @@ public class GeckoSprite {
     }
 
     public final void playCardToGecko(int mouseX, int mouseY) {
-        if (isOnGecko(mouseX, mouseY)) {
+        if (isInArea(mouseX, mouseY)) {
             checkCardPlayed();
         }
         initCardPosition();
     }
 
-    public void initCardPosition() {
-
-    }
-
-    public void checkCardPlayed() {
-
-    }
-
-    public boolean isOnGecko(float x, float y){
+    public boolean isInArea(float x, float y){
         return defaultGecko.isOnWidget(x,y)|| fullGecko.isOnWidget(x, y);
     }
 }
