@@ -33,13 +33,13 @@ public class GeckoSprite extends DetectCardArea{
     }
 
     public final void playCardToGecko(int mouseX, int mouseY) {
-        if (isInArea(mouseX, mouseY)) {
+        if (isOnGecko(mouseX, mouseY))
             checkCardPlayed();
-        }
+
         initCardPosition();
     }
 
-    public boolean isInArea(float x, float y){
+    private boolean isOnGecko(float x, float y) {
         return defaultGecko.isOnWidget(x,y)|| fullGecko.isOnWidget(x, y);
     }
 }
