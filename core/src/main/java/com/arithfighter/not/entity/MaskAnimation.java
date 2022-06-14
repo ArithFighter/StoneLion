@@ -1,7 +1,7 @@
 package com.arithfighter.not.entity;
 
 import com.arithfighter.not.time.TimeHandler;
-import com.arithfighter.not.widget.Mask;
+import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MaskAnimation {

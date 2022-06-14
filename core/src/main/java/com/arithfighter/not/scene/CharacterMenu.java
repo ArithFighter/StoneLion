@@ -9,7 +9,7 @@ import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.widget.Mask;
+import com.arithfighter.not.widget.a1.Mask;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;

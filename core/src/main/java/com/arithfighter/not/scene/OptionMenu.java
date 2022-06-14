@@ -5,7 +5,7 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.widget.ControlBar;
+import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.pojo.TextProvider;
 import com.badlogic.gdx.graphics.Texture;

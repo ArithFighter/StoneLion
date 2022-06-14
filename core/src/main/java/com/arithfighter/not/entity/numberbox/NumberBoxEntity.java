@@ -4,7 +4,7 @@ import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
-import com.arithfighter.not.widget.Mask;
+import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

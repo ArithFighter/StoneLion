@@ -7,7 +7,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.gamecard.GameCardController;
 import com.arithfighter.not.entity.gamecard.GameCardService;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.widget.BetBrowser;
+import com.arithfighter.not.widget.a1.BetBrowser;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;

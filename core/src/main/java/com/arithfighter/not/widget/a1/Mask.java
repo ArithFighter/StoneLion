@@ -1,5 +1,7 @@
-package com.arithfighter.not.widget;
+package com.arithfighter.not.widget.a1;
 
+import com.arithfighter.not.widget.SpriteWidget;
+import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

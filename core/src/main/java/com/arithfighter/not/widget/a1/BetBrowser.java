@@ -1,4 +1,4 @@
-package com.arithfighter.not.widget;
+package com.arithfighter.not.widget.a1;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
