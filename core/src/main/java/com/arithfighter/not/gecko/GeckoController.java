@@ -19,10 +19,6 @@ public class GeckoController {
         this.geckoAnimate = geckoAnimate;
     }
 
-    public GeckoSprite getGeckoSprite() {
-        return geckoSprite;
-    }
-
     public void setGeckoState(GeckoState geckoState) {
         this.geckoState = geckoState;
     }
@@ -33,6 +29,10 @@ public class GeckoController {
 
     public boolean isNotFullEating() {
         return geckoState != GeckoState.FULL_EATING;
+    }
+
+    public void touchUp(int x, int y){
+        geckoSprite.playCardToGecko(x, y);
     }
 
     public void drawGecko() {

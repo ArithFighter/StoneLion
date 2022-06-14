@@ -51,7 +51,7 @@ public class GeckoEntity {
     }
 
     public void touchUp(int x, int y) {
-        geckoController.getGeckoSprite().playCardToGecko(x, y);
+        geckoController.touchUp(x,y);
     }
 
     public void draw(SpriteBatch batch) {
