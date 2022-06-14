@@ -1,4 +1,4 @@
-package com.arithfighter.not.animate;
+package com.arithfighter.not.animate.character;
 
 public class CharacterAnimationService implements CharacterAnimatable {
     private CharacterAnimation animation;

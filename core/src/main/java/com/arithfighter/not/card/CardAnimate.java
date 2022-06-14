@@ -1,29 +1,29 @@
 package com.arithfighter.not.card;
 
-import com.arithfighter.not.animate.VisualAnimatable;
-import com.arithfighter.not.animate.VisualEffect;
+import com.arithfighter.not.animate.se.SpecialAnimatable;
+import com.arithfighter.not.animate.se.SpecialEffect;
 
 public class CardAnimate{
-    private final VisualAnimatable[] visualEffects;
+    private final SpecialAnimatable[] visualEffects;
 
-    public CardAnimate(VisualAnimatable[] visualEffects) {
+    public CardAnimate(SpecialAnimatable[] visualEffects) {
         this.visualEffects = visualEffects;
     }
 
-    public VisualEffect[] getVisualEffects() {
-        VisualEffect[] ves = new VisualEffect[visualEffects.length];
+    public SpecialEffect[] getVisualEffects() {
+        SpecialEffect[] ves = new SpecialEffect[visualEffects.length];
 
         for (int i = 0; i< ves.length;i++)
-            ves[i] = visualEffects[i].getVisualEffect();
+            ves[i] = visualEffects[i].getSpecialEffect();
 
         return ves;
     }
 
-    public VisualEffect getCardReset(){
-        return visualEffects[0].getVisualEffect();
+    public SpecialEffect getCardReset(){
+        return visualEffects[0].getSpecialEffect();
     }
 
-    public VisualEffect getCardFadeOut(){
-        return visualEffects[1].getVisualEffect();
+    public SpecialEffect getCardFadeOut(){
+        return visualEffects[1].getSpecialEffect();
     }
 }

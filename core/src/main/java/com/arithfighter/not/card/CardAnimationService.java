@@ -1,37 +1,37 @@
 package com.arithfighter.not.card;
 
-import com.arithfighter.not.animate.VisualAnimatable;
-import com.arithfighter.not.animate.VisualEffect;
-import com.arithfighter.not.animate.VisualEffectService;
+import com.arithfighter.not.animate.se.SpecialAnimatable;
+import com.arithfighter.not.animate.se.SpecialEffect;
+import com.arithfighter.not.animate.se.SpecialEffectService;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardAnimationService {
-    private final VisualAnimatable[] visualEffects;
+    private final SpecialAnimatable[] visualEffects;
 
     public CardAnimationService(Texture[] spriteSheets){
-        visualEffects = new VisualAnimatable[]{
+        visualEffects = new SpecialAnimatable[]{
                 new CardReset(spriteSheets[0]),
                 new CardFadeOut(spriteSheets[1])
         };
     }
 
-    public VisualAnimatable[] getVisualEffects() {
+    public SpecialAnimatable[] getVisualEffects() {
         return visualEffects;
     }
 }
 
-class CardFadeOut extends VisualEffectService {
+class CardFadeOut extends SpecialEffectService {
     public CardFadeOut(Texture spriteSheet){
-        setVisualEffect(new VisualEffect(spriteSheet,3,3));
-        getVisualEffect().setFrameDuration(0.08f);
-        getVisualEffect().setDuration(0.4f);
+        setSpecialEffect(new SpecialEffect(spriteSheet,3,3));
+        getSpecialEffect().setFrameDuration(0.08f);
+        getSpecialEffect().setDuration(0.4f);
     }
 }
 
-class CardReset extends VisualEffectService{
+class CardReset extends SpecialEffectService {
     public CardReset(Texture spriteSheet){
-        setVisualEffect(new VisualEffect(spriteSheet,3,3));
-        getVisualEffect().setFrameDuration(0.08f);
-        getVisualEffect().setDuration(0.48f);
+        setSpecialEffect(new SpecialEffect(spriteSheet,3,3));
+        getSpecialEffect().setFrameDuration(0.08f);
+        getSpecialEffect().setDuration(0.48f);
     }
 }

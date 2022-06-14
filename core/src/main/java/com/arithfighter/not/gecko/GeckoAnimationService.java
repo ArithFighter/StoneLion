@@ -1,8 +1,8 @@
 package com.arithfighter.not.gecko;
 
-import com.arithfighter.not.animate.CharacterAnimatable;
-import com.arithfighter.not.animate.CharacterAnimation;
-import com.arithfighter.not.animate.CharacterAnimationService;
+import com.arithfighter.not.animate.character.CharacterAnimatable;
+import com.arithfighter.not.animate.character.CharacterAnimation;
+import com.arithfighter.not.animate.character.CharacterAnimationService;
 import com.badlogic.gdx.graphics.Texture;
 
 public class GeckoAnimationService {

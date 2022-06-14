@@ -1,18 +1,18 @@
 package com.arithfighter.not.entity.numberbox;
 
-import com.arithfighter.not.animate.Animator;
+import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class NumberBoxAnimation {
     private int[] numbers;
-    private final Animator animator;
+    private final VisualEffect visualEffect;
     private final TimeHandler timeHandler;
     private SpriteBatch batch;
     private int matchedBoxIndex = -1;
 
     public NumberBoxAnimation(NumberBox[] numberBoxes) {
-        animator = new Animator() {
+        visualEffect = new VisualEffect() {
             @Override
             public void renderEffect() {
                 numberBoxes[matchedBoxIndex].draw(batch, numbers[matchedBoxIndex]);
@@ -40,7 +40,7 @@ class NumberBoxAnimation {
         if (matchedBoxIndex >= 0) {
             timeHandler.updatePastedTime();
 
-            animator.animateFlashy(ratePerSec);
+            visualEffect.animateFlashy(ratePerSec);
 
             if (timeHandler.getPastedTime() > durationSec)
                 init();

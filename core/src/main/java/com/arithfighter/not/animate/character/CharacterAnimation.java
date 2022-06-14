@@ -1,5 +1,7 @@
-package com.arithfighter.not.animate;
+package com.arithfighter.not.animate.character;
 
+import com.arithfighter.not.animate.AnimationModel;
+import com.arithfighter.not.animate.AnimationProcessor;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.Texture;

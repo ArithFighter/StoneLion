@@ -2,7 +2,7 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
-import com.arithfighter.not.animate.VisualEffect;
+import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
@@ -48,7 +48,7 @@ public class GamePlayComponent {
         CardAnimationService cas = new CardAnimationService(spriteSheets);
 
         cardAnimate = new CardAnimate(cas.getVisualEffects());
-        for (VisualEffect ve: cardAnimate.getVisualEffects())
+        for (SpecialEffect ve: cardAnimate.getVisualEffects())
             ve.setScale(16);
     }
 

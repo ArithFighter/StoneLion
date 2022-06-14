@@ -2,7 +2,7 @@ package com.arithfighter.not.animate;
 
 import com.arithfighter.not.pojo.Point;
 
-class AnimationModel {
+public class AnimationModel {
     private float duration;
     private Point lastMousePoint;
     private Point drawPoint;

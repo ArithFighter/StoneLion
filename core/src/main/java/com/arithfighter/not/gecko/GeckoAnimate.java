@@ -1,7 +1,7 @@
 package com.arithfighter.not.gecko;
 
-import com.arithfighter.not.animate.CharacterAnimatable;
-import com.arithfighter.not.animate.CharacterAnimateController;
+import com.arithfighter.not.animate.character.CharacterAnimatable;
+import com.arithfighter.not.animate.character.CharacterAnimateController;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GeckoAnimate extends CharacterAnimateController {
