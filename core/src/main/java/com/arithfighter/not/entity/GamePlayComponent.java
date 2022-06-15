@@ -12,7 +12,6 @@ import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.arithfighter.not.font.Font;
-import com.arithfighter.not.gecko.*;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +23,6 @@ public class GamePlayComponent {
     private boolean isCardDragging = false;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
-    private GeckoEntity gecko;
     private final SumBoxEntity sumBoxEntity;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
@@ -40,8 +38,6 @@ public class GamePlayComponent {
                 soundManager.playScoreSound();
             }
         };
-
-        createGecko(spriteSheets);
 
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
@@ -68,39 +64,11 @@ public class GamePlayComponent {
             ve.setScale(16);
     }
 
-    public void createGecko(Texture[] spriteSheets){
-        GeckoSprite geckoSprite = new GeckoSprite(spriteSheets) {
-            @Override
-            public void initCardPosition() {
-                cardAnimate.getCardReset().setStart();
-                player.initHand();
-            }
-
-            @Override
-            public void checkCardPlayed() {
-                player.playCard();
-                cardAnimate.getCardFadeOut().setStart();
-                changeGeckoStateWhenPlayCard();
-            }
-        };
-
-        gecko = new GeckoEntity(geckoSprite, spriteSheets);
-    }
-
-    private void changeGeckoStateWhenPlayCard() {
-        if (sumBoxEntity.isCapacityWarning()) {
-            gecko.setFullEating();
-        } else {
-            gecko.setEating();
-        }
-    }
-
     public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }
 
     public void init() {
-        gecko.setNeutral();
         sumBoxEntity.init();
         numberBoxEntity.init();
         cardAnimate.getCardFadeOut().init();
@@ -124,8 +92,6 @@ public class GamePlayComponent {
 
         sumBoxEntity.draw(batch);
 
-        gecko.draw(batch);
-
         player.draw(batch);
 
         drawCardAnimate();
@@ -142,10 +108,10 @@ public class GamePlayComponent {
         cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
 
         if (sumBoxEntity.isCapacityWarning()) {
-            gecko.setTooFull();
+
         }
         if (isReadyToResetSum) {
-            gecko.setSpitting();
+
             sumBoxEntity.init();
             isReadyToResetSum = false;
         }
@@ -159,7 +125,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
-            gecko.touchUp(mouseX, mouseY);
+
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxEntity.isCapacityFull())

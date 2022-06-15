@@ -72,7 +72,8 @@ public class FileLibrary {
             "spritesheet/gecko/gecko-lick.png",
             "spritesheet/gecko/gecko-too-full.png",
             "spritesheet/gecko/gecko-full-eating.png",
-            "spritesheet/gecko/gecko-spit.png"
+            "spritesheet/gecko/gecko-spit.png",
+            "spritesheet/lion/stone-lion.png"
     };
 
     public String[] getWidgetFiles(){

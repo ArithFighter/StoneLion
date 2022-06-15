@@ -1,4 +1,4 @@
-package com.arithfighter.not.gecko;
+package com.arithfighter.not.entity;
 
 public  abstract class DetectCardArea {
     public void initCardPosition() {}
