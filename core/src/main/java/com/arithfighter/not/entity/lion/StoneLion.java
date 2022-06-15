@@ -24,6 +24,7 @@ public class StoneLion extends DetectCardArea {
     }
 
     public void drawDefault(SpriteBatch batch){
+        stoneLion.getSprite().setColor(Color.WHITE);
         stoneLion.draw(batch);
     }
 

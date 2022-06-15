@@ -102,6 +102,8 @@ public class GamePlayComponent {
         numberBoxEntity.update(sum);
 
         player.updateWhenTouchCard(mouseX, mouseY);
+
+
     }
 
     public void draw() {
@@ -109,7 +111,10 @@ public class GamePlayComponent {
 
         sumBoxEntity.draw(batch);
 
-        stoneLion.drawDefault(batch);
+        if (sumBoxEntity.isCapacityWarning())
+            stoneLion.drawWarning(batch);
+        else
+            stoneLion.drawDefault(batch);
 
         player.draw(batch);
 
@@ -126,9 +131,6 @@ public class GamePlayComponent {
         player.activateCard(mouseX, mouseY);
         cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
 
-        if (sumBoxEntity.isCapacityWarning()) {
-            stoneLion.drawWarning(batch);
-        }
         if (isReadyToResetSum) {
             sumBoxEntity.init();
             isReadyToResetSum = false;
@@ -143,6 +145,7 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
+            stoneLion.playCardToLion(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxEntity.isCapacityFull())
