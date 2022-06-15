@@ -7,6 +7,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
+import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GamePlayComponent {
     private final NumberBoxEntity numberBoxEntity;
-    private Player player;
+    private final Player player;
     private CardAnimate cardAnimate;
     private boolean isCardDragging = false;
     private SpriteBatch batch;
@@ -28,6 +29,7 @@ public class GamePlayComponent {
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
 
         createCardAnimate(spriteSheets);
@@ -42,6 +44,20 @@ public class GamePlayComponent {
         createGecko(spriteSheets);
 
         sumBoxEntity = new SumBoxEntity(textures[2], font);
+
+        player = new Player(textures, cards, CharacterList.KNIGHT){
+            final SumBoxModel sumBoxModel = sumBoxEntity.getSumBoxModel();
+            @Override
+            public void checkNumberCardPlayed() {
+                sumBoxModel.update(getHand().getCardNumber());
+            }
+
+            @Override
+            public void doWhenResettingCardPlay() {
+                sumBoxModel.init();
+                sumBoxModel.update(getHand().getCardNumber());
+            }
+        };
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -83,10 +99,6 @@ public class GamePlayComponent {
         this.batch = batch;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public void init() {
         gecko.setNeutral();
         sumBoxEntity.init();
@@ -95,10 +107,6 @@ public class GamePlayComponent {
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
-    }
-
-    public NumberBoxEntity getNumberBoxDisplacer() {
-        return numberBoxEntity;
     }
 
     public void setNumberQuantity(int quantity) {
