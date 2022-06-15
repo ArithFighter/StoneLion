@@ -6,6 +6,7 @@ import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
+import com.arithfighter.not.entity.lion.StoneLion;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
@@ -24,6 +25,7 @@ public class GamePlayComponent {
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
     private final SumBoxEntity sumBoxEntity;
+    private final StoneLion stoneLion;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -54,6 +56,21 @@ public class GamePlayComponent {
                 sumBoxModel.update(getHand().getCardNumber());
             }
         };
+
+        stoneLion = new StoneLion(spriteSheets){
+            @Override
+            public void initCardPosition() {
+                cardAnimate.getCardReset().setStart();
+                player.initHand();
+            }
+
+            @Override
+            public void checkCardPlayed() {
+                cardAnimate.getCardFadeOut().setStart();
+                player.playCard();
+            }
+        };
+        stoneLion.setPosition(900,200);
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -92,6 +109,8 @@ public class GamePlayComponent {
 
         sumBoxEntity.draw(batch);
 
+        stoneLion.drawDefault(batch);
+
         player.draw(batch);
 
         drawCardAnimate();
@@ -108,10 +127,9 @@ public class GamePlayComponent {
         cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
 
         if (sumBoxEntity.isCapacityWarning()) {
-
+            stoneLion.drawWarning(batch);
         }
         if (isReadyToResetSum) {
-
             sumBoxEntity.init();
             isReadyToResetSum = false;
         }
@@ -125,7 +143,6 @@ public class GamePlayComponent {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
-
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxEntity.isCapacityFull())

@@ -64,15 +64,6 @@ public class FileLibrary {
     private final String[] sheetFiles = {
             "spritesheet/card-fade-in.png",
             "spritesheet/card-fade-out.png",
-            "spritesheet/gecko/gecko-default.png",
-            "spritesheet/gecko/gecko-blink.png",
-            "spritesheet/gecko/gecko-swing.png",
-
-            "spritesheet/gecko/gecko-eating.png",
-            "spritesheet/gecko/gecko-lick.png",
-            "spritesheet/gecko/gecko-too-full.png",
-            "spritesheet/gecko/gecko-full-eating.png",
-            "spritesheet/gecko/gecko-spit.png",
             "spritesheet/lion/stone-lion.png"
     };
 
