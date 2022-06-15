@@ -262,7 +262,7 @@ class StageController extends BuilderAccessor implements SceneControllable {
         }
         if (isAllGameCompleted()) {
             setGameScene(GameScene.RESULT);
-            resultScreen.setState(ResultState.WIN);
+            resultScreen.setWin();
 
             tokenHolder.gain(betScreen.getBet());
 
@@ -272,7 +272,7 @@ class StageController extends BuilderAccessor implements SceneControllable {
         }
         if (stageAction.isLose()) {
             setGameScene(GameScene.RESULT);
-            resultScreen.setState(ResultState.LOOSE);
+            resultScreen.setLose();
             tokenHolder.lose(betScreen.getBet());
             resetStage();
             resultScreen.setRemainingTokens(tokenHolder.getTokens());

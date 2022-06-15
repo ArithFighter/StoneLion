@@ -4,7 +4,6 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
-import com.arithfighter.not.scene.ResultState;
 import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.button.SceneControlButton;
@@ -20,6 +19,7 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
     private final SceneControlButton continueButton;
     private final SceneControlButton quitButton;
     private int remainingTokens = 0;
+    enum ResultState {WIN, LOOSE}
     private ResultState state = ResultState.WIN;
     private final TextProvider textProvider;
 
@@ -42,8 +42,12 @@ public class ResultScreen extends SceneComponent implements SceneEvent, MouseEve
         tokenMessage = fontService.getFont32();
     }
 
-    public void setState(ResultState state) {
-        this.state = state;
+    public void setWin() {
+        state = ResultState.WIN;
+    }
+
+    public void setLose(){
+        state = ResultState.LOOSE;
     }
 
     public void setRemainingTokens(int tokens) {
