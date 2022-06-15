@@ -1,4 +1,4 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
@@ -7,6 +7,9 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.gamecard.GameCardController;
 import com.arithfighter.not.entity.gamecard.GameCardService;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneComponent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.a1.BetBrowser;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;

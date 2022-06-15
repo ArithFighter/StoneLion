@@ -1,4 +1,4 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene.stage;
 
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.WindowSetting;
@@ -10,6 +10,9 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Recorder;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneComponent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
@@ -169,129 +172,3 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 }
 
-class CardLimitManager {
-    private final Recorder playRecord;
-    private final Font cardLimitText;
-    private int cardLimit;
-
-    public CardLimitManager(Font font) {
-        cardLimitText = font;
-
-        playRecord = new Recorder();
-    }
-
-    public void setCardLimit(int cardLimit) {
-        this.cardLimit = cardLimit;
-    }
-
-    public Recorder getPlayRecord() {
-        return playRecord;
-    }
-
-    public void draw(SpriteBatch batch) {
-        cardLimitText.setColor(Color.WHITE);
-        cardLimitText.draw(
-                batch,
-                "cards: " + (cardLimit - playRecord.getRecord()),
-                WindowSetting.GRID_X * 8,
-                WindowSetting.GRID_Y * 8 + WindowSetting.CENTER_Y);
-    }
-
-    public boolean isExceedCardLimit() {
-        return playRecord.getRecord() >= cardLimit;
-    }
-}
-
-class StageMessage {
-    private final Font text;
-
-    enum State {WIN, LOSE, NEUTRAL, READY}
-
-    private State state = State.READY;
-    private final TimeHandler transitionHandler;
-    private final float x;
-    private final float y;
-
-    public StageMessage(float x, float y, Font font) {
-        this.x = x;
-        this.y = y;
-        text = font;
-        text.setColor(Color.WHITE);
-
-        transitionHandler = new TimeHandler();
-    }
-
-    public final boolean isNeutral() {
-        return state == State.NEUTRAL;
-    }
-
-    public final boolean isWin() {
-        return state == State.WIN;
-    }
-
-    public final boolean isLose() {
-        return state == State.LOSE;
-    }
-
-    public final void init() {
-        state = State.READY;
-        transitionHandler.resetPastedTime();
-    }
-
-    public final void draw(SpriteBatch batch) {
-        if (state == State.READY)
-            showReady(batch);
-
-        if (isStageComplete() || isExceedCardLimitAndStageNotComplete())
-            showEnd(batch);
-    }
-
-    private void showReady(SpriteBatch batch) {
-        transitionHandler.updatePastedTime();
-
-        float r = 1.5f;
-        float a = 2.5f;
-
-        if (transitionHandler.getPastedTime() < r)
-            text.draw(batch, "Game Ready", x, y);
-        if (transitionHandler.getPastedTime() > r && transitionHandler.getPastedTime() < a)
-            text.draw(batch, "Action", x, y);
-        if (transitionHandler.getPastedTime() > a)
-            state = State.NEUTRAL;
-    }
-
-    private void showEnd(SpriteBatch batch) {
-        transitionHandler.updatePastedTime();
-
-        float time = 5f;
-        if (transitionHandler.getPastedTime() < time)
-            text.draw(batch, getMessage(), x, y);
-        else {
-            setFinalState();
-        }
-    }
-
-    private String getMessage() {
-        String message = "";
-        if (isStageComplete())
-            message = "Complete";
-        if (isExceedCardLimitAndStageNotComplete())
-            message = "Exceed limit";
-        return message;
-    }
-
-    private void setFinalState() {
-        if (isStageComplete())
-            state = State.WIN;
-        if (isExceedCardLimitAndStageNotComplete())
-            state = State.LOSE;
-    }
-
-    public boolean isExceedCardLimitAndStageNotComplete() {
-        return false;
-    }
-
-    public boolean isStageComplete() {
-        return false;
-    }
-}

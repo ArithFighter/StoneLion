@@ -1,8 +1,12 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.ResultState;
+import com.arithfighter.not.scene.SceneComponent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.TextProvider;

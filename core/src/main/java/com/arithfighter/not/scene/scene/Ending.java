@@ -1,8 +1,11 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.TextAdventure;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneComponent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Ending extends SceneComponent implements SceneEvent, MouseEvent {
