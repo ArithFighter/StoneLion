@@ -16,10 +16,6 @@ public class MusicController {
 
     public void playBackgroundMusic() {
         MusicManager musicManager = audioHandler.getMusicManager();
-        if (gameScene == GameScene.MENU ||
-                gameScene == GameScene.OPTION ||
-                gameScene == GameScene.BET)
-            musicManager.playMenuMusic();
 
         if (gameScene == GameScene.STAGE)
             musicManager.playTheme();

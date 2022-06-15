@@ -71,10 +71,6 @@ public class GamePlayComponent {
         gecko = new GeckoEntity(geckoSprite, spriteSheets);
     }
 
-    public SumBoxModel getSumBoxModel() {
-        return sumBoxEntity.getSumBoxModel();
-    }
-
     private void changeGeckoStateWhenPlayCard() {
         if (sumBoxEntity.isCapacityWarning()) {
             gecko.setFullEating();

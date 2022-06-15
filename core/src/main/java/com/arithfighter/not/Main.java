@@ -46,9 +46,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
 
-        audioHandler.setOptionMenu(sceneBuilder.getOptionMenu());
-
-        sceneController = new SceneController(sceneBuilder, GameScene.MENU);
+        sceneController = new SceneController(sceneBuilder, GameScene.STAGE);
 
         setGameSave();
 
@@ -58,8 +56,6 @@ public class Main extends ApplicationAdapter {
 
     private void setGameSave(){
         GameSave gameSave = new GameSave();
-        sceneBuilder.setAudioVolume(gameSave);
-        sceneBuilder.setHighScore(gameSave);
         sceneController.setGameSave(gameSave);
     }
 
@@ -78,15 +74,11 @@ public class Main extends ApplicationAdapter {
     }
 
     private void runGame(){
-        GameScene gameScene = sceneController.getGameScene();
+        GameScene gameScene = GameScene.STAGE;
 
-        sceneController.updateScene();
+        //sceneController.updateScene();
 
         cursorPos.update();
-
-        audioHandler.setAudioVolume();
-
-        setSelectedCharacter();
 
         mouseAdapter.setGameScene(gameScene);
 
@@ -95,12 +87,6 @@ public class Main extends ApplicationAdapter {
         musicController.playBackgroundMusic();
 
         drawGame(gameScene);
-    }
-
-    private void setSelectedCharacter() {
-        int selectedCharacterIndex = sceneBuilder.getCharacterMenu().getSelectIndex();
-
-        sceneBuilder.getStage().setSelectedPlayerToGame(selectedCharacterIndex);
     }
 
     private void drawGame(GameScene gameScene) {

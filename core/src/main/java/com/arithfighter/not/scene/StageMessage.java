@@ -1,4 +1,4 @@
-package com.arithfighter.not.scene.scene.stage;
+package com.arithfighter.not.scene;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.time.TimeHandler;
