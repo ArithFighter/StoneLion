@@ -7,30 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
     private final Hand hand;
-    private final CharacterList character;
-    private final EnergyBarController energyBarController;
 
-    private enum SkillState {NEUTRAL, READY}
-
-    private SkillState skillState = SkillState.NEUTRAL;
-
-    public Player(Texture[] textures, Texture[] cards, CharacterList character) {
-        energyBarController = new EnergyBarController(character);
-
-        EnergyBar energyBar = new EnergyBar(textures);
-        energyBarController.setEnergyBar(energyBar);
-
+    public Player(Texture[] cards, CharacterList character) {
         hand = new Hand(cards, character);
-
-        this.character = character;
     }
 
     public Hand getHand() {
         return hand;
-    }
-
-    public void init() {
-        energyBarController.reset();
     }
 
     public boolean isCardActive(){
@@ -55,8 +38,6 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        energyBarController.draw(batch);
-
         hand.draw(batch);
     }
 
@@ -77,10 +58,6 @@ public class Player {
             card.setPosition(card.getPoint().getX(), card.getPoint().getY()+speed);
     }
 
-    public void setSkillStateToNeutral(){
-        skillState = SkillState.NEUTRAL;
-    }
-
     public final void initHand() {
         for (NumberCard card : hand.getCards())
             card.initCard();
@@ -90,15 +67,10 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenAnyCardPlayed();
 
-            energyBarController.update();
-
             if (hand.isResettingCard()){
-                checkResettingCardPlay();
-                skillState = SkillState.READY;
+                doWhenResettingCardPlay();
             }
             else{
-                if (skillState == SkillState.READY)
-                    skillState = SkillState.NEUTRAL;
                 checkNumberCardPlayed();
             }
         }
@@ -109,24 +81,6 @@ public class Player {
     }
 
     public void checkNumberCardPlayed() {
-    }
-
-    private void checkResettingCardPlay() {
-        if (isSkillReady()) {
-            castSkill(character);
-            energyBarController.reset();
-            skillState = SkillState.NEUTRAL;
-        } else {
-            doWhenResettingCardPlay();
-        }
-    }
-
-    private boolean isSkillReady() {
-        return skillState == SkillState.READY &&
-                energyBarController.isMaxEnergy();
-    }
-
-    public void castSkill(CharacterList character) {
     }
 
     public void doWhenResettingCardPlay() {

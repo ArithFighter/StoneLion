@@ -45,7 +45,7 @@ public class GamePlayComponent {
 
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
-        player = new Player(textures, cards, CharacterList.KNIGHT){
+        player = new Player(cards, CharacterList.KNIGHT){
             final SumBoxModel sumBoxModel = sumBoxEntity.getSumBoxModel();
             @Override
             public void checkNumberCardPlayed() {
@@ -103,7 +103,6 @@ public class GamePlayComponent {
         gecko.setNeutral();
         sumBoxEntity.init();
         numberBoxEntity.init();
-        player.init();
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
@@ -148,7 +147,6 @@ public class GamePlayComponent {
         if (isReadyToResetSum) {
             gecko.setSpitting();
             sumBoxEntity.init();
-            player.setSkillStateToNeutral();
             isReadyToResetSum = false;
         }
     }
