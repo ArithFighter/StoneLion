@@ -5,7 +5,7 @@ import static com.arithfighter.not.WindowSetting.GRID_Y;
 
 public class NumberBoxPlacer {
     private final float initX = GRID_X * 7.5f;
-    private final float initY = GRID_Y * 5;
+    private final float initY = GRID_Y * 5f;
     private final float margin = GRID_X;
 
     public float getNumberBoxX(int i, float width) {

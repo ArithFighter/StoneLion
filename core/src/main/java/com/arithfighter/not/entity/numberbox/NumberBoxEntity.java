@@ -38,11 +38,14 @@ public class NumberBoxEntity {
 
     private void createMaskAnimation(Texture texture, NumberBoxPlacer placer) {
         Mask[] masks = new Mask[maxQuantity];
+        float scale = 2.5f;
+        float fix = scale*4;
+
         for (int i = 0; i < maxQuantity; i++) {
-            masks[i] = new Mask(texture, 2.4f);
+            masks[i] = new Mask(texture, scale);
             masks[i].setPosition(
-                    placer.getNumberBoxX(i, masks[i].getWidth()),
-                    placer.getNumberBoxY(i, masks[i].getHeight()));
+                    placer.getNumberBoxX(i, masks[i].getWidth()-fix),
+                    placer.getNumberBoxY(i, masks[i].getHeight()-fix));
         }
 
         maskAnimation = new MaskAnimation(masks);
