@@ -3,6 +3,7 @@ package com.arithfighter.not.entity.numberbox;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.widget.FontWidget;
+import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,8 @@ public class NumberBox{
     }
 
     public Rectangle getRectangle(){
-        return new Rectangle(widget.getWidget().getWidth(), widget.getWidget().getHeight());
+        RawWidget raw = widget.getWidget();
+        return new Rectangle(raw.getWidth(), raw.getHeight());
     }
 
     public void draw(SpriteBatch batch, int number) {

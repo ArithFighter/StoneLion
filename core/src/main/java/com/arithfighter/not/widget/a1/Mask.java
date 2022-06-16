@@ -1,5 +1,7 @@
 package com.arithfighter.not.widget.a1;
 
+import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Color;
@@ -17,12 +19,9 @@ public class Mask {
         widget.setPosition(x,y);
     }
 
-    public float getWidth(){
-        return widget.getWidget().getWidth();
-    }
-
-    public float getHeight(){
-        return widget.getWidget().getHeight();
+    public Rectangle getRectangle(){
+        RawWidget raw = widget.getWidget();
+        return new Rectangle(raw.getWidth(), raw.getHeight());
     }
 
     public void draw(SpriteBatch batch){

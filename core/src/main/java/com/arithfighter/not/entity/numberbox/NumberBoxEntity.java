@@ -2,6 +2,7 @@ package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.widget.a1.Mask;
@@ -43,9 +44,10 @@ public class NumberBoxEntity {
 
         for (int i = 0; i < maxQuantity; i++) {
             masks[i] = new Mask(texture, scale);
-            masks[i].setPosition(
-                    placer.getNumberBoxX(i, masks[i].getWidth()-fix),
-                    placer.getNumberBoxY(i, masks[i].getHeight()-fix));
+            Rectangle rectangle = masks[i].getRectangle();
+            masks[i].setPosition((
+                    placer.getNumberBoxX(i, rectangle.getWidth())-fix),
+                    placer.getNumberBoxY(i, rectangle.getHeight())-fix);
         }
 
         maskAnimation = new MaskAnimation(masks);
