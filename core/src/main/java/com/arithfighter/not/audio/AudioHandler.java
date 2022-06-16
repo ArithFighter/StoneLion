@@ -22,13 +22,11 @@ public class AudioHandler {
     }
 
     public void setSoundVolume(float volume) {
-        float soundVolume = volume / 10f;
-        soundManager.setVolume(soundVolume);
+        soundManager.setVolume(volume);
     }
 
     public void setMusicVolume(float volume){
-        float musicVolume = volume / 8f;
-        musicManager.setVolume(musicVolume);
+        musicManager.setVolume(volume);
     }
 
     public void dispose() {

@@ -103,7 +103,13 @@ public class GamePlayComponent {
 
         player.updateWhenTouchCard(mouseX, mouseY);
 
+        if (numberBoxEntity.isAllNumZero())
+            initNumbersAndSum();
+    }
 
+    private void initNumbersAndSum(){
+        numberBoxEntity.init();
+        sumBoxEntity.init();
     }
 
     public void draw() {
