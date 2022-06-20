@@ -10,14 +10,19 @@ import static com.arithfighter.not.WindowSetting.*;
 public class SumBoxEntity {
     private final SumBox sumBox;
     private final SumBoxModel sumBoxModel;
+    private Point point;
 
     public SumBoxEntity(Texture texture, Font font) {
         sumBox = new SumBox(texture);
-        Point sumPoint = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
-        sumBox.setPosition(sumPoint.getX(), sumPoint.getY());
+        point = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+        sumBox.setPosition(point.getX(), point.getY());
         sumBox.setFont(font);
 
         sumBoxModel = new SumBoxModel();
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public SumBoxModel getSumBoxModel() {

@@ -13,6 +13,8 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.time.TimeHandler;
+import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -25,6 +27,7 @@ public class GamePlayComponent {
     private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
     private final StoneLionEntity stoneLion;
+    private final SumMask sumMask;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -37,6 +40,8 @@ public class GamePlayComponent {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
+                sumMask.init();
+                sumMask.setReveal();
             }
         };
 
@@ -45,6 +50,11 @@ public class GamePlayComponent {
         player = new PlayerService(cards, sumBoxEntity.getSumBoxModel(), CharacterList.KNIGHT);
 
         stoneLion = new StoneLionEntity(spriteSheets[2], player.getPlayer(), cardAnimate);
+
+        sumMask = new SumMask(textures);
+
+        Point point = sumBoxEntity.getPoint();
+        sumMask.getSumMask().setPosition(point.getX(), point.getY());
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -96,6 +106,8 @@ public class GamePlayComponent {
         else
             stoneLion.getStoneLion().drawDefault(batch);
 
+        sumMask.update(batch);
+
         player.getPlayer().draw(batch);
 
         drawCardAnimate();
@@ -130,5 +142,38 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
+    }
+}
+
+class SumMask{
+    private final Mask sumMask;
+    private final TimeHandler timeHandler;
+    private boolean isReveal = false;
+
+    public SumMask(Texture[] textures){
+        sumMask = new Mask(textures[5], 5);
+        timeHandler = new TimeHandler();
+    }
+
+    public Mask getSumMask() {
+        return sumMask;
+    }
+
+    public void init(){
+        isReveal = false;
+        timeHandler.resetPastedTime();
+    }
+
+    public void setReveal(){
+        isReveal = true;
+    }
+
+    public void update(SpriteBatch batch){
+        if (isReveal){
+            timeHandler.updatePastedTime();
+            if (timeHandler.getPastedTime()>=1.5f)
+                init();
+        }else
+            sumMask.draw(batch);
     }
 }
