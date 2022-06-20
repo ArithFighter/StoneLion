@@ -6,12 +6,11 @@ import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.card.CardAnimationService;
-import com.arithfighter.not.entity.lion.StoneLion;
+import com.arithfighter.not.entity.lion.StoneLionEntity;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
-import com.arithfighter.not.entity.player.Player;
+import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
-import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
@@ -131,53 +130,5 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
-    }
-}
-
-class PlayerService{
-    private final Player player;
-
-    public PlayerService(Texture[] cards, SumBoxModel sumBoxModel, CharacterList character){
-        player = new Player(cards, character){
-            @Override
-            public void checkNumberCardPlayed() {
-                sumBoxModel.update(getHand().getCardNumber());
-            }
-
-            @Override
-            public void doWhenResettingCardPlay() {
-                sumBoxModel.init();
-                sumBoxModel.update(getHand().getCardNumber());
-            }
-        };
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-}
-
-class StoneLionEntity{
-    private final StoneLion stoneLion;
-
-    public StoneLionEntity(Texture texture, Player player, CardAnimate cardAnimate){
-        stoneLion = new StoneLion(texture){
-            @Override
-            public void initCardPosition() {
-                cardAnimate.getCardReset().setStart();
-                player.initHand();
-            }
-
-            @Override
-            public void checkCardPlayed() {
-                cardAnimate.getCardFadeOut().setStart();
-                player.playCard();
-            }
-        };
-        stoneLion.setPosition(900,200);
-    }
-
-    public StoneLion getStoneLion() {
-        return stoneLion;
     }
 }
