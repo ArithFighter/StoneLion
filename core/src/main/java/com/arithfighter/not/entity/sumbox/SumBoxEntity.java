@@ -10,7 +10,7 @@ import static com.arithfighter.not.WindowSetting.*;
 public class SumBoxEntity {
     private final SumBox sumBox;
     private final SumBoxModel sumBoxModel;
-    private Point point;
+    private final Point point;
 
     public SumBoxEntity(Texture texture, Font font) {
         sumBox = new SumBox(texture);
