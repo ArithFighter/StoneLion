@@ -96,7 +96,7 @@ public class GamePlayComponent {
         sumBoxEntity.init();
     }
 
-    public void draw() {
+    public void draw(GameVariation gameVariation) {
         numberBoxEntity.draw(batch);
 
         sumBoxEntity.draw(batch);
@@ -106,7 +106,8 @@ public class GamePlayComponent {
         else
             stoneLion.getStoneLion().drawDefault(batch);
 
-        sumMask.update(batch);
+        if (gameVariation == GameVariation.FOG)
+            sumMask.update(batch);
 
         player.getPlayer().draw(batch);
 
