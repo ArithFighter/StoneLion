@@ -19,13 +19,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GamePlayComponent {
     private final NumberBoxEntity numberBoxEntity;
-    private final Player player;
+    private final PlayerService player;
     private CardAnimate cardAnimate;
-    private boolean isCardDragging = false;
     private SpriteBatch batch;
     private boolean isReadyToResetSum = false;
+    private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
-    private final StoneLion stoneLion;
+    private final StoneLionEntity stoneLion;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -43,34 +43,9 @@ public class GamePlayComponent {
 
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
-        player = new Player(cards, CharacterList.KNIGHT){
-            final SumBoxModel sumBoxModel = sumBoxEntity.getSumBoxModel();
-            @Override
-            public void checkNumberCardPlayed() {
-                sumBoxModel.update(getHand().getCardNumber());
-            }
+        player = new PlayerService(cards, sumBoxEntity.getSumBoxModel(), CharacterList.KNIGHT);
 
-            @Override
-            public void doWhenResettingCardPlay() {
-                sumBoxModel.init();
-                sumBoxModel.update(getHand().getCardNumber());
-            }
-        };
-
-        stoneLion = new StoneLion(spriteSheets){
-            @Override
-            public void initCardPosition() {
-                cardAnimate.getCardReset().setStart();
-                player.initHand();
-            }
-
-            @Override
-            public void checkCardPlayed() {
-                cardAnimate.getCardFadeOut().setStart();
-                player.playCard();
-            }
-        };
-        stoneLion.setPosition(900,200);
+        stoneLion = new StoneLionEntity(spriteSheets[2], player.getPlayer(), cardAnimate);
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -101,7 +76,7 @@ public class GamePlayComponent {
         int sum = sumBoxEntity.getSumBoxModel().getSum();
         numberBoxEntity.update(sum);
 
-        player.updateWhenTouchCard(mouseX, mouseY);
+        player.getPlayer().updateWhenTouchCard(mouseX, mouseY);
 
         if (numberBoxEntity.isAllNumZero())
             initNumbersAndSum();
@@ -118,11 +93,11 @@ public class GamePlayComponent {
         sumBoxEntity.draw(batch);
 
         if (sumBoxEntity.isCapacityWarning())
-            stoneLion.drawWarning(batch);
+            stoneLion.getStoneLion().drawWarning(batch);
         else
-            stoneLion.drawDefault(batch);
+            stoneLion.getStoneLion().drawDefault(batch);
 
-        player.draw(batch);
+        player.getPlayer().draw(batch);
 
         drawCardAnimate();
     }
@@ -134,8 +109,8 @@ public class GamePlayComponent {
 
     public void touchDown(int mouseX, int mouseY) {
         isCardDragging = false;
-        player.activateCard(mouseX, mouseY);
-        cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
+        player.getPlayer().activateCard(mouseX, mouseY);
+        cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
 
         if (isReadyToResetSum) {
             sumBoxEntity.init();
@@ -144,17 +119,65 @@ public class GamePlayComponent {
     }
 
     public void touchDragged(int mouseX, int mouseY) {
-        if (player.isCardActive())
+        if (player.getPlayer().isCardActive())
             isCardDragging = true;
-        player.updateWhenDrag(mouseX, mouseY);
+        player.getPlayer().updateWhenDrag(mouseX, mouseY);
     }
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
-            stoneLion.playCardToLion(mouseX, mouseY);
+            stoneLion.getStoneLion().playCardToLion(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
+    }
+}
+
+class PlayerService{
+    private final Player player;
+
+    public PlayerService(Texture[] cards, SumBoxModel sumBoxModel, CharacterList character){
+        player = new Player(cards, character){
+            @Override
+            public void checkNumberCardPlayed() {
+                sumBoxModel.update(getHand().getCardNumber());
+            }
+
+            @Override
+            public void doWhenResettingCardPlay() {
+                sumBoxModel.init();
+                sumBoxModel.update(getHand().getCardNumber());
+            }
+        };
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+}
+
+class StoneLionEntity{
+    private final StoneLion stoneLion;
+
+    public StoneLionEntity(Texture texture, Player player, CardAnimate cardAnimate){
+        stoneLion = new StoneLion(texture){
+            @Override
+            public void initCardPosition() {
+                cardAnimate.getCardReset().setStart();
+                player.initHand();
+            }
+
+            @Override
+            public void checkCardPlayed() {
+                cardAnimate.getCardFadeOut().setStart();
+                player.playCard();
+            }
+        };
+        stoneLion.setPosition(900,200);
+    }
+
+    public StoneLion getStoneLion() {
+        return stoneLion;
     }
 }

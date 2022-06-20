@@ -11,8 +11,8 @@ public class StoneLion extends DetectCardArea {
     private final DetectableWidget stoneLion;
     private final int scale = 4;
 
-    public StoneLion(Texture[] textures){
-        stoneLion = new SpriteWidget(textures[2], scale);
+    public StoneLion(Texture texture){
+        stoneLion = new SpriteWidget(texture, scale);
     }
 
     public int getScale(){

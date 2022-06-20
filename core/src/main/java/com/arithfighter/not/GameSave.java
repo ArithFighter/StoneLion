@@ -18,7 +18,7 @@ public class GameSave {
     };
 
     public GameSave(){
-        preferences = Gdx.app.getPreferences("Numbers-on-Table-data");
+        preferences = Gdx.app.getPreferences("Stone-Lion-Data");
 
         initOptionSave();
 
