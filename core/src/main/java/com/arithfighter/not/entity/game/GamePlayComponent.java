@@ -13,8 +13,6 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.time.TimeHandler;
-import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -28,6 +26,7 @@ public class GamePlayComponent {
     private final SumBoxEntity sumBoxEntity;
     private final StoneLionEntity stoneLion;
     private final SumMask sumMask;
+    private final TabooNumber tabooNumber;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -55,6 +54,9 @@ public class GamePlayComponent {
 
         Point point = sumBoxEntity.getPoint();
         sumMask.getSumMask().setPosition(point.getX(), point.getY());
+
+        tabooNumber = new TabooNumber(font);
+        tabooNumber.setPoint(new Point(300,700));
     }
 
     private void createCardAnimate(Texture[] spriteSheets){
@@ -89,6 +91,8 @@ public class GamePlayComponent {
 
         if (numberBoxEntity.isAllNumZero())
             initNumbersAndSum();
+
+        tabooNumber.update(sum);
     }
 
     private void initNumbersAndSum(){
@@ -108,6 +112,8 @@ public class GamePlayComponent {
 
         if (gameVariation == GameVariation.FOG)
             sumMask.update(batch);
+
+        tabooNumber.draw(batch);
 
         player.getPlayer().draw(batch);
 
@@ -146,35 +152,40 @@ public class GamePlayComponent {
     }
 }
 
-class SumMask{
-    private final Mask sumMask;
-    private final TimeHandler timeHandler;
-    private boolean isReveal = false;
+class TabooNumber{
+    private final Font font;
+    private int value1 = 0;
+    private int value2 = 0;
+    private Point point;
 
-    public SumMask(Texture[] textures){
-        sumMask = new Mask(textures[5], 5);
-        timeHandler = new TimeHandler();
+    public TabooNumber(Font font){
+        this.font = font;
     }
 
-    public Mask getSumMask() {
-        return sumMask;
+    public void setValue1(int value1) {
+        this.value1 = value1;
     }
 
-    public void init(){
-        isReveal = false;
-        timeHandler.resetPastedTime();
+    public void setValue2(int value2) {
+        this.value2 = value2;
     }
 
-    public void setReveal(){
-        isReveal = true;
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
-    public void update(SpriteBatch batch){
-        if (isReveal){
-            timeHandler.updatePastedTime();
-            if (timeHandler.getPastedTime()>=1.2f)
-                init();
-        }else
-            sumMask.draw(batch);
+    public void draw(SpriteBatch batch){
+        font.draw(batch, value1+" "+value2, point.getX(), point.getY());
+    }
+
+    public void update(int sum){
+        if (sum == value1)
+            value1 = 0;
+        if (sum == value2)
+            value2 = 0;
+    }
+
+    public boolean isViolatingTaboos(){
+        return value1 == 0&& value2 == 0;
     }
 }

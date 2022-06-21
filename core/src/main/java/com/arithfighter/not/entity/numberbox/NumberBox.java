@@ -33,15 +33,11 @@ public class NumberBox{
     public void draw(SpriteBatch batch, int number) {
         widget.setFontSize(font.getSize());
 
-        setSprite();
+        widget.getSprite().setColor(Color.WHITE);
 
         widget.draw(batch);
 
         addText(batch, number);
-    }
-
-    private void setSprite() {
-        widget.getSprite().setColor(0, 0.9f, 0.9f, 1);
     }
 
     private void addText(SpriteBatch batch, int number) {

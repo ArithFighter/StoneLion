@@ -57,7 +57,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw(GameVariation.FOG);
+        gamePlayComponent.draw(GameVariation.STANDARD);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);
