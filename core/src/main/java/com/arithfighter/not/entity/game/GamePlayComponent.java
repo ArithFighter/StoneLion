@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity;
+package com.arithfighter.not.entity.game;
 
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;

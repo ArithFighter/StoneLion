@@ -4,6 +4,8 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.entity.game.GamePlayComponent;
+import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
