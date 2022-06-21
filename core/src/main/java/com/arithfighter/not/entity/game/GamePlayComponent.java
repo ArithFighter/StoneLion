@@ -110,21 +110,27 @@ public class GamePlayComponent {
         else
             stoneLion.getStoneLion().drawDefault(batch);
 
-        if (gameVariation == GameVariation.FOG)
-            sumMask.update(batch);
-
-        if (gameVariation == GameVariation.TABOO) {
-            updateTabooNumber();
-            tabooNumber.draw(batch);
-        }
-        if (gameVariation == GameVariation.TRANSFORM) {
-            transformNumber.draw(batch);
-            updateTransformNumber();
-        }
+        changeGameVariation(gameVariation);
 
         player.getPlayer().draw(batch);
 
         drawCardAnimate();
+    }
+
+    private void changeGameVariation(GameVariation gameVariation){
+        switch (gameVariation) {
+            case FOG:
+                sumMask.update(batch);
+                break;
+            case TABOO:
+                updateTabooNumber();
+                tabooNumber.draw(batch);
+                break;
+            case TRANSFORM:
+                transformNumber.draw(batch);
+                updateTransformNumber();
+                break;
+        }
     }
 
     private void updateTransformNumber() {
@@ -215,7 +221,7 @@ class TransformNumber {
     }
 
     public void draw(SpriteBatch batch) {
-        font.draw(batch, "Transformer: "+value, point.getX(), point.getY());
+        font.draw(batch, "Transformer: " + value, point.getX(), point.getY());
     }
 }
 
