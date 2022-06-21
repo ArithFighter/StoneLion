@@ -64,7 +64,7 @@ public class GamePlayComponent {
         tabooNumber.setValues();
 
         transformNumber = new TransformNumber(font);
-        transformNumber.setPoint(new Point(200, 400));
+        transformNumber.setPoint(new Point(50, 700));
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -117,14 +117,9 @@ public class GamePlayComponent {
             updateTabooNumber();
             tabooNumber.draw(batch);
         }
-        if (gameVariation == GameVariation.TRANSFORM){
+        if (gameVariation == GameVariation.TRANSFORM) {
             transformNumber.draw(batch);
-            if (transformNumber.getValue() == 0)
-                transformNumber.setValue(numberBoxEntity);
-            if (transformNumber.isNumberMatched(sumBoxEntity.getSumBoxModel().getSum())){
-                transformNumber.transform(numberBoxEntity);
-                transformNumber.init();
-            }
+            updateTransformNumber();
         }
 
         player.getPlayer().draw(batch);
@@ -132,7 +127,15 @@ public class GamePlayComponent {
         drawCardAnimate();
     }
 
-    private void updateTabooNumber(){
+    private void updateTransformNumber() {
+        transformNumber.setValue(numberBoxEntity);
+        if (transformNumber.isNumberMatched(sumBoxEntity.getSumBoxModel().getSum())) {
+            transformNumber.transform(numberBoxEntity);
+            transformNumber.init();
+        }
+    }
+
+    private void updateTabooNumber() {
         tabooNumber.update(sumBoxEntity.getSumBoxModel().getSum());
         if (tabooNumber.isViolatingTaboos()) {
             init();
@@ -171,12 +174,12 @@ public class GamePlayComponent {
     }
 }
 
-class TransformNumber{
+class TransformNumber {
     private final Font font;
     private Point point;
     private int value;
 
-    public TransformNumber(Font font){
+    public TransformNumber(Font font) {
         this.font = font;
     }
 
@@ -184,30 +187,35 @@ class TransformNumber{
         this.point = point;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void init(){
-        value = -1;
+    public void init() {
+        value = 0;
     }
 
     public void setValue(NumberBoxEntity numberBoxEntity) {
-        RandomNumProducer rnp = new RandomNumProducer(numberBoxEntity.getMaxQuantity()-1, 0);
-        value = numberBoxEntity.getNumberBoxValue(rnp.getRandomNum());
+        RandomNumProducer rnp = new RandomNumProducer(numberBoxEntity.getMaxQuantity() - 1, 0);
+
+        try {
+            if (value == 0)
+                value = numberBoxEntity.getNumberBoxValue(rnp.getRandomNum());
+        } catch (IndexOutOfBoundsException ignored) {
+        }
     }
 
-    public void transform(NumberBoxEntity numberBoxEntity){
+    public void transform(NumberBoxEntity numberBoxEntity) {
         NumberBoxPicker nbp = new NumberBoxPicker(numberBoxEntity);
-        numberBoxEntity.set(nbp.getRandomNonZeroValueIndex(), 17);
+        int result = 17;
+        try {
+            numberBoxEntity.set(nbp.getRandomNonZeroValueIndex(), result);
+        } catch (IndexOutOfBoundsException ignored) {
+        }
     }
 
-    public boolean isNumberMatched(int sum){
-        return value == sum;
+    public boolean isNumberMatched(int sum) {
+        return value == sum && sum > 0;
     }
 
-    public void draw(SpriteBatch batch){
-        font.draw(batch, String.valueOf(value), point.getX(), point.getY());
+    public void draw(SpriteBatch batch) {
+        font.draw(batch, "Transformer: "+value, point.getX(), point.getY());
     }
 }
 
@@ -225,7 +233,7 @@ class NumberBoxPicker {
             if (numberBoxEntity.getNumberBoxValue(i) > 0)
                 indexList.add(i);
         }
-        RandomNumProducer rnp = new RandomNumProducer(indexList.size() - 1,0);
+        RandomNumProducer rnp = new RandomNumProducer(indexList.size() - 1, 0);
         int indexPick = rnp.getRandomNum();
 
         return indexList.get(indexPick);
