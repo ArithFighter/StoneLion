@@ -57,8 +57,7 @@ public class GamePlayComponent {
 
         tabooNumber = new TabooNumber(font);
         tabooNumber.setPoint(new Point(300, 700));
-        tabooNumber.setValue1(23);
-        tabooNumber.setValue2(14);
+        tabooNumber.setValues();
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -79,6 +78,7 @@ public class GamePlayComponent {
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
+        tabooNumber.setValues();
     }
 
     public void setNumberQuantity(int quantity) {
@@ -109,18 +109,20 @@ public class GamePlayComponent {
             sumMask.update(batch);
 
         if (gameVariation == GameVariation.TABOO) {
-            tabooNumber.update(sumBoxEntity.getSumBoxModel().getSum());
+            updateTabooNumber();
             tabooNumber.draw(batch);
-            if (tabooNumber.isViolatingTaboos()) {
-                init();
-                tabooNumber.setValue1(23);
-                tabooNumber.setValue2(14);
-            }
         }
 
         player.getPlayer().draw(batch);
 
         drawCardAnimate();
+    }
+
+    private void updateTabooNumber(){
+        tabooNumber.update(sumBoxEntity.getSumBoxModel().getSum());
+        if (tabooNumber.isViolatingTaboos()) {
+            init();
+        }
     }
 
     private void drawCardAnimate() {
@@ -152,43 +154,5 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
-    }
-}
-
-class TabooNumber {
-    private final Font font;
-    private int value1 = 0;
-    private int value2 = 0;
-    private Point point;
-
-    public TabooNumber(Font font) {
-        this.font = font;
-    }
-
-    public void setValue1(int value1) {
-        this.value1 = value1;
-    }
-
-    public void setValue2(int value2) {
-        this.value2 = value2;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
-    }
-
-    public void draw(SpriteBatch batch) {
-        font.draw(batch, value1 + " " + value2, point.getX(), point.getY());
-    }
-
-    public void update(int sum) {
-        if (sum == value1)
-            value1 = 0;
-        if (sum == value2)
-            value2 = 0;
-    }
-
-    public boolean isViolatingTaboos() {
-        return value1 == 0 && value2 == 0;
     }
 }
