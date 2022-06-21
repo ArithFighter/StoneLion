@@ -13,6 +13,7 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.system.RandomNumProducer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -27,6 +28,7 @@ public class GamePlayComponent {
     private final StoneLionEntity stoneLion;
     private final SumMask sumMask;
     private final TabooNumber tabooNumber;
+    private final TransformNumber transformNumber;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -58,6 +60,9 @@ public class GamePlayComponent {
         tabooNumber = new TabooNumber(font);
         tabooNumber.setPoint(new Point(300, 700));
         tabooNumber.setValues();
+
+        transformNumber = new TransformNumber(font);
+        transformNumber.setPoint(new Point(200, 400));
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -112,6 +117,11 @@ public class GamePlayComponent {
             updateTabooNumber();
             tabooNumber.draw(batch);
         }
+        if (gameVariation == GameVariation.TRANSFORM){
+            transformNumber.draw(batch);
+            if (transformNumber.getValue() == 0)
+                transformNumber.setValue(numberBoxEntity);
+        }
 
         player.getPlayer().draw(batch);
 
@@ -154,5 +164,36 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
+    }
+}
+
+class TransformNumber{
+    private final Font font;
+    private Point point;
+    private int value;
+
+    public TransformNumber(Font font){
+        this.font = font;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(NumberBoxEntity numberBoxEntity) {
+        RandomNumProducer rnp = new RandomNumProducer(numberBoxEntity.getMaxQuantity()-1, 0);
+        value = numberBoxEntity.getNumberBoxValue(rnp.getRandomNum());
+    }
+
+    public boolean isNumberMatched(int sum){
+        return value == sum;
+    }
+
+    public void draw(SpriteBatch batch){
+        font.draw(batch, String.valueOf(value), point.getX(), point.getY());
     }
 }
