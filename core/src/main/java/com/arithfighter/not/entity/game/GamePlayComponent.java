@@ -56,14 +56,16 @@ public class GamePlayComponent {
         sumMask.getSumMask().setPosition(point.getX(), point.getY());
 
         tabooNumber = new TabooNumber(font);
-        tabooNumber.setPoint(new Point(300,700));
+        tabooNumber.setPoint(new Point(300, 700));
+        tabooNumber.setValue1(23);
+        tabooNumber.setValue2(14);
     }
 
-    private void createCardAnimate(Texture[] spriteSheets){
+    private void createCardAnimate(Texture[] spriteSheets) {
         CardAnimationService cas = new CardAnimationService(spriteSheets);
 
         cardAnimate = new CardAnimate(cas.getVisualEffects());
-        for (SpecialEffect ve: cardAnimate.getVisualEffects())
+        for (SpecialEffect ve : cardAnimate.getVisualEffects())
             ve.setScale(16);
     }
 
@@ -90,14 +92,7 @@ public class GamePlayComponent {
         player.getPlayer().updateWhenTouchCard(mouseX, mouseY);
 
         if (numberBoxEntity.isAllNumZero())
-            initNumbersAndSum();
-
-        tabooNumber.update(sum);
-    }
-
-    private void initNumbersAndSum(){
-        numberBoxEntity.init();
-        sumBoxEntity.init();
+            init();
     }
 
     public void draw(GameVariation gameVariation) {
@@ -113,7 +108,15 @@ public class GamePlayComponent {
         if (gameVariation == GameVariation.FOG)
             sumMask.update(batch);
 
-        tabooNumber.draw(batch);
+        if (gameVariation == GameVariation.TABOO) {
+            tabooNumber.update(sumBoxEntity.getSumBoxModel().getSum());
+            tabooNumber.draw(batch);
+            if (tabooNumber.isViolatingTaboos()) {
+                init();
+                tabooNumber.setValue1(23);
+                tabooNumber.setValue2(14);
+            }
+        }
 
         player.getPlayer().draw(batch);
 
@@ -152,13 +155,13 @@ public class GamePlayComponent {
     }
 }
 
-class TabooNumber{
+class TabooNumber {
     private final Font font;
     private int value1 = 0;
     private int value2 = 0;
     private Point point;
 
-    public TabooNumber(Font font){
+    public TabooNumber(Font font) {
         this.font = font;
     }
 
@@ -174,18 +177,18 @@ class TabooNumber{
         this.point = point;
     }
 
-    public void draw(SpriteBatch batch){
-        font.draw(batch, value1+" "+value2, point.getX(), point.getY());
+    public void draw(SpriteBatch batch) {
+        font.draw(batch, value1 + " " + value2, point.getX(), point.getY());
     }
 
-    public void update(int sum){
+    public void update(int sum) {
         if (sum == value1)
             value1 = 0;
         if (sum == value2)
             value2 = 0;
     }
 
-    public boolean isViolatingTaboos(){
-        return value1 == 0&& value2 == 0;
+    public boolean isViolatingTaboos() {
+        return value1 == 0 && value2 == 0;
     }
 }
