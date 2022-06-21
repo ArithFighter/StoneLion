@@ -17,6 +17,8 @@ import com.arithfighter.not.system.RandomNumProducer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+
 public class GamePlayComponent {
     private final NumberBoxEntity numberBoxEntity;
     private final PlayerService player;
@@ -86,10 +88,6 @@ public class GamePlayComponent {
         tabooNumber.setValues();
     }
 
-    public void setNumberQuantity(int quantity) {
-        numberBoxEntity.setBoxQuantity(quantity);
-    }
-
     public void update(int mouseX, int mouseY) {
         int sum = sumBoxEntity.getSumBoxModel().getSum();
         numberBoxEntity.update(sum);
@@ -104,6 +102,8 @@ public class GamePlayComponent {
         numberBoxEntity.draw(batch);
 
         sumBoxEntity.draw(batch);
+
+        numberBoxEntity.setBoxQuantity(6);
 
         if (sumBoxEntity.isCapacityWarning())
             stoneLion.getStoneLion().drawWarning(batch);
@@ -121,6 +121,10 @@ public class GamePlayComponent {
             transformNumber.draw(batch);
             if (transformNumber.getValue() == 0)
                 transformNumber.setValue(numberBoxEntity);
+            if (transformNumber.isNumberMatched(sumBoxEntity.getSumBoxModel().getSum())){
+                transformNumber.transform(numberBoxEntity);
+                transformNumber.init();
+            }
         }
 
         player.getPlayer().draw(batch);
@@ -184,9 +188,18 @@ class TransformNumber{
         return value;
     }
 
+    public void init(){
+        value = -1;
+    }
+
     public void setValue(NumberBoxEntity numberBoxEntity) {
         RandomNumProducer rnp = new RandomNumProducer(numberBoxEntity.getMaxQuantity()-1, 0);
         value = numberBoxEntity.getNumberBoxValue(rnp.getRandomNum());
+    }
+
+    public void transform(NumberBoxEntity numberBoxEntity){
+        NumberBoxPicker nbp = new NumberBoxPicker(numberBoxEntity);
+        numberBoxEntity.set(nbp.getRandomNonZeroValueIndex(), 17);
     }
 
     public boolean isNumberMatched(int sum){
@@ -195,5 +208,26 @@ class TransformNumber{
 
     public void draw(SpriteBatch batch){
         font.draw(batch, String.valueOf(value), point.getX(), point.getY());
+    }
+}
+
+class NumberBoxPicker {
+    private final NumberBoxEntity numberBoxEntity;
+
+    public NumberBoxPicker(NumberBoxEntity numberBoxEntity) {
+        this.numberBoxEntity = numberBoxEntity;
+    }
+
+    public int getRandomNonZeroValueIndex() {
+        ArrayList<Integer> indexList = new ArrayList<>();
+
+        for (int i = 0; i < numberBoxEntity.getMaxQuantity(); i++) {
+            if (numberBoxEntity.getNumberBoxValue(i) > 0)
+                indexList.add(i);
+        }
+        RandomNumProducer rnp = new RandomNumProducer(indexList.size() - 1,0);
+        int indexPick = rnp.getRandomNum();
+
+        return indexList.get(indexPick);
     }
 }

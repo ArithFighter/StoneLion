@@ -20,8 +20,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
 
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
-        int numberBoxQuantity = 9;
-        gamePlayComponent.setNumberQuantity(numberBoxQuantity);
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
