@@ -56,9 +56,14 @@ class VariationController {
 
     private void updateTransformNumber() {
         TransformNumber transformNumber = variationService.getTransformNumber();
+
         transformNumber.setValue(numberBoxEntity);
+
         if (transformNumber.isNumberMatched(sum)) {
             transformNumber.transform(numberBoxEntity);
+
+            numberBoxEntity.setMarkerAnimationIndex(transformNumber.getNumberBoxIndex());
+
             transformNumber.init();
         }
     }

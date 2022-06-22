@@ -12,6 +12,7 @@ class TransformNumber {
     private final Font font;
     private Point point;
     private int value;
+    private int numberBoxIndex = -1;
 
     public TransformNumber(Font font) {
         this.font = font;
@@ -39,9 +40,14 @@ class TransformNumber {
         NumberBoxPicker nbp = new NumberBoxPicker(numberBoxEntity);
         int result = 17;
         try {
-            numberBoxEntity.set(nbp.getRandomNonZeroValueIndex(), result);
+            numberBoxIndex = nbp.getRandomNonZeroValueIndex();
+            numberBoxEntity.set(numberBoxIndex, result);
         } catch (IndexOutOfBoundsException ignored) {
         }
+    }
+
+    public int getNumberBoxIndex() {
+        return numberBoxIndex;
     }
 
     public boolean isNumberMatched(int sum) {

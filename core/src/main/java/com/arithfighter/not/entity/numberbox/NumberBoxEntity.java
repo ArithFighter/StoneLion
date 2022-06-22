@@ -151,7 +151,7 @@ class MarkerAnimation{
     private final VisibleWidget mark;
 
     public MarkerAnimation(Texture texture, NumberBox[] numberBoxes){
-        mark = new SpriteWidget(texture, 2.5f);
+        mark = new SpriteWidget(texture, 1f);
         visualEffect = new VisualEffect(){
             @Override
             public void renderEffect() {
