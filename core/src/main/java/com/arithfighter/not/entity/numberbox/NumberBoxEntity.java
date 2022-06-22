@@ -85,8 +85,6 @@ public class NumberBoxEntity {
         int[] numbers = numberListController.getNumbers();
 
         numberListInspector.inspectNumberList(numbers);
-
-        animation.setNumbers(numbers);
     }
 
     public void setBoxQuantity(int boxQuantity) {

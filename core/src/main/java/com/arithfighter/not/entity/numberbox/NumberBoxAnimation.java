@@ -5,7 +5,6 @@ import com.arithfighter.not.time.TimeHandler;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class NumberBoxAnimation {
-    private int[] numbers;
     private final VisualEffect visualEffect;
     private final TimeHandler timeHandler;
     private SpriteBatch batch;
@@ -15,14 +14,10 @@ class NumberBoxAnimation {
         visualEffect = new VisualEffect() {
             @Override
             public void renderEffect() {
-                numberBoxes[matchedBoxIndex].draw(batch, numbers[matchedBoxIndex]);
+                numberBoxes[matchedBoxIndex].draw(batch, 0);
             }
         };
         timeHandler = new TimeHandler();
-    }
-
-    public void setNumbers(int[] numbers) {
-        this.numbers = numbers;
     }
 
     public void setBatch(SpriteBatch batch) {
