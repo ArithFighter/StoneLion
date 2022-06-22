@@ -48,16 +48,13 @@ public class GamePlayComponent {
 
         stoneLion = new StoneLionEntity(spriteSheets[2], player.getPlayer(), cardAnimate);
 
-        variationController = new VariationController(textures[5], font){
+        variationController = new VariationController(textures[5], font, sumBoxEntity){
             @Override
             public void doWhenViolatingTaboos() {
                 init();
             }
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
-        variationController.setSumMaskPoint(sumBoxEntity.getPoint());
-        variationController.setTabooNumberPoint(new Point(300, 700));
-        variationController.setTransformNumberPoint(new Point(50, 700));
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -140,87 +137,5 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
-    }
-}
-
-class VariationController{
-    private final SumMask sumMask;
-    private final TabooNumber tabooNumber;
-    private final TransformNumber transformNumber;
-    private NumberBoxEntity numberBoxEntity;
-    private int sum;
-
-    public VariationController(Texture texture, Font font){
-        sumMask = new SumMask(texture);
-
-        tabooNumber = new TabooNumber(font);
-
-        tabooNumber.setValues();
-
-        transformNumber = new TransformNumber(font);
-    }
-
-    public void init(){
-        tabooNumber.setValues();
-    }
-
-    public void setSum(int sum) {
-        this.sum = sum;
-    }
-
-    public void setNumberBoxEntity(NumberBoxEntity numberBoxEntity) {
-        this.numberBoxEntity = numberBoxEntity;
-    }
-
-    public void setSumMaskPoint(Point point){
-        sumMask.getSumMask().setPosition(point.getX(), point.getY());
-    }
-
-    public void setTabooNumberPoint(Point point){
-        tabooNumber.setPoint(point);
-    }
-
-    public void setTransformNumberPoint(Point point){
-        transformNumber.setPoint(point);
-    }
-
-    public void revealSumMask(){
-        sumMask.init();
-        sumMask.setReveal();
-    }
-
-    public void changeGameVariation(GameVariation gameVariation, SpriteBatch batch){
-        switch (gameVariation) {
-            case FOG:
-                sumMask.update(batch);
-                break;
-            case TABOO:
-                updateTabooNumber();
-                tabooNumber.draw(batch);
-                break;
-            case TRANSFORM:
-                transformNumber.draw(batch);
-                updateTransformNumber();
-                break;
-        }
-    }
-
-    private void updateTransformNumber() {
-        transformNumber.setValue(numberBoxEntity);
-        if (transformNumber.isNumberMatched(sum)) {
-            transformNumber.transform(numberBoxEntity);
-            transformNumber.init();
-        }
-    }
-
-    private void updateTabooNumber() {
-        tabooNumber.update(sum);
-        if (tabooNumber.isViolatingTaboos()) {
-            doWhenViolatingTaboos();
-        }
-    }
-
-    public void doWhenViolatingTaboos() {
-
     }
 }
