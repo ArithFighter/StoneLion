@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.widget.FontWidget;
 import com.arithfighter.not.widget.RawWidget;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class NumberBox{
     private Font font;
     private final FontWidget widget;
+    private Point point;
 
     public NumberBox(Texture texture) {
         widget = new SpriteWidget(texture, 3.5f, 32);
@@ -21,8 +23,12 @@ public class NumberBox{
         this.font = font;
     }
 
-    public void setPosition(float x, float y){
-        widget.setPosition(x, y);
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public Rectangle getRectangle(){
@@ -31,6 +37,8 @@ public class NumberBox{
     }
 
     public void draw(SpriteBatch batch, int number) {
+        widget.setPosition(point.getX(), point.getY());
+
         widget.setFontSize(font.getSize());
 
         widget.getSprite().setColor(Color.WHITE);

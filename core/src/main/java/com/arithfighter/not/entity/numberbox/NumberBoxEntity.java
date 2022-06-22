@@ -1,10 +1,14 @@
 package com.arithfighter.not.entity.numberbox;
 
+import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
+import com.arithfighter.not.time.TimeHandler;
+import com.arithfighter.not.widget.SpriteWidget;
+import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -125,6 +129,24 @@ public class NumberBoxEntity {
         animation.draw();
 
         maskAnimation.draw(batch, 0.1f);
+    }
+}
+
+class MarkerAnimation{
+    private final VisualEffect visualEffect;
+    private final TimeHandler timeHandler;
+    private SpriteBatch batch;
+    private int index = -1;
+    private VisibleWidget mark;
+
+    public MarkerAnimation(Texture texture, NumberBox[] numberBoxes){
+        mark = new SpriteWidget(texture, 2.5f);
+        visualEffect = new VisualEffect(){
+            @Override
+            public void renderEffect() {
+            }
+        };
+        timeHandler = new TimeHandler();
     }
 }
 

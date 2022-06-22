@@ -1,6 +1,7 @@
 package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,10 +22,12 @@ public class NumberBoxService {
     public void setPosition(NumberBoxPlacer placer) {
         for (int i = 0; i < quantity; i++){
             Rectangle rectangle = numberBoxes[i].getRectangle();
-            numberBoxes[i].setPosition(
+
+            Point point = new Point(
                     placer.getNumberBoxX(i, rectangle.getWidth()),
                     placer.getNumberBoxY(i, rectangle.getHeight())
             );
+            numberBoxes[i].setPoint(point);
         }
     }
 
