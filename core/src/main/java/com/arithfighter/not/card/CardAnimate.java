@@ -19,13 +19,17 @@ public class CardAnimate{
         return ves;
     }
 
-    public boolean isNotStart(){
+    public boolean isAllNotStart(){
         boolean condition = false;
+        int x = 0;
 
         for (SpecialAnimatable sa: visualEffects){
             if (!sa.getSpecialEffect().isStart())
-                condition = true;
+                x++;
         }
+        if (x == visualEffects.length)
+            condition = true;
+
         return condition;
     }
 

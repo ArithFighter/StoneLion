@@ -116,7 +116,9 @@ public class GamePlayComponent {
     public void touchDown(int mouseX, int mouseY) {
         isCardDragging = false;
         player.getPlayer().activateCard(mouseX, mouseY);
-        cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
+
+        if (cardAnimate.isAllNotStart())
+            cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
 
         if (isReadyToResetSum) {
             sumBoxEntity.init();
