@@ -10,8 +10,8 @@ class SumMask {
     private final TimeHandler timeHandler;
     private boolean isReveal = false;
 
-    public SumMask(Texture[] textures) {
-        sumMask = new Mask(textures[5], 5);
+    public SumMask(Texture texture) {
+        sumMask = new Mask(texture, 5);
         timeHandler = new TimeHandler();
     }
 

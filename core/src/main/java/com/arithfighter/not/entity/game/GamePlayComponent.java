@@ -13,11 +13,8 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.system.RandomNumProducer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.util.ArrayList;
 
 public class GamePlayComponent {
     private final NumberBoxEntity numberBoxEntity;
@@ -28,9 +25,7 @@ public class GamePlayComponent {
     private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
     private final StoneLionEntity stoneLion;
-    private final SumMask sumMask;
-    private final TabooNumber tabooNumber;
-    private final TransformNumber transformNumber;
+    private final VariationController variationController;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -43,8 +38,7 @@ public class GamePlayComponent {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
-                sumMask.init();
-                sumMask.setReveal();
+                variationController.revealSumMask();
             }
         };
 
@@ -54,17 +48,16 @@ public class GamePlayComponent {
 
         stoneLion = new StoneLionEntity(spriteSheets[2], player.getPlayer(), cardAnimate);
 
-        sumMask = new SumMask(textures);
-
-        Point point = sumBoxEntity.getPoint();
-        sumMask.getSumMask().setPosition(point.getX(), point.getY());
-
-        tabooNumber = new TabooNumber(font);
-        tabooNumber.setPoint(new Point(300, 700));
-        tabooNumber.setValues();
-
-        transformNumber = new TransformNumber(font);
-        transformNumber.setPoint(new Point(50, 700));
+        variationController = new VariationController(textures[5], font){
+            @Override
+            public void doWhenViolatingTaboos() {
+                init();
+            }
+        };
+        variationController.setNumberBoxEntity(numberBoxEntity);
+        variationController.setSumMaskPoint(sumBoxEntity.getPoint());
+        variationController.setTabooNumberPoint(new Point(300, 700));
+        variationController.setTransformNumberPoint(new Point(50, 700));
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -85,7 +78,7 @@ public class GamePlayComponent {
         cardAnimate.getCardFadeOut().init();
         cardAnimate.getCardReset().init();
         isReadyToResetSum = false;
-        tabooNumber.setValues();
+        variationController.init();
     }
 
     public void update(int mouseX, int mouseY) {
@@ -110,42 +103,12 @@ public class GamePlayComponent {
         else
             stoneLion.getStoneLion().drawDefault(batch);
 
-        changeGameVariation(gameVariation);
+        variationController.setSum(sumBoxEntity.getSumBoxModel().getSum());
+        variationController.changeGameVariation(gameVariation, batch);
 
         player.getPlayer().draw(batch);
 
         drawCardAnimate();
-    }
-
-    private void changeGameVariation(GameVariation gameVariation){
-        switch (gameVariation) {
-            case FOG:
-                sumMask.update(batch);
-                break;
-            case TABOO:
-                updateTabooNumber();
-                tabooNumber.draw(batch);
-                break;
-            case TRANSFORM:
-                transformNumber.draw(batch);
-                updateTransformNumber();
-                break;
-        }
-    }
-
-    private void updateTransformNumber() {
-        transformNumber.setValue(numberBoxEntity);
-        if (transformNumber.isNumberMatched(sumBoxEntity.getSumBoxModel().getSum())) {
-            transformNumber.transform(numberBoxEntity);
-            transformNumber.init();
-        }
-    }
-
-    private void updateTabooNumber() {
-        tabooNumber.update(sumBoxEntity.getSumBoxModel().getSum());
-        if (tabooNumber.isViolatingTaboos()) {
-            init();
-        }
     }
 
     private void drawCardAnimate() {
@@ -177,5 +140,87 @@ public class GamePlayComponent {
         }
         if (sumBoxEntity.isCapacityFull())
             isReadyToResetSum = true;
+    }
+}
+
+class VariationController{
+    private final SumMask sumMask;
+    private final TabooNumber tabooNumber;
+    private final TransformNumber transformNumber;
+    private NumberBoxEntity numberBoxEntity;
+    private int sum;
+
+    public VariationController(Texture texture, Font font){
+        sumMask = new SumMask(texture);
+
+        tabooNumber = new TabooNumber(font);
+
+        tabooNumber.setValues();
+
+        transformNumber = new TransformNumber(font);
+    }
+
+    public void init(){
+        tabooNumber.setValues();
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
+    public void setNumberBoxEntity(NumberBoxEntity numberBoxEntity) {
+        this.numberBoxEntity = numberBoxEntity;
+    }
+
+    public void setSumMaskPoint(Point point){
+        sumMask.getSumMask().setPosition(point.getX(), point.getY());
+    }
+
+    public void setTabooNumberPoint(Point point){
+        tabooNumber.setPoint(point);
+    }
+
+    public void setTransformNumberPoint(Point point){
+        transformNumber.setPoint(point);
+    }
+
+    public void revealSumMask(){
+        sumMask.init();
+        sumMask.setReveal();
+    }
+
+    public void changeGameVariation(GameVariation gameVariation, SpriteBatch batch){
+        switch (gameVariation) {
+            case FOG:
+                sumMask.update(batch);
+                break;
+            case TABOO:
+                updateTabooNumber();
+                tabooNumber.draw(batch);
+                break;
+            case TRANSFORM:
+                transformNumber.draw(batch);
+                updateTransformNumber();
+                break;
+        }
+    }
+
+    private void updateTransformNumber() {
+        transformNumber.setValue(numberBoxEntity);
+        if (transformNumber.isNumberMatched(sum)) {
+            transformNumber.transform(numberBoxEntity);
+            transformNumber.init();
+        }
+    }
+
+    private void updateTabooNumber() {
+        tabooNumber.update(sum);
+        if (tabooNumber.isViolatingTaboos()) {
+            doWhenViolatingTaboos();
+        }
+    }
+
+    public void doWhenViolatingTaboos() {
+
     }
 }
