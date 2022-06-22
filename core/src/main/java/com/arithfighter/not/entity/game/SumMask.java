@@ -5,7 +5,7 @@ import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SumMask {
+class SumMask {
     private final Mask sumMask;
     private final TimeHandler timeHandler;
     private boolean isReveal = false;
