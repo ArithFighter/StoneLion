@@ -73,6 +73,7 @@ public class NumberBoxEntity {
         randomNumListProducer.clear();
         maskAnimation.init();
         numberListController.init();
+        markerAnimation.init();
     }
 
     public int getNumberBoxValue(int index) {
@@ -151,7 +152,7 @@ class MarkerAnimation{
     private final VisibleWidget mark;
 
     public MarkerAnimation(Texture texture, NumberBox[] numberBoxes){
-        mark = new SpriteWidget(texture, 1f);
+        mark = new SpriteWidget(texture, 1.2f);
         visualEffect = new VisualEffect(){
             @Override
             public void renderEffect() {
@@ -173,7 +174,7 @@ class MarkerAnimation{
 
     public void draw() {
         int ratePerSec = 8;
-        float durationSec = 1.2f;
+        float durationSec = 1f;
 
         if (index >= 0) {
             timeHandler.updatePastedTime();
@@ -185,7 +186,7 @@ class MarkerAnimation{
         }
     }
 
-    private void init() {
+    public void init() {
         timeHandler.resetPastedTime();
         index -= index + 1;
     }
