@@ -3,6 +3,7 @@ package com.arithfighter.not.entity.numberbox;
 import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.entity.MaskAnimation;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.system.GameNumProducer;
 import com.arithfighter.not.system.RandomNumListProducer;
@@ -23,6 +24,7 @@ public class NumberBoxEntity {
     private MaskAnimation maskAnimation;
     private final NumberListController numberListController;
     private final NumberListInspector numberListInspector = new NumberListInspector();
+    private final MarkerAnimation markerAnimation;
 
     public NumberBoxEntity(Texture[] textures, Font font) {
         NumberBoxPlacer placer = new NumberBoxPlacer();
@@ -39,6 +41,8 @@ public class NumberBoxEntity {
         animation = new NumberBoxAnimation(numberBoxService.getNumberBoxes());
 
         numberListController = new NumberListController(maxQuantity);
+
+        markerAnimation = new MarkerAnimation(textures[7], numberBoxService.getNumberBoxes());
     }
 
     private void createMaskAnimation(Texture texture, NumberBoxPlacer placer) {
@@ -122,6 +126,10 @@ public class NumberBoxEntity {
     public void doWhenSumAndNumMatched() {
     }
 
+    public void setMarkerAnimationIndex(int i){
+        markerAnimation.setIndex(i);
+    }
+
     public void draw(SpriteBatch batch) {
         numberBoxService.draw(batch, numberListController.getNumbers());
 
@@ -129,6 +137,9 @@ public class NumberBoxEntity {
         animation.draw();
 
         maskAnimation.draw(batch, 0.1f);
+
+        markerAnimation.setBatch(batch);
+        markerAnimation.draw();
     }
 }
 
@@ -137,16 +148,46 @@ class MarkerAnimation{
     private final TimeHandler timeHandler;
     private SpriteBatch batch;
     private int index = -1;
-    private VisibleWidget mark;
+    private final VisibleWidget mark;
 
     public MarkerAnimation(Texture texture, NumberBox[] numberBoxes){
         mark = new SpriteWidget(texture, 2.5f);
         visualEffect = new VisualEffect(){
             @Override
             public void renderEffect() {
+                Point point = numberBoxes[index].getPoint();
+                mark.setPosition(point.getX(), point.getY());
+                mark.draw(batch);
             }
         };
         timeHandler = new TimeHandler();
+    }
+
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void draw() {
+        int ratePerSec = 8;
+        float durationSec = 1.2f;
+
+        if (index >= 0) {
+            timeHandler.updatePastedTime();
+
+            visualEffect.animateFlashy(ratePerSec);
+
+            if (timeHandler.getPastedTime() > durationSec)
+                init();
+        }
+    }
+
+    private void init() {
+        timeHandler.resetPastedTime();
+        index -= index + 1;
     }
 }
 
