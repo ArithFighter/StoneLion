@@ -42,7 +42,7 @@ class NumberBoxAnimation {
         }
     }
 
-    private void init() {
+    public void init() {
         timeHandler.resetPastedTime();
         matchedBoxIndex -= matchedBoxIndex + 1;
     }

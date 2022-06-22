@@ -14,9 +14,12 @@ class VariationController {
 
     public VariationController(Texture texture, Font font, SumBoxEntity sumBoxEntity) {
         variationService = new VariationService(texture, font);
+
         Point point = sumBoxEntity.getPoint();
         variationService.getSumMask().getSumMask().setPosition(point.getX(), point.getY());
+
         variationService.getTabooNumber().setPoint(new Point(300, 700));
+
         variationService.getTransformNumber().setPoint(new Point(50, 700));
     }
 
@@ -62,9 +65,9 @@ class VariationController {
         if (transformNumber.isNumberMatched(sum)) {
             transformNumber.transform(numberBoxEntity);
 
-            numberBoxEntity.setMarkerAnimationIndex(transformNumber.getNumberBoxIndex());
-
             transformNumber.init();
+
+            numberBoxEntity.setMarkerAnimationIndex(transformNumber.getNumberBoxIndex());
         }
     }
 

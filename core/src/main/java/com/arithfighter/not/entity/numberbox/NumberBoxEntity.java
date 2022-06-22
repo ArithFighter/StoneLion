@@ -15,7 +15,7 @@ public class NumberBoxEntity {
     private final NumberBoxService numberBoxService;
     private final int maxQuantity;
     private final RandomNumListProducer randomNumListProducer;
-    private final NumberBoxAnimation animation;
+    private final NumberBoxAnimation numberBoxAnimation;
     private MaskAnimation maskAnimation;
     private final NumberListController numberListController;
     private final NumberListInspector numberListInspector = new NumberListInspector();
@@ -33,7 +33,7 @@ public class NumberBoxEntity {
         randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
         randomNumListProducer.setMaxQuantity(maxQuantity);
 
-        animation = new NumberBoxAnimation(numberBoxService.getNumberBoxes());
+        numberBoxAnimation = new NumberBoxAnimation(numberBoxService.getNumberBoxes());
 
         numberListController = new NumberListController(maxQuantity);
 
@@ -69,6 +69,7 @@ public class NumberBoxEntity {
         maskAnimation.init();
         numberListController.init();
         markerAnimation.init();
+        numberBoxAnimation.init();
     }
 
     public int getNumberBoxValue(int index) {
@@ -105,7 +106,7 @@ public class NumberBoxEntity {
     private void handleWhenNumMatchedSum(int sum) {
         for (int i = 0; i < numberListController.getNumbers().length; i++) {
             if (isNonZeroNumMatchedSum(i, sum)) {
-                animation.setMatchedBoxIndex(i);
+                numberBoxAnimation.setMatchedBoxIndex(i);
 
                 doWhenSumAndNumMatched();
 
@@ -129,8 +130,8 @@ public class NumberBoxEntity {
     public void draw(SpriteBatch batch) {
         numberBoxService.draw(batch, numberListController.getNumbers());
 
-        animation.setBatch(batch);
-        animation.draw();
+        numberBoxAnimation.setBatch(batch);
+        numberBoxAnimation.draw();
 
         maskAnimation.draw(batch, 0.1f);
 
