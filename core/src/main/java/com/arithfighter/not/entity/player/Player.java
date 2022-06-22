@@ -1,7 +1,6 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
-import com.arithfighter.not.widget.bar.EnergyBar;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -41,16 +40,16 @@ public class Player {
         hand.draw(batch);
     }
 
-    public void updateWhenTouchCard(int mouseX, int mouseY) {
+    public void playOnCardAnimation(int mouseX, int mouseY) {
         for (NumberCard card : hand.getCards()) {
             if (card.isOnCard(mouseX, mouseY)) {
-                playTouchedAnimation(card);
+                moveCardUpward(card);
             } else
                 card.initCard();
         }
     }
 
-    private void playTouchedAnimation(NumberCard card){
+    private void moveCardUpward(NumberCard card){
         int movingDistance = 30;
         float speed = 3;
 
@@ -67,17 +66,14 @@ public class Player {
         if (hand.isCardActive()) {
             doWhenAnyCardPlayed();
 
-            if (hand.isResettingCard()){
+            if (hand.isResettingCard())
                 doWhenResettingCardPlay();
-            }
-            else{
+            else
                 checkNumberCardPlayed();
-            }
         }
     }
 
     public void doWhenAnyCardPlayed() {
-
     }
 
     public void checkNumberCardPlayed() {

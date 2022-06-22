@@ -72,7 +72,7 @@ public class NumberCard{
 
     public void activateCard(float mouseX, float mouseY) {
         if (isOnCard(mouseX, mouseY))
-            isCardActive =true;
+            isCardActive = true;
     }
 
     public boolean isActive(){

@@ -82,7 +82,8 @@ public class GamePlayComponent {
         int sum = sumBoxEntity.getSumBoxModel().getSum();
         numberBoxEntity.update(sum);
 
-        player.getPlayer().updateWhenTouchCard(mouseX, mouseY);
+        if (cardAnimate.isAllNotStart())
+            player.getPlayer().playOnCardAnimation(mouseX, mouseY);
 
         if (numberBoxEntity.isAllNumZero())
             init();
