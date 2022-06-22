@@ -41,6 +41,10 @@ public class SpecialEffect {
         model.setLastMousePoint(point);
     }
 
+    public boolean isStart() {
+        return isStart;
+    }
+
     public void setStart() {
         isStart = true;
     }

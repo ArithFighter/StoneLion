@@ -19,6 +19,16 @@ public class CardAnimate{
         return ves;
     }
 
+    public boolean isNotStart(){
+        boolean condition = false;
+
+        for (SpecialAnimatable sa: visualEffects){
+            if (!sa.getSpecialEffect().isStart())
+                condition = true;
+        }
+        return condition;
+    }
+
     public SpecialEffect getCardReset(){
         return visualEffects[0].getSpecialEffect();
     }
