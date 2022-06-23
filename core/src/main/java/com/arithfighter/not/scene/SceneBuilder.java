@@ -5,6 +5,7 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.scene.Stage;
+import com.arithfighter.not.scene.scene.Transition;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
@@ -15,10 +16,12 @@ public class SceneBuilder extends SceneCollection{
         super(textureService, soundManager, fontService);
 
         mouseEvents = new MouseEvent[]{
+                getTransition(),
                 getStage()
         };
 
         sceneEvents = new SceneEvent[]{
+                getTransition(),
                 getStage()
         };
     }
@@ -49,12 +52,18 @@ public class SceneBuilder extends SceneCollection{
 
 class SceneCollection{
     private final Stage stage;
+    private final Transition transition;
 
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService){
         stage = new Stage(textureService, soundManager, fontService);
+        transition = new Transition(fontService);
     }
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Transition getTransition() {
+        return transition;
     }
 }

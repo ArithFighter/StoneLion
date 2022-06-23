@@ -74,7 +74,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void runGame(){
-        GameScene gameScene = GameScene.STAGE;
+        GameScene gameScene = GameScene.TRANSITION;
 
         //sceneController.updateScene();
 

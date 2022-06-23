@@ -14,7 +14,7 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
     private final Font font;
     private boolean isGameStart = false;
 
-    public Transition(TextureService textureService, FontService fontService){
+    public Transition(FontService fontService){
         font = fontService.getFont32();
         font.setColor(Color.WHITE);
     }
@@ -51,8 +51,8 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         font.draw(
                 batch,
                 ready,
-                WindowSetting.CENTER_X-ready.length()* font.getSize(),
-                WindowSetting.CENTER_Y- font.getSize()/2f
+                WindowSetting.CENTER_X-ready.length()* font.getSize()/2f,
+                WindowSetting.CENTER_Y+ font.getSize()
         );
     }
 }
