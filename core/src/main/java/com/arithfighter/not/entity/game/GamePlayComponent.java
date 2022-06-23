@@ -72,8 +72,7 @@ public class GamePlayComponent {
     public void init() {
         sumBoxEntity.init();
         numberBoxEntity.init();
-        cardAnimate.getCardFadeOut().init();
-        cardAnimate.getCardReset().init();
+        cardAnimate.init();
         isReadyToResetSum = false;
         variationController.init();
     }
@@ -84,9 +83,6 @@ public class GamePlayComponent {
 
         if (cardAnimate.isAllNotStart())
             player.getPlayer().playOnCardAnimation(mouseX, mouseY);
-
-        if (numberBoxEntity.isAllNumZero())
-            init();
     }
 
     public boolean isAllNumZero(){

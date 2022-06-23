@@ -33,6 +33,11 @@ public class CardAnimate{
         return condition;
     }
 
+    public void init(){
+        for (SpecialAnimatable sa: visualEffects)
+            sa.getSpecialEffect().init();
+    }
+
     public SpecialEffect getCardReset(){
         return visualEffects[0].getSpecialEffect();
     }
