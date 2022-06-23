@@ -46,7 +46,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
 
-        sceneController = new SceneController(sceneBuilder, GameScene.STAGE);
+        sceneController = new SceneController(sceneBuilder, GameScene.TRANSITION);
 
         setGameSave();
 
@@ -74,9 +74,9 @@ public class Main extends ApplicationAdapter {
     }
 
     private void runGame(){
-        GameScene gameScene = GameScene.TRANSITION;
+        GameScene gameScene = sceneController.getGameScene();
 
-        //sceneController.updateScene();
+        sceneController.updateScene();
 
         cursorPos.update();
 

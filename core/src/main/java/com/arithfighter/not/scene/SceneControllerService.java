@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.TokenHolder;
+import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
 
 public class SceneControllerService {
@@ -11,16 +12,16 @@ public class SceneControllerService {
     private final Savable[] savable;
 
     public SceneControllerService(SceneBuilder sceneBuilder) {
-        TokenHolder tokenHolder = new TokenHolder();
-
         SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
 
         sceneFactories = new SceneFactory[]{
-                scc.getTransitionController()
+                scc.getTransitionController(),
+                scc.getStageController()
         };
 
         sceneManageable = new SceneControllable[]{
-                scc.getTransitionController()
+                scc.getTransitionController(),
+                scc.getStageController()
         };
 
         for (SceneControllable s : sceneManageable)
@@ -54,13 +55,19 @@ public class SceneControllerService {
 
 class SceneControllerCollection {
     private final TransitionController transitionController;
+    private final StageController stageController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
         transitionController = new TransitionController(sceneBuilder);
+        stageController = new StageController(sceneBuilder);
     }
 
     public TransitionController getTransitionController() {
         return transitionController;
+    }
+
+    public StageController getStageController() {
+        return stageController;
     }
 }
 
@@ -92,6 +99,23 @@ class TransitionController extends BuilderAccessor implements SceneControllable{
             setGameScene(GameScene.STAGE);
             transition.init();
         }
+    }
+}
+
+class StageController extends BuilderAccessor implements SceneControllable{
+
+    public StageController(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.STAGE);
+    }
+
+    @Override
+    public void run() {
+
     }
 }
 
