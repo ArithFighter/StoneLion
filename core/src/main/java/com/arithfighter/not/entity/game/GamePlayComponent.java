@@ -116,11 +116,13 @@ public class GamePlayComponent {
 
     public void touchDown(int mouseX, int mouseY) {
         isCardDragging = false;
-        player.getPlayer().activateCard(mouseX, mouseY);
 
-        if (cardAnimate.isAllNotStart())
+        //you can only touch cards when all card animation finished
+        if (cardAnimate.isAllNotStart()){
+            player.getPlayer().activateCard(mouseX, mouseY);
             cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
-
+        }
+        //reset sum will happen after you touch screen
         if (isReadyToResetSum) {
             sumBoxEntity.init();
             isReadyToResetSum = false;
@@ -130,6 +132,7 @@ public class GamePlayComponent {
     public void touchDragged(int mouseX, int mouseY) {
         if (player.getPlayer().isCardActive())
             isCardDragging = true;
+
         player.getPlayer().updateWhenDrag(mouseX, mouseY);
     }
 
