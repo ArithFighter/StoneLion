@@ -89,12 +89,16 @@ public class GamePlayComponent {
             init();
     }
 
-    public void draw(GameVariation gameVariation) {
+    public boolean isAllNumZero(){
+        return numberBoxEntity.isAllNumZero();
+    }
+
+    public void draw(GameVariation gameVariation, int boxQuantity) {
         numberBoxEntity.draw(batch);
 
         sumBoxEntity.draw(batch);
 
-        numberBoxEntity.setBoxQuantity(6);
+        numberBoxEntity.setBoxQuantity(boxQuantity);
 
         if (sumBoxEntity.isCapacityWarning())
             stoneLion.getStoneLion().drawWarning(batch);

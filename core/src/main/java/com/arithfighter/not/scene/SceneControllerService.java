@@ -115,7 +115,12 @@ class StageController extends BuilderAccessor implements SceneControllable{
 
     @Override
     public void run() {
+        Stage stage = getSceneBuilder().getStage();
 
+        if(stage.isComplete()){
+            setGameScene(GameScene.TRANSITION);
+            stage.init();
+        }
     }
 }
 

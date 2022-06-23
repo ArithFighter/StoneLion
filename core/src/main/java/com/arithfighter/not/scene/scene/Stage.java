@@ -37,6 +37,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.init();
     }
 
+    public boolean isComplete(){
+        return gamePlayComponent.isAllNumZero();
+    }
+
     private void update() {
         if (pauseButton.isStart()) {
             pauseMenu.update();
@@ -58,7 +62,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw(GameVariation.TRANSFORM);
+        gamePlayComponent.draw(GameVariation.TRANSFORM, 6);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);

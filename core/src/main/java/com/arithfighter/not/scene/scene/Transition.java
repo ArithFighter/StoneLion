@@ -17,7 +17,7 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
     private boolean isGameStart = false;
 
     public Transition(FontService fontService){
-        font = fontService.getFont32();
+        font = fontService.getFont45();
         font.setColor(Color.WHITE);
 
         timeHandler = new TimeHandler();
