@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
 import com.arithfighter.not.pojo.TokenHolder;
+import com.arithfighter.not.scene.scene.Transition;
 
 public class SceneControllerService {
     private GameScene gameScene;
@@ -15,11 +16,11 @@ public class SceneControllerService {
         SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
 
         sceneFactories = new SceneFactory[]{
-
+                scc.getTransitionController()
         };
 
         sceneManageable = new SceneControllable[]{
-
+                scc.getTransitionController()
         };
 
         for (SceneControllable s : sceneManageable)
@@ -52,13 +53,15 @@ public class SceneControllerService {
 }
 
 class SceneControllerCollection {
+    private final TransitionController transitionController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
+        transitionController = new TransitionController(sceneBuilder);
     }
-}
 
-interface SceneFactory {
-    GameScene getGamaScene();
+    public TransitionController getTransitionController() {
+        return transitionController;
+    }
 }
 
 interface SceneControllable {
@@ -69,6 +72,31 @@ interface SceneControllable {
 
 interface Savable {
     void setGameSave(GameSave gameSave);
+}
+
+class TransitionController extends BuilderAccessor implements SceneControllable{
+
+    public TransitionController(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.TRANSITION);
+    }
+
+    @Override
+    public void run() {
+        Transition transition = getSceneBuilder().getTransition();
+        if (transition.isGameStart()){
+            setGameScene(GameScene.STAGE);
+            transition.init();
+        }
+    }
+}
+
+interface SceneFactory {
+    GameScene getGamaScene();
 }
 
 class BuilderAccessor implements SceneFactory {
