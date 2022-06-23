@@ -1,12 +1,10 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.GameSave;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
-import com.badlogic.gdx.Preferences;
+import com.arithfighter.not.scene.scene.Stage;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
