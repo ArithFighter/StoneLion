@@ -10,6 +10,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
+import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
+    private boolean isComplete = false;
+    private final TimeHandler timeHandler = new TimeHandler();
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -35,10 +38,12 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
+        isComplete = false;
+        timeHandler.resetPastedTime();
     }
 
     public boolean isComplete(){
-        return gamePlayComponent.isAllNumZero();
+        return isComplete;
     }
 
     private void update() {
@@ -53,7 +58,17 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseButton.update();
 
             gamePlayComponent.update(getCursorPos().getX(), getCursorPos().getY());
+
+            if (gamePlayComponent.isAllNumZero()){
+                countDownCompletion();
+            }
         }
+    }
+
+    private void countDownCompletion(){
+        timeHandler.updatePastedTime();
+        if (timeHandler.getPastedTime()>1.5f)
+            isComplete = true;
     }
 
     public void render() {
@@ -62,7 +77,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw(GameVariation.TRANSFORM, 6);
+        gamePlayComponent.draw(GameVariation.STANDARD, 6);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);
