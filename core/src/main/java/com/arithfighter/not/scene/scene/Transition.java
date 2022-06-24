@@ -8,19 +8,21 @@ import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.TimeHandler;
+import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Transition extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font font;
-    private final TimeHandler timeHandler;
+    private final Timer timer;
     private boolean isGameStart = false;
 
     public Transition(FontService fontService){
         font = fontService.getFont45();
         font.setColor(Color.WHITE);
 
-        timeHandler = new TimeHandler();
+        timer = new Timer();
+        timer.setTime(1.5f);
     }
 
     public boolean isGameStart(){
@@ -44,7 +46,7 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
 
     @Override
     public void init() {
-        timeHandler.resetPastedTime();
+        timer.init();
         isGameStart = false;
     }
 
@@ -53,9 +55,9 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         SpriteBatch batch = getBatch();
         String ready = "Ready";
 
-        timeHandler.updatePastedTime();
+        timer.update();
 
-        if (timeHandler.getPastedTime()>1.5f)
+        if (timer.isTimesOut())
             isGameStart = true;
 
         font.draw(
