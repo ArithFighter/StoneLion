@@ -20,6 +20,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final CompletionManager completionManager;
+    private GameVariation gameVariation = GameVariation.STANDARD;
+    private int boxQuantity = 6;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -33,6 +35,14 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.getButton().setFont(fontService.getFont22());
 
         completionManager = new CompletionManager();
+    }
+
+    public void setGameVariation(GameVariation gameVariation) {
+        this.gameVariation = gameVariation;
+    }
+
+    public void setBoxQuantity(int boxQuantity) {
+        this.boxQuantity = boxQuantity;
     }
 
     public void init() {
@@ -70,7 +80,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw(GameVariation.STANDARD, 6);
+        gamePlayComponent.draw(gameVariation, boxQuantity);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);
