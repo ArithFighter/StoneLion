@@ -11,7 +11,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
-import com.arithfighter.not.time.CompletionManager;
+import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,7 +20,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
-    private final CompletionManager completionManager;
+    private final Timer timer;
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
 
@@ -36,7 +36,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.getButton().setPosition(1000, 600);
         pauseButton.getButton().setFont(fontService.getFont22());
 
-        completionManager = new CompletionManager();
+        timer = new Timer();
+        timer.setTime(1.5f);
     }
 
     public void setGameVariation(GameVariation gameVariation) {
@@ -51,11 +52,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
-        completionManager.init();
+        timer.init();
     }
 
     public boolean isComplete(){
-        return completionManager.isComplete();
+        return timer.isTimesOut();
     }
 
     private void update() {
@@ -72,7 +73,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             gamePlayComponent.update(getCursorPos().getX(), getCursorPos().getY());
 
             if (gamePlayComponent.isAllNumZero())
-                completionManager.countDownCompletion();
+                timer.update();
         }
     }
 
