@@ -31,6 +31,7 @@ class SumMask {
     public void update(SpriteBatch batch) {
         if (isReveal) {
             timeHandler.updatePastedTime();
+
             if (timeHandler.getPastedTime() >= 1.2f)
                 init();
         } else
