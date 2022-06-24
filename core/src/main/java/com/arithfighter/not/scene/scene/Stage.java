@@ -6,6 +6,7 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.game.GamePlayComponent;
 import com.arithfighter.not.entity.game.GameVariation;
+import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
@@ -27,6 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
 
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
+        gamePlayComponent.setCharacter(CharacterList.KNIGHT);
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
@@ -80,6 +82,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
+        gamePlayComponent.setCharacter(CharacterList.ROGUE);
         gamePlayComponent.draw(gameVariation, boxQuantity);
 
         if (pauseButton.isStart()) {

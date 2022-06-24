@@ -4,24 +4,28 @@ import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.badlogic.gdx.graphics.Texture;
 
 public class PlayerService {
-    private final Player player;
+    private final Player[] players;
 
-    public PlayerService(Texture[] cards, SumBoxModel sumBoxModel, CharacterList character) {
-        player = new Player(cards, character) {
-            @Override
-            public void checkNumberCardPlayed() {
-                sumBoxModel.update(getHand().getCardNumber());
-            }
+    public PlayerService(Texture[] cards, SumBoxModel sumBoxModel) {
+        players = new Player[CharacterList.values().length];
 
-            @Override
-            public void doWhenResettingCardPlay() {
-                sumBoxModel.init();
-                sumBoxModel.update(getHand().getCardNumber());
-            }
-        };
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new Player(cards, CharacterList.values()[i]) {
+                @Override
+                public void checkNumberCardPlayed() {
+                    sumBoxModel.update(getHand().getCardNumber());
+                }
+
+                @Override
+                public void doWhenResettingCardPlay() {
+                    sumBoxModel.init();
+                    sumBoxModel.update(getHand().getCardNumber());
+                }
+            };
+        }
     }
 
-    public Player getPlayer() {
-        return player;
+    public Player[] getPlayers() {
+        return players;
     }
 }

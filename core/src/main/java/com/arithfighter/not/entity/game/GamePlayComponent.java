@@ -26,6 +26,7 @@ public class GamePlayComponent {
     private final SumBoxEntity sumBoxEntity;
     private final StoneLionEntity stoneLion;
     private final VariationController variationController;
+    private final PlayerService playerService;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -53,10 +54,20 @@ public class GamePlayComponent {
             }
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
+
+        playerService = new PlayerService(cards, sumBoxEntity.getSumBoxModel());
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setCharacter(CharacterList character) {
+        int index = 0;
+
+        for (int i = 0;i<CharacterList.values().length;i++){
+            if (CharacterList.values()[i] == character)
+                index =i;
+        }
+
+        this.player = playerService.getPlayers()[index];
+
         stoneLion.setPlayer(player);
     }
 
