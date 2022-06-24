@@ -82,8 +82,8 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.setGameScene(gameScene);
 
-        audioHandler.setMusicVolume(1.0f);
-        audioHandler.setSoundVolume(0.8f);
+        audioHandler.setMusicVolume(0.8f);
+        audioHandler.setSoundVolume(0.6f);
 
         MusicController musicController = new MusicController(audioHandler);
         musicController.setGameScene(gameScene);

@@ -11,6 +11,7 @@ public class SumBoxEntity {
     private final SumBox sumBox;
     private final SumBoxModel sumBoxModel;
     private final Point point;
+    private boolean isReadyToResetSum = false;
 
     public SumBoxEntity(Texture texture, Font font) {
         sumBox = new SumBox(texture);
@@ -40,10 +41,22 @@ public class SumBoxEntity {
     public void init() {
         sumBox.init();
         sumBoxModel.init();
+        isReadyToResetSum = false;
     }
 
     public void draw(SpriteBatch batch) {
         sumBox.setCapacity(sumBoxModel.getCardCapacity());
         sumBox.draw(sumBoxModel.getSum(), batch);
+    }
+
+    public void touchDown(){
+        //reset sum will happen after you touch screen
+        if (isReadyToResetSum)
+            init();
+    }
+
+    public void touchUp(){
+        if (isCapacityFull())
+            isReadyToResetSum = true;
     }
 }

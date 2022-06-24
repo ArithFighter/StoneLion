@@ -21,7 +21,6 @@ public class GamePlayComponent {
     private final PlayerService player;
     private CardAnimate cardAnimate;
     private SpriteBatch batch;
-    private boolean isReadyToResetSum = false;
     private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
     private final StoneLionEntity stoneLion;
@@ -73,7 +72,6 @@ public class GamePlayComponent {
         sumBoxEntity.init();
         numberBoxEntity.init();
         cardAnimate.init();
-        isReadyToResetSum = false;
         variationController.init();
     }
 
@@ -122,11 +120,7 @@ public class GamePlayComponent {
             player.getPlayer().activateCard(mouseX, mouseY);
             cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
         }
-        //reset sum will happen after you touch screen
-        if (isReadyToResetSum) {
-            sumBoxEntity.init();
-            isReadyToResetSum = false;
-        }
+        sumBoxEntity.touchDown();
     }
 
     public void touchDragged(int mouseX, int mouseY) {
@@ -141,7 +135,6 @@ public class GamePlayComponent {
             stoneLion.getStoneLion().playCardToLion(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
-        if (sumBoxEntity.isCapacityFull())
-            isReadyToResetSum = true;
+        sumBoxEntity.touchUp();
     }
 }
