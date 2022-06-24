@@ -1,18 +1,20 @@
 package com.arithfighter.not.entity.game;
 
 import com.arithfighter.not.time.TimeHandler;
+import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class SumMask {
     private final Mask sumMask;
-    private final TimeHandler timeHandler;
+    private final Timer timer;
     private boolean isReveal = false;
 
     public SumMask(Texture texture) {
         sumMask = new Mask(texture, 5);
-        timeHandler = new TimeHandler();
+        timer = new Timer();
+        timer.setTime(1.2f);
     }
 
     public Mask getSumMask() {
@@ -21,7 +23,7 @@ class SumMask {
 
     public void init() {
         isReveal = false;
-        timeHandler.resetPastedTime();
+        timer.init();
     }
 
     public void setReveal() {
@@ -30,9 +32,9 @@ class SumMask {
 
     public void update(SpriteBatch batch) {
         if (isReveal) {
-            timeHandler.updatePastedTime();
+            timer.update();
 
-            if (timeHandler.getPastedTime() >= 1.2f)
+            if (timer.isTimesOut())
                 init();
         } else
             sumMask.draw(batch);
