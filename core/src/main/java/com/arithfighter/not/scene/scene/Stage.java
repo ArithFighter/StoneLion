@@ -19,8 +19,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
-    private boolean isComplete = false;
-    private final TimeHandler timeHandler = new TimeHandler();
+    private final CompletionManager completionManager;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -32,18 +31,19 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton = new SceneControlButton(textures[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
         pauseButton.getButton().setFont(fontService.getFont22());
+
+        completionManager = new CompletionManager();
     }
 
     public void init() {
         gamePlayComponent.init();
         pauseMenu.init();
         pauseButton.init();
-        isComplete = false;
-        timeHandler.resetPastedTime();
+        completionManager.init();
     }
 
     public boolean isComplete(){
-        return isComplete;
+        return completionManager.isComplete();
     }
 
     private void update() {
@@ -59,16 +59,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
             gamePlayComponent.update(getCursorPos().getX(), getCursorPos().getY());
 
-            if (gamePlayComponent.isAllNumZero()){
-                countDownCompletion();
-            }
+            if (gamePlayComponent.isAllNumZero())
+                completionManager.countDownCompletion();
         }
-    }
-
-    private void countDownCompletion(){
-        timeHandler.updatePastedTime();
-        if (timeHandler.getPastedTime()>1.5f)
-            isComplete = true;
     }
 
     public void render() {
@@ -117,3 +110,27 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 }
 
+class CompletionManager{
+    private boolean isComplete;
+    private final TimeHandler timeHandler;
+
+    public CompletionManager(){
+        isComplete = false;
+        timeHandler = new TimeHandler();
+    }
+
+    public void init(){
+        isComplete = false;
+        timeHandler.resetPastedTime();
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void countDownCompletion(){
+        timeHandler.updatePastedTime();
+        if (timeHandler.getPastedTime()>1.5f)
+            isComplete = true;
+    }
+}
