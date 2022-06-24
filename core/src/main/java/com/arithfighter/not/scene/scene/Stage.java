@@ -11,7 +11,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
-import com.arithfighter.not.time.TimeHandler;
+import com.arithfighter.not.time.CompletionManager;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -120,30 +120,5 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseButton.getButton().off();
             gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
         }
-    }
-}
-
-class CompletionManager{
-    private boolean isComplete;
-    private final TimeHandler timeHandler;
-
-    public CompletionManager(){
-        isComplete = false;
-        timeHandler = new TimeHandler();
-    }
-
-    public void init(){
-        isComplete = false;
-        timeHandler.resetPastedTime();
-    }
-
-    public boolean isComplete() {
-        return isComplete;
-    }
-
-    public void countDownCompletion(){
-        timeHandler.updatePastedTime();
-        if (timeHandler.getPastedTime()>1.5f)
-            isComplete = true;
     }
 }
