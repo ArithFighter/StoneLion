@@ -9,6 +9,7 @@ import com.arithfighter.not.card.CardAnimationService;
 import com.arithfighter.not.entity.lion.StoneLionEntity;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
+import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GamePlayComponent {
     private final NumberBoxEntity numberBoxEntity;
-    private final PlayerService player;
+    private Player player;
     private CardAnimate cardAnimate;
     private SpriteBatch batch;
     private boolean isCardDragging = false;
@@ -43,9 +44,7 @@ public class GamePlayComponent {
 
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
-        player = new PlayerService(cards, sumBoxEntity.getSumBoxModel(), CharacterList.KNIGHT);
-
-        stoneLion = new StoneLionEntity(spriteSheets[2], player.getPlayer(), cardAnimate);
+        stoneLion = new StoneLionEntity(spriteSheets[2], cardAnimate);
 
         variationController = new VariationController(textures[5], font, sumBoxEntity){
             @Override
@@ -54,6 +53,11 @@ public class GamePlayComponent {
             }
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+        stoneLion.setPlayer(player);
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -80,7 +84,7 @@ public class GamePlayComponent {
         numberBoxEntity.update(sum);
 
         if (cardAnimate.isAllNotStart())
-            player.getPlayer().playOnCardAnimation(mouseX, mouseY);
+            player.playOnCardAnimation(mouseX, mouseY);
     }
 
     public boolean isAllNumZero(){
@@ -102,7 +106,7 @@ public class GamePlayComponent {
         variationController.setSum(sumBoxEntity.getSumBoxModel().getSum());
         variationController.changeGameVariation(gameVariation, batch);
 
-        player.getPlayer().draw(batch);
+        player.draw(batch);
 
         drawCardAnimate();
     }
@@ -117,17 +121,17 @@ public class GamePlayComponent {
 
         //you can only touch cards when all card animation finished
         if (cardAnimate.isAllNotStart()){
-            player.getPlayer().activateCard(mouseX, mouseY);
-            cardAnimate.getCardReset().setLastMousePoint(player.getPlayer().getActiveCard().getInitPoint());
+            player.activateCard(mouseX, mouseY);
+            cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
         }
         sumBoxEntity.touchDown();
     }
 
     public void touchDragged(int mouseX, int mouseY) {
-        if (player.getPlayer().isCardActive())
+        if (player.isCardActive())
             isCardDragging = true;
 
-        player.getPlayer().updateWhenDrag(mouseX, mouseY);
+        player.updateWhenDrag(mouseX, mouseY);
     }
 
     public void touchUp(int mouseX, int mouseY) {

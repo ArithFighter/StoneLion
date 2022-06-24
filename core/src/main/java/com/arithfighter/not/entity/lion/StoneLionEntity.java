@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class StoneLionEntity {
     private final StoneLion stoneLion;
+    private Player player;
 
-    public StoneLionEntity(Texture texture, Player player, CardAnimate cardAnimate) {
+    public StoneLionEntity(Texture texture, CardAnimate cardAnimate) {
         stoneLion = new StoneLion(texture) {
             @Override
             public void initCardPosition() {
@@ -22,6 +23,10 @@ public class StoneLionEntity {
             }
         };
         stoneLion.setPosition(900, 200);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public StoneLion getStoneLion() {
