@@ -1,6 +1,5 @@
 package com.arithfighter.not.entity.game;
 
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;

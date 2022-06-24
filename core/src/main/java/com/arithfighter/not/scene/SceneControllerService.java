@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
-import com.arithfighter.not.pojo.TokenHolder;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
 

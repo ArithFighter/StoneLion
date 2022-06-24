@@ -1,7 +1,6 @@
 package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.animate.VisualEffect;
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

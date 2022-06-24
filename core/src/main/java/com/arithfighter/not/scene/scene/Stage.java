@@ -21,7 +21,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final Timer timer;
-    private GameVariation gameVariation = GameVariation.TRANSFORM;
+    private GameVariation gameVariation = GameVariation.FOG;
     private int boxQuantity = 6;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {

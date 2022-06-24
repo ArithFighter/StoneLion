@@ -2,7 +2,6 @@ package com.arithfighter.not.entity.numberbox;
 
 import com.arithfighter.not.animate.VisualEffect;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.time.TimeHandler;
 import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
