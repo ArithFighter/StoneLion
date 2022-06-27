@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.GameSave;
+import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
 
@@ -15,12 +16,14 @@ public class SceneControllerService {
 
         sceneFactories = new SceneFactory[]{
                 scc.getTransitionController(),
-                scc.getStageController()
+                scc.getStageController(),
+                scc.getOptionController()
         };
 
         sceneManageable = new SceneControllable[]{
                 scc.getTransitionController(),
-                scc.getStageController()
+                scc.getStageController(),
+                scc.getOptionController()
         };
 
         for (SceneControllable s : sceneManageable)
@@ -55,10 +58,12 @@ public class SceneControllerService {
 class SceneControllerCollection {
     private final TransitionController transitionController;
     private final StageController stageController;
+    private final OptionController optionController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
         transitionController = new TransitionController(sceneBuilder);
         stageController = new StageController(sceneBuilder);
+        optionController = new OptionController(sceneBuilder);
     }
 
     public TransitionController getTransitionController() {
@@ -67,6 +72,10 @@ class SceneControllerCollection {
 
     public StageController getStageController() {
         return stageController;
+    }
+
+    public OptionController getOptionController() {
+        return optionController;
     }
 }
 
@@ -101,6 +110,29 @@ class TransitionController extends BuilderAccessor implements SceneControllable{
     }
 }
 
+class OptionController extends BuilderAccessor implements SceneControllable{
+
+    public OptionController(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.OPTION);
+    }
+
+    @Override
+    public void run() {
+        SceneBuilder sceneBuilder = getSceneBuilder();
+        Option option = sceneBuilder.getOption();
+
+        if (option.isLeaving()) {
+            setGameScene(option.getSceneTemp());
+            option.init();
+        }
+    }
+}
+
 class StageController extends BuilderAccessor implements SceneControllable{
 
     public StageController(SceneBuilder sceneBuilder) {
@@ -116,6 +148,11 @@ class StageController extends BuilderAccessor implements SceneControllable{
     public void run() {
         Stage stage = getSceneBuilder().getStage();
 
+        if (stage.getPauseMenu().isOpenOption()){
+            setGameScene(GameScene.OPTION);
+            getSceneBuilder().getOption().setSceneTemp(GameScene.STAGE);
+            stage.getPauseMenu().init();
+        }
         if(stage.isComplete()){
             setGameScene(GameScene.TRANSITION);
             stage.init();
