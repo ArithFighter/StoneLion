@@ -1,16 +1,13 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
-import com.badlogic.gdx.Preferences;
 
 public class SceneControllerService {
     private GameScene gameScene;
     private final SceneFactory[] sceneFactories;
     private final SceneControllable[] sceneManageable;
-    private final Savable[] savable;
 
     public SceneControllerService(SceneBuilder sceneBuilder) {
         SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
@@ -29,10 +26,6 @@ public class SceneControllerService {
 
         for (SceneControllable s : sceneManageable)
             s.initScene();
-
-        savable = new Savable[]{
-                scc.getOptionController()
-        };
     }
 
     public void setGameScene(GameScene gameScene) {
@@ -41,11 +34,6 @@ public class SceneControllerService {
 
     public GameScene getGameScene() {
         return gameScene;
-    }
-
-    public void setGameSave(GameSave gameSave) {
-        for (Savable s : savable)
-            s.setGameSave(gameSave);
     }
 
     public void update(int index) {
@@ -86,10 +74,6 @@ interface SceneControllable {
     void run();
 }
 
-interface Savable {
-    void setGameSave(GameSave gameSave);
-}
-
 class TransitionController extends BuilderAccessor implements SceneControllable{
 
     public TransitionController(SceneBuilder sceneBuilder) {
@@ -111,9 +95,7 @@ class TransitionController extends BuilderAccessor implements SceneControllable{
     }
 }
 
-class OptionController extends BuilderAccessor implements SceneControllable, Savable{
-    private GameSave gameSave;
-
+class OptionController extends BuilderAccessor implements SceneControllable{
     public OptionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
     }
@@ -130,26 +112,9 @@ class OptionController extends BuilderAccessor implements SceneControllable, Sav
 
         if (option.isLeaving()) {
             setGameScene(option.getSceneTemp());
-            saveOption();
+            sceneBuilder.getOptionSave().saveOption();
             option.init();
         }
-    }
-
-    private void saveOption(){
-        OptionEvent optionEvent = getSceneBuilder().getOption();
-
-        Preferences pref = gameSave.getPreferences();
-        String soundVolumeKey = gameSave.getOptionKeys()[0];
-        String musicVolumeKey = gameSave.getOptionKeys()[1];
-
-        pref.putInteger(soundVolumeKey, optionEvent.getSoundVolume());
-        pref.putInteger(musicVolumeKey, optionEvent.getMusicVolume());
-        pref.flush();
-    }
-
-    @Override
-    public void setGameSave(GameSave gameSave) {
-        this.gameSave = gameSave;
     }
 }
 

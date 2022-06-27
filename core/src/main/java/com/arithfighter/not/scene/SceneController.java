@@ -1,7 +1,5 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.save.GameSave;
-
 public class SceneController {
     private GameScene gameScene;
     private final SceneControllerService sceneControllerService;
@@ -11,10 +9,6 @@ public class SceneController {
 
         sceneControllerService = new SceneControllerService(sceneBuilder);
         sceneControllerService.setGameScene(gameScene);
-    }
-
-    public void setGameSave(GameSave gameSave) {
-        sceneControllerService.setGameSave(gameSave);
     }
 
     public GameScene getGameScene() {

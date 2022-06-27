@@ -5,15 +5,16 @@ import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
     private final MouseEvent[] mouseEvents;
     private final SceneEvent[] sceneEvents;
+    private OptionSave optionSave;
 
     public SceneBuilder(TextureService textureService, SoundManager soundManager, FontService fontService){
         super(textureService, soundManager, fontService);
@@ -31,15 +32,12 @@ public class SceneBuilder extends SceneCollection{
         };
     }
 
-    public void loadSave(GameSave gameSave){
-        Preferences pref = gameSave.getPreferences();
-        String soundVolumeKey = gameSave.getOptionKeys()[0];
-        String musicVolumeKey = gameSave.getOptionKeys()[1];
+    public void setOptionSave(GameSave gameSave) {
+        optionSave = new OptionSave(gameSave, getOption());
+    }
 
-        OptionEvent optionEvent = getOption();
-
-        optionEvent.setSoundVolume(pref.getInteger(soundVolumeKey));
-        optionEvent.setMusicVolume(pref.getInteger(musicVolumeKey));
+    public OptionSave getOptionSave() {
+        return optionSave;
     }
 
     public void setBatch(SpriteBatch batch){
