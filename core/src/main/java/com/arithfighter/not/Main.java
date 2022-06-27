@@ -6,9 +6,9 @@ import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.GameScene;
+import com.arithfighter.not.scene.OptionEvent;
 import com.arithfighter.not.scene.SceneBuilder;
 import com.arithfighter.not.scene.SceneController;
-import com.arithfighter.not.scene.scene.Option;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -94,7 +94,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void setVolume(){
-        Option option = sceneBuilder.getOption();
+        OptionEvent option = sceneBuilder.getOption();
         float soundVolume = option.getSoundVolume();
         float musicVolume = option.getMusicVolume();
 

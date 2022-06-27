@@ -5,15 +5,12 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.scene.GameScene;
-import com.arithfighter.not.scene.MouseEvent;
-import com.arithfighter.not.scene.SceneComponent;
-import com.arithfighter.not.scene.SceneEvent;
+import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 
-public class Option extends SceneComponent implements SceneEvent, MouseEvent {
+public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {
     private final SceneControlButton leaveButton;
     private final SoundManager soundManager;
     private final ControlBar soundControl;
