@@ -36,8 +36,10 @@ public class SceneBuilder extends SceneCollection{
         String soundVolumeKey = gameSave.getOptionKeys()[0];
         String musicVolumeKey = gameSave.getOptionKeys()[1];
 
-        getOption().setSoundVolume(pref.getInteger(soundVolumeKey));
-        getOption().setMusicVolume(pref.getInteger(musicVolumeKey));
+        OptionEvent optionEvent = getOption();
+
+        optionEvent.setSoundVolume(pref.getInteger(soundVolumeKey));
+        optionEvent.setMusicVolume(pref.getInteger(musicVolumeKey));
     }
 
     public void setBatch(SpriteBatch batch){

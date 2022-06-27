@@ -136,15 +136,14 @@ class OptionController extends BuilderAccessor implements SceneControllable, Sav
     }
 
     private void saveOption(){
-        SceneBuilder sceneBuilder = getSceneBuilder();
-        Option option = sceneBuilder.getOption();
+        OptionEvent optionEvent = getSceneBuilder().getOption();
 
         Preferences pref = gameSave.getPreferences();
         String soundVolumeKey = gameSave.getOptionKeys()[0];
         String musicVolumeKey = gameSave.getOptionKeys()[1];
 
-        pref.putInteger(soundVolumeKey, option.getSoundVolume());
-        pref.putInteger(musicVolumeKey, option.getMusicVolume());
+        pref.putInteger(soundVolumeKey, optionEvent.getSoundVolume());
+        pref.putInteger(musicVolumeKey, optionEvent.getMusicVolume());
         pref.flush();
     }
 
