@@ -5,7 +5,6 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.pojo.OptionManager;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneComponent;
@@ -20,7 +19,6 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent {
     private final ControlBar soundControl;
     private final ControlBar musicControl;
     private GameScene sceneTemp;
-    private final OptionManager optionManager = new OptionManager();
 
     public Option(TextureService textureService, SoundManager soundManager, FontService fontService){
         this.soundManager = soundManager;
@@ -89,8 +87,6 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent {
         leaveButton.update();
         soundControl.update();
         musicControl.update();
-        optionManager.setMusicVolume(musicControl.getValue()/8f);
-        optionManager.setSoundVolume(soundControl.getValue()/10f);
     }
 
     public GameScene getSceneTemp() {
@@ -101,8 +97,20 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent {
         this.sceneTemp = sceneTemp;
     }
 
-    public OptionManager getOptionManager() {
-        return optionManager;
+    public void setSoundVolume(int i){
+        soundControl.setValue(i);
+    }
+
+    public void setMusicVolume(int i){
+        musicControl.setValue(i);
+    }
+
+    public int getSoundVolume(){
+        return soundControl.getValue();
+    }
+
+    public int getMusicVolume(){
+        return musicControl.getValue();
     }
 
     public boolean isLeaving() {

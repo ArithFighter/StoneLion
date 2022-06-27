@@ -94,11 +94,11 @@ public class Main extends ApplicationAdapter {
 
     private void setVolume(){
         Option option = sceneBuilder.getOption();
-        float soundVolume = option.getOptionManager().getSoundVolume();
-        float musicVolume = option.getOptionManager().getMusicVolume();
+        float soundVolume = option.getSoundVolume();
+        float musicVolume = option.getMusicVolume();
 
-        audioHandler.setMusicVolume(soundVolume);
-        audioHandler.setSoundVolume(musicVolume);
+        audioHandler.setMusicVolume(musicVolume);
+        audioHandler.setSoundVolume(soundVolume);
     }
 
     private void drawGame(GameScene gameScene) {
