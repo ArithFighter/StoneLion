@@ -21,7 +21,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final Timer timer;
-    private GameVariation gameVariation = GameVariation.FOG;
+    private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
@@ -40,12 +40,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer.setTime(1.5f);
     }
 
-    public void setGameVariation(GameVariation gameVariation) {
-        this.gameVariation = gameVariation;
-    }
-
-    public void setBoxQuantity(int boxQuantity) {
-        this.boxQuantity = boxQuantity;
+    public PauseMenu getPauseMenu() {
+        return pauseMenu;
     }
 
     public void init() {
