@@ -1,12 +1,14 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.GameSave;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
@@ -27,6 +29,15 @@ public class SceneBuilder extends SceneCollection{
                 getStage(),
                 getOption()
         };
+    }
+
+    public void loadSave(GameSave gameSave){
+        Preferences pref = gameSave.getPreferences();
+        String soundVolumeKey = gameSave.getOptionKeys()[0];
+        String musicVolumeKey = gameSave.getOptionKeys()[1];
+
+        getOption().setSoundVolume(pref.getInteger(soundVolumeKey));
+        getOption().setMusicVolume(pref.getInteger(musicVolumeKey));
     }
 
     public void setBatch(SpriteBatch batch){

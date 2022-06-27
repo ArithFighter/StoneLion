@@ -58,6 +58,7 @@ public class Main extends ApplicationAdapter {
     private void setGameSave(){
         GameSave gameSave = new GameSave();
         sceneController.setGameSave(gameSave);
+        sceneBuilder.loadSave(gameSave);
     }
 
     @Override
