@@ -39,6 +39,14 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer.setTime(1.5f);
     }
 
+    public void setGameVariation(GameVariation gameVariation) {
+        this.gameVariation = gameVariation;
+    }
+
+    public void setBoxQuantity(int boxQuantity) {
+        this.boxQuantity = boxQuantity;
+    }
+
     public PauseMenu getPauseMenu() {
         return pauseMenu;
     }

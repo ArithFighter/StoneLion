@@ -1,10 +1,13 @@
 package com.arithfighter.not.scene.controller;
 
+import com.arithfighter.not.entity.game.GameVariation;
+import com.arithfighter.not.entity.numberbox.NumberBoxService;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
+import com.arithfighter.not.system.RandomNumProducer;
 
 class SceneControllerCollection {
     private final TransitionController transitionController;
@@ -31,9 +34,11 @@ class SceneControllerCollection {
 }
 
 class TransitionController extends BuilderAccessor implements SceneControllable {
+    private final StageConfigurator stageConfigurator;
 
     public TransitionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
+        stageConfigurator = new StageConfigurator();
     }
 
     @Override
@@ -44,10 +49,34 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
     @Override
     public void run() {
         Transition transition = getSceneBuilder().getTransition();
+        Stage stage = getSceneBuilder().getStage();
+
         if (transition.isGameStart()) {
-            setGameScene(GameScene.STAGE);
+            stage.setGameVariation(stageConfigurator.getVariation());
+            stage.setBoxQuantity(stageConfigurator.getQuantity());
             transition.init();
+            setGameScene(GameScene.STAGE);
         }
+    }
+}
+
+class StageConfigurator{
+    private final RandomNumProducer randomQuantity;
+    private final RandomNumProducer randomVariationIndex;
+
+    StageConfigurator(){
+        int maxQuantity = new NumberBoxService().getQuantity();
+        randomQuantity = new RandomNumProducer(maxQuantity, 1);
+
+        randomVariationIndex = new RandomNumProducer(GameVariation.values().length-1, 0);
+    }
+
+    public int getQuantity(){
+        return randomQuantity.getRandomNum();
+    }
+
+    public GameVariation getVariation(){
+        return GameVariation.values()[randomVariationIndex.getRandomNum()];
     }
 }
 

@@ -19,6 +19,10 @@ public class NumberBoxService {
         }
     }
 
+    public NumberBoxService() {
+        numberBoxes = new NumberBox[quantity];
+    }
+
     public void setPosition(NumberBoxPlacer placer) {
         for (int i = 0; i < quantity; i++){
             Rectangle rectangle = numberBoxes[i].getRectangle();
