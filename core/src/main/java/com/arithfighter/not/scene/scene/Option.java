@@ -94,6 +94,14 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent {
         this.sceneTemp = sceneTemp;
     }
 
+    public float getSoundVolume(){
+        return soundControl.getValue();
+    }
+
+    public float getMusicVolume(){
+        return musicControl.getValue();
+    }
+
     public boolean isLeaving() {
         return leaveButton.isStart();
     }
