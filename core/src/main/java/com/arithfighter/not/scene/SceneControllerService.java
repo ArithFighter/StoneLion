@@ -4,6 +4,7 @@ import com.arithfighter.not.GameSave;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
+import com.badlogic.gdx.Preferences;
 
 public class SceneControllerService {
     private GameScene gameScene;
@@ -30,7 +31,7 @@ public class SceneControllerService {
             s.initScene();
 
         savable = new Savable[]{
-
+                scc.getOptionController()
         };
     }
 
@@ -110,7 +111,8 @@ class TransitionController extends BuilderAccessor implements SceneControllable{
     }
 }
 
-class OptionController extends BuilderAccessor implements SceneControllable{
+class OptionController extends BuilderAccessor implements SceneControllable, Savable{
+    private GameSave gameSave;
 
     public OptionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -128,8 +130,27 @@ class OptionController extends BuilderAccessor implements SceneControllable{
 
         if (option.isLeaving()) {
             setGameScene(option.getSceneTemp());
+            saveOption();
             option.init();
         }
+    }
+
+    private void saveOption(){
+        SceneBuilder sceneBuilder = getSceneBuilder();
+        Option option = sceneBuilder.getOption();
+
+        Preferences pref = gameSave.getPreferences();
+        String soundVolumeKey = gameSave.getOptionKeys()[0];
+        String musicVolumeKey = gameSave.getOptionKeys()[1];
+
+        pref.putInteger(soundVolumeKey, (int) option.getOptionManager().getSoundVolume());
+        pref.putInteger(musicVolumeKey, (int) option.getOptionManager().getMusicVolume());
+        pref.flush();
+    }
+
+    @Override
+    public void setGameSave(GameSave gameSave) {
+        this.gameSave = gameSave;
     }
 }
 

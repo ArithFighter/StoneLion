@@ -83,18 +83,22 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.setGameScene(gameScene);
 
-        Option option = sceneBuilder.getOption();
-        float soundVolume = option.getOptionManager().getSoundVolume();
-        float musicVolume = option.getOptionManager().getMusicVolume();
-
-        audioHandler.setMusicVolume(soundVolume);
-        audioHandler.setSoundVolume(musicVolume);
+        setVolume();
 
         MusicController musicController = new MusicController(audioHandler);
         musicController.setGameScene(gameScene);
         musicController.playBackgroundMusic();
 
         drawGame(gameScene);
+    }
+
+    private void setVolume(){
+        Option option = sceneBuilder.getOption();
+        float soundVolume = option.getOptionManager().getSoundVolume();
+        float musicVolume = option.getOptionManager().getMusicVolume();
+
+        audioHandler.setMusicVolume(soundVolume);
+        audioHandler.setSoundVolume(musicVolume);
     }
 
     private void drawGame(GameScene gameScene) {
