@@ -8,6 +8,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.SceneBuilder;
 import com.arithfighter.not.scene.SceneController;
+import com.arithfighter.not.scene.scene.Option;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -82,8 +83,12 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter.setGameScene(gameScene);
 
-        audioHandler.setMusicVolume(sceneBuilder.getOption().getMusicVolume());
-        audioHandler.setSoundVolume(sceneBuilder.getOption().getSoundVolume());
+        Option option = sceneBuilder.getOption();
+        float soundVolume = option.getOptionManager().getSoundVolume();
+        float musicVolume = option.getOptionManager().getMusicVolume();
+
+        audioHandler.setMusicVolume(soundVolume);
+        audioHandler.setSoundVolume(musicVolume);
 
         MusicController musicController = new MusicController(audioHandler);
         musicController.setGameScene(gameScene);
