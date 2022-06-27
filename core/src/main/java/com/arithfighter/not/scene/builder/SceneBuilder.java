@@ -1,4 +1,4 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.builder;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.save.GameSave;
@@ -6,9 +6,9 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.save.OptionSave;
-import com.arithfighter.not.scene.scene.Option;
-import com.arithfighter.not.scene.scene.Stage;
-import com.arithfighter.not.scene.scene.Transition;
+import com.arithfighter.not.scene.GameScene;
+import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneEvent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneBuilder extends SceneCollection{
@@ -61,29 +61,5 @@ public class SceneBuilder extends SceneCollection{
             if (gameScene == GameScene.values()[i]){
                 sceneEvents[i].render();
             }
-    }
-}
-
-class SceneCollection{
-    private final Stage stage;
-    private final Transition transition;
-    private final Option option;
-
-    public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService){
-        stage = new Stage(textureService, soundManager, fontService);
-        transition = new Transition(fontService);
-        option = new Option(textureService, soundManager, fontService);
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public Transition getTransition() {
-        return transition;
-    }
-
-    public Option getOption() {
-        return option;
     }
 }

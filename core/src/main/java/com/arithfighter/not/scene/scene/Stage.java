@@ -9,7 +9,6 @@ import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
-import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.button.SceneControlButton;

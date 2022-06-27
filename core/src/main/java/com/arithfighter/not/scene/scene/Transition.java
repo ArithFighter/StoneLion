@@ -4,7 +4,6 @@ import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
-import com.arithfighter.not.scene.SceneComponent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.graphics.Color;

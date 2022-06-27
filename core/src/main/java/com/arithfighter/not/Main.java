@@ -8,8 +8,8 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
-import com.arithfighter.not.scene.SceneBuilder;
-import com.arithfighter.not.scene.SceneController;
+import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.controller.SceneController;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -47,10 +47,9 @@ public class Main extends ApplicationAdapter {
         sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager(), fontService);
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
+        setGameSave();
 
         sceneController = new SceneController(sceneBuilder, GameScene.TRANSITION);
-
-        setGameSave();
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
         Gdx.input.setInputProcessor(mouseAdapter);
@@ -58,7 +57,6 @@ public class Main extends ApplicationAdapter {
 
     private void setGameSave(){
         GameSave gameSave = new GameSave();
-        sceneController.setGameSave(gameSave);
         sceneBuilder.setOptionSave(gameSave);
         sceneBuilder.getOptionSave().loadSave();
     }

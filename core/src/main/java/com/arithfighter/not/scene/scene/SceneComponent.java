@@ -1,9 +1,9 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SceneComponent {
+class SceneComponent {
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
 
