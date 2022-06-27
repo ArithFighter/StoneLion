@@ -2,9 +2,6 @@ package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
-import com.arithfighter.not.scene.scene.Option;
-import com.arithfighter.not.scene.scene.Stage;
-import com.arithfighter.not.scene.scene.Transition;
 
 public class SceneControllerService {
     private GameScene gameScene;
@@ -41,7 +38,9 @@ public class SceneControllerService {
     public void update(int index) {
         for (SceneControllable s : sceneManageable)
             s.initScene();
+
         sceneManageable[index].run();
+
         gameScene = sceneFactories[index].getGamaScene();
     }
 }
