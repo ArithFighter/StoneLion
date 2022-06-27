@@ -1,6 +1,6 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.GameSave;
+import com.arithfighter.not.save.GameSave;
 
 public class SceneController {
     private GameScene gameScene;

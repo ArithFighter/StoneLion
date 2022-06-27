@@ -1,6 +1,6 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.GameSave;
+import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
