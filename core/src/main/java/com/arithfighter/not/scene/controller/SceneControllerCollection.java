@@ -8,6 +8,7 @@ import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
 import com.arithfighter.not.system.RandomNumProducer;
+import jdk.tools.jaotc.ELFMacroAssembler;
 
 class SceneControllerCollection {
     private final TransitionController transitionController;
@@ -54,6 +55,9 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
         if (transition.isGameStart()) {
             stage.setGameVariation(stageConfigurator.getVariation());
             stage.setBoxQuantity(stageConfigurator.getQuantity());
+
+            stageConfigurator.update();
+
             transition.init();
             setGameScene(GameScene.STAGE);
         }
@@ -61,14 +65,16 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
 }
 
 class StageConfigurator{
+    private int cursor = 0;
     private final RandomNumProducer randomQuantity;
-    private final RandomNumProducer randomVariationIndex;
 
     StageConfigurator(){
         int maxQuantity = new NumberBoxService().getQuantity();
-        randomQuantity = new RandomNumProducer(maxQuantity, 1);
+        randomQuantity = new RandomNumProducer(maxQuantity, 6);
+    }
 
-        randomVariationIndex = new RandomNumProducer(GameVariation.values().length-1, 0);
+    public void update(){
+        cursor++;
     }
 
     public int getQuantity(){
@@ -76,7 +82,18 @@ class StageConfigurator{
     }
 
     public GameVariation getVariation(){
-        return GameVariation.values()[randomVariationIndex.getRandomNum()];
+        GameVariation gv;
+
+        if (cursor<2)
+            gv = GameVariation.STANDARD;
+        else if (cursor<3)
+            gv = GameVariation.FOG;
+        else if (cursor<4)
+            gv = GameVariation.TABOO;
+        else
+            gv = GameVariation.TRANSFORM;
+
+        return gv;
     }
 }
 
