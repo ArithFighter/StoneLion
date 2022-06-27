@@ -85,4 +85,16 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent {
         soundControl.draw(getBatch(), "SOUND");
         musicControl.draw(getBatch(), "MUSIC");
     }
+
+    public GameScene getSceneTemp() {
+        return sceneTemp;
+    }
+
+    public void setSceneTemp(GameScene sceneTemp) {
+        this.sceneTemp = sceneTemp;
+    }
+
+    public boolean isLeaving() {
+        return leaveButton.isStart();
+    }
 }
