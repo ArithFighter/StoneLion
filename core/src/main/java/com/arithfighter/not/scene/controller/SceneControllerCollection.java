@@ -8,7 +8,6 @@ import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
 import com.arithfighter.not.system.RandomNumProducer;
-import jdk.tools.jaotc.ELFMacroAssembler;
 
 class SceneControllerCollection {
     private final TransitionController transitionController;
@@ -35,11 +34,11 @@ class SceneControllerCollection {
 }
 
 class TransitionController extends BuilderAccessor implements SceneControllable {
-    private final StageConfigurator stageConfigurator;
+    private final StageDeployer stageDeployer;
 
     public TransitionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
-        stageConfigurator = new StageConfigurator();
+        stageDeployer = new StageDeployer();
     }
 
     @Override
@@ -53,10 +52,10 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
         Stage stage = getSceneBuilder().getStage();
 
         if (transition.isGameStart()) {
-            stage.setGameVariation(stageConfigurator.getVariation());
-            stage.setBoxQuantity(stageConfigurator.getQuantity());
+            stage.setGameVariation(stageDeployer.getVariation());
+            stage.setBoxQuantity(stageDeployer.getQuantity());
 
-            stageConfigurator.update();
+            stageDeployer.update();
 
             transition.init();
             setGameScene(GameScene.STAGE);
@@ -64,11 +63,11 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
     }
 }
 
-class StageConfigurator{
+class StageDeployer {
     private int cursor = 0;
     private final RandomNumProducer randomQuantity;
 
-    StageConfigurator(){
+    StageDeployer(){
         int maxQuantity = new NumberBoxService().getQuantity();
         randomQuantity = new RandomNumProducer(maxQuantity, 6);
     }
