@@ -20,12 +20,14 @@ public class SceneBuilder extends SceneCollection{
         super(textureService, soundManager, fontService);
 
         mouseEvents = new MouseEvent[]{
+                getDeckSelection(),
                 getTransition(),
                 getStage(),
                 getOption()
         };
 
         sceneEvents = new SceneEvent[]{
+                getDeckSelection(),
                 getTransition(),
                 getStage(),
                 getOption()

@@ -49,7 +49,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setCursorPos(cursorPos);
         setGameSave();
 
-        sceneController = new SceneController(sceneBuilder, GameScene.TRANSITION);
+        sceneController = new SceneController(sceneBuilder, GameScene.DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
         Gdx.input.setInputProcessor(mouseAdapter);
