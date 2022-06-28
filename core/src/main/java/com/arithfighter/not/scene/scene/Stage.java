@@ -47,6 +47,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         this.boxQuantity = boxQuantity;
     }
 
+    public void setDeck(CharacterList characterList){
+        gamePlayComponent.setCharacter(characterList);
+    }
+
     public PauseMenu getPauseMenu() {
         return pauseMenu;
     }
@@ -86,7 +90,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         gamePlayComponent.setBatch(batch);
-        gamePlayComponent.setCharacter(CharacterList.ROGUE);
         gamePlayComponent.draw(gameVariation, boxQuantity);
 
         if (pauseButton.isStart()) {
