@@ -5,8 +5,10 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
+import com.arithfighter.not.scene.SceneLayout;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
@@ -18,17 +20,21 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     private final Font font;
     private final SceneControlButton startButton;
     private String deckName = "";
+    private final Rectangle grid;
 
     public DeckSelection(TextureService textureService, FontService fontService){
         Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
         font = fontService.getFont36();
 
+        SceneLayout layout = new SceneLayout(7, 4);
+        grid = layout.getGrid();
+
         knightButton = new PanelButton(panels[0], 1f);
-        knightButton.setPosition(350,350);
+        knightButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
         rogueButton = new PanelButton(panels[1], 1f);
-        rogueButton.setPosition(600,350);
+        rogueButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();
         f.setColor(Color.WHITE);
@@ -78,7 +84,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         if (rogueButton.isOn())
             deckName = CharacterList.values()[1].toString();
 
-        font.draw(getBatch(), deckName, 800,300);
+        font.draw(getBatch(), deckName, grid.getWidth()*5,grid.getHeight()*2);
 
         knightButton.draw(getBatch());
         rogueButton.draw(getBatch());
@@ -91,9 +97,9 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
 
     private void setStartButtonPosition(){
         if (deckName.equals(""))
-            startButton.getButton().setPosition(0,-300);
+            startButton.getButton().setPosition(0,-grid.getHeight());
         else
-            startButton.getButton().setPosition(800,100);
+            startButton.getButton().setPosition(grid.getWidth()*5, grid.getHeight());
     }
 
     public boolean isStartGame(){
