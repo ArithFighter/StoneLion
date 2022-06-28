@@ -11,6 +11,7 @@ import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.scene.SceneLayout;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -27,7 +28,9 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
         font = fontService.getFont36();
 
-        SceneLayout layout = new SceneLayout(7, 4);
+        SceneLayout layout = new SceneLayout();
+        layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        layout.setGrid(7,4);
         grid = layout.getGrid();
 
         knightButton = new PanelButton(panels[0], 1f);

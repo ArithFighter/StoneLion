@@ -1,36 +1,23 @@
 package com.arithfighter.not.scene;
 
 import com.arithfighter.not.pojo.Rectangle;
-import com.badlogic.gdx.Gdx;
 
 public class SceneLayout {
-    private final Rectangle maxLayout;
-    private final Rectangle grid;
-    private final float centerX;
-    private final float centerY;
+    private Rectangle maxLayout;
+    private Rectangle grid;
 
-    public SceneLayout(int proportionX, int proportionY){
-        maxLayout = new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        grid = new Rectangle(maxLayout.getWidth()/proportionX, maxLayout.getHeight()/proportionY);
-
-        centerX = maxLayout.getWidth()/2;
-        centerY = maxLayout.getHeight()/2;
+    public SceneLayout(){
     }
 
-    public Rectangle getMaxLayout() {
-        return maxLayout;
+    public void setMaxLayout(Rectangle maxLayout) {
+        this.maxLayout = maxLayout;
+    }
+
+    public void setGrid(int proportionX, int proportionY) {
+        grid = new Rectangle(maxLayout.getWidth()/proportionX, maxLayout.getHeight()/proportionY);
     }
 
     public Rectangle getGrid() {
         return grid;
-    }
-
-    public float getCenterX() {
-        return centerX;
-    }
-
-    public float getCenterY() {
-        return centerY;
     }
 }

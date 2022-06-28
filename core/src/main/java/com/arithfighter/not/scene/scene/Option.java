@@ -9,6 +9,7 @@ import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {
@@ -23,7 +24,9 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Font font = fontService.getFont22();
 
-        SceneLayout layout = new SceneLayout(5,6);
+        SceneLayout layout = new SceneLayout();
+        layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        layout.setGrid(5,6);
         Rectangle grid = layout.getGrid();
 
         leaveButton = new SceneControlButton(textures[6], 1.8f);
