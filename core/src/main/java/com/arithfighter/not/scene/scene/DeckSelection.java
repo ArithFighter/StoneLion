@@ -8,7 +8,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
-import com.arithfighter.not.scene.SceneLayout;
+import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.Gdx;
@@ -28,7 +28,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
         font = fontService.getFont36();
 
-        SceneLayout layout = new SceneLayout();
+        LayoutSetter layout = new LayoutSetter();
         layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(7,4);
         grid = layout.getGrid();

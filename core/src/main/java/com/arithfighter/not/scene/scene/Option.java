@@ -6,6 +6,7 @@ import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
@@ -24,7 +25,7 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Font font = fontService.getFont22();
 
-        SceneLayout layout = new SceneLayout();
+        LayoutSetter layout = new LayoutSetter();
         layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(5,6);
         Rectangle grid = layout.getGrid();

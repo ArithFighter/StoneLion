@@ -1,12 +1,10 @@
-package com.arithfighter.not.scene;
+package com.arithfighter.not.pojo;
 
-import com.arithfighter.not.pojo.Rectangle;
-
-public class SceneLayout {
+public class LayoutSetter {
     private Rectangle maxLayout;
     private Rectangle grid;
 
-    public SceneLayout(){
+    public LayoutSetter(){
     }
 
     public void setMaxLayout(Rectangle maxLayout) {

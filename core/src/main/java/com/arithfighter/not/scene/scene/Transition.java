@@ -5,7 +5,7 @@ import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
-import com.arithfighter.not.scene.SceneLayout;
+import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -24,7 +24,7 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         timer = new Timer();
         timer.setTime(1.5f);
 
-        SceneLayout layout = new SceneLayout();
+        LayoutSetter layout = new LayoutSetter();
         layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(2,2);
         grid = layout.getGrid();
