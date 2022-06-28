@@ -149,6 +149,10 @@ class StageController extends BuilderAccessor implements SceneControllable {
             setGameScene(GameScene.TRANSITION);
             stage.init();
         }
+        if (stage.getPauseMenu().isReturnToMainMenu()){
+            setGameScene(GameScene.DECK_SELECTION);
+            stage.init();
+        }
     }
 }
 

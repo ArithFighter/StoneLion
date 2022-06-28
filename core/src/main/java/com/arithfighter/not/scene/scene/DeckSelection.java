@@ -62,6 +62,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     @Override
     public void init() {
         offButtons();
+        startButton.init();
     }
 
     private void offButtons(){
