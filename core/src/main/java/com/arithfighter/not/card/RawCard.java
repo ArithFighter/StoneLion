@@ -8,24 +8,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class RawCard {
     private final Point initPoint;
     private final Point point;
-    private Rectangle rectangle;
+    private final Rectangle rectangle;
     private final Sprite sprite;
 
-    public RawCard(Texture texture){
+    public RawCard(Texture texture, float scale){
         sprite = new Sprite(texture);
         initPoint = new Point();
         point = new Point();
-    }
 
-    public void addShape(Texture texture, float scale){
-        setShape(texture.getWidth(), texture.getHeight(), scale);
-    }
-
-    private void setShape(float width, float height, float scale){
-        Rectangle rectangle = new Rectangle();
-        rectangle.setWidth(width*scale);
-        rectangle.setHeight(height*scale);
-        this.rectangle = rectangle;
+        this.rectangle = new Rectangle(
+                texture.getWidth()*scale,
+                texture.getHeight()*scale
+        );
     }
 
     public void setSprite(){

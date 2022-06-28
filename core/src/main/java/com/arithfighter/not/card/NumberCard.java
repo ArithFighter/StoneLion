@@ -13,9 +13,7 @@ public class NumberCard{
     private final RawCard card;
 
     public NumberCard(Texture texture, int number, int scale) {
-        card = new RawCard(texture);
-
-        card.addShape(texture, scale);
+        card = new RawCard(texture, scale);
 
         rectangle = card.getShape();
 
