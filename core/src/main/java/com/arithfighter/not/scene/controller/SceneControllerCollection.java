@@ -4,6 +4,7 @@ import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.numberbox.NumberBoxService;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.scene.DeckSelection;
 import com.arithfighter.not.scene.scene.Option;
 import com.arithfighter.not.scene.scene.Stage;
 import com.arithfighter.not.scene.scene.Transition;
@@ -52,7 +53,12 @@ class DeckSelectionController extends BuilderAccessor implements SceneControllab
 
     @Override
     public void run() {
+        DeckSelection deckSelection = getSceneBuilder().getDeckSelection();
 
+        if(deckSelection.isStartGame()){
+            setGameScene(GameScene.TRANSITION);
+            deckSelection.init();
+        }
     }
 }
 

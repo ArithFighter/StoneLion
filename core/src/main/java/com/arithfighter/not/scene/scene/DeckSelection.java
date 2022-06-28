@@ -85,4 +85,8 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         startButton.update();
         startButton.getButton().draw(getBatch(), "Start");
     }
+
+    public boolean isStartGame(){
+        return startButton.isStart();
+    }
 }
