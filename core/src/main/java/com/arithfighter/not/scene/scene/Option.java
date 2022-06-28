@@ -5,6 +5,7 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
@@ -22,17 +23,20 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Font font = fontService.getFont22();
 
+        SceneLayout layout = new SceneLayout(5,6);
+        Rectangle grid = layout.getGrid();
+
         leaveButton = new SceneControlButton(textures[6], 1.8f);
         leaveButton.getButton().setFont(font);
-        leaveButton.getButton().setPosition(500,120);
+        leaveButton.getButton().setPosition(grid.getWidth()*2, grid.getHeight());
 
         soundControl = new ControlBar(textures, 6);
         soundControl.setFont(font);
-        soundControl.setPosition(500,600);
+        soundControl.setPosition(grid.getWidth()*2, grid.getHeight()*5);
 
         musicControl = new ControlBar(textures, 6);
         musicControl.setFont(font);
-        musicControl.setPosition(500,400);
+        musicControl.setPosition(grid.getWidth()*2, grid.getHeight()*4);
     }
 
     @Override

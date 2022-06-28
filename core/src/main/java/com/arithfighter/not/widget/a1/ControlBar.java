@@ -45,7 +45,7 @@ public class ControlBar {
         return valueHolder.getValue();
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         for (int i = 0; i < grids.length; i++) {
             grids[i].setPosition(x + grids[i].getWidget().getWidth() * i + 10 * i, y);
         }
