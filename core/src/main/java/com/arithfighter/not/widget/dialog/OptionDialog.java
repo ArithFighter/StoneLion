@@ -1,6 +1,5 @@
 package com.arithfighter.not.widget.dialog;
 
-import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.SceneControlButton;

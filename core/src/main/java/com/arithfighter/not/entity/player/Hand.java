@@ -7,23 +7,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     private final NumberCard[] cards;
-    private final CardTexturesExtractor texturesExtractor;
 
     public Hand(Texture[] textures, CharacterList character) {
-        texturesExtractor = new CardTexturesExtractor(textures);
-
         cards = new NumberCard[character.getTextureMap().length];
 
-        createCardList(character);
-    }
-
-    private void createCardList(CharacterList character) {
-        float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
-        float initY = -WindowSetting.GRID_Y;
+        CardTexturesExtractor texturesExtractor = new CardTexturesExtractor(textures);
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
 
         for (int i = 0; i < cards.length; i++){
             cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], 2);
+
+            float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
+            float initY = -WindowSetting.GRID_Y;
 
             cards[i].getInitPoint().set(initX + i * getPadding(cardSet), initY);
         }
