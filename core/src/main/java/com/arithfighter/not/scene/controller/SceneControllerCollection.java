@@ -13,11 +13,13 @@ class SceneControllerCollection {
     private final TransitionController transitionController;
     private final StageController stageController;
     private final OptionController optionController;
+    private final DeckSelectionController deckSelectionController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
         transitionController = new TransitionController(sceneBuilder);
         stageController = new StageController(sceneBuilder);
         optionController = new OptionController(sceneBuilder);
+        deckSelectionController = new DeckSelectionController(sceneBuilder);
     }
 
     public TransitionController getTransitionController() {
@@ -30,6 +32,27 @@ class SceneControllerCollection {
 
     public OptionController getOptionController() {
         return optionController;
+    }
+
+    public DeckSelectionController getDeckSelectionController() {
+        return deckSelectionController;
+    }
+}
+
+class DeckSelectionController extends BuilderAccessor implements SceneControllable{
+
+    public DeckSelectionController(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.DECK_SELECTION);
+    }
+
+    @Override
+    public void run() {
+
     }
 }
 

@@ -12,12 +12,14 @@ public class SceneControllerService {
         SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
 
         sceneFactories = new SceneFactory[]{
+                scc.getDeckSelectionController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
                 scc.getOptionController()
         };
 
         sceneManageable = new SceneControllable[]{
+                scc.getDeckSelectionController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
                 scc.getOptionController()

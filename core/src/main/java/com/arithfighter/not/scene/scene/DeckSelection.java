@@ -14,10 +14,10 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     public DeckSelection(TextureService textureService){
         Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
 
-        knightButton = new PanelButton(panels[0], 1.8f);
+        knightButton = new PanelButton(panels[0], 1f);
         knightButton.setPosition(350,350);
 
-        rogueButton = new PanelButton(panels[0], 1.8f);
+        rogueButton = new PanelButton(panels[1], 1f);
         rogueButton.setPosition(600,350);
     }
 
