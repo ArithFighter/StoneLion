@@ -2,7 +2,7 @@ package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.builder.SceneBuilder;
 
-public class SceneControllerService {
+class SceneControllerService {
     private final SceneFactory[] sceneFactories;
     private final SceneControllable[] sceneManageable;
 
