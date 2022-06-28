@@ -11,7 +11,6 @@ public class SceneController {
         gameScene = initScene;
 
         sceneControllerService = new SceneControllerService(sceneBuilder);
-        sceneControllerService.setGameScene(gameScene);
     }
 
     public GameScene getGameScene() {
@@ -21,8 +20,12 @@ public class SceneController {
     public void updateScene() {
         for (int i = 0;i<GameScene.values().length;i++){
             if (gameScene == GameScene.values()[i]){
-                sceneControllerService.update(i);
-                gameScene = sceneControllerService.getGameScene();
+                for (SceneControllable s : sceneControllerService.getSceneManageable())
+                    s.initScene();
+
+                sceneControllerService.getSceneManageable()[i].run();
+
+                gameScene = sceneControllerService.getSceneFactories()[i].getGamaScene();
             }
         }
     }

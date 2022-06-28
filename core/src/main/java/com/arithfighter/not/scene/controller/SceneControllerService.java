@@ -1,10 +1,8 @@
 package com.arithfighter.not.scene.controller;
 
-import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 
 public class SceneControllerService {
-    private GameScene gameScene;
     private final SceneFactory[] sceneFactories;
     private final SceneControllable[] sceneManageable;
 
@@ -29,20 +27,11 @@ public class SceneControllerService {
             s.initScene();
     }
 
-    public void setGameScene(GameScene gameScene) {
-        this.gameScene = gameScene;
+    public SceneFactory[] getSceneFactories() {
+        return sceneFactories;
     }
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
-    public void update(int index) {
-        for (SceneControllable s : sceneManageable)
-            s.initScene();
-
-        sceneManageable[index].run();
-
-        gameScene = sceneFactories[index].getGamaScene();
+    public SceneControllable[] getSceneManageable() {
+        return sceneManageable;
     }
 }
