@@ -18,7 +18,7 @@ class SceneCollection {
         stage = new Stage(textureService, soundManager, fontService);
         transition = new Transition(fontService);
         option = new Option(textureService, soundManager, fontService);
-        deckSelection = new DeckSelection(textureService);
+        deckSelection = new DeckSelection(textureService, fontService);
     }
 
     public Stage getStage() {
