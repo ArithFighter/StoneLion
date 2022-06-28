@@ -10,15 +10,13 @@ public class NumberCard{
     private final int number;
     private boolean isCardActive = false;
     private final Rectangle rectangle;
-    private final Point initPoint;
-    private final Point point;
     private final RawCard card;
 
-    public NumberCard(float initX, float initY, Texture texture, int number) {
-        card = new RawCard(initX, initY, texture);
-        card.addShape(texture, 2f);
-        initPoint = card.getInitPoint();
-        point = card.getPoint();
+    public NumberCard(Texture texture, int number, int scale) {
+        card = new RawCard(texture);
+
+        card.addShape(texture, scale);
+
         rectangle = card.getShape();
 
         this.number = number;
@@ -33,15 +31,11 @@ public class NumberCard{
     }
 
     public Point getPoint(){
-        return point;
+        return card.getPoint();
     }
 
     public Point getInitPoint(){
-        return initPoint;
-    }
-
-    public void setPosition(float x, float y){
-        point.set(x,y);
+        return card.getInitPoint();
     }
 
     public void draw(SpriteBatch batch) {
@@ -58,12 +52,12 @@ public class NumberCard{
     private void setPointWhenOutOfScreen(){
         ScreenBorderInspector sbi = new ScreenBorderInspector(rectangle.getWidth(), rectangle.getHeight());
 
-        point.set(sbi.updateWhenExceedX(point.getX()),
-                sbi.updateWhenExceedY(point.getY()));
+        getPoint().set(sbi.updateWhenExceedX(getPoint().getX()),
+                sbi.updateWhenExceedY(getPoint().getY()));
     }
 
     public void initCard() {
-        point.set(initPoint.getX(), initPoint.getY());
+        getPoint().set(getInitPoint().getX(), getInitPoint().getY());
 
         isCardActive = false;
 
@@ -84,6 +78,8 @@ public class NumberCard{
 
         tolerance = getCardActivationRange(tolerance);
 
+        Point point = getPoint();
+
         return x > point.getX() - tolerance &&
                 x < point.getX() + rectangle.getWidth() + tolerance &&
                 y > point.getY() - tolerance &&
@@ -93,6 +89,7 @@ public class NumberCard{
     private int getCardActivationRange(int tolerance){
         if(isCardActive)
             tolerance*=4;
+
         return tolerance;
     }
 }

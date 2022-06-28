@@ -11,10 +11,10 @@ public class RawCard {
     private Rectangle rectangle;
     private final Sprite sprite;
 
-    public RawCard(float initX, float initY, Texture texture){
-        initPoint = new Point(initX,initY);
-        point = new Point(initX,initY);
+    public RawCard(Texture texture){
         sprite = new Sprite(texture);
+        initPoint = new Point();
+        point = new Point();
     }
 
     public void addShape(Texture texture, float scale){

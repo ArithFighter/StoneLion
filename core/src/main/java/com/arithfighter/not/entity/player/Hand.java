@@ -22,17 +22,15 @@ public class Hand {
         float initY = -WindowSetting.GRID_Y;
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
 
-        for (int i = 0; i < cards.length; i++)
-            cards[i] = new NumberCard(
-                    initX + i * getPadding(cardSet),
-                    initY,
-                    cardSet[i],
-                    character.getNumberSet()[i]
-            );
+        for (int i = 0; i < cards.length; i++){
+            cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], 2);
+
+            cards[i].getInitPoint().set(initX + i * getPadding(cardSet), initY);
+        }
     }
 
     private float getPadding(Texture[] textures) {
-        NumberCard sample = new NumberCard(0, 0, textures[0], 0);
+        NumberCard sample = new NumberCard(textures[0], 0, 2);
         return sample.getShape().getWidth() + WindowSetting.GRID_X * 0.6f;
     }
 

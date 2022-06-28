@@ -31,7 +31,7 @@ public class Player {
     public final void updateWhenDrag(int mouseX, int mouseY) {
         for (NumberCard card : hand.getCards()){
             if (card.isActive())
-                card.setPosition(mouseX - card.getShape().getWidth() / 2,
+                card.getPoint().set(mouseX - card.getShape().getWidth() / 2,
                             mouseY - card.getShape().getHeight() / 2);
         }
     }
@@ -54,7 +54,7 @@ public class Player {
         float speed = 3;
 
         if (card.getPoint().getY() < card.getInitPoint().getY() + movingDistance)
-            card.setPosition(card.getPoint().getX(), card.getPoint().getY()+speed);
+            card.getPoint().set(card.getPoint().getX(), card.getPoint().getY()+speed);
     }
 
     public final void initHand() {
