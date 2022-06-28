@@ -35,7 +35,6 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
 
         startButton = new SceneControlButton(widgets[6], 1.8f);
         startButton.getButton().setFont(f);
-        startButton.getButton().setPosition(800,100);
     }
 
     @Override
@@ -46,6 +45,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
 
         knightButton.on(x,y);
         rogueButton.on(x,y);
+
         startButton.getButton().on(x,y);
     }
 
@@ -83,11 +83,30 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         knightButton.draw(getBatch());
         rogueButton.draw(getBatch());
 
+        setStartButtonPosition();
+
         startButton.update();
         startButton.getButton().draw(getBatch(), "Start");
     }
 
+    private void setStartButtonPosition(){
+        if (deckName.equals(""))
+            startButton.getButton().setPosition(0,-300);
+        else
+            startButton.getButton().setPosition(800,100);
+    }
+
     public boolean isStartGame(){
         return startButton.isStart();
+    }
+
+    public int getDeckIndex(){
+        int index = 0;
+
+        for (int i = 0;i<CharacterList.values().length;i++){
+            if (deckName.equals(CharacterList.values()[i].toString()))
+                index = i;
+        }
+        return index;
     }
 }
