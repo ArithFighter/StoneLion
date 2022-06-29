@@ -2,11 +2,13 @@ package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.card.NumberCard;
+import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Hand {
     private final NumberCard[] cards;
+    private final float padding;
 
     public Hand(Texture[] textures, CharacterList character) {
         cards = new NumberCard[character.getTextureMap().length];
@@ -14,19 +16,16 @@ public class Hand {
         CardTexturesExtractor texturesExtractor = new CardTexturesExtractor(textures);
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
 
-        for (int i = 0; i < cards.length; i++){
-            cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], 2);
+        int cardScale = 2;
+        padding = textures[0].getWidth()* cardScale + 18;
 
-            float initX = WindowSetting.CENTER_X + WindowSetting.GRID_X * 1.2f;
-            float initY = -WindowSetting.GRID_Y;
-
-            cards[i].getInitPoint().set(initX + i * getPadding(cardSet), initY);
-        }
+        for (int i = 0; i < cards.length; i++)
+            cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], cardScale);
     }
 
-    private float getPadding(Texture[] textures) {
-        NumberCard sample = new NumberCard(textures[0], 0, 2);
-        return sample.getShape().getWidth() + WindowSetting.GRID_X * 0.6f;
+    public void setInitPoint(Point point){
+        for (int i = 0; i < cards.length; i++)
+            cards[i].getInitPoint().set(point.getX()+ i * padding, point.getY());
     }
 
     public void draw(SpriteBatch batch) {

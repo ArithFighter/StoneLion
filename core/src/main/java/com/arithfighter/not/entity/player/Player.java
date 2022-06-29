@@ -1,6 +1,8 @@
 package com.arithfighter.not.entity.player;
 
 import com.arithfighter.not.card.NumberCard;
+import com.arithfighter.not.pojo.LayoutSetter;
+import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -9,6 +11,11 @@ public class Player {
 
     public Player(Texture[] cards, CharacterList character) {
         hand = new Hand(cards, character);
+
+        LayoutSetter layoutSetter = new LayoutSetter();
+        layoutSetter.setGrid(9,2);
+
+        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,-20));
     }
 
     public Hand getHand() {
