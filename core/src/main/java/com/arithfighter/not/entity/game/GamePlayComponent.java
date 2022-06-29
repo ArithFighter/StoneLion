@@ -58,11 +58,10 @@ public class GamePlayComponent {
 
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
-        playerService.setRemainCards(new Recorder(50));
     }
 
-    public int getRemainCards() {
-        return playerService.getRemainCards().getRecord();
+    public void setRemainCardsRecorder(Recorder remainCardsRecorder){
+        playerService.setRemainCardRecorder(remainCardsRecorder);
     }
 
     public void setCharacter(CharacterList character) {

@@ -1,13 +1,15 @@
 package com.arithfighter.not.pojo;
 
 public class Recorder {
-    private int record = 0;
+    private int initValue = 0;
+    private int record;
 
     public Recorder(){
 
     }
 
     public Recorder(int initValue){
+        this.initValue = initValue;
         record = initValue;
     }
 
@@ -20,6 +22,6 @@ public class Recorder {
     }
 
     public void reset(){
-        record-=record;
+        record=initValue;
     }
 }
