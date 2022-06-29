@@ -7,16 +7,20 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.game.GamePlayComponent;
 import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.player.CharacterList;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.button.SceneControlButton;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
+    private int remainCards = 0;
+    private final Font remainCardFont;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final Timer timer;
@@ -37,6 +41,13 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         timer = new Timer();
         timer.setTime(1.5f);
+
+        remainCardFont = fontService.getFont32();
+        remainCardFont.setColor(Color.WHITE);
+    }
+
+    public void setRemainCards(int remainCards) {
+        this.remainCards = remainCards;
     }
 
     public void setGameVariation(GameVariation gameVariation) {
@@ -96,6 +107,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.draw(batch);
         } else
             pauseButton.getButton().draw(batch, "Pause");
+
+        remainCardFont.draw(batch, "Remain cards:"+remainCards, 100,100);
     }
 
     public void touchDown() {

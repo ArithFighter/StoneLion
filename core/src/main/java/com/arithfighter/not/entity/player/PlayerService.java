@@ -12,6 +12,11 @@ public class PlayerService {
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(cards, CharacterList.values()[i]) {
                 @Override
+                public void doWhenAnyCardPlayed() {
+                    super.doWhenAnyCardPlayed();
+                }
+
+                @Override
                 public void checkNumberCardPlayed() {
                     sumBoxModel.update(getHand().getCardNumber());
                 }
