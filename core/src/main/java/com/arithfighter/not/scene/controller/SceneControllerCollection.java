@@ -144,17 +144,14 @@ class StageController extends BuilderAccessor implements SceneControllable {
 
             checkFinishedAllStage();
         }
-        if (stage.getPauseMenu().isReturnToMainMenu() ||
-                stage.getGamePlayComponent().getRemainCardManager().isNoRemainCard()) {
-            goToDeckSelection();
+        if (stage.getPauseMenu().isReturnToMainMenu()) {
+            setGameScene(GameScene.DECK_SELECTION);
+            stage.init();
         }
-    }
-
-    private void goToDeckSelection() {
-        Stage stage = getSceneBuilder().getStage();
-
-        setGameScene(GameScene.DECK_SELECTION);
-        stage.init();
+        if (stage.getGamePlayComponent().isNoRemainCards()){
+            setGameScene(GameScene.GAME_OVER);
+            stage.init();
+        }
     }
 
     private void checkFinishedAllStage() {

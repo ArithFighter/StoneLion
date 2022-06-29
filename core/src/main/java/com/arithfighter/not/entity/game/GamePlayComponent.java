@@ -15,7 +15,7 @@ import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
-import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -58,15 +58,15 @@ public class GamePlayComponent {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        remainCardManager = new RemainCardManager(new Recorder(50), font);
+        remainCardManager = new RemainCardManager(new Recorder(10), font);
 
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
         playerService.setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
     }
 
-    public RemainCardManager getRemainCardManager() {
-        return remainCardManager;
+    public boolean isNoRemainCards(){
+        return remainCardManager.isNoRemainCard();
     }
 
     public void setCharacter(CharacterList character) {

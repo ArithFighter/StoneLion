@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class RemainCardManager {
-    private Font remainCardFont;
+    private final Font remainCardFont;
     private Recorder remainCardRecorder;
 
     public RemainCardManager(Font font){
