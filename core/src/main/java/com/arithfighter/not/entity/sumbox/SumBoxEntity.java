@@ -1,11 +1,11 @@
 package com.arithfighter.not.entity.sumbox;
 
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import static com.arithfighter.not.WindowSetting.*;
 
 public class SumBoxEntity {
     private final SumBox sumBox;
@@ -15,7 +15,12 @@ public class SumBoxEntity {
 
     public SumBoxEntity(Texture texture, Font font) {
         sumBox = new SumBox(texture);
-        point = new Point(CENTER_X + GRID_X * 6, GRID_Y * 11);
+
+        LayoutSetter layoutSetter = new LayoutSetter();
+        layoutSetter.setGrid(7,7);
+        Rectangle grid = layoutSetter.getGrid();
+
+        point = new Point(grid.getWidth()*4, grid.getHeight()*4);
         sumBox.setPosition(point.getX(), point.getY());
         sumBox.setFont(font);
 
