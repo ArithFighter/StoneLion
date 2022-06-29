@@ -8,7 +8,6 @@ import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -62,5 +61,9 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
 
         quitButton.update();
         quitButton.getButton().draw(getBatch(), "Quit");
+    }
+
+    public boolean isQuit(){
+        return quitButton.isStart();
     }
 }

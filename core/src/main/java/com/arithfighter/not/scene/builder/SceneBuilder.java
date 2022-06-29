@@ -23,6 +23,7 @@ public class SceneBuilder extends SceneCollection{
                 getDeckSelection(),
                 getTransition(),
                 getStage(),
+                getGameOver(),
                 getOption()
         };
 
@@ -30,6 +31,7 @@ public class SceneBuilder extends SceneCollection{
                 getDeckSelection(),
                 getTransition(),
                 getStage(),
+                getGameOver(),
                 getOption()
         };
     }
