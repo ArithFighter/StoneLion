@@ -5,10 +5,7 @@ import com.arithfighter.not.entity.numberbox.NumberBoxService;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
-import com.arithfighter.not.scene.scene.DeckSelection;
-import com.arithfighter.not.scene.scene.Option;
-import com.arithfighter.not.scene.scene.Stage;
-import com.arithfighter.not.scene.scene.Transition;
+import com.arithfighter.not.scene.scene.*;
 import com.arithfighter.not.system.RandomNumProducer;
 
 class SceneControllerCollection {
@@ -16,12 +13,14 @@ class SceneControllerCollection {
     private final StageController stageController;
     private final OptionController optionController;
     private final DeckSelectionController deckSelectionController;
+    private final GameOverController gameOverController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
         transitionController = new TransitionController(sceneBuilder);
         stageController = new StageController(sceneBuilder);
         optionController = new OptionController(sceneBuilder);
         deckSelectionController = new DeckSelectionController(sceneBuilder);
+        gameOverController = new GameOverController(sceneBuilder);
     }
 
     public TransitionController getTransitionController() {
@@ -38,6 +37,10 @@ class SceneControllerCollection {
 
     public DeckSelectionController getDeckSelectionController() {
         return deckSelectionController;
+    }
+
+    public GameOverController getGameOverController() {
+        return gameOverController;
     }
 }
 
@@ -129,6 +132,7 @@ class StageDeployer {
 }
 
 class StageController extends BuilderAccessor implements SceneControllable {
+    private int stageCount = 0;
 
     public StageController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -149,12 +153,39 @@ class StageController extends BuilderAccessor implements SceneControllable {
             stage.getPauseMenu().init();
         }
         if (stage.isComplete()) {
+            stageCount++;
             setGameScene(GameScene.TRANSITION);
             stage.init();
+
+            if (stageCount>=7){
+                setGameScene(GameScene.GAME_OVER);
+                stage.init();
+            }
         }
         if (stage.getPauseMenu().isReturnToMainMenu()){
             setGameScene(GameScene.DECK_SELECTION);
             stage.init();
+        }
+    }
+}
+
+class GameOverController extends BuilderAccessor implements SceneControllable{
+
+    public GameOverController(SceneBuilder sceneBuilder) {
+        super(sceneBuilder);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.GAME_OVER);
+    }
+
+    @Override
+    public void run() {
+        GameOver gameOver = getSceneBuilder().getGameOver();
+        if (gameOver.isQuit()){
+            setGameScene(GameScene.DECK_SELECTION);
+            gameOver.init();
         }
     }
 }

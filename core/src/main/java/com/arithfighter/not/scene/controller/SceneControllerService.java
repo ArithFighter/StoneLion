@@ -13,6 +13,7 @@ class SceneControllerService {
                 scc.getDeckSelectionController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
+                scc.getGameOverController(),
                 scc.getOptionController()
         };
 
@@ -20,6 +21,7 @@ class SceneControllerService {
                 scc.getDeckSelectionController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
+                scc.getGameOverController(),
                 scc.getOptionController()
         };
 
