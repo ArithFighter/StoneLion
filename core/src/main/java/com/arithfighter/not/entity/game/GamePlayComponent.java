@@ -14,6 +14,7 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -57,11 +58,11 @@ public class GamePlayComponent {
 
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
-        playerService.setRemainCards(50);
+        playerService.setRemainCards(new Recorder(50));
     }
 
     public int getRemainCards() {
-        return playerService.getRemainCards();
+        return playerService.getRemainCards().getRecord();
     }
 
     public void setCharacter(CharacterList character) {
