@@ -15,6 +15,7 @@ import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -28,6 +29,8 @@ public class GamePlayComponent {
     private final StoneLionEntity stoneLion;
     private final VariationController variationController;
     private final PlayerService playerService;
+    private final Font remainCardFont;
+    private final Recorder remainCardRecorder;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -56,12 +59,14 @@ public class GamePlayComponent {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
+        remainCardRecorder = new Recorder(50);
+
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
-    }
+        playerService.setRemainCardRecorder(remainCardRecorder);
 
-    public void setRemainCardsRecorder(Recorder remainCardsRecorder){
-        playerService.setRemainCardRecorder(remainCardsRecorder);
+        remainCardFont = font;
+        remainCardFont.setColor(Color.WHITE);
     }
 
     public void setCharacter(CharacterList character) {
@@ -90,6 +95,7 @@ public class GamePlayComponent {
     }
 
     public void init() {
+        remainCardRecorder.reset();
         sumBoxEntity.init();
         numberBoxEntity.init();
         cardAnimate.init();
@@ -126,6 +132,8 @@ public class GamePlayComponent {
         player.draw(batch);
 
         drawCardAnimate();
+
+        remainCardFont.draw(batch, "Remain cards:"+remainCardRecorder.getRecord(), 100,100);
     }
 
     private void drawCardAnimate() {
