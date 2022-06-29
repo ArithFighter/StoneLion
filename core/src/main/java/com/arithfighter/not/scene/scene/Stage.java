@@ -6,8 +6,10 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.game.GamePlayComponent;
 import com.arithfighter.not.entity.game.GameVariation;
+import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
@@ -22,12 +24,16 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final Timer timer;
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
+    private final RemainCardManager remainCardManager;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
 
+        remainCardManager = new RemainCardManager(new Recorder(20), fontService.getFont32());
+
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
         gamePlayComponent.setCharacter(CharacterList.KNIGHT);
+        gamePlayComponent.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
@@ -39,8 +45,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer.setTime(1.5f);
     }
 
-    public GamePlayComponent getGamePlayComponent() {
-        return gamePlayComponent;
+    public RemainCardManager getRemainCardManager() {
+        return remainCardManager;
     }
 
     public void setGameVariation(GameVariation gameVariation) {
@@ -100,6 +106,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.draw(batch);
         } else
             pauseButton.getButton().draw(batch, "Pause");
+
+        remainCardManager.draw(batch, 100,100);
     }
 
     public void touchDown() {

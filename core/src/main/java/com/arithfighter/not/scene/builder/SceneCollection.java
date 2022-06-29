@@ -14,9 +14,13 @@ class SceneCollection {
 
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService) {
         stage = new Stage(textureService, soundManager, fontService);
+
         transition = new Transition(fontService);
+
         option = new Option(textureService, soundManager, fontService);
+
         deckSelection = new DeckSelection(textureService, fontService);
+
         gameOver = new GameOver(textureService, fontService);
     }
 

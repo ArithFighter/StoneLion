@@ -148,7 +148,7 @@ class StageController extends BuilderAccessor implements SceneControllable {
             setGameScene(GameScene.DECK_SELECTION);
             stage.init();
         }
-        if (stage.getGamePlayComponent().isNoRemainCards()){
+        if (stage.getRemainCardManager().isNoRemainCard()){
             setGameScene(GameScene.GAME_OVER);
             stage.init();
         }

@@ -14,7 +14,6 @@ import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
-import com.arithfighter.not.pojo.Recorder;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,7 +28,6 @@ public class GamePlayComponent {
     private final StoneLionEntity stoneLion;
     private final VariationController variationController;
     private final PlayerService playerService;
-    private final RemainCardManager remainCardManager;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -45,7 +43,6 @@ public class GamePlayComponent {
                 variationController.revealSumMask();
             }
         };
-
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
         stoneLion = new StoneLionEntity(spriteSheets[2], cardAnimate);
@@ -58,15 +55,12 @@ public class GamePlayComponent {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        remainCardManager = new RemainCardManager(new Recorder(10), font);
-
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
-        playerService.setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
     }
 
-    public boolean isNoRemainCards(){
-        return remainCardManager.isNoRemainCard();
+    public PlayerService getPlayerService() {
+        return playerService;
     }
 
     public void setCharacter(CharacterList character) {
@@ -95,7 +89,6 @@ public class GamePlayComponent {
     }
 
     public void init() {
-        remainCardManager.init();
         sumBoxEntity.init();
         numberBoxEntity.init();
         cardAnimate.init();
@@ -132,8 +125,6 @@ public class GamePlayComponent {
         player.draw(batch);
 
         drawCardAnimate();
-
-        remainCardManager.draw(batch, 100,100);
     }
 
     private void drawCardAnimate() {
