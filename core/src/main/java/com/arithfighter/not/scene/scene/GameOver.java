@@ -27,7 +27,11 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
 
         grid = layoutSetter.getGrid();
 
+        Font font22 = fontService.getFont22();
+        font22.setColor(Color.WHITE);
+
         quitButton = new SceneControlButton(widgets[6], 1.8f);
+        quitButton.getButton().setFont(font22);
         quitButton.getButton().setPosition(
                 grid.getWidth()-widgets[6].getWidth()*0.9f,
                 grid.getHeight()

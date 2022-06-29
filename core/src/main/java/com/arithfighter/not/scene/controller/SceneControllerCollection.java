@@ -1,12 +1,9 @@
 package com.arithfighter.not.scene.controller;
 
-import com.arithfighter.not.entity.game.GameVariation;
-import com.arithfighter.not.entity.numberbox.NumberBoxService;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.scene.*;
-import com.arithfighter.not.system.RandomNumProducer;
 
 class SceneControllerCollection {
     private final TransitionController transitionController;
@@ -16,10 +13,19 @@ class SceneControllerCollection {
     private final GameOverController gameOverController;
 
     public SceneControllerCollection(SceneBuilder sceneBuilder) {
+        StageDeployer stageDeployer = new StageDeployer();
+
         transitionController = new TransitionController(sceneBuilder);
+        transitionController.setStageDeployer(stageDeployer);
+
         stageController = new StageController(sceneBuilder);
+        stageController.setStageDeployer(stageDeployer);
+
         optionController = new OptionController(sceneBuilder);
+
         deckSelectionController = new DeckSelectionController(sceneBuilder);
+        deckSelectionController.setStageDeployer(stageDeployer);
+
         gameOverController = new GameOverController(sceneBuilder);
     }
 
@@ -45,9 +51,14 @@ class SceneControllerCollection {
 }
 
 class DeckSelectionController extends BuilderAccessor implements SceneControllable{
+    private StageDeployer stageDeployer;
 
     public DeckSelectionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
+    }
+
+    public void setStageDeployer(StageDeployer stageDeployer) {
+        this.stageDeployer = stageDeployer;
     }
 
     @Override
@@ -63,22 +74,26 @@ class DeckSelectionController extends BuilderAccessor implements SceneControllab
         if(deckSelection.isStartGame()){
             setGameScene(GameScene.TRANSITION);
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
+            stageDeployer.init();
             deckSelection.init();
         }
     }
 }
 
 class TransitionController extends BuilderAccessor implements SceneControllable {
-    private final StageDeployer stageDeployer;
+    private StageDeployer stageDeployer;
 
     public TransitionController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
-        stageDeployer = new StageDeployer();
     }
 
     @Override
     public void initScene() {
         setGameScene(GameScene.TRANSITION);
+    }
+
+    public void setStageDeployer(StageDeployer stageDeployer) {
+        this.stageDeployer = stageDeployer;
     }
 
     @Override
@@ -98,44 +113,15 @@ class TransitionController extends BuilderAccessor implements SceneControllable 
     }
 }
 
-class StageDeployer {
-    private int cursor = 0;
-    private final RandomNumProducer randomQuantity;
-
-    StageDeployer(){
-        int maxQuantity = new NumberBoxService().getQuantity();
-        randomQuantity = new RandomNumProducer(maxQuantity, 6);
-    }
-
-    public void update(){
-        cursor++;
-    }
-
-    public int getQuantity(){
-        return randomQuantity.getRandomNum();
-    }
-
-    public GameVariation getVariation(){
-        GameVariation gv;
-
-        if (cursor<2)
-            gv = GameVariation.STANDARD;
-        else if (cursor<3)
-            gv = GameVariation.FOG;
-        else if (cursor<4)
-            gv = GameVariation.TABOO;
-        else
-            gv = GameVariation.TRANSFORM;
-
-        return gv;
-    }
-}
-
 class StageController extends BuilderAccessor implements SceneControllable {
-    private int stageCount = 0;
+    private StageDeployer stageDeployer;
 
     public StageController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
+    }
+
+    public void setStageDeployer(StageDeployer stageDeployer) {
+        this.stageDeployer = stageDeployer;
     }
 
     @Override
@@ -153,11 +139,10 @@ class StageController extends BuilderAccessor implements SceneControllable {
             stage.getPauseMenu().init();
         }
         if (stage.isComplete()) {
-            stageCount++;
             setGameScene(GameScene.TRANSITION);
             stage.init();
 
-            if (stageCount>=7){
+            if (stageDeployer.isReachFinalStage(3)){
                 setGameScene(GameScene.GAME_OVER);
                 stage.init();
             }
