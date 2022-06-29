@@ -74,6 +74,7 @@ class DeckSelectionController extends BuilderAccessor implements SceneControllab
         if (deckSelection.isStartGame()) {
             setGameScene(GameScene.TRANSITION);
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
+            stage.getRemainCardManager().init();
             stageDeployer.init();
             deckSelection.init();
         }
