@@ -1,12 +1,15 @@
 package com.arithfighter.not.entity.numberbox;
 
-import static com.arithfighter.not.WindowSetting.GRID_X;
-import static com.arithfighter.not.WindowSetting.GRID_Y;
-
 public class NumberBoxPlacer {
-    private final float initX = GRID_X * 7.5f;
-    private final float initY = GRID_Y * 5f;
-    private final float margin = GRID_X;
+    private final float initX;
+    private final float initY;
+    private final float margin;
+
+    public NumberBoxPlacer(float initX, float initY, float margin){
+        this.initX = initX;
+        this.initY = initY;
+        this.margin = margin;
+    }
 
     public float getNumberBoxX(int i, float width) {
         float x = initX;

@@ -1,6 +1,5 @@
 package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.WindowSetting;
 import com.arithfighter.not.card.NumberCard;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
