@@ -29,8 +29,7 @@ public class GamePlayComponent {
     private final StoneLionEntity stoneLion;
     private final VariationController variationController;
     private final PlayerService playerService;
-    private final Font remainCardFont;
-    private final Recorder remainCardRecorder;
+    private final RemainCardManager remainCardManager;
 
     public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
@@ -59,14 +58,15 @@ public class GamePlayComponent {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        remainCardRecorder = new Recorder(50);
+        remainCardManager = new RemainCardManager(new Recorder(50), font);
 
         playerService = new PlayerService(cards);
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
-        playerService.setRemainCardRecorder(remainCardRecorder);
+        playerService.setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
+    }
 
-        remainCardFont = font;
-        remainCardFont.setColor(Color.WHITE);
+    public boolean isNoRemainCards(){
+        return remainCardManager.isNoRemainCard();
     }
 
     public void setCharacter(CharacterList character) {
@@ -95,7 +95,7 @@ public class GamePlayComponent {
     }
 
     public void init() {
-        remainCardRecorder.reset();
+        remainCardManager.init();
         sumBoxEntity.init();
         numberBoxEntity.init();
         cardAnimate.init();
@@ -133,7 +133,7 @@ public class GamePlayComponent {
 
         drawCardAnimate();
 
-        remainCardFont.draw(batch, "Remain cards:"+remainCardRecorder.getRecord(), 100,100);
+        remainCardManager.draw(batch, 100,100);
     }
 
     private void drawCardAnimate() {
@@ -165,5 +165,34 @@ public class GamePlayComponent {
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         sumBoxEntity.touchUp();
+    }
+}
+
+class RemainCardManager{
+    private final Font remainCardFont;
+    private final Recorder remainCardRecorder;
+
+    public RemainCardManager(Recorder recorder, Font font){
+        remainCardFont = font;
+        remainCardFont.setColor(Color.WHITE);
+
+        remainCardRecorder = recorder;
+    }
+
+    public Recorder getRemainCardRecorder() {
+        return remainCardRecorder;
+    }
+
+    public void init(){
+        remainCardRecorder.reset();
+    }
+
+    public void draw(SpriteBatch batch, int x, int y){
+        remainCardFont.draw(
+                batch, "Remain cards:"+remainCardRecorder.getRecord(), x,y);
+    }
+
+    public boolean isNoRemainCard(){
+        return remainCardRecorder.getRecord() == 0;
     }
 }
