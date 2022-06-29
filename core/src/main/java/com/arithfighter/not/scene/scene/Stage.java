@@ -19,7 +19,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final GamePlayComponent gamePlayComponent;
-    private int remainCards = 0;
     private final Font remainCardFont;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
@@ -44,10 +43,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         remainCardFont = fontService.getFont32();
         remainCardFont.setColor(Color.WHITE);
-    }
-
-    public void setRemainCards(int remainCards) {
-        this.remainCards = remainCards;
     }
 
     public void setGameVariation(GameVariation gameVariation) {
@@ -108,7 +103,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         } else
             pauseButton.getButton().draw(batch, "Pause");
 
-        remainCardFont.draw(batch, "Remain cards:"+remainCards, 100,100);
+        remainCardFont.draw(batch, "Remain cards:"+gamePlayComponent.getRemainCards(), 100,100);
     }
 
     public void touchDown() {

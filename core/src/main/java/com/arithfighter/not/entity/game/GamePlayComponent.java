@@ -55,7 +55,13 @@ public class GamePlayComponent {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        playerService = new PlayerService(cards, sumBoxEntity.getSumBoxModel());
+        playerService = new PlayerService(cards);
+        playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
+        playerService.setRemainCards(50);
+    }
+
+    public int getRemainCards() {
+        return playerService.getRemainCards();
     }
 
     public void setCharacter(CharacterList character) {
