@@ -24,7 +24,6 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
         font.setColor(Color.WHITE);
 
         LayoutSetter layoutSetter = new LayoutSetter();
-        layoutSetter.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layoutSetter.setGrid(2,3);
 
         grid = layoutSetter.getGrid();

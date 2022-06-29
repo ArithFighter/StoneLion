@@ -26,7 +26,6 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         Font font = fontService.getFont22();
 
         LayoutSetter layout = new LayoutSetter();
-        layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(5,6);
         Rectangle grid = layout.getGrid();
 

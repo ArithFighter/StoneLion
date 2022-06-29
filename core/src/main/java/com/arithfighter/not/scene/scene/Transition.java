@@ -25,7 +25,6 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         timer.setTime(1.5f);
 
         LayoutSetter layout = new LayoutSetter();
-        layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(2,2);
         grid = layout.getGrid();
     }

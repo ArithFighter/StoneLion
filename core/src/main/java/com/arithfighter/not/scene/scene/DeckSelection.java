@@ -29,7 +29,6 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         font = fontService.getFont36();
 
         LayoutSetter layout = new LayoutSetter();
-        layout.setMaxLayout(new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         layout.setGrid(7,4);
         grid = layout.getGrid();
 

@@ -1,13 +1,16 @@
 package com.arithfighter.not.pojo;
 
+import com.badlogic.gdx.Gdx;
+
 public class LayoutSetter {
-    private Rectangle maxLayout;
+    private final Rectangle maxLayout;
     private Rectangle grid;
 
     public LayoutSetter(){
+        maxLayout = new Rectangle(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    public void setMaxLayout(Rectangle maxLayout) {
+    public LayoutSetter(Rectangle maxLayout){
         this.maxLayout = maxLayout;
     }
 
