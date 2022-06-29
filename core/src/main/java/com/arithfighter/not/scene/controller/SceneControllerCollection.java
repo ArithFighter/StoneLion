@@ -50,7 +50,7 @@ class SceneControllerCollection {
     }
 }
 
-class DeckSelectionController extends BuilderAccessor implements SceneControllable{
+class DeckSelectionController extends BuilderAccessor implements SceneControllable {
     private StageDeployer stageDeployer;
 
     public DeckSelectionController(SceneBuilder sceneBuilder) {
@@ -71,7 +71,7 @@ class DeckSelectionController extends BuilderAccessor implements SceneControllab
         DeckSelection deckSelection = getSceneBuilder().getDeckSelection();
         Stage stage = getSceneBuilder().getStage();
 
-        if(deckSelection.isStartGame()){
+        if (deckSelection.isStartGame()) {
             setGameScene(GameScene.TRANSITION);
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
             stageDeployer.init();
@@ -144,23 +144,30 @@ class StageController extends BuilderAccessor implements SceneControllable {
 
             checkFinishedAllStage();
         }
-        if (stage.getPauseMenu().isReturnToMainMenu()){
-            setGameScene(GameScene.DECK_SELECTION);
-            stage.init();
+        if (stage.getPauseMenu().isReturnToMainMenu() ||
+                stage.getGamePlayComponent().getRemainCardManager().isNoRemainCard()) {
+            goToDeckSelection();
         }
     }
 
-    private void checkFinishedAllStage(){
+    private void goToDeckSelection() {
         Stage stage = getSceneBuilder().getStage();
-        
-        if (stageDeployer.isReachFinalStage(10)){
+
+        setGameScene(GameScene.DECK_SELECTION);
+        stage.init();
+    }
+
+    private void checkFinishedAllStage() {
+        Stage stage = getSceneBuilder().getStage();
+
+        if (stageDeployer.isReachFinalStage(10)) {
             setGameScene(GameScene.GAME_OVER);
             stage.init();
         }
     }
 }
 
-class GameOverController extends BuilderAccessor implements SceneControllable{
+class GameOverController extends BuilderAccessor implements SceneControllable {
 
     public GameOverController(SceneBuilder sceneBuilder) {
         super(sceneBuilder);
@@ -174,7 +181,7 @@ class GameOverController extends BuilderAccessor implements SceneControllable{
     @Override
     public void run() {
         GameOver gameOver = getSceneBuilder().getGameOver();
-        if (gameOver.isQuit()){
+        if (gameOver.isQuit()) {
             setGameScene(GameScene.DECK_SELECTION);
             gameOver.init();
         }

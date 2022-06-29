@@ -65,8 +65,8 @@ public class GamePlayComponent {
         playerService.setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
     }
 
-    public boolean isNoRemainCards(){
-        return remainCardManager.isNoRemainCard();
+    public RemainCardManager getRemainCardManager() {
+        return remainCardManager;
     }
 
     public void setCharacter(CharacterList character) {
@@ -165,34 +165,5 @@ public class GamePlayComponent {
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         sumBoxEntity.touchUp();
-    }
-}
-
-class RemainCardManager{
-    private final Font remainCardFont;
-    private final Recorder remainCardRecorder;
-
-    public RemainCardManager(Recorder recorder, Font font){
-        remainCardFont = font;
-        remainCardFont.setColor(Color.WHITE);
-
-        remainCardRecorder = recorder;
-    }
-
-    public Recorder getRemainCardRecorder() {
-        return remainCardRecorder;
-    }
-
-    public void init(){
-        remainCardRecorder.reset();
-    }
-
-    public void draw(SpriteBatch batch, int x, int y){
-        remainCardFont.draw(
-                batch, "Remain cards:"+remainCardRecorder.getRecord(), x,y);
-    }
-
-    public boolean isNoRemainCard(){
-        return remainCardRecorder.getRecord() == 0;
     }
 }
