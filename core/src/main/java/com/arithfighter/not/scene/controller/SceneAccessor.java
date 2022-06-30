@@ -2,17 +2,18 @@ package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.builder.SceneCollection;
 
-class BuilderAccessor implements SceneFactory {
-    private final SceneBuilder sceneBuilder;
+class SceneAccessor implements SceneFactory {
+    private final SceneCollection sceneCollection;
     private GameScene gameScene;
 
-    public BuilderAccessor(SceneBuilder sceneBuilder) {
-        this.sceneBuilder = sceneBuilder;
+    public SceneAccessor(SceneCollection sceneCollection) {
+        this.sceneCollection = sceneCollection;
     }
 
-    public SceneBuilder getSceneBuilder() {
-        return sceneBuilder;
+    public SceneCollection getSceneCollection() {
+        return sceneCollection;
     }
 
     public void setGameScene(GameScene gameScene) {

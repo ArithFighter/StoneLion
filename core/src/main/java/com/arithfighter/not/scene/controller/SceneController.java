@@ -1,16 +1,16 @@
 package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.GameScene;
-import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.builder.SceneCollection;
 
 public class SceneController {
     private GameScene gameScene;
     private final SceneControllerService sceneControllerService;
 
-    public SceneController(SceneBuilder sceneBuilder, GameScene initScene) {
+    public SceneController(SceneCollection sceneCollection, GameScene initScene) {
         gameScene = initScene;
 
-        sceneControllerService = new SceneControllerService(sceneBuilder);
+        sceneControllerService = new SceneControllerService(sceneCollection);
     }
 
     public GameScene getGameScene() {

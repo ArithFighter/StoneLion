@@ -1,13 +1,14 @@
 package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.builder.SceneCollection;
 
 class SceneControllerService {
     private final SceneFactory[] sceneFactories;
     private final SceneControllable[] sceneManageable;
 
-    public SceneControllerService(SceneBuilder sceneBuilder) {
-        SceneControllerCollection scc = new SceneControllerCollection(sceneBuilder);
+    public SceneControllerService(SceneCollection sceneCollection) {
+        SceneControllerCollection scc = new SceneControllerCollection(sceneCollection);
 
         sceneFactories = new SceneFactory[]{
                 scc.getDeckSelectionController(),

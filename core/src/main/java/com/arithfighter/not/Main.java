@@ -61,7 +61,7 @@ public class Main extends ApplicationAdapter {
 
         setGameSave();
 
-        sceneController = new SceneController(sceneBuilder, DECK_SELECTION);
+        sceneController = new SceneController(sceneCollection, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
