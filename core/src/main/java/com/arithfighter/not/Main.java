@@ -16,6 +16,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import static com.arithfighter.not.scene.GameScene.*;
+
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
@@ -49,13 +51,19 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setCursorPos(cursorPos);
         setGameSave();
 
-        sceneController = new SceneController(sceneBuilder, GameScene.DECK_SELECTION);
+        sceneController = new SceneController(sceneBuilder, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
+        mouseAdapter.setSceneList(new GameScene[]{
+                DECK_SELECTION,
+                STAGE,
+                GAME_OVER,
+                OPTION
+        });
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
-    private void setGameSave(){
+    private void setGameSave() {
         GameSave gameSave = new GameSave();
         sceneBuilder.setOptionSave(gameSave);
         sceneBuilder.getOptionSave().loadSave();
@@ -70,12 +78,12 @@ public class Main extends ApplicationAdapter {
 
         assetManager.update(17);
 
-        if (assetManager.update()){
+        if (assetManager.update()) {
             runGame();
         }
     }
 
-    private void runGame(){
+    private void runGame() {
         GameScene gameScene = sceneController.getGameScene();
 
         sceneController.updateScene();
@@ -93,7 +101,7 @@ public class Main extends ApplicationAdapter {
         drawGame(gameScene);
     }
 
-    private void setVolume(){
+    private void setVolume() {
         OptionEvent option = sceneBuilder.getOption();
         float soundVolume = option.getSoundVolume();
         float musicVolume = option.getMusicVolume();

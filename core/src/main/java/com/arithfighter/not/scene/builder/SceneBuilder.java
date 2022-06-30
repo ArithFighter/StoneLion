@@ -20,7 +20,6 @@ public class SceneBuilder extends SceneCollection{
 
         mouseEvents = new MouseEvent[]{
                 getDeckSelection(),
-                getTransition(),
                 getStage(),
                 getGameOver(),
                 getOption()

@@ -3,14 +3,13 @@ package com.arithfighter.not.scene.scene;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Rectangle;
-import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Transition extends SceneComponent implements SceneEvent, MouseEvent {
+public class Transition extends SceneComponent implements SceneEvent{
     private final Font font;
     private final Timer timer;
     private boolean isGameStart = false;
@@ -30,21 +29,6 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
 
     public boolean isGameStart() {
         return isGameStart;
-    }
-
-    @Override
-    public void touchDown() {
-
-    }
-
-    @Override
-    public void touchDragged() {
-
-    }
-
-    @Override
-    public void touchUp() {
-
     }
 
     @Override
