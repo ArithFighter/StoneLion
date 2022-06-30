@@ -1,8 +1,6 @@
 package com.arithfighter.not.scene.builder;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.save.GameSave;
-import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
@@ -16,7 +14,6 @@ public class SceneBuilder {
     private final SceneCollection sceneCollection;
     private MouseEvent[] mouseEvents;
     private SceneEvent[] sceneEvents;
-    private OptionSave optionSave;
 
     public SceneBuilder(SceneCollection sceneCollection) {
         this.sceneCollection = sceneCollection;
@@ -68,14 +65,6 @@ public class SceneBuilder {
         sceneEvents = new SceneEvent[sceneEventList.size()];
         for (int i =0; i< sceneEvents.length;i++)
             sceneEvents[i] = sceneEventList.get(i);
-    }
-
-    public void setOptionSave(GameSave gameSave) {
-        optionSave = new OptionSave(gameSave, sceneCollection.getOption());
-    }
-
-    public OptionSave getOptionSave() {
-        return optionSave;
     }
 
     public void setBatch(SpriteBatch batch) {

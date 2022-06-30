@@ -6,6 +6,7 @@ import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.MyAssetProcessor;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.save.GameSave;
+import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
 import com.arithfighter.not.scene.builder.SceneBuilder;
@@ -57,6 +58,7 @@ public class Main extends ApplicationAdapter {
         sceneBuilder = new SceneBuilder(sceneCollection);
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
+
         setGameSave();
 
         sceneController = new SceneController(sceneBuilder, DECK_SELECTION);
@@ -83,8 +85,8 @@ public class Main extends ApplicationAdapter {
 
     private void setGameSave() {
         GameSave gameSave = new GameSave();
-        sceneBuilder.setOptionSave(gameSave);
-        sceneBuilder.getOptionSave().loadSave();
+        OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
+        optionSave.saveOption();
     }
 
     @Override
