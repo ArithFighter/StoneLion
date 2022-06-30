@@ -16,6 +16,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.arithfighter.not.scene.GameScene.*;
 
 /**
@@ -55,15 +58,22 @@ public class Main extends ApplicationAdapter {
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
-        GameScene[] mouseEventScenes = new GameScene[]{
-                DECK_SELECTION,
-                STAGE,
-                GAME_OVER,
-                OPTION
-        };
-        mouseAdapter.setSceneList(mouseEventScenes);
+        mouseAdapter.setSceneList(getMouseEventScenes());
 
         Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private GameScene[] getMouseEventScenes(){
+        List<GameScene> gameSceneList = new ArrayList<>();
+        for (GameScene g:GameScene.values()){
+            if (g.getSceneModel().getMouseEvent()!=null)
+                gameSceneList.add(g);
+        }
+        GameScene[] mouseEventScenes = new GameScene[gameSceneList.size()];
+        for (int i =0;i< mouseEventScenes.length;i++)
+            mouseEventScenes[i] = gameSceneList.get(i);
+
+        return mouseEventScenes;
     }
 
     private void setGameSave() {
