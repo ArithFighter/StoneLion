@@ -10,7 +10,6 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {

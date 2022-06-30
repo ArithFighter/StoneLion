@@ -6,7 +6,7 @@ import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.scene.*;
 
-class SceneControllerCollection {
+public class SceneControllerCollection {
     private final TransitionController transitionController;
     private final StageController stageController;
     private final OptionController optionController;

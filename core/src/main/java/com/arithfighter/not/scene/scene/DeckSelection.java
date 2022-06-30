@@ -11,7 +11,6 @@ import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 

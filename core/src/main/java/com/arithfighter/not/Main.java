@@ -12,6 +12,8 @@ import com.arithfighter.not.scene.OptionEvent;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
+import com.arithfighter.not.scene.controller.SceneControllerCollection;
+import com.arithfighter.not.scene.controller.SceneControllerService;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -63,7 +65,9 @@ public class Main extends ApplicationAdapter {
         OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
         optionSave.loadSave();
 
-        sceneController = new SceneController(sceneCollection, DECK_SELECTION, optionSave);
+        SceneControllerCollection scc = new SceneControllerCollection(sceneCollection, optionSave);
+        SceneControllerService scs = new SceneControllerService(scc);
+        sceneController = new SceneController(scs, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 

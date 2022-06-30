@@ -1,16 +1,10 @@
 package com.arithfighter.not.scene.controller;
 
-import com.arithfighter.not.save.OptionSave;
-import com.arithfighter.not.scene.builder.SceneBuilder;
-import com.arithfighter.not.scene.builder.SceneCollection;
-
-class SceneControllerService {
+public class SceneControllerService {
     private final SceneFactory[] sceneFactories;
     private final SceneControllable[] sceneManageable;
 
-    public SceneControllerService(SceneCollection sceneCollection, OptionSave optionSave) {
-        SceneControllerCollection scc = new SceneControllerCollection(sceneCollection, optionSave);
-
+    public SceneControllerService(SceneControllerCollection scc) {
         sceneFactories = new SceneFactory[]{
                 scc.getDeckSelectionController(),
                 scc.getTransitionController(),

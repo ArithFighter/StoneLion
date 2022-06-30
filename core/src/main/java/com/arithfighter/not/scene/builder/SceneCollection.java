@@ -3,8 +3,6 @@ package com.arithfighter.not.scene.builder;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.scene.GameScene;
-import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.scene.*;
 
 public class SceneCollection {

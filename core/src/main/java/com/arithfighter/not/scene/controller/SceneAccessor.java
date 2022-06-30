@@ -1,7 +1,6 @@
 package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.scene.GameScene;
-import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.builder.SceneCollection;
 
 class SceneAccessor implements SceneFactory {
