@@ -2,10 +2,7 @@ package com.arithfighter.not.scene;
 
 public class SceneModel {
     private MouseEvent mouseEvent;
-    private SceneEvent sceneEvent;
-
-    public SceneModel() {
-    }
+    private final SceneEvent sceneEvent;
 
     public SceneModel(SceneEvent sceneEvent) {
         this.sceneEvent = sceneEvent;

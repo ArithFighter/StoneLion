@@ -9,7 +9,6 @@ import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
-import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
@@ -71,10 +70,10 @@ public class Main extends ApplicationAdapter {
 
         SceneControllerCollection scc = new SceneControllerCollection(sceneCollection, optionSave);
         SceneControllerService scs = new SceneControllerService(scc);
+
         sceneController = new SceneController(scs, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
-
         mouseAdapter.setSceneList(getMouseEventScenes());
 
         Gdx.input.setInputProcessor(mouseAdapter);
