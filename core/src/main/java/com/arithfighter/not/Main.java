@@ -105,7 +105,8 @@ public class Main extends ApplicationAdapter {
     private void drawGame(GameScene gameScene) {
         batch.begin();
 
-        sceneBuilder.renderScene(gameScene);
+        SceneDrawer sceneDrawer = new SceneDrawer(sceneBuilder.getSceneEvents());
+        sceneDrawer.draw(gameScene);
 
         GameDataDisplacer gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
         gameDataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());

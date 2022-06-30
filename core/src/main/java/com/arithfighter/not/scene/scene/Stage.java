@@ -29,7 +29,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
 
-        remainCardManager = new RemainCardManager(new Recorder(20), fontService.getFont32());
+        remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
         gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
         gamePlayComponent.setCharacter(CharacterList.KNIGHT);

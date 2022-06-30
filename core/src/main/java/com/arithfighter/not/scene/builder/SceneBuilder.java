@@ -6,7 +6,6 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.save.OptionSave;
-import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,25 +44,20 @@ public class SceneBuilder extends SceneCollection{
     }
 
     public void setBatch(SpriteBatch batch){
-        for (SceneEvent sceneEvent:sceneEvents){
+        for (SceneEvent sceneEvent:sceneEvents)
             sceneEvent.setBatch(batch);
-        }
     }
 
     public void setCursorPos(CursorPositionAccessor cursorPos){
-        for (MouseEvent mouseEvent:mouseEvents){
+        for (MouseEvent mouseEvent:mouseEvents)
             mouseEvent.setCursorPos(cursorPos);
-        }
     }
 
     public MouseEvent[] getMouseEvents(){
         return mouseEvents;
     }
 
-    public void renderScene(GameScene gameScene) {
-        for (int i = 0; i < GameScene.values().length; i++)
-            if (gameScene == GameScene.values()[i]){
-                sceneEvents[i].render();
-            }
+    public SceneEvent[] getSceneEvents() {
+        return sceneEvents;
     }
 }

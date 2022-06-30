@@ -7,7 +7,6 @@ import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.time.Timer;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,7 +16,7 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
     private boolean isGameStart = false;
     private final Rectangle grid;
 
-    public Transition(FontService fontService){
+    public Transition(FontService fontService) {
         font = fontService.getFont45();
         font.setColor(Color.WHITE);
 
@@ -25,11 +24,11 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         timer.setTime(1.5f);
 
         LayoutSetter layout = new LayoutSetter();
-        layout.setGrid(2,2);
+        layout.setGrid(2, 2);
         grid = layout.getGrid();
     }
 
-    public boolean isGameStart(){
+    public boolean isGameStart() {
         return isGameStart;
     }
 
@@ -67,8 +66,8 @@ public class Transition extends SceneComponent implements SceneEvent, MouseEvent
         font.draw(
                 batch,
                 ready,
-                grid.getWidth() -ready.length()* font.getSize()/2f,
-                grid.getHeight()+ font.getSize()*2
+                grid.getWidth() - ready.length() * font.getSize() / 2f,
+                grid.getHeight() + font.getSize() * 2
         );
     }
 }
