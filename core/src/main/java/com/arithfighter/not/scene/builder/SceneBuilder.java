@@ -25,7 +25,9 @@ public class SceneBuilder extends SceneCollection {
 
         initGameScene();
 
-        initEvents();
+        initMouseEvents(getSceneModels());
+
+        initSceneEvents(getSceneModels());
     }
 
     private void initGameScene(){
@@ -36,22 +38,32 @@ public class SceneBuilder extends SceneCollection {
         GameScene.OPTION.setSceneModel(new SceneModel(getOption(), getOption()));
     }
 
-    private void initEvents(){
+    private SceneModel[] getSceneModels(){
         List<SceneModel> sceneModelList = new ArrayList<>();
         for (GameScene g:GameScene.values())
             sceneModelList.add(g.getSceneModel());
 
+        SceneModel[] sceneModels = new SceneModel[sceneModelList.size()];
+        for (int i = 0; i<sceneModels.length;i++)
+            sceneModels[i] = sceneModelList.get(i);
+
+        return sceneModels;
+    }
+
+    private void initMouseEvents(SceneModel[] sceneModels){
         List<MouseEvent> mouseEventList = new ArrayList<>();
-        for (SceneModel s:sceneModelList){
+        for (SceneModel s:sceneModels){
             if (s.getMouseEvent()!=null)
                 mouseEventList.add(s.getMouseEvent());
         }
         mouseEvents = new MouseEvent[mouseEventList.size()];
         for (int i = 0; i< mouseEvents.length;i++)
             mouseEvents[i] = mouseEventList.get(i);
+    }
 
+    private void initSceneEvents(SceneModel[] sceneModels){
         List<SceneEvent> sceneEventList = new ArrayList<>();
-        for (SceneModel s:sceneModelList){
+        for (SceneModel s:sceneModels){
             if (s.getSceneEvent()!=null)
                 sceneEventList.add(s.getSceneEvent());
         }
