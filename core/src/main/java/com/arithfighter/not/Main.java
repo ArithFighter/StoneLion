@@ -59,9 +59,11 @@ public class Main extends ApplicationAdapter {
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
 
-        setGameSave();
+        GameSave gameSave = new GameSave();
+        OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
+        optionSave.loadSave();
 
-        sceneController = new SceneController(sceneCollection, DECK_SELECTION);
+        sceneController = new SceneController(sceneCollection, DECK_SELECTION, optionSave);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
@@ -81,12 +83,6 @@ public class Main extends ApplicationAdapter {
             mouseEventScenes[i] = gameSceneList.get(i);
 
         return mouseEventScenes;
-    }
-
-    private void setGameSave() {
-        GameSave gameSave = new GameSave();
-        OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
-        optionSave.saveOption();
     }
 
     @Override

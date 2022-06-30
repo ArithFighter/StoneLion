@@ -13,7 +13,7 @@ class SceneControllerCollection {
     private final DeckSelectionController deckSelectionController;
     private final GameOverController gameOverController;
 
-    public SceneControllerCollection(SceneCollection sceneCollection) {
+    public SceneControllerCollection(SceneCollection sceneCollection, OptionSave optionSave) {
         StageDeployer stageDeployer = new StageDeployer();
 
         transitionController = new TransitionController(sceneCollection);
@@ -23,6 +23,7 @@ class SceneControllerCollection {
         stageController.setStageDeployer(stageDeployer);
 
         optionController = new OptionController(sceneCollection);
+        optionController.setOptionSave(optionSave);
 
         deckSelectionController = new DeckSelectionController(sceneCollection);
         deckSelectionController.setStageDeployer(stageDeployer);
