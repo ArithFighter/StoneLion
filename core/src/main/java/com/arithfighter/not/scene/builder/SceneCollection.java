@@ -24,8 +24,6 @@ class SceneCollection {
         deckSelection = new DeckSelection(textureService, fontService);
 
         gameOver = new GameOver(textureService, fontService);
-
-        GameScene.DECK_SELECTION.setSceneModel(new SceneModel());
     }
 
     public Stage getStage() {
