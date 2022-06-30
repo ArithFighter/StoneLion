@@ -58,8 +58,8 @@ public class Main extends ApplicationAdapter {
 
         sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
 
-        GameSceneInitializer gameSceneInitializer = new GameSceneInitializer(sceneCollection);
-        gameSceneInitializer.run();
+        SceneInitializer sceneInitializer = new SceneInitializer(sceneCollection);
+        sceneInitializer.run();
 
         sceneBuilder = new SceneBuilder();
         sceneBuilder.setBatch(batch);
@@ -156,30 +156,5 @@ public class Main extends ApplicationAdapter {
         audioHandler.dispose();
 
         fontService.dispose();
-    }
-}
-
-class GameSceneInitializer{
-    private final SceneCollection sceneCollection;
-
-    public GameSceneInitializer(SceneCollection sceneCollection) {
-        this.sceneCollection = sceneCollection;
-    }
-
-    public void run(){
-        GameScene.DECK_SELECTION.setSceneModel(
-                new SceneModel(sceneCollection.getDeckSelection(), sceneCollection.getDeckSelection()));
-
-        GameScene.TRANSITION.setSceneModel(
-                new SceneModel(sceneCollection.getTransition()));
-
-        GameScene.STAGE.setSceneModel(
-                new SceneModel(sceneCollection.getStage(), sceneCollection.getStage()));
-
-        GameScene.GAME_OVER.setSceneModel(
-                new SceneModel(sceneCollection.getGameOver(), sceneCollection.getGameOver()));
-
-        GameScene.OPTION.setSceneModel(
-                new SceneModel(sceneCollection.getOption(), sceneCollection.getOption()));
     }
 }

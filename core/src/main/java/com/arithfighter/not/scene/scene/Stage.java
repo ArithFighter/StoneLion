@@ -4,7 +4,7 @@ import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.entity.game.GamePlayComponent;
+import com.arithfighter.not.entity.game.Game;
 import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.player.CharacterList;
@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
-    private final GamePlayComponent gamePlayComponent;
+    private final Game game;
     private final SceneControlButton pauseButton;
     private final PauseMenu pauseMenu;
     private final Timer timer;
@@ -31,9 +31,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
-        gamePlayComponent = new GamePlayComponent(textureService, soundManager, fontService.getFont32());
-        gamePlayComponent.setCharacter(CharacterList.KNIGHT);
-        gamePlayComponent.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
+        game = new Game(textureService, soundManager, fontService.getFont32());
+        game.setCharacter(CharacterList.KNIGHT);
+        game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
 
@@ -58,7 +58,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void setDeck(CharacterList characterList){
-        gamePlayComponent.setCharacter(characterList);
+        game.setCharacter(characterList);
     }
 
     public PauseMenu getPauseMenu() {
@@ -66,7 +66,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     }
 
     public void init() {
-        gamePlayComponent.init();
+        game.init();
         pauseMenu.init();
         pauseButton.init();
         timer.init();
@@ -87,9 +87,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         } else {
             pauseButton.update();
 
-            gamePlayComponent.update(getCursorPos().getX(), getCursorPos().getY());
+            game.update(getCursorPos().getX(), getCursorPos().getY());
 
-            if (gamePlayComponent.isAllNumZero())
+            if (game.isAllNumZero())
                 timer.update();
         }
     }
@@ -99,8 +99,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         SpriteBatch batch = getBatch();
 
-        gamePlayComponent.setBatch(batch);
-        gamePlayComponent.draw(gameVariation, boxQuantity);
+        game.setBatch(batch);
+        game.draw(gameVariation, boxQuantity);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);
@@ -119,7 +119,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.touchDown(x, y);
         else {
             pauseButton.getButton().on(x, y);
-            gamePlayComponent.touchDown(x, y);
+            game.touchDown(x, y);
         }
     }
 
@@ -128,7 +128,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.touchDragged();
         else {
             pauseButton.getButton().off();
-            gamePlayComponent.touchDragged(getCursorPos().getX(), getCursorPos().getY());
+            game.touchDragged(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 
@@ -137,7 +137,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.touchUp();
         else {
             pauseButton.getButton().off();
-            gamePlayComponent.touchUp(getCursorPos().getX(), getCursorPos().getY());
+            game.touchUp(getCursorPos().getX(), getCursorPos().getY());
         }
     }
 }

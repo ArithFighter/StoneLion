@@ -18,7 +18,7 @@ import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GamePlayComponent {
+public class Game {
     private final NumberBoxEntity numberBoxEntity;
     private Player player;
     private CardAnimate cardAnimate;
@@ -29,7 +29,7 @@ public class GamePlayComponent {
     private final VariationController variationController;
     private final PlayerService playerService;
 
-    public GamePlayComponent(TextureService textureService, SoundManager soundManager, Font font) {
+    public Game(TextureService textureService, SoundManager soundManager, Font font) {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
