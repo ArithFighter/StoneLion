@@ -9,6 +9,7 @@ import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
 import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -33,6 +34,7 @@ public class Main extends ApplicationAdapter {
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
     private FontService fontService;
+    private SceneCollection sceneCollection;
 
     @Override
     public void create() {
@@ -49,7 +51,10 @@ public class Main extends ApplicationAdapter {
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
         TextureService textureService = new TextureService(assetProcessor);
-        sceneBuilder = new SceneBuilder(textureService, audioHandler.getSoundManager(), fontService);
+
+        sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
+
+        sceneBuilder = new SceneBuilder(sceneCollection);
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
         setGameSave();
@@ -115,7 +120,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void setVolume() {
-        OptionEvent option = sceneBuilder.getOption();
+        OptionEvent option = sceneCollection.getOption();
         float soundVolume = option.getSoundVolume();
         float musicVolume = option.getMusicVolume();
 

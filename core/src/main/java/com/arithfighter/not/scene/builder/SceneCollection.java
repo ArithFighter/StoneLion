@@ -7,7 +7,7 @@ import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.scene.*;
 
-class SceneCollection {
+public class SceneCollection {
     private final Stage stage;
     private final Transition transition;
     private final Option option;

@@ -2,9 +2,6 @@ package com.arithfighter.not.scene.builder;
 
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.save.GameSave;
-import com.arithfighter.not.TextureService;
-import com.arithfighter.not.audio.SoundManager;
-import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
@@ -15,13 +12,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SceneBuilder extends SceneCollection {
+public class SceneBuilder {
+    private final SceneCollection sceneCollection;
     private MouseEvent[] mouseEvents;
     private SceneEvent[] sceneEvents;
     private OptionSave optionSave;
 
-    public SceneBuilder(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        super(textureService, soundManager, fontService);
+    public SceneBuilder(SceneCollection sceneCollection) {
+        this.sceneCollection = sceneCollection;
 
         initGameScene();
 
@@ -31,11 +29,11 @@ public class SceneBuilder extends SceneCollection {
     }
 
     private void initGameScene(){
-        GameScene.DECK_SELECTION.setSceneModel(new SceneModel(getDeckSelection(), getDeckSelection()));
-        GameScene.TRANSITION.setSceneModel(new SceneModel(getTransition()));
-        GameScene.STAGE.setSceneModel(new SceneModel(getStage(), getStage()));
-        GameScene.GAME_OVER.setSceneModel(new SceneModel(getGameOver(), getGameOver()));
-        GameScene.OPTION.setSceneModel(new SceneModel(getOption(), getOption()));
+        GameScene.DECK_SELECTION.setSceneModel(new SceneModel(sceneCollection.getDeckSelection(), sceneCollection.getDeckSelection()));
+        GameScene.TRANSITION.setSceneModel(new SceneModel(sceneCollection.getTransition()));
+        GameScene.STAGE.setSceneModel(new SceneModel(sceneCollection.getStage(), sceneCollection.getStage()));
+        GameScene.GAME_OVER.setSceneModel(new SceneModel(sceneCollection.getGameOver(), sceneCollection.getGameOver()));
+        GameScene.OPTION.setSceneModel(new SceneModel(sceneCollection.getOption(), sceneCollection.getOption()));
     }
 
     private SceneModel[] getSceneModels(){
@@ -73,7 +71,7 @@ public class SceneBuilder extends SceneCollection {
     }
 
     public void setOptionSave(GameSave gameSave) {
-        optionSave = new OptionSave(gameSave, getOption());
+        optionSave = new OptionSave(gameSave, sceneCollection.getOption());
     }
 
     public OptionSave getOptionSave() {
