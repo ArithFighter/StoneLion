@@ -11,26 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SceneBuilder {
-    private final SceneCollection sceneCollection;
     private MouseEvent[] mouseEvents;
     private SceneEvent[] sceneEvents;
 
-    public SceneBuilder(SceneCollection sceneCollection) {
-        this.sceneCollection = sceneCollection;
-
-        initGameScene();
-
+    public SceneBuilder() {
         initMouseEvents(getSceneModels());
 
         initSceneEvents(getSceneModels());
-    }
-
-    private void initGameScene(){
-        GameScene.DECK_SELECTION.setSceneModel(new SceneModel(sceneCollection.getDeckSelection(), sceneCollection.getDeckSelection()));
-        GameScene.TRANSITION.setSceneModel(new SceneModel(sceneCollection.getTransition()));
-        GameScene.STAGE.setSceneModel(new SceneModel(sceneCollection.getStage(), sceneCollection.getStage()));
-        GameScene.GAME_OVER.setSceneModel(new SceneModel(sceneCollection.getGameOver(), sceneCollection.getGameOver()));
-        GameScene.OPTION.setSceneModel(new SceneModel(sceneCollection.getOption(), sceneCollection.getOption()));
     }
 
     private SceneModel[] getSceneModels(){

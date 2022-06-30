@@ -9,6 +9,7 @@ import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
+import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
@@ -57,7 +58,9 @@ public class Main extends ApplicationAdapter {
 
         sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
 
-        sceneBuilder = new SceneBuilder(sceneCollection);
+        initGameScene();
+
+        sceneBuilder = new SceneBuilder();
         sceneBuilder.setBatch(batch);
         sceneBuilder.setCursorPos(cursorPos);
 
@@ -74,6 +77,14 @@ public class Main extends ApplicationAdapter {
         mouseAdapter.setSceneList(getMouseEventScenes());
 
         Gdx.input.setInputProcessor(mouseAdapter);
+    }
+
+    private void initGameScene(){
+        GameScene.DECK_SELECTION.setSceneModel(new SceneModel(sceneCollection.getDeckSelection(), sceneCollection.getDeckSelection()));
+        GameScene.TRANSITION.setSceneModel(new SceneModel(sceneCollection.getTransition()));
+        GameScene.STAGE.setSceneModel(new SceneModel(sceneCollection.getStage(), sceneCollection.getStage()));
+        GameScene.GAME_OVER.setSceneModel(new SceneModel(sceneCollection.getGameOver(), sceneCollection.getGameOver()));
+        GameScene.OPTION.setSceneModel(new SceneModel(sceneCollection.getOption(), sceneCollection.getOption()));
     }
 
     private GameScene[] getMouseEventScenes(){

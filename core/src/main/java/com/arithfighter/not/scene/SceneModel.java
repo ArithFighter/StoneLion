@@ -16,14 +16,6 @@ public class SceneModel {
         this.sceneEvent = sceneEvent;
     }
 
-    public void setMouseEvent(MouseEvent mouseEvent) {
-        this.mouseEvent = mouseEvent;
-    }
-
-    public void setSceneEvent(SceneEvent sceneEvent) {
-        this.sceneEvent = sceneEvent;
-    }
-
     public MouseEvent getMouseEvent() {
         return mouseEvent;
     }
