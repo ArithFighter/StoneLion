@@ -18,23 +18,3 @@ public enum GameScene {
     }
 }
 
-class SceneModel{
-    private MouseEvent mouseEvent;
-    private SceneEvent sceneEvent;
-
-    public void setMouseEvent(MouseEvent mouseEvent) {
-        this.mouseEvent = mouseEvent;
-    }
-
-    public void setSceneEvent(SceneEvent sceneEvent) {
-        this.sceneEvent = sceneEvent;
-    }
-
-    public MouseEvent getMouseEvent() {
-        return mouseEvent;
-    }
-
-    public SceneEvent getSceneEvent() {
-        return sceneEvent;
-    }
-}

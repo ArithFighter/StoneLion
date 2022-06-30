@@ -3,6 +3,8 @@ package com.arithfighter.not.scene.builder;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.scene.GameScene;
+import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.scene.*;
 
 class SceneCollection {
@@ -22,6 +24,8 @@ class SceneCollection {
         deckSelection = new DeckSelection(textureService, fontService);
 
         gameOver = new GameOver(textureService, fontService);
+
+        GameScene.DECK_SELECTION.setSceneModel(new SceneModel());
     }
 
     public Stage getStage() {
