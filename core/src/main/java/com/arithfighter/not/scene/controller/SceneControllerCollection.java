@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene.controller;
 
 import com.arithfighter.not.entity.player.CharacterList;
+import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.scene.*;
@@ -186,7 +187,9 @@ class GameOverController extends SceneAccessor implements SceneControllable {
     }
 }
 
-class OptionController extends SceneAccessor implements SceneControllable {
+class OptionController extends SceneAccessor implements SceneControllable, Optionable {
+    private OptionSave optionSave;
+
     public OptionController(SceneCollection sceneCollection) {
         super(sceneCollection);
     }
@@ -203,7 +206,13 @@ class OptionController extends SceneAccessor implements SceneControllable {
 
         if (option.isLeaving()) {
             setGameScene(option.getSceneTemp());
+            optionSave.saveOption();
             option.init();
         }
+    }
+
+    @Override
+    public void setOptionSave(OptionSave optionSave) {
+        this.optionSave = optionSave;
     }
 }
