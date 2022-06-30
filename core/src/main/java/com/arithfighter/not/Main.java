@@ -54,12 +54,15 @@ public class Main extends ApplicationAdapter {
         sceneController = new SceneController(sceneBuilder, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
-        mouseAdapter.setSceneList(new GameScene[]{
+
+        GameScene[] mouseEventScenes = new GameScene[]{
                 DECK_SELECTION,
                 STAGE,
                 GAME_OVER,
                 OPTION
-        });
+        };
+        mouseAdapter.setSceneList(mouseEventScenes);
+
         Gdx.input.setInputProcessor(mouseAdapter);
     }
 
