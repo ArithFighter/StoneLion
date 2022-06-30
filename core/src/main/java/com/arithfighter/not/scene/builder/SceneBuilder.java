@@ -12,11 +12,12 @@ import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.scene.SceneModel;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static com.arithfighter.not.scene.GameScene.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SceneBuilder extends SceneCollection {
-    private final MouseEvent[] mouseEvents;
-    private final SceneEvent[] sceneEvents;
+    private MouseEvent[] mouseEvents;
+    private SceneEvent[] sceneEvents;
     private OptionSave optionSave;
 
     public SceneBuilder(TextureService textureService, SoundManager soundManager, FontService fontService) {
@@ -24,20 +25,7 @@ public class SceneBuilder extends SceneCollection {
 
         initGameScene();
 
-        mouseEvents = new MouseEvent[]{
-                DECK_SELECTION.getSceneModel().getMouseEvent(),
-                STAGE.getSceneModel().getMouseEvent(),
-                GAME_OVER.getSceneModel().getMouseEvent(),
-                OPTION.getSceneModel().getMouseEvent()
-        };
-
-        sceneEvents = new SceneEvent[]{
-                DECK_SELECTION.getSceneModel().getSceneEvent(),
-                TRANSITION.getSceneModel().getSceneEvent(),
-                STAGE.getSceneModel().getSceneEvent(),
-                GAME_OVER.getSceneModel().getSceneEvent(),
-                OPTION.getSceneModel().getSceneEvent()
-        };
+        initEvents();
     }
 
     private void initGameScene(){
@@ -46,6 +34,30 @@ public class SceneBuilder extends SceneCollection {
         GameScene.STAGE.setSceneModel(new SceneModel(getStage(), getStage()));
         GameScene.GAME_OVER.setSceneModel(new SceneModel(getGameOver(), getGameOver()));
         GameScene.OPTION.setSceneModel(new SceneModel(getOption(), getOption()));
+    }
+
+    private void initEvents(){
+        List<SceneModel> sceneModelList = new ArrayList<>();
+        for (GameScene g:GameScene.values())
+            sceneModelList.add(g.getSceneModel());
+
+        List<MouseEvent> mouseEventList = new ArrayList<>();
+        for (SceneModel s:sceneModelList){
+            if (s.getMouseEvent()!=null)
+                mouseEventList.add(s.getMouseEvent());
+        }
+        mouseEvents = new MouseEvent[mouseEventList.size()];
+        for (int i = 0; i< mouseEvents.length;i++)
+            mouseEvents[i] = mouseEventList.get(i);
+
+        List<SceneEvent> sceneEventList = new ArrayList<>();
+        for (SceneModel s:sceneModelList){
+            if (s.getSceneEvent()!=null)
+                sceneEventList.add(s.getSceneEvent());
+        }
+        sceneEvents = new SceneEvent[sceneEventList.size()];
+        for (int i =0; i< sceneEvents.length;i++)
+            sceneEvents[i] = sceneEventList.get(i);
     }
 
     public void setOptionSave(GameSave gameSave) {
