@@ -11,36 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SceneBuilder {
-    private MouseEvent[] mouseEvents;
+    private final MouseEvent[] mouseEvents;
     private SceneEvent[] sceneEvents;
 
     public SceneBuilder() {
-        initMouseEvents(getSceneModels());
+        SceneModelAccessor sma = new SceneModelAccessor();
 
-        initSceneEvents(getSceneModels());
-    }
+        MouseEventListProducer m = new MouseEventListProducer();
+        m.init(sma.getSceneModels());
 
-    private SceneModel[] getSceneModels(){
-        List<SceneModel> sceneModelList = new ArrayList<>();
-        for (GameScene g:GameScene.values())
-            sceneModelList.add(g.getSceneModel());
-
-        SceneModel[] sceneModels = new SceneModel[sceneModelList.size()];
-        for (int i = 0; i<sceneModels.length;i++)
-            sceneModels[i] = sceneModelList.get(i);
-
-        return sceneModels;
-    }
-
-    private void initMouseEvents(SceneModel[] sceneModels){
-        List<MouseEvent> mouseEventList = new ArrayList<>();
-        for (SceneModel s:sceneModels){
-            if (s.getMouseEvent()!=null)
-                mouseEventList.add(s.getMouseEvent());
-        }
-        mouseEvents = new MouseEvent[mouseEventList.size()];
+        mouseEvents = new MouseEvent[m.getList().size()];
         for (int i = 0; i< mouseEvents.length;i++)
-            mouseEvents[i] = mouseEventList.get(i);
+            mouseEvents[i] = m.getList().get(i);
+
+        initSceneEvents(sma.getSceneModels());
     }
 
     private void initSceneEvents(SceneModel[] sceneModels){
@@ -70,5 +54,37 @@ public class SceneBuilder {
 
     public SceneEvent[] getSceneEvents() {
         return sceneEvents;
+    }
+}
+
+class SceneModelAccessor{
+
+    public SceneModel[] getSceneModels(){
+        List<SceneModel> sceneModelList = new ArrayList<>();
+        for (GameScene g:GameScene.values()){
+            if(g.getSceneModel()!=null)
+                sceneModelList.add(g.getSceneModel());
+        }
+
+        SceneModel[] sceneModels = new SceneModel[sceneModelList.size()];
+        for (int i = 0; i<sceneModels.length;i++)
+            sceneModels[i] = sceneModelList.get(i);
+
+        return sceneModels;
+    }
+}
+
+class MouseEventListProducer{
+    private final List<MouseEvent> mouseEventList = new ArrayList<>();
+
+    public void init(SceneModel[] sceneModels){
+        for (SceneModel s:sceneModels){
+            if (s.getMouseEvent()!=null)
+                mouseEventList.add(s.getMouseEvent());
+        }
+    }
+
+    public List<MouseEvent> getList(){
+        return mouseEventList;
     }
 }
