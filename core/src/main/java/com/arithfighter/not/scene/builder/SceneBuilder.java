@@ -16,6 +16,7 @@ public class SceneBuilder {
 
     public SceneBuilder() {
         SceneModelAccessor sma = new SceneModelAccessor();
+        sma.init();
 
         MouseEventListProducer m = new MouseEventListProducer();
         m.init(sma.getSceneModels());
@@ -52,15 +53,21 @@ public class SceneBuilder {
 }
 
 class SceneModelAccessor{
+    private final List<SceneModel> sceneModelList = new ArrayList<>();
+
+    public void init(){
+        for (GameScene g:GameScene.values())
+            addSceneModel(g);
+    }
+
+    private void addSceneModel(GameScene g){
+        if(g.getSceneModel()!=null)
+            sceneModelList.add(g.getSceneModel());
+    }
 
     public SceneModel[] getSceneModels(){
-        List<SceneModel> sceneModelList = new ArrayList<>();
-        for (GameScene g:GameScene.values()){
-            if(g.getSceneModel()!=null)
-                sceneModelList.add(g.getSceneModel());
-        }
-
         SceneModel[] sceneModels = new SceneModel[sceneModelList.size()];
+
         for (int i = 0; i<sceneModels.length;i++)
             sceneModels[i] = sceneModelList.get(i);
 
