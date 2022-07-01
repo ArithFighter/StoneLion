@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SceneBuilder {
     private final MouseEvent[] mouseEvents;
-    private SceneEvent[] sceneEvents;
+    private final SceneEvent[] sceneEvents;
 
     public SceneBuilder() {
         SceneModelAccessor sma = new SceneModelAccessor();
@@ -24,18 +24,12 @@ public class SceneBuilder {
         for (int i = 0; i< mouseEvents.length;i++)
             mouseEvents[i] = m.getList().get(i);
 
-        initSceneEvents(sma.getSceneModels());
-    }
+        SceneEventListProducer s = new SceneEventListProducer();
+        s.init(sma.getSceneModels());
 
-    private void initSceneEvents(SceneModel[] sceneModels){
-        List<SceneEvent> sceneEventList = new ArrayList<>();
-        for (SceneModel s:sceneModels){
-            if (s.getSceneEvent()!=null)
-                sceneEventList.add(s.getSceneEvent());
-        }
-        sceneEvents = new SceneEvent[sceneEventList.size()];
+        sceneEvents = new SceneEvent[s.getList().size()];
         for (int i =0; i< sceneEvents.length;i++)
-            sceneEvents[i] = sceneEventList.get(i);
+            sceneEvents[i] = s.getList().get(i);
     }
 
     public void setBatch(SpriteBatch batch) {
@@ -86,5 +80,20 @@ class MouseEventListProducer{
 
     public List<MouseEvent> getList(){
         return mouseEventList;
+    }
+}
+
+class SceneEventListProducer{
+    private final List<SceneEvent> sceneEventList = new ArrayList<>();
+
+    public void init(SceneModel[] sceneModels){
+        for (SceneModel s:sceneModels){
+            if (s.getMouseEvent()!=null)
+                sceneEventList.add(s.getSceneEvent());
+        }
+    }
+
+    public List<SceneEvent> getList(){
+        return sceneEventList;
     }
 }
