@@ -28,11 +28,11 @@ class StageDeployer {
     public GameVariation getVariation() {
         GameVariation gv;
 
-        if (cursor < 2)
+        if (cursor < 4)
             gv = GameVariation.STANDARD;
-        else if (cursor < 3)
+        else if (cursor < 6)
             gv = GameVariation.FOG;
-        else if (cursor < 4)
+        else if (cursor < 8)
             gv = GameVariation.TABOO;
         else
             gv = GameVariation.TRANSFORM;

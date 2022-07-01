@@ -160,7 +160,7 @@ class StageController extends SceneAccessor implements SceneControllable {
     private void checkFinishedAllStage() {
         Stage stage = getSceneCollection().getStage();
 
-        if (stageDeployer.isReachFinalStage(10)) {
+        if (stageDeployer.isReachFinalStage(5)) {
             setGameScene(GameScene.GAME_OVER);
             stage.init();
         }
