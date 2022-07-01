@@ -74,22 +74,8 @@ public class Main extends ApplicationAdapter {
         sceneController = new SceneController(scs, DECK_SELECTION);
 
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
-        mouseAdapter.setSceneList(getMouseEventScenes());
 
         Gdx.input.setInputProcessor(mouseAdapter);
-    }
-
-    private GameScene[] getMouseEventScenes(){
-        List<GameScene> gameSceneList = new ArrayList<>();
-        for (GameScene g:GameScene.values()){
-            if (g.getSceneModel().getMouseEvent()!=null)
-                gameSceneList.add(g);
-        }
-        GameScene[] mouseEventScenes = new GameScene[gameSceneList.size()];
-        for (int i =0;i< mouseEventScenes.length;i++)
-            mouseEventScenes[i] = gameSceneList.get(i);
-
-        return mouseEventScenes;
     }
 
     @Override

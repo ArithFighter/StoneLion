@@ -4,17 +4,31 @@ import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
 import com.badlogic.gdx.InputAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MouseAdapter extends InputAdapter {
     private final MouseEvent[] mouseEvents;
-    private GameScene[] sceneList;
+    private final GameScene[] sceneList;
     private GameScene gameScene;
 
     public MouseAdapter(MouseEvent[] mouseEvents) {
         this.mouseEvents = mouseEvents;
+
+        sceneList = getMouseEventScenes();
     }
 
-    public void setSceneList(GameScene[] sceneList) {
-        this.sceneList = sceneList;
+    private GameScene[] getMouseEventScenes(){
+        List<GameScene> gameSceneList = new ArrayList<>();
+        for (GameScene g:GameScene.values()){
+            if (g.getSceneModel().getMouseEvent()!=null)
+                gameSceneList.add(g);
+        }
+        GameScene[] mouseEventScenes = new GameScene[gameSceneList.size()];
+        for (int i =0;i< mouseEventScenes.length;i++)
+            mouseEventScenes[i] = gameSceneList.get(i);
+
+        return mouseEventScenes;
     }
 
     public void setGameScene(GameScene gameScene) {

@@ -88,7 +88,7 @@ class SceneEventListProducer{
 
     public void init(SceneModel[] sceneModels){
         for (SceneModel s:sceneModels){
-            if (s.getMouseEvent()!=null)
+            if (s.getSceneEvent()!=null)
                 sceneEventList.add(s.getSceneEvent());
         }
     }
