@@ -2,6 +2,7 @@ package com.arithfighter.not;
 
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.MouseEvent;
+import com.arithfighter.not.scene.SceneModel;
 import com.badlogic.gdx.InputAdapter;
 
 import java.util.ArrayList;
@@ -20,11 +21,15 @@ public class MouseAdapter extends InputAdapter {
 
     private GameScene[] getMouseEventScenes(){
         List<GameScene> gameSceneList = new ArrayList<>();
+
         for (GameScene g:GameScene.values()){
-            if (g.getSceneModel().getMouseEvent()!=null)
+            SceneModel sceneModel = g.getSceneModel();
+
+            if (sceneModel.getMouseEvent()!=null)
                 gameSceneList.add(g);
         }
         GameScene[] mouseEventScenes = new GameScene[gameSceneList.size()];
+
         for (int i =0;i< mouseEventScenes.length;i++)
             mouseEventScenes[i] = gameSceneList.get(i);
 
