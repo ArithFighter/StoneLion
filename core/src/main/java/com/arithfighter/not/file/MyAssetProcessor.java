@@ -18,12 +18,6 @@ public class MyAssetProcessor {
     }
 
     public void load(){
-        loadTextures(fileLibrary.getWidgetFiles());
-
-        loadTextures(fileLibrary.getCardFiles());
-
-        loadTextures(fileLibrary.getPanelFiles());
-
         loadTextures(fileLibrary.getSheetFiles());
 
         loadAtlas(fileLibrary.getAtlasFiles());
@@ -61,18 +55,6 @@ public class MyAssetProcessor {
 
     public void update(int millis){
         assetManager.update(millis);
-    }
-
-    public Texture[] getWidgets() {
-        return accessor.getTextures(fileLibrary.getWidgetFiles());
-    }
-
-    public Texture[] getCards(){
-        return accessor.getTextures(fileLibrary.getCardFiles());
-    }
-
-    public Texture[] getPanels(){
-        return accessor.getTextures(fileLibrary.getPanelFiles());
     }
 
     public Music[] getMusics(){
