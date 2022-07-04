@@ -87,6 +87,10 @@ public class MyAssetProcessor {
         return accessor.getTextures(fileLibrary.getSheetFiles());
     }
 
+    public TextureAtlas[] getTextureAtlas(){
+        return accessor.getTextureAtlas(fileLibrary.getAtlasFiles());
+    }
+
     public void dispose(){
         assetManager.dispose();
     }
@@ -97,6 +101,16 @@ class AssetAccessor{
 
     public AssetAccessor(AssetManager assetManager){
         this.assetManager = assetManager;
+    }
+
+    public TextureAtlas[] getTextureAtlas(String[] files){
+        int length = files.length;
+        TextureAtlas[] array = new TextureAtlas[length];
+
+        for (int i = 0; i < length; i++)
+            array[i] = assetManager.get(files[i]);
+
+        return array;
     }
 
     public Texture[] getTextures(String[] files){
