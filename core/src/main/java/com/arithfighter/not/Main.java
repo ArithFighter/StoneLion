@@ -36,7 +36,6 @@ public class Main extends ApplicationAdapter {
     private SceneController sceneController;
     private FontService fontService;
     private SceneCollection sceneCollection;
-    private Sprite testSprite;
 
     @Override
     public void create() {
@@ -75,10 +74,6 @@ public class Main extends ApplicationAdapter {
         mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
 
         Gdx.input.setInputProcessor(mouseAdapter);
-
-        TextureAtlasService textureAtlasService = new TextureAtlasService(assetProcessor.getTextureAtlas()[0]);
-        testSprite = new Sprite(textureAtlasService.getButton());
-        testSprite.setPosition(100,120);
     }
 
     @Override
@@ -131,8 +126,6 @@ public class Main extends ApplicationAdapter {
         GameDataDisplacer gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
         gameDataDisplacer.setCursorPoint(cursorPos.getX(), cursorPos.getY());
         gameDataDisplacer.draw(batch);
-
-        testSprite.draw(batch);
 
         batch.end();
     }

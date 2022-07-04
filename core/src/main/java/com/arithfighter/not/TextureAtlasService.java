@@ -1,16 +1,24 @@
 package com.arithfighter.not;
 
+import com.arithfighter.not.file.FileLibrary;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TextureAtlasService {
-    private final TextureRegion button;
+    private final Map<String, TextureAtlas> atlasMap;
 
-    public TextureAtlasService(TextureAtlas atlas){
-        button = atlas.findRegion("Button");
+    public TextureAtlasService(TextureAtlas[] atlases){
+        atlasMap = new HashMap<>();
+
+        FileLibrary fileLibrary = new FileLibrary();
+
+        for (int i =0;i<fileLibrary.getAtlasFiles().length;i++)
+            atlasMap.put(fileLibrary.getAtlasFiles()[i], atlases[i]);
     }
 
-    public TextureRegion getButton() {
-        return button;
+    public Map<String, TextureAtlas> getAtlasMap() {
+        return atlasMap;
     }
 }
