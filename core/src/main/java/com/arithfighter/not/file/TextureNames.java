@@ -26,31 +26,32 @@ public class TextureNames {
     private final String[] widgetNames = {
             "BoardArea",
             "sum-Display-block",
-            "numberBox",
             "Energy-bar",
             "white-block",
-
             "Button",
+
             "arrow-head-left",
             "arrow-head-right",
             "dialog",
             "wide-dialog",
-
             "Grid",
+
             "highlight"
     };
 
-    private String[] objectNames = {
+    private final String[] objectNames = {
             "bamboo-forest",
             "bamboo-forest-re",
             "bamboos",
             "bamboos-re",
             "bell",
+
             "candle-fire",
-            "Hand-Candle",
+            "Hand-CandleStick",
             "red-candle",
             "stone-lion",
             "white-bird",
+
             "white-snake"
     };
 

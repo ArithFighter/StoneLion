@@ -17,7 +17,7 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Rectangle grid;
 
     public GameOver(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
 
         font = fontService.getFont36();
         font.setColor(Color.WHITE);
@@ -30,7 +30,7 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
         Font font22 = fontService.getFont22();
         font22.setColor(Color.WHITE);
 
-        quitButton = new SceneControlButton(widgets[6], 1.8f);
+        quitButton = new SceneControlButton(widgets[5], 1.8f);
         quitButton.getButton().setFont(font22);
         quitButton.getButton().setPosition(
                 grid.getWidth()-widgets[6].getWidth()*0.9f,

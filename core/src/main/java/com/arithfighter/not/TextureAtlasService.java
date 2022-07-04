@@ -1,8 +1,6 @@
 package com.arithfighter.not;
 
 import com.arithfighter.not.file.FileLibrary;
-import com.arithfighter.not.file.TextureNames;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import java.util.HashMap;

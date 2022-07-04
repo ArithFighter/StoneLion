@@ -53,7 +53,7 @@ public class Main extends ApplicationAdapter {
 
         TextureAtlasService textureAtlasService = new TextureAtlasService(assetProcessor.getTextureAtlas());
 
-        TextureService textureService = new TextureService(textureAtlasService);
+        TextureService textureService = new TextureService(textureAtlasService, assetProcessor);
 
         sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
 

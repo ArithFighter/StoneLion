@@ -23,24 +23,25 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     private final Rectangle grid;
 
     public DeckSelection(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
+        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
+        Texture[] panels = textureService.getTextureMap().get(textureService.getKeys()[2]);
+
         font = fontService.getFont36();
 
         LayoutSetter layout = new LayoutSetter();
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        knightButton = new PanelButton(panels[0], 1f);
+        knightButton = new PanelButton(panels[8], 1f);
         knightButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        rogueButton = new PanelButton(panels[1], 1f);
+        rogueButton = new PanelButton(panels[9], 1f);
         rogueButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();
         f.setColor(Color.WHITE);
 
-        startButton = new SceneControlButton(widgets[6], 1.8f);
+        startButton = new SceneControlButton(widgets[4], 1.8f);
         startButton.getButton().setFont(f);
     }
 

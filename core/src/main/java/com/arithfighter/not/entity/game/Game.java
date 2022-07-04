@@ -12,6 +12,7 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
+import com.arithfighter.not.file.FileLibrary;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 
@@ -30,24 +31,24 @@ public class Game {
     private final PlayerService playerService;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
-        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
-        Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
+        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
+        Texture[] cards = textureService.getTextureMap().get(textureService.getKeys()[1]);
+        Texture[] spriteSheets = textureService.getTextureMap().get(textureService.getKeys()[2]);
 
         createCardAnimate(spriteSheets);
 
-        numberBoxEntity = new NumberBoxEntity(textures, font) {
+        numberBoxEntity = new NumberBoxEntity(widgets, font) {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(textures[2], font);
+        sumBoxEntity = new SumBoxEntity(widgets[2], font);
 
-        stoneLion = new StoneLionEntity(spriteSheets[2], cardAnimate);
+        stoneLion = new StoneLionEntity(spriteSheets[8], cardAnimate);
 
-        variationController = new VariationController(textures[5], font, sumBoxEntity){
+        variationController = new VariationController(widgets[5], font, sumBoxEntity){
             @Override
             public void doWhenViolatingTaboos() {
                 init();
