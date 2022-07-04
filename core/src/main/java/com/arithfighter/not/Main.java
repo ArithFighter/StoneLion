@@ -51,7 +51,9 @@ public class Main extends ApplicationAdapter {
 
         audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
 
-        TextureService textureService = new TextureService(assetProcessor);
+        TextureAtlasService textureAtlasService = new TextureAtlasService(assetProcessor.getTextureAtlas());
+
+        TextureService textureService = new TextureService(textureAtlasService);
 
         sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
 

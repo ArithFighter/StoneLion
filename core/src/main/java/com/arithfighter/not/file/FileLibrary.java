@@ -68,20 +68,20 @@ public class FileLibrary {
     };
 
     private final String[] atlasFiles = {
-              "atlas/game-widgets.atlas",
+            "atlas/game-widgets.atlas",
             "atlas/game-cards.atlas",
-            "atlas/game-object"
+            "atlas/game-object.atlas"
     };
 
-    public String[] getWidgetFiles(){
+    public String[] getWidgetFiles() {
         return widgetFiles;
     }
 
-    public String[] getCardFiles(){
+    public String[] getCardFiles() {
         return cardFiles;
     }
 
-    public String[] getPanelFiles(){
+    public String[] getPanelFiles() {
         return panelFiles;
     }
 
