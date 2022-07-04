@@ -1,0 +1,117 @@
+game-cards.png
+size: 512, 192
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Number-1
+  rotate: false
+  xy: 0, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-2
+  rotate: false
+  xy: 64, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-3
+  rotate: false
+  xy: 128, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-4
+  rotate: false
+  xy: 192, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-5
+  rotate: false
+  xy: 256, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-6
+  rotate: false
+  xy: 320, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-7
+  rotate: false
+  xy: 384, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-8
+  rotate: false
+  xy: 448, 0
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-9
+  rotate: false
+  xy: 0, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-max
+  rotate: false
+  xy: 64, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-neg1
+  rotate: false
+  xy: 128, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-neg3
+  rotate: false
+  xy: 192, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-neg7
+  rotate: false
+  xy: 256, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-re0
+  rotate: false
+  xy: 320, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-re12
+  rotate: false
+  xy: 384, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Number-re15
+  rotate: false
+  xy: 448, 96
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
