@@ -67,6 +67,10 @@ public class FileLibrary {
             "spritesheet/lion/stone-lion.png"
     };
 
+    private final String[] atlasFiles = {
+              "atlas/game-widgets.atlas"
+    };
+
     public String[] getWidgetFiles(){
         return widgetFiles;
     }
@@ -89,5 +93,9 @@ public class FileLibrary {
 
     public String[] getSheetFiles() {
         return sheetFiles;
+    }
+
+    public String[] getAtlasFiles() {
+        return atlasFiles;
     }
 }

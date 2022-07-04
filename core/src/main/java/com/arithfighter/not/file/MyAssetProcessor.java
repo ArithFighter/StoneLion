@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class MyAssetProcessor {
     private final AssetManager assetManager;
@@ -24,6 +25,8 @@ public class MyAssetProcessor {
         loadTextures(fileLibrary.getPanelFiles());
 
         loadTextures(fileLibrary.getSheetFiles());
+
+        loadAtlas(fileLibrary.getAtlasFiles());
 
         loadMusic();
 
@@ -49,6 +52,11 @@ public class MyAssetProcessor {
     private void loadSound(){
         for(String file: fileLibrary.getSoundFiles())
             assetManager.load(file, Sound.class);
+    }
+
+    private void loadAtlas(String[] files){
+        for (String s: files)
+            assetManager.load(s, TextureAtlas.class);
     }
 
     public void update(int millis){
