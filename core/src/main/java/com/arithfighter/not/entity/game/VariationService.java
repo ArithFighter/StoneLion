@@ -2,13 +2,14 @@ package com.arithfighter.not.entity.game;
 
 import com.arithfighter.not.font.Font;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class VariationService {
     private final SumMask sumMask;
     private final TabooNumber tabooNumber;
     private final TransformNumber transformNumber;
 
-    public VariationService(Texture texture, Font font) {
+    public VariationService(TextureRegion texture, Font font) {
         sumMask = new SumMask(texture);
 
         tabooNumber = new TabooNumber(font);

@@ -6,13 +6,14 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SumBox {
     private Font font;
     private final FontWidget widget;
     private int capacity;
 
-    public SumBox(Texture texture) {
+    public SumBox(TextureRegion texture) {
         widget = new SpriteWidget(texture, 8, 36);
     }
 

@@ -9,6 +9,7 @@ import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.widget.dialog.OptionDialog;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PauseMenu {
     private final ButtonProducer buttons;
@@ -17,7 +18,7 @@ public class PauseMenu {
     private final SoundManager soundManager;
     private final TextProvider textProvider;
 
-    public PauseMenu(Texture[] textures, SoundManager soundManager, Font font) {
+    public PauseMenu(TextureRegion[] textures, SoundManager soundManager, Font font) {
         this.soundManager = soundManager;
 
         textProvider = new TextProvider();
@@ -126,7 +127,7 @@ public class PauseMenu {
 class ButtonProducer {
     private final SceneControlButton[] buttons;
 
-    public ButtonProducer(Texture[] textures, Font font) {
+    public ButtonProducer(TextureRegion[] textures, Font font) {
         buttons = new SceneControlButton[3];
 
         for (int i = 0; i < buttons.length; i++) {

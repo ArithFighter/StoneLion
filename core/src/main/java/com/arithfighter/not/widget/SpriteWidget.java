@@ -4,6 +4,7 @@ import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SpriteWidget implements VisibleWidget, DetectableWidget,
         FontWidget, DetectableFontWidget, FlexibleWidget{
@@ -11,6 +12,24 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
     private final RawWidget widget;
     private final Point point;
     private int fontSize;
+
+    public SpriteWidget(TextureRegion texture, float scale, int fontSize){
+        widget = new RawWidget();
+        widget.setSize(texture, scale);
+        point = widget.getPoint();
+
+        this.fontSize = fontSize;
+
+        sprite = new Sprite(texture);
+    }
+
+    public SpriteWidget(TextureRegion texture, float scale){
+        widget = new RawWidget();
+        widget.setSize(texture, scale);
+        point = widget.getPoint();
+
+        sprite = new Sprite(texture);
+    }
 
     public SpriteWidget(Texture texture, float scale, int fontSize){
         widget = new RawWidget();

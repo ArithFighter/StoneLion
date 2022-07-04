@@ -4,19 +4,20 @@ import com.arithfighter.not.card.NumberCard;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Hand {
     private final NumberCard[] cards;
     private final float padding;
 
-    public Hand(Texture[] textures, CharacterList character) {
+    public Hand(TextureRegion[] textures, CharacterList character) {
         cards = new NumberCard[character.getTextureMap().length];
 
         CardTexturesExtractor texturesExtractor = new CardTexturesExtractor(textures);
-        Texture[] cardSet = texturesExtractor.getCardTextures(character);
+        TextureRegion[] cardSet = texturesExtractor.getCardTextures(character);
 
         int cardScale = 2;
-        padding = textures[0].getWidth()* cardScale + 18;
+        padding = textures[0].getRegionWidth()* cardScale + 18;
 
         for (int i = 0; i < cards.length; i++)
             cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], cardScale);
@@ -63,16 +64,16 @@ public class Hand {
 }
 
 class CardTexturesExtractor {
-    private final Texture[] cardTextures;
+    private final TextureRegion[] cardTextures;
     private final CharacterList[] characters = CharacterList.values();
     private final int quantity = characters[0].getTextureMap().length;
 
-    public CardTexturesExtractor(Texture[] cardTextures) {
+    public CardTexturesExtractor(TextureRegion[] cardTextures) {
         this.cardTextures = cardTextures;
     }
 
-    public Texture[] getCardTextures(CharacterList player) {
-        Texture[] cardSet = new Texture[quantity];
+    public TextureRegion[] getCardTextures(CharacterList player) {
+        TextureRegion[] cardSet = new TextureRegion[quantity];
 
         for (CharacterList character : characters)
             if (player == character) {

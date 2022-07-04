@@ -6,6 +6,7 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SumBoxEntity {
     private final SumBox sumBox;
@@ -13,7 +14,7 @@ public class SumBoxEntity {
     private final Point point;
     private boolean isReadyToResetSum = false;
 
-    public SumBoxEntity(Texture texture, Font font) {
+    public SumBoxEntity(TextureRegion texture, Font font) {
         sumBox = new SumBox(texture);
 
         LayoutSetter layoutSetter = new LayoutSetter();

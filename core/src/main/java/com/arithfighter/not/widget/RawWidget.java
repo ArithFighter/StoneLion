@@ -3,6 +3,7 @@ package com.arithfighter.not.widget;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class RawWidget {
     private Point point;
@@ -19,6 +20,10 @@ public class RawWidget {
 
     public Point getPoint() {
         return point;
+    }
+
+    public void setSize(TextureRegion texture, float scale) {
+        configSize(texture.getRegionWidth(), texture.getRegionHeight(), scale);
     }
 
     public void setSize(Texture texture, float scale) {

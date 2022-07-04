@@ -5,6 +5,7 @@ import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class NumberCard{
     private final int number;
@@ -12,7 +13,7 @@ public class NumberCard{
     private final Rectangle rectangle;
     private final RawCard card;
 
-    public NumberCard(Texture texture, int number, int scale) {
+    public NumberCard(TextureRegion texture, int number, int scale) {
         card = new RawCard(texture, scale);
 
         rectangle = card.getShape();

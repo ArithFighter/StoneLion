@@ -7,6 +7,7 @@ import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Dialog {
     private Font font;
@@ -16,7 +17,7 @@ public class Dialog {
     private String content2;
     private final Point point;
 
-    public Dialog(Texture texture, float scale) {
+    public Dialog(TextureRegion texture, float scale) {
         dialog = new SpriteWidget(texture, scale);
 
         point = new Point();

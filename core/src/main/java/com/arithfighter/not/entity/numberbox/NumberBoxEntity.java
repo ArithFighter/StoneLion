@@ -8,6 +8,7 @@ import com.arithfighter.not.system.RandomNumListProducer;
 import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.LinkedList;
 
@@ -21,7 +22,7 @@ public class NumberBoxEntity {
     private final NumberListInspector numberListInspector = new NumberListInspector();
     private final MarkerAnimation markerAnimation;
 
-    public NumberBoxEntity(Texture[] textures, Font font) {
+    public NumberBoxEntity(TextureRegion[] textures, Font font) {
         NumberBoxPlacer placer = new NumberBoxPlacer(250,220, 30);
 
         numberBoxService = new NumberBoxService(textures[3], font);
@@ -40,7 +41,7 @@ public class NumberBoxEntity {
         markerAnimation = new MarkerAnimation(textures[7], numberBoxService.getNumberBoxes());
     }
 
-    private void createMaskAnimation(Texture texture, NumberBoxPlacer placer) {
+    private void createMaskAnimation(TextureRegion texture, NumberBoxPlacer placer) {
         Mask[] masks = new Mask[maxQuantity];
         float scale = 2.5f;
         float fix = scale*4;

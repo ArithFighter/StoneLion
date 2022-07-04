@@ -4,13 +4,14 @@ import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.a1.Mask;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class SumMask {
     private final Mask sumMask;
     private final Timer timer;
     private boolean isReveal = false;
 
-    public SumMask(Texture texture) {
+    public SumMask(TextureRegion texture) {
         sumMask = new Mask(texture, 5);
         timer = new Timer();
         timer.setTime(1.2f);

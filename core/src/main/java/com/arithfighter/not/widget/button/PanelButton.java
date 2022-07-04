@@ -5,13 +5,14 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PanelButton{
     private final DetectableWidget button;
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
-    public PanelButton(Texture texture, float scale){
+    public PanelButton(TextureRegion texture, float scale){
         button = new SpriteWidget(texture, scale);
     }
 

@@ -5,11 +5,12 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player {
     private final Hand hand;
 
-    public Player(Texture[] cards, CharacterList character) {
+    public Player(TextureRegion[] cards, CharacterList character) {
         hand = new Hand(cards, character);
 
         LayoutSetter layoutSetter = new LayoutSetter();

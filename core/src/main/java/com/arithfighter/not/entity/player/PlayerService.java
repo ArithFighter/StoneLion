@@ -3,13 +3,14 @@ package com.arithfighter.not.entity.player;
 import com.arithfighter.not.entity.sumbox.SumBoxModel;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PlayerService {
     private final Player[] players;
     private SumBoxModel sumBoxModel;
     private Recorder remainCardRecorder;
 
-    public PlayerService(Texture[] cards) {
+    public PlayerService(TextureRegion[] cards) {
         players = new Player[CharacterList.values().length];
 
         for (int i = 0; i < players.length; i++) {

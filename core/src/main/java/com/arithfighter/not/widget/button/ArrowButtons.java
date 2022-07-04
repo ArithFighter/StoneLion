@@ -3,13 +3,14 @@ package com.arithfighter.not.widget.button;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ArrowButtons {
     private final PanelButton leftArrow;
     private final PanelButton rightArrow;
     private Point point;
 
-    public ArrowButtons(Texture[] textures, float scale) {
+    public ArrowButtons(TextureRegion[] textures, float scale) {
         leftArrow = new PanelButton(textures[6], scale);
 
         rightArrow = new PanelButton(textures[7], scale);

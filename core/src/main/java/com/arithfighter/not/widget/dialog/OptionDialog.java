@@ -6,12 +6,13 @@ import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class OptionDialog extends Dialog {
     private final SceneControlButton yesButton;
     private final SceneControlButton noButton;
 
-    public OptionDialog(Texture[] textures){
+    public OptionDialog(TextureRegion[] textures){
         super(textures[10], 35);
         getPoint().set(
                 Gdx.graphics.getWidth()/2f - getDialog().getWidget().getWidth() / 2,

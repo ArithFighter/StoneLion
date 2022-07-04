@@ -6,13 +6,14 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class VariationController {
     private final VariationService variationService;
     private NumberBoxEntity numberBoxEntity;
     private int sum;
 
-    public VariationController(Texture texture, Font font, SumBoxEntity sumBoxEntity) {
+    public VariationController(TextureRegion texture, Font font, SumBoxEntity sumBoxEntity) {
         variationService = new VariationService(texture, font);
 
         Point point = sumBoxEntity.getPoint();

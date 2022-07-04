@@ -3,12 +3,13 @@ package com.arithfighter.not.entity.lion;
 import com.arithfighter.not.card.CardAnimate;
 import com.arithfighter.not.entity.player.Player;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class StoneLionEntity {
     private final StoneLion stoneLion;
     private Player player;
 
-    public StoneLionEntity(Texture texture, CardAnimate cardAnimate) {
+    public StoneLionEntity(TextureRegion texture, CardAnimate cardAnimate) {
         stoneLion = new StoneLion(texture) {
             @Override
             public void initCardPosition() {

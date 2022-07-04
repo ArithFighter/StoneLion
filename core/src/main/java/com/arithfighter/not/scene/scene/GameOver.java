@@ -10,6 +10,7 @@ import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font font;
@@ -17,7 +18,7 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Rectangle grid;
 
     public GameOver(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
+        TextureRegion[] widgets = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
 
         font = fontService.getFont36();
         font.setColor(Color.WHITE);
@@ -33,7 +34,7 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
         quitButton = new SceneControlButton(widgets[5], 1.8f);
         quitButton.getButton().setFont(font22);
         quitButton.getButton().setPosition(
-                grid.getWidth()-widgets[6].getWidth()*0.9f,
+                grid.getWidth()-widgets[6].getRegionWidth()*0.9f,
                 grid.getHeight()
         );
     }

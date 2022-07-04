@@ -5,12 +5,13 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class NumberBoxService {
     private final NumberBox[] numberBoxes;
     private final static int quantity = 9;
 
-    public NumberBoxService(Texture texture, Font font) {
+    public NumberBoxService(TextureRegion texture, Font font) {
         numberBoxes = new NumberBox[quantity];
 
         for (int i = 0; i < quantity; i++) {

@@ -16,6 +16,7 @@ import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final Game game;
@@ -27,7 +28,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final RemainCardManager remainCardManager;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        Texture[] textures = textureService.getTextureMap().get(textureService.getKeys()[0]);
+        TextureRegion[] textures = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 

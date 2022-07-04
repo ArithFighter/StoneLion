@@ -6,12 +6,13 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class StoneLion extends DetectCardArea {
     private final DetectableWidget stoneLion;
     private final int scale = 4;
 
-    public StoneLion(Texture texture){
+    public StoneLion(TextureRegion texture){
         stoneLion = new SpriteWidget(texture, scale);
     }
 

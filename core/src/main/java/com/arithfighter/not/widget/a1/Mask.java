@@ -7,11 +7,12 @@ import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Mask {
     private final VisibleWidget widget;
 
-    public Mask(Texture texture, float scale){
+    public Mask(TextureRegion texture, float scale){
         widget = new SpriteWidget(texture, scale);
     }
 

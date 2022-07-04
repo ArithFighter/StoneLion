@@ -12,12 +12,12 @@ import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.player.PlayerService;
 import com.arithfighter.not.entity.sumbox.SumBoxEntity;
-import com.arithfighter.not.file.FileLibrary;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Game {
     private final NumberBoxEntity numberBoxEntity;
@@ -31,9 +31,12 @@ public class Game {
     private final PlayerService playerService;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
-        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
-        Texture[] cards = textureService.getTextureMap().get(textureService.getKeys()[1]);
-        Texture[] spriteSheets = textureService.getTextureMap().get(textureService.getKeys()[2]);
+        TextureRegion[] widgets = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
+        TextureRegion[] cards = textureService.getTextureRegionMap().get(textureService.getKeys()[1]);
+        TextureRegion[] object = textureService.getTextureRegionMap().get(textureService.getKeys()[2]);
+
+        Texture[] spriteSheets = new Texture[textureService.getAnimateSheetList().size()];
+        textureService.getAnimateSheetList().toArray(spriteSheets);
 
         createCardAnimate(spriteSheets);
 
@@ -46,7 +49,7 @@ public class Game {
         };
         sumBoxEntity = new SumBoxEntity(widgets[2], font);
 
-        stoneLion = new StoneLionEntity(spriteSheets[8], cardAnimate);
+        stoneLion = new StoneLionEntity(object[8], cardAnimate);
 
         variationController = new VariationController(widgets[5], font, sumBoxEntity){
             @Override

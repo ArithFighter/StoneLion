@@ -6,6 +6,7 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Button{
     private Font font;
@@ -13,7 +14,7 @@ public class Button{
     private enum State{ON, OFF}
     private State buttonState = State.OFF;
 
-    public Button(Texture texture, float scale){
+    public Button(TextureRegion texture, float scale){
         button = new SpriteWidget(texture, scale);
     }
 

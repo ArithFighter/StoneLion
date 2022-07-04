@@ -11,6 +11,7 @@ import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {
     private final SceneControlButton leaveButton;
@@ -21,7 +22,7 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
 
     public Option(TextureService textureService, SoundManager soundManager, FontService fontService){
         this.soundManager = soundManager;
-        Texture[] textures = textureService.getTextureMap().get(textureService.getKeys()[0]);
+        TextureRegion[] textures = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
         Font font = fontService.getFont22();
 
         LayoutSetter layout = new LayoutSetter();

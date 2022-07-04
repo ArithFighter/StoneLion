@@ -13,6 +13,7 @@ import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class DeckSelection extends SceneComponent implements SceneEvent, MouseEvent {
     private final PanelButton knightButton;
@@ -23,8 +24,8 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     private final Rectangle grid;
 
     public DeckSelection(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextureMap().get(textureService.getKeys()[0]);
-        Texture[] panels = textureService.getTextureMap().get(textureService.getKeys()[2]);
+        TextureRegion[] widgets = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
+        TextureRegion[] panels = textureService.getTextureRegionMap().get(textureService.getKeys()[2]);
 
         font = fontService.getFont36();
 

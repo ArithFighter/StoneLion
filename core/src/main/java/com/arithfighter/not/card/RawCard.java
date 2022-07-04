@@ -4,6 +4,7 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class RawCard {
     private final Point initPoint;
@@ -11,14 +12,14 @@ public class RawCard {
     private final Rectangle rectangle;
     private final Sprite sprite;
 
-    public RawCard(Texture texture, float scale){
+    public RawCard(TextureRegion texture, float scale){
         sprite = new Sprite(texture);
         initPoint = new Point();
         point = new Point();
 
         this.rectangle = new Rectangle(
-                texture.getWidth()*scale,
-                texture.getHeight()*scale
+                texture.getRegionWidth()*scale,
+                texture.getRegionHeight()*scale
         );
     }
 

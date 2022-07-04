@@ -10,6 +10,7 @@ import com.arithfighter.not.widget.button.ArrowButtons;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ControlBar {
     private final VisibleWidget[] grids;
@@ -18,7 +19,7 @@ public class ControlBar {
     private final ValueHolder valueHolder;
     private boolean isButtonLock = false;
 
-    public ControlBar(Texture[] textures, int max) {
+    public ControlBar(TextureRegion[] textures, int max) {
         valueHolder = new ValueHolder(max);
 
         grids = new VisibleWidget[valueHolder.getMaxValue()];

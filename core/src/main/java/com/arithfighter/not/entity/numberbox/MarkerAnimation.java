@@ -7,6 +7,7 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class MarkerAnimation {
     private final VisualEffect visualEffect;
@@ -15,7 +16,7 @@ class MarkerAnimation {
     private int index = -1;
     private final VisibleWidget mark;
 
-    public MarkerAnimation(Texture texture, NumberBox[] numberBoxes) {
+    public MarkerAnimation(TextureRegion texture, NumberBox[] numberBoxes) {
         mark = new SpriteWidget(texture, 1.2f);
 
         visualEffect = new VisualEffect() {

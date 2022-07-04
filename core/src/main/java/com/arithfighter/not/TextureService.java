@@ -7,20 +7,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TextureService {
-    private final Map<String, Texture[]> textureMap;
+    private final Map<String, TextureRegion[]> textureRegionMap;
+    private final List<Texture> animateSheetList;
     private final String[] keys ={
             "widgets",
             "cards",
-            "objects",
-            "spriteSheet"
+            "objects"
     };
 
     public TextureService(TextureAtlasService textureAtlasService, MyAssetProcessor myAssetProcessor) {
-        textureMap = new HashMap<>();
+        textureRegionMap = new HashMap<>();
+
+        animateSheetList = new ArrayList<>();
 
         TextureNames textureNames = new TextureNames();
 
@@ -33,13 +37,6 @@ public class TextureService {
                 new TextureRegion[widgetLen],
                 new TextureRegion[cardLen],
                 new TextureRegion[objectLen]
-        };
-
-        Texture[][] textures = {
-                new Texture[widgetLen],
-                new Texture[cardLen],
-                new Texture[objectLen],
-                new Texture[sheetLength],
         };
 
         FileLibrary fileLibrary = new FileLibrary();
@@ -56,28 +53,23 @@ public class TextureService {
         }
 
         for (int j = 0; j < objectLen; j++){
-            TextureAtlas ta = atlasMap.get(fileLibrary.getAtlasFiles()[0]);
+            TextureAtlas ta = atlasMap.get(fileLibrary.getAtlasFiles()[2]);
             textureRegions[2][j] = ta.findRegion(textureNames.getObjectNames()[j]);
         }
 
-        for (int i = 0;i<widgetLen;i++)
-            textures[0][i] = textureRegions[0][i].getTexture();
-
-        for (int i = 0;i<cardLen;i++)
-            textures[1][i] = textureRegions[1][i].getTexture();
-
-        for (int i = 0;i<objectLen;i++)
-            textures[2][i] = textureRegions[2][i].getTexture();
-
         for (int i = 0;i<sheetLength;i++)
-            textures[3][i] = myAssetProcessor.getSpriteSheet()[i];
+            animateSheetList.add(myAssetProcessor.getSpriteSheet()[i]);
 
         for (int i = 0; i< keys.length;i++)
-            textureMap.put(keys[i], textures[i]);
+            textureRegionMap.put(keys[i], textureRegions[i]);
     }
 
-    public Map<String, Texture[]> getTextureMap() {
-        return textureMap;
+    public List<Texture> getAnimateSheetList() {
+        return animateSheetList;
+    }
+
+    public Map<String, TextureRegion[]> getTextureRegionMap() {
+        return textureRegionMap;
     }
 
     public String[] getKeys() {
