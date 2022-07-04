@@ -24,19 +24,20 @@ public class TextureNames {
     };
 
     private final String[] widgetNames = {
+            "Card_template",
             "BoardArea",
             "sum-Display-block",
+            "numberBox",
             "Energy-bar",
+
             "white-block",
-            "Button",
+            "Button1",
+            "Golden_Square",
+            "arrow-left",
+            "arrow-right",
 
-            "arrow-head-left",
-            "arrow-head-right",
             "dialog",
-            "wide-dialog",
-            "Grid",
-
-            "highlight"
+            "wide-dialog"
     };
 
     private final String[] objectNames = {

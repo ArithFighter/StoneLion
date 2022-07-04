@@ -33,10 +33,10 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        knightButton = new PanelButton(panels[8], 1f);
+        knightButton = new PanelButton(panels[9], 5f);
         knightButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        rogueButton = new PanelButton(panels[9], 1f);
+        rogueButton = new PanelButton(panels[10], 5f);
         rogueButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();
