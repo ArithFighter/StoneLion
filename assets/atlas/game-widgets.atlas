@@ -1,32 +1,39 @@
 game-widgets.png
-size: 64, 349
+size: 96, 316
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arrow-head-left
   rotate: false
-  xy: 0, 125
+  xy: 0, 156
   size: 48, 64
   orig: 48, 64
   offset: 0, 0
   index: -1
 arrow-head-right
   rotate: false
-  xy: 0, 189
+  xy: 48, 156
   size: 48, 64
   orig: 48, 64
   offset: 0, 0
   index: -1
 BoardArea
   rotate: false
-  xy: 0, 253
+  xy: 0, 220
   size: 64, 96
   orig: 64, 96
   offset: 0, 0
   index: -1
+Button
+  rotate: false
+  xy: 0, 96
+  size: 96, 60
+  orig: 96, 60
+  offset: 0, 0
+  index: -1
 desk
   rotate: false
-  xy: 0, 25
+  xy: 0, 16
   size: 32, 18
   orig: 32, 18
   offset: 0, 0
@@ -40,42 +47,42 @@ dialog
   index: -1
 Energy-bar
   rotate: false
-  xy: 0, 45
+  xy: 64, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Grid
   rotate: false
-  xy: 32, 45
+  xy: 0, 48
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 highlight
   rotate: false
-  xy: 32, 25
+  xy: 32, 16
   size: 32, 20
   orig: 32, 20
   offset: 0, 0
   index: -1
 sum-Display-block
   rotate: false
-  xy: 16, 0
+  xy: 61, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white-block
   rotate: false
-  xy: 0, 77
+  xy: 32, 48
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 wide-dialog
   rotate: false
-  xy: 0, 16
+  xy: 16, 0
   size: 45, 9
   orig: 45, 9
   offset: 0, 0
