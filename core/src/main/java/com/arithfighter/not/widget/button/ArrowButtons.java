@@ -11,9 +11,9 @@ public class ArrowButtons {
     private Point point;
 
     public ArrowButtons(TextureRegion[] textures, float scale) {
-        leftArrow = new PanelButton(textures[6], scale);
+        leftArrow = new PanelButton(textures[8], scale);
 
-        rightArrow = new PanelButton(textures[7], scale);
+        rightArrow = new PanelButton(textures[9], scale);
     }
 
     public void setPoint(Point point) {

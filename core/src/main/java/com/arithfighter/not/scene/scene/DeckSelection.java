@@ -42,7 +42,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         Font f = fontService.getFont22();
         f.setColor(Color.WHITE);
 
-        startButton = new SceneControlButton(widgets[4], 1.8f);
+        startButton = new SceneControlButton(widgets[6], 1.8f);
         startButton.getButton().setFont(f);
     }
 

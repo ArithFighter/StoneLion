@@ -29,7 +29,7 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         layout.setGrid(5,6);
         Rectangle grid = layout.getGrid();
 
-        leaveButton = new SceneControlButton(textures[5], 1.8f);
+        leaveButton = new SceneControlButton(textures[6], 1.8f);
         leaveButton.getButton().setFont(font);
         leaveButton.getButton().setPosition(grid.getWidth()*2, grid.getHeight());
 

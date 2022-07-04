@@ -47,7 +47,7 @@ public class Game {
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(widgets[1], font);
+        sumBoxEntity = new SumBoxEntity(widgets[2], font);
 
         stoneLion = new StoneLionEntity(object[8], cardAnimate);
 

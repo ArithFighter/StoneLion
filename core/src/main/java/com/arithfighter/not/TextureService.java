@@ -44,7 +44,7 @@ public class TextureService {
 
         for (int j = 0; j < widgetLen; j++){
             TextureAtlas ta = atlasMap.get(fileLibrary.getAtlasFiles()[0]);
-            textureRegions[0][j] = ta.findRegion("Button");
+            textureRegions[0][j] = ta.findRegion(textureNames.getWidgetNames()[j]);
         }
 
         for (int j = 0; j < cardLen; j++){
