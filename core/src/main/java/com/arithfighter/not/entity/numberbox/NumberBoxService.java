@@ -14,7 +14,7 @@ public class NumberBoxService {
         numberBoxes = new NumberBox[quantity];
 
         for (int i = 0; i < quantity; i++) {
-            numberBoxes[i] = new NumberBox(texture);
+            numberBoxes[i] = new NumberBox(texture, 5.5f);
             numberBoxes[i].setFont(font);
         }
     }

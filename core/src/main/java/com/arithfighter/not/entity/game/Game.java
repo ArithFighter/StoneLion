@@ -30,25 +30,28 @@ public class Game {
     private final PlayerService playerService;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
-        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
         Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
 
         createCardAnimate(spriteSheets);
 
-        numberBoxEntity = new NumberBoxEntity(textures, font) {
+        Texture[] numberTextures = {
+                object[1], gui[5], gui[7]
+        };
+        numberBoxEntity = new NumberBoxEntity(numberTextures, font) {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(textures[2], font);
+        sumBoxEntity = new SumBoxEntity(gui[2], font);
 
         stoneLion = new StoneLionEntity(object[0], cardAnimate);
 
-        variationController = new VariationController(textures[5], font, sumBoxEntity){
+        variationController = new VariationController(gui[5], font, sumBoxEntity) {
             @Override
             public void doWhenViolatingTaboos() {
                 init();
@@ -67,9 +70,9 @@ public class Game {
     public void setCharacter(CharacterList character) {
         int index = 0;
 
-        for (int i = 0;i<CharacterList.values().length;i++){
+        for (int i = 0; i < CharacterList.values().length; i++) {
             if (CharacterList.values()[i] == character)
-                index =i;
+                index = i;
         }
 
         this.player = playerService.getPlayers()[index];
@@ -104,7 +107,7 @@ public class Game {
             player.playOnCardAnimation(mouseX, mouseY);
     }
 
-    public boolean isAllNumZero(){
+    public boolean isAllNumZero() {
         return numberBoxEntity.isAllNumZero();
     }
 
@@ -137,7 +140,7 @@ public class Game {
         isCardDragging = false;
 
         //you can only touch cards when all card animation finished
-        if (cardAnimate.isAllNotStart()){
+        if (cardAnimate.isAllNotStart()) {
             player.activateCard(mouseX, mouseY);
             cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
         }

@@ -15,8 +15,8 @@ public class NumberBox{
     private final FontWidget widget;
     private Point point;
 
-    public NumberBox(Texture texture) {
-        widget = new SpriteWidget(texture, 3.5f, 32);
+    public NumberBox(Texture texture, float scale) {
+        widget = new SpriteWidget(texture, scale);
     }
 
     public void setFont(Font font) {

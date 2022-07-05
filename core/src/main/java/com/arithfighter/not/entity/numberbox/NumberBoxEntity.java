@@ -24,11 +24,11 @@ public class NumberBoxEntity {
     public NumberBoxEntity(Texture[] textures, Font font) {
         NumberBoxPlacer placer = new NumberBoxPlacer(250,220, 30);
 
-        numberBoxService = new NumberBoxService(textures[3], font);
+        numberBoxService = new NumberBoxService(textures[0], font);
         numberBoxService.setPosition(placer);
 
         maxQuantity = numberBoxService.getQuantity();
-        createMaskAnimation(textures[5], placer);
+        createMaskAnimation(textures[1], placer);
 
         randomNumListProducer = new RandomNumListProducer(new GameNumProducer());
         randomNumListProducer.setMaxQuantity(maxQuantity);
@@ -37,7 +37,7 @@ public class NumberBoxEntity {
 
         numberListController = new NumberListController(maxQuantity);
 
-        markerAnimation = new MarkerAnimation(textures[7], numberBoxService.getNumberBoxes());
+        markerAnimation = new MarkerAnimation(textures[2], numberBoxService.getNumberBoxes());
     }
 
     private void createMaskAnimation(Texture texture, NumberBoxPlacer placer) {
