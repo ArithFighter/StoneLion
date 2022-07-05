@@ -12,7 +12,6 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class DeckSelection extends SceneComponent implements SceneEvent, MouseEvent {
@@ -25,7 +24,7 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
 
     public DeckSelection(TextureService textureService, FontService fontService){
         TextureRegion[] widgets = textureService.getTextureRegionMap().get(textureService.getKeys()[0]);
-        TextureRegion[] panels = textureService.getTextureRegionMap().get(textureService.getKeys()[2]);
+        TextureRegion[] object = textureService.getTextureRegionMap().get(textureService.getKeys()[2]);
 
         font = fontService.getFont36();
 
@@ -33,10 +32,10 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        knightButton = new PanelButton(panels[9], 5f);
+        knightButton = new PanelButton(object[9], 5f);
         knightButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        rogueButton = new PanelButton(panels[10], 5f);
+        rogueButton = new PanelButton(object[10], 5f);
         rogueButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();

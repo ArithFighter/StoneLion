@@ -14,7 +14,6 @@ import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -33,7 +32,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
         game = new Game(textureService, soundManager, fontService.getFont32());
-        game.setCharacter(CharacterList.KNIGHT);
+        game.setCharacter(CharacterList.SNAKE);
         game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
         pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
