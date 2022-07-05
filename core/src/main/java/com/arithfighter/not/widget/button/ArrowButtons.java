@@ -9,10 +9,11 @@ public class ArrowButtons {
     private final PanelButton rightArrow;
     private Point point;
 
-    public ArrowButtons(Texture[] textures, float scale) {
-        leftArrow = new PanelButton(textures[8], scale);
+    public ArrowButtons(Texture texture, float scale) {
+        leftArrow = new PanelButton(texture, scale);
 
-        rightArrow = new PanelButton(textures[9], scale);
+        rightArrow = new PanelButton(texture, scale);
+        rightArrow.reverseHorizontal();
     }
 
     public void setPoint(Point point) {

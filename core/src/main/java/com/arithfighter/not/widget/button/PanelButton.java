@@ -15,6 +15,10 @@ public class PanelButton{
         button = new SpriteWidget(texture, scale);
     }
 
+    public void reverseHorizontal(){
+        button.getSprite().flip(true, false);
+    }
+
     public void setPosition(float x, float y){
         button.setPosition(x,y);
     }
