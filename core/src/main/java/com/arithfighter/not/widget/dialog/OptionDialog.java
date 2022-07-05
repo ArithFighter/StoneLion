@@ -12,7 +12,7 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton noButton;
 
     public OptionDialog(Texture[] textures){
-        super(textures[10], 35);
+        super(textures[9], 35);
         getPoint().set(
                 Gdx.graphics.getWidth()/2f - getDialog().getWidget().getWidth() / 2,
                 Gdx.graphics.getHeight()/2f - getDialog().getWidget().getHeight() / 2

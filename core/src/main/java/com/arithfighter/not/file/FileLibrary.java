@@ -12,9 +12,8 @@ public class FileLibrary {
             "gui/Button1.png",
             "gui/Golden_Square.png",
             "gui/arrow-left.png",
-            "gui/arrow-right.png",
-
             "gui/dialog.png",
+
             "gui/wide-dialog.png"
     };
 
