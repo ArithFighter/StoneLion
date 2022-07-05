@@ -8,19 +8,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBoxService {
     private final NumberBox[] numberBoxes;
+    private final float scale = 5.5f;
     private final static int quantity = 9;
 
     public NumberBoxService(Texture texture, Font font) {
         numberBoxes = new NumberBox[quantity];
 
         for (int i = 0; i < quantity; i++) {
-            numberBoxes[i] = new NumberBox(texture, 5.5f);
+            numberBoxes[i] = new NumberBox(texture, scale);
             numberBoxes[i].setFont(font);
         }
     }
 
     public NumberBoxService() {
         numberBoxes = new NumberBox[quantity];
+    }
+
+    public float getScale() {
+        return scale;
     }
 
     public void setPosition(NumberBoxPlacer placer) {

@@ -38,7 +38,7 @@ public class Game {
         createCardAnimate(spriteSheets);
 
         Texture[] numberTextures = {
-                object[1], gui[5], gui[7]
+                object[1], gui[7]
         };
         numberBoxEntity = new NumberBoxEntity(numberTextures, font) {
             @Override
