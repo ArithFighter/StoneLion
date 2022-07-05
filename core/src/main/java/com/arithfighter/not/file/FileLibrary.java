@@ -41,11 +41,8 @@ public class FileLibrary {
     };
 
     private final String[] panelFiles = {
-            "panel/KNIGHT_panel.png",
-            "panel/NINJA_panel.png",
-            "panel/HUNTER_panel.png",
-            "panel/PALADIN_panel.png",
-            "panel/WARRIOR_panel.png",
+            "panel/snake.png",
+            "panel/crane.png",
     };
 
     private final String[] musicFiles = {

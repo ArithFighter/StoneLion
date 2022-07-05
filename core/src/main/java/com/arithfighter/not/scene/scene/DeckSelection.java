@@ -15,8 +15,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
 public class DeckSelection extends SceneComponent implements SceneEvent, MouseEvent {
-    private final PanelButton knightButton;
-    private final PanelButton rogueButton;
+    private final PanelButton snakeButton;
+    private final PanelButton craneButton;
     private final Font font;
     private final SceneControlButton startButton;
     private String deckName = "";
@@ -31,11 +31,11 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        knightButton = new PanelButton(panels[0], 1f);
-        knightButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
+        snakeButton = new PanelButton(panels[0], 6f);
+        snakeButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        rogueButton = new PanelButton(panels[1], 1f);
-        rogueButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
+        craneButton = new PanelButton(panels[1], 4f);
+        craneButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();
         f.setColor(Color.WHITE);
@@ -50,8 +50,8 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         int x = cpa.getX();
         int y = cpa.getY();
 
-        knightButton.on(x,y);
-        rogueButton.on(x,y);
+        snakeButton.on(x,y);
+        craneButton.on(x,y);
 
         startButton.getButton().on(x,y);
     }
@@ -73,22 +73,22 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     }
 
     private void offButtons(){
-        knightButton.off();
-        rogueButton.off();
+        snakeButton.off();
+        craneButton.off();
         startButton.getButton().off();
     }
 
     @Override
     public void render() {
-        if (knightButton.isOn())
+        if (snakeButton.isOn())
             deckName = CharacterList.values()[0].toString();
-        if (rogueButton.isOn())
+        if (craneButton.isOn())
             deckName = CharacterList.values()[1].toString();
 
         font.draw(getBatch(), deckName, grid.getWidth()*5,grid.getHeight()*2);
 
-        knightButton.draw(getBatch());
-        rogueButton.draw(getBatch());
+        snakeButton.draw(getBatch());
+        craneButton.draw(getBatch());
 
         setStartButtonPosition();
 
