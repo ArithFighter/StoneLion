@@ -27,7 +27,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final RemainCardManager remainCardManager;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
@@ -35,9 +35,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         game.setCharacter(CharacterList.SNAKE);
         game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
-        pauseMenu = new PauseMenu(textures, soundManager, fontService.getFont20());
+        Texture[] pauseGui = {gui[1], gui[6], gui[9]};
+        pauseMenu = new PauseMenu(pauseGui, soundManager, fontService.getFont20());
 
-        pauseButton = new SceneControlButton(textures[6], 1.8f);
+        pauseButton = new SceneControlButton(gui[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
         pauseButton.getButton().setFont(fontService.getFont22());
 

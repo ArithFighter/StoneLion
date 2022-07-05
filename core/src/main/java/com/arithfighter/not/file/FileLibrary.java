@@ -71,7 +71,7 @@ public class FileLibrary {
 
             "object/ghost-fire.png",
             "object/bamboos.png",
-            "object/bamboos-forest.png",
+            "object/bamboo-forest.png",
     };
 
     public String[] getGuiFiles(){

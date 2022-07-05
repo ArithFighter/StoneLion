@@ -22,9 +22,9 @@ public class PauseMenu {
 
         textProvider = new TextProvider();
 
-        buttons = new ButtonProducer(textures, font);
+        buttons = new ButtonProducer(textures[1], font);
 
-        dialog = new OptionDialog(textures);
+        dialog = new OptionDialog(textures[2], textures[1]);
         dialog.setFont(font);
         dialog.setButtonFont(font);
         dialog.setOriginString(textProvider.getPauseMenuTexts()[3]);
@@ -33,7 +33,7 @@ public class PauseMenu {
         int y = 300;
         int margin = 100;
 
-        background = new SpriteWidget(textures[1], 5f);
+        background = new SpriteWidget(textures[0], 5f);
         background.setPosition(x, y - margin);
     }
 
@@ -126,11 +126,11 @@ public class PauseMenu {
 class ButtonProducer {
     private final SceneControlButton[] buttons;
 
-    public ButtonProducer(Texture[] textures, Font font) {
+    public ButtonProducer(Texture texture, Font font) {
         buttons = new SceneControlButton[3];
 
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new SceneControlButton(textures[6], 1.8f);
+            buttons[i] = new SceneControlButton(texture, 1.8f);
             buttons[i].getButton().setPosition(540, 250 + 150 * i);
             buttons[i].getButton().setFont(font);
         }

@@ -11,14 +11,14 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton yesButton;
     private final SceneControlButton noButton;
 
-    public OptionDialog(Texture[] textures){
-        super(textures[9], 35);
+    public OptionDialog(Texture dialog, Texture button){
+        super(dialog, 35);
         getPoint().set(
                 Gdx.graphics.getWidth()/2f - getDialog().getWidget().getWidth() / 2,
                 Gdx.graphics.getHeight()/2f - getDialog().getWidget().getHeight() / 2
         );
-        yesButton = new SceneControlButton(textures[6], 1.2f);
-        noButton = new SceneControlButton(textures[6], 1.2f);
+        yesButton = new SceneControlButton(button, 1.2f);
+        noButton = new SceneControlButton(button, 1.2f);
     }
 
     public void setButtonFont(Font font) {
