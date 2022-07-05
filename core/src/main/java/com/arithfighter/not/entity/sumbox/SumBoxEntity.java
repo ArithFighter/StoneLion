@@ -14,7 +14,7 @@ public class SumBoxEntity {
     private boolean isReadyToResetSum = false;
 
     public SumBoxEntity(Texture texture, Font font) {
-        sumBox = new SumBox(texture);
+        sumBox = new SumBox(texture, 2);
 
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(7,7);

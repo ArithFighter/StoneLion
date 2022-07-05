@@ -69,6 +69,7 @@ public class FileLibrary {
             "object/red-candle.png",
             "object/candle-fire.png",
             "object/Hand-CandleStick.png",
+
             "object/ghost-fire.png",
     };
 

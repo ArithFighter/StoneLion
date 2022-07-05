@@ -12,8 +12,8 @@ public class SumBox {
     private final FontWidget widget;
     private int capacity;
 
-    public SumBox(Texture texture) {
-        widget = new SpriteWidget(texture, 8);
+    public SumBox(Texture texture, float scale) {
+        widget = new SpriteWidget(texture, scale);
     }
 
     public void setFont(Font font) {
