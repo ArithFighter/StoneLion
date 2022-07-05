@@ -9,7 +9,7 @@ public class EmptyBar{
     private final VisibleWidget widget;
 
     public EmptyBar(Texture texture){
-        widget = new SpriteWidget(texture,8,23);
+        widget = new SpriteWidget(texture,8);
     }
 
     public float getWidth(){

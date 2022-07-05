@@ -12,16 +12,6 @@ public class SpriteWidget implements VisibleWidget, DetectableWidget,
     private final Point point;
     private int fontSize;
 
-    public SpriteWidget(Texture texture, float scale, int fontSize){
-        widget = new RawWidget();
-        widget.setSize(texture, scale);
-        point = widget.getPoint();
-
-        this.fontSize = fontSize;
-
-        sprite = new Sprite(texture);
-    }
-
     public SpriteWidget(Texture texture, float scale){
         widget = new RawWidget();
         widget.setSize(texture, scale);

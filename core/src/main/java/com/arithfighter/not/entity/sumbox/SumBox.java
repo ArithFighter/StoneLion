@@ -13,7 +13,7 @@ public class SumBox {
     private int capacity;
 
     public SumBox(Texture texture) {
-        widget = new SpriteWidget(texture, 8, 36);
+        widget = new SpriteWidget(texture, 8);
     }
 
     public void setFont(Font font) {
