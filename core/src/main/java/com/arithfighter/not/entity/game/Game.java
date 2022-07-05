@@ -33,6 +33,7 @@ public class Game {
         Texture[] textures = textureService.getTextures(textureService.getKeys()[0]);
         Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
         Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
+        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
 
         createCardAnimate(spriteSheets);
 
@@ -45,7 +46,7 @@ public class Game {
         };
         sumBoxEntity = new SumBoxEntity(textures[2], font);
 
-        stoneLion = new StoneLionEntity(spriteSheets[2], cardAnimate);
+        stoneLion = new StoneLionEntity(object[0], cardAnimate);
 
         variationController = new VariationController(textures[5], font, sumBoxEntity){
             @Override

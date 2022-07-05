@@ -63,8 +63,11 @@ public class FileLibrary {
 
     private final String[] sheetFiles = {
             "spritesheet/card-fade-in.png",
-            "spritesheet/card-fade-out.png",
-            "spritesheet/lion/stone-lion.png"
+            "spritesheet/card-fade-out.png"
+    };
+
+    private final String[] objectFiles = {
+            "object/stone-lion.png",
     };
 
     public String[] getGuiFiles(){
@@ -89,5 +92,9 @@ public class FileLibrary {
 
     public String[] getSheetFiles() {
         return sheetFiles;
+    }
+
+    public String[] getObjectFiles() {
+        return objectFiles;
     }
 }

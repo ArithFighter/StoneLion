@@ -12,7 +12,8 @@ public class TextureService {
             "Widgets",
             "Cards",
             "Panels",
-            "SpriteSheets"
+            "SpriteSheets",
+            "object"
     };
 
     public TextureService(MyAssetProcessor assetProcessor) {
@@ -22,6 +23,7 @@ public class TextureService {
         textureMap.put(keys[1], assetProcessor.getCards());
         textureMap.put(keys[2], assetProcessor.getPanels());
         textureMap.put(keys[3], assetProcessor.getSpriteSheet());
+        textureMap.put(keys[4], assetProcessor.getObject());
     }
 
     public String[] getKeys() {

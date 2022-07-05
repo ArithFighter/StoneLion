@@ -25,6 +25,8 @@ public class MyAssetProcessor {
 
         loadTextures(fileLibrary.getSheetFiles());
 
+        loadTextures(fileLibrary.getObjectFiles());
+
         loadMusic();
 
         loadSound();
@@ -77,6 +79,10 @@ public class MyAssetProcessor {
 
     public Texture[] getSpriteSheet(){
         return accessor.getTextures(fileLibrary.getSheetFiles());
+    }
+
+    public Texture[] getObject(){
+        return accessor.getTextures(fileLibrary.getObjectFiles());
     }
 
     public void dispose(){
