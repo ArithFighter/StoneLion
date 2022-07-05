@@ -21,7 +21,7 @@ public class FileLibrary {
     };
 
     private final String[] atlasFiles = {
-            "atlas/game-widgets.atlas",
+            "atlas/game-gui.atlas",
             "atlas/game-cards.atlas",
             "atlas/game-object.atlas"
     };
