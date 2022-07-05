@@ -1,88 +1,88 @@
 game-widgets.png
-size: 112, 396
+size: 221, 208
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arrow-left
   rotate: false
-  xy: 0, 140
+  xy: 144, 48
   size: 48, 64
   orig: 48, 64
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 48, 140
+  xy: 0, 112
   size: 48, 64
   orig: 48, 64
   offset: 0, 0
   index: -1
 BoardArea
   rotate: false
-  xy: 0, 204
+  xy: 48, 112
   size: 64, 96
   orig: 64, 96
   offset: 0, 0
   index: -1
 Button1
   rotate: false
-  xy: 0, 80
+  xy: 48, 48
   size: 96, 60
   orig: 96, 60
   offset: 0, 0
   index: -1
 Card_template
   rotate: false
-  xy: 32, 32
+  xy: 189, 0
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 0, 0
-  size: 16, 9
-  orig: 16, 9
+  xy: 125, 0
+  size: 64, 36
+  orig: 64, 36
   offset: 0, 0
   index: -1
 Energy-bar
   rotate: false
-  xy: 77, 0
+  xy: 61, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Golden_Square
   rotate: false
-  xy: 0, 300
+  xy: 112, 112
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 numberBox
   rotate: false
-  xy: 0, 32
+  xy: 93, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 sum-Display-block
   rotate: false
-  xy: 61, 0
+  xy: 45, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white-block
   rotate: false
-  xy: 64, 32
+  xy: 0, 48
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 wide-dialog
   rotate: false
-  xy: 16, 0
+  xy: 0, 0
   size: 45, 9
   orig: 45, 9
   offset: 0, 0

@@ -4,7 +4,6 @@ import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -13,7 +12,7 @@ public class OptionDialog extends Dialog {
     private final SceneControlButton noButton;
 
     public OptionDialog(TextureRegion[] textures){
-        super(textures[10], 35);
+        super(textures[10], 9);
         getPoint().set(
                 Gdx.graphics.getWidth()/2f - getDialog().getWidget().getWidth() / 2,
                 Gdx.graphics.getHeight()/2f - getDialog().getWidget().getHeight() / 2
