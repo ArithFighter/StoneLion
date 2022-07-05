@@ -65,6 +65,11 @@ public class FileLibrary {
 
     private final String[] objectFiles = {
             "object/stone-lion.png",
+            "object/bell.png",
+            "object/red-candle.png",
+            "object/candle-fire.png",
+            "object/Hand-CandleStick.png",
+            "object/ghost-fire.png",
     };
 
     public String[] getGuiFiles(){
