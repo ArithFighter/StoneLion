@@ -62,8 +62,8 @@ public class FileLibrary {
     };
 
     private final String[] sheetFiles = {
-            "spritesheet/card-fade-in.png",
-            "spritesheet/card-fade-out.png"
+            "animation/card-fade-in.png",
+            "animation/card-fade-out.png"
     };
 
     private final String[] objectFiles = {
