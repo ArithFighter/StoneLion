@@ -23,7 +23,7 @@ public class TextureNames {
             "Number-max",
     };
 
-    private final String[] widgetNames = {
+    private final String[] guiNames = {
             "Card_template",
             "BoardArea",
             "sum-Display-block",
@@ -56,8 +56,8 @@ public class TextureNames {
             "white-snake"
     };
 
-    public String[] getWidgetNames() {
-        return widgetNames;
+    public String[] getGuiNames() {
+        return guiNames;
     }
 
     public String[] getCardFiles() {

@@ -16,7 +16,7 @@ public class TextureService {
     private final Map<String, TextureRegion[]> textureRegionMap;
     private final List<Texture> animateSheetList;
     private final String[] keys ={
-            "widgets",
+            "guis",
             "cards",
             "objects"
     };
@@ -28,7 +28,7 @@ public class TextureService {
 
         TextureNames textureNames = new TextureNames();
 
-        int widgetLen = textureNames.getWidgetNames().length;
+        int widgetLen = textureNames.getGuiNames().length;
         int cardLen = textureNames.getCardFiles().length;
         int objectLen = textureNames.getObjectNames().length;
         int sheetLength = myAssetProcessor.getSpriteSheet().length;
@@ -44,7 +44,7 @@ public class TextureService {
 
         for (int j = 0; j < widgetLen; j++){
             TextureAtlas ta = atlasMap.get(fileLibrary.getAtlasFiles()[0]);
-            textureRegions[0][j] = ta.findRegion(textureNames.getWidgetNames()[j]);
+            textureRegions[0][j] = ta.findRegion(textureNames.getGuiNames()[j]);
         }
 
         for (int j = 0; j < cardLen; j++){
