@@ -1,21 +1,21 @@
 package com.arithfighter.not.file;
 
 public class FileLibrary {
-    private final String[] widgetFiles = {
-            "widget/Card_template.png",
-            "widget/BoardArea.png",
-            "widget/sum-Display-block.png",
-            "widget/numberBox.png",
-            "widget/Energy-bar.png",
+    private final String[] guiFiles = {
+            "gui/Card_template.png",
+            "gui/BoardArea.png",
+            "gui/sum-Display-block.png",
+            "gui/numberBox.png",
+            "gui/Energy-bar.png",
 
-            "widget/white-block.png",
-            "widget/Button1.png",
-            "widget/Golden_Square.png",
-            "widget/arrow-left.png",
-            "widget/arrow-right.png",
+            "gui/white-block.png",
+            "gui/Button1.png",
+            "gui/Golden_Square.png",
+            "gui/arrow-left.png",
+            "gui/arrow-right.png",
 
-            "widget/dialog.png",
-            "widget/wide-dialog.png"
+            "gui/dialog.png",
+            "gui/wide-dialog.png"
     };
 
     private final String[] cardFiles = {
@@ -67,8 +67,8 @@ public class FileLibrary {
             "spritesheet/lion/stone-lion.png"
     };
 
-    public String[] getWidgetFiles(){
-        return widgetFiles;
+    public String[] getGuiFiles(){
+        return guiFiles;
     }
 
     public String[] getCardFiles(){

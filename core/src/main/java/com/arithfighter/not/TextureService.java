@@ -18,7 +18,7 @@ public class TextureService {
     public TextureService(MyAssetProcessor assetProcessor) {
         textureMap = new HashMap<>();
 
-        textureMap.put(keys[0], assetProcessor.getWidgets());
+        textureMap.put(keys[0], assetProcessor.getGUIs());
         textureMap.put(keys[1], assetProcessor.getCards());
         textureMap.put(keys[2], assetProcessor.getPanels());
         textureMap.put(keys[3], assetProcessor.getSpriteSheet());

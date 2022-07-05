@@ -17,7 +17,7 @@ public class MyAssetProcessor {
     }
 
     public void load(){
-        loadTextures(fileLibrary.getWidgetFiles());
+        loadTextures(fileLibrary.getGuiFiles());
 
         loadTextures(fileLibrary.getCardFiles());
 
@@ -55,8 +55,8 @@ public class MyAssetProcessor {
         assetManager.update(millis);
     }
 
-    public Texture[] getWidgets() {
-        return accessor.getTextures(fileLibrary.getWidgetFiles());
+    public Texture[] getGUIs() {
+        return accessor.getTextures(fileLibrary.getGuiFiles());
     }
 
     public Texture[] getCards(){
