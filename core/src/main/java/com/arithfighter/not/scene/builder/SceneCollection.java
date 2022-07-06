@@ -15,7 +15,7 @@ public class SceneCollection {
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService) {
         stage = new Stage(textureService, soundManager, fontService);
 
-        transition = new Transition(fontService);
+        transition = new Transition(textureService,fontService);
 
         option = new Option(textureService, soundManager, fontService);
 

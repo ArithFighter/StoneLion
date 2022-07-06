@@ -1,5 +1,7 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.TextureService;
+import com.arithfighter.not.entity.Background;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Rectangle;
@@ -7,6 +9,7 @@ import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.time.Timer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Transition extends SceneComponent implements SceneEvent{
@@ -14,8 +17,10 @@ public class Transition extends SceneComponent implements SceneEvent{
     private final Timer timer;
     private boolean isGameStart = false;
     private final Rectangle grid;
+    private Background background;
 
-    public Transition(FontService fontService) {
+    public Transition(TextureService textureService, FontService fontService) {
+        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
         font = fontService.getFont45();
         font.setColor(Color.WHITE);
 
@@ -25,6 +30,8 @@ public class Transition extends SceneComponent implements SceneEvent{
         LayoutSetter layout = new LayoutSetter();
         layout.setGrid(2, 2);
         grid = layout.getGrid();
+
+        background = new Background(object[6]);
     }
 
     public boolean isGameStart() {
@@ -41,6 +48,8 @@ public class Transition extends SceneComponent implements SceneEvent{
     public void render() {
         SpriteBatch batch = getBatch();
         String ready = "Ready";
+
+        background.draw(batch);
 
         timer.update();
 
