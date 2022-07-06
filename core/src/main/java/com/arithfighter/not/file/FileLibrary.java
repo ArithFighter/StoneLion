@@ -70,7 +70,7 @@ public class FileLibrary {
             "object/Hand-CandleStick.png",
 
             "object/ghost-fire.png",
-            "object/bamboos.png",
+            "object/bamboo-forest.png",
     };
 
     public String[] getGuiFiles(){
