@@ -50,7 +50,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         Texture[] candleT = {object[2],object[3], object[4]};
         candleStick = new CandleStick(candleT);
-        candleStick.setPoint(new Point(100,120));
+        candleStick.setPoint(new Point(50,50));
     }
 
     public RemainCardManager getRemainCardManager() {

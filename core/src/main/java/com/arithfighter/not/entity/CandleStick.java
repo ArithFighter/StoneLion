@@ -13,13 +13,14 @@ public class CandleStick {
     private final VisibleWidget fire;
     private final VisibleWidget handStick;
     private Point point;
+    private float scale = 7;
 
     public CandleStick(Texture[] textures){
-        candle = new SpriteWidget(textures[0], 3);
+        candle = new SpriteWidget(textures[0], scale);
 
-        fire = new SpriteWidget(textures[1], 3);
+        fire = new SpriteWidget(textures[1], scale);
 
-        handStick = new SpriteWidget(textures[2], 3);
+        handStick = new SpriteWidget(textures[2], scale);
     }
 
     public void setPoint(Point point) {
@@ -37,10 +38,40 @@ public class CandleStick {
         Rectangle fireR = new Rectangle(fireSprite.getWidth(), fireSprite.getHeight());
 
         handStick.setPosition(point.getX(), point.getY());
-        candle.setPosition(point.getX() + (stickR.getWidth()- candleR.getWidth())/2, point.getY()+ stickR.getHeight());
-        fire.setPosition(point.getX()+ (candleR.getWidth()- fireR.getWidth())/2, point.getY()+ stickR.getHeight()+ candleR.getHeight());
+        candle.setPosition(point.getX() + (stickR.getWidth()- candleR.getWidth())/2, point.getY()+ stickR.getHeight()-scale*5);
+        fire.setPosition(point.getX()+ (stickR.getWidth()- fireR.getWidth())/2, point.getY()+ stickR.getHeight()+ candleR.getHeight()-scale*5);
 
         handStick.draw(batch);
+        candle.draw(batch);
+        fire.draw(batch);
+    }
+}
+
+class Candle{
+    private final VisibleWidget candle;
+    private final VisibleWidget fire;
+    private float scale = 7;
+    private Point point;
+
+    public Candle(Texture[] textures){
+        candle = new SpriteWidget(textures[0], scale);
+
+        fire = new SpriteWidget(textures[1], scale);
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public void draw(SpriteBatch batch) {
+        Sprite candleSprite = candle.getSprite();
+        Rectangle candleR = new Rectangle(candleSprite.getWidth(), candleSprite.getHeight());
+
+        Sprite fireSprite = fire.getSprite();
+        Rectangle fireR = new Rectangle(fireSprite.getWidth(), fireSprite.getHeight());
+        candle.setPosition(point.getX() - candleR.getWidth()/2, point.getY()-scale*5);
+        fire.setPosition(point.getX()- fireR.getWidth()/2, point.getY()+ candleR.getHeight()-scale*5);
+
         candle.draw(batch);
         fire.draw(batch);
     }
