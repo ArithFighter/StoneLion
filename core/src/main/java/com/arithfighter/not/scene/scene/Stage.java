@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.TextureGetter;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
@@ -27,11 +28,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private int boxQuantity = 6;
     private final RemainCardManager remainCardManager;
     private final CandleStick candleStick;
-    private Background background;
+    private final Background background;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
+        TextureGetter tg = new TextureGetter(textureService);
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
@@ -39,21 +39,21 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         game.setCharacter(CharacterList.SNAKE);
         game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
-        Texture[] pauseGui = {gui[1], gui[6], gui[9]};
+        Texture[] pauseGui = {tg.getGUIs()[1], tg.getGUIs()[6], tg.getGUIs()[9]};
         pauseMenu = new PauseMenu(pauseGui, soundManager, fontService.getFont20());
 
-        pauseButton = new SceneControlButton(gui[6], 1.8f);
+        pauseButton = new SceneControlButton(tg.getGUIs()[6], 1.8f);
         pauseButton.getButton().setPosition(1000, 600);
         pauseButton.getButton().setFont(fontService.getFont22());
 
         timer = new Timer();
         timer.setTime(1.5f);
 
-        Texture[] candleT = {object[2],object[3], object[4]};
+        Texture[] candleT = {tg.getObjects()[2],tg.getObjects()[3], tg.getObjects()[4]};
         candleStick = new CandleStick(candleT);
         candleStick.setPoint(new Point(50,50));
 
-        background = new Background(object[6]);
+        background = new Background(tg.getObjects()[6]);
     }
 
     public RemainCardManager getRemainCardManager() {

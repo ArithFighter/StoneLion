@@ -1,6 +1,7 @@
 package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.TextureGetter;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.Font;
@@ -23,24 +24,24 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
     private final Rectangle grid;
 
     public DeckSelection(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] panels = textureService.getTextures(textureService.getKeys()[2]);
+        TextureGetter tg = new TextureGetter(textureService);
+
         font = fontService.getFont36();
 
         LayoutSetter layout = new LayoutSetter();
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        snakeButton = new PanelButton(panels[0], 6f);
+        snakeButton = new PanelButton(tg.getPanels()[0], 6f);
         snakeButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        craneButton = new PanelButton(panels[1], 4f);
+        craneButton = new PanelButton(tg.getPanels()[1], 4f);
         craneButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();
         f.setColor(Color.WHITE);
 
-        startButton = new SceneControlButton(widgets[6], 1.8f);
+        startButton = new SceneControlButton(tg.getGUIs()[6], 1.8f);
         startButton.getButton().setFont(f);
     }
 

@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.TextureGetter;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.entity.Background;
 import com.arithfighter.not.font.Font;
@@ -17,10 +18,10 @@ public class Transition extends SceneComponent implements SceneEvent{
     private final Timer timer;
     private boolean isGameStart = false;
     private final Rectangle grid;
-    private Background background;
+    private final Background background;
 
     public Transition(TextureService textureService, FontService fontService) {
-        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
+        TextureGetter tg = new TextureGetter(textureService);
         font = fontService.getFont45();
         font.setColor(Color.WHITE);
 
@@ -31,7 +32,7 @@ public class Transition extends SceneComponent implements SceneEvent{
         layout.setGrid(2, 2);
         grid = layout.getGrid();
 
-        background = new Background(object[6]);
+        background = new Background(tg.getObjects()[6]);
     }
 
     public boolean isGameStart() {

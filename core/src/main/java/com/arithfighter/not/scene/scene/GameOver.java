@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.TextureGetter;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
@@ -17,7 +18,7 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Rectangle grid;
 
     public GameOver(TextureService textureService, FontService fontService){
-        Texture[] widgets = textureService.getTextures(textureService.getKeys()[0]);
+        TextureGetter tg = new TextureGetter(textureService);
 
         font = fontService.getFont36();
         font.setColor(Color.WHITE);
@@ -30,10 +31,10 @@ public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
         Font font22 = fontService.getFont22();
         font22.setColor(Color.WHITE);
 
-        quitButton = new SceneControlButton(widgets[6], 1.8f);
+        quitButton = new SceneControlButton(tg.getGUIs()[6], 1.8f);
         quitButton.getButton().setFont(font22);
         quitButton.getButton().setPosition(
-                grid.getWidth()-widgets[6].getWidth()*0.9f,
+                grid.getWidth()-tg.getGUIs()[6].getWidth()*0.9f,
                 grid.getHeight()
         );
     }

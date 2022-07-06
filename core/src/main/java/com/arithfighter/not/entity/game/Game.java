@@ -1,5 +1,6 @@
 package com.arithfighter.not.entity.game;
 
+import com.arithfighter.not.TextureGetter;
 import com.arithfighter.not.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.se.SpecialEffect;
@@ -30,15 +31,12 @@ public class Game {
     private final PlayerService playerService;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
-        Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] cards = textureService.getTextures(textureService.getKeys()[1]);
-        Texture[] spriteSheets = textureService.getTextures(textureService.getKeys()[3]);
-        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
+        TextureGetter tg = new TextureGetter(textureService);
 
-        createCardAnimate(spriteSheets);
+        createCardAnimate(tg.getAnimations());
 
         Texture[] numberTextures = {
-                object[1], gui[7]
+                tg.getObjects()[1], tg.getGUIs()[7]
         };
         numberBoxEntity = new NumberBoxEntity(numberTextures, font) {
             @Override
@@ -47,11 +45,11 @@ public class Game {
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(object[5], font);
+        sumBoxEntity = new SumBoxEntity(tg.getObjects()[5], font);
 
-        stoneLion = new StoneLionEntity(object[0], cardAnimate);
+        stoneLion = new StoneLionEntity(tg.getObjects()[0], cardAnimate);
 
-        variationController = new VariationController(gui[5], font, sumBoxEntity) {
+        variationController = new VariationController(tg.getGUIs()[5], font, sumBoxEntity) {
             @Override
             public void doWhenViolatingTaboos() {
                 init();
@@ -59,7 +57,7 @@ public class Game {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        playerService = new PlayerService(cards);
+        playerService = new PlayerService(tg.getCards());
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
     }
 
