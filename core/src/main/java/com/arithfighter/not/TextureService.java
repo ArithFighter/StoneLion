@@ -9,11 +9,11 @@ import java.util.Map;
 public class TextureService {
     private final Map<String, Texture[]> textureMap;
     private final String[] keys = {
-            "Widgets",
+            "GUIs",
             "Cards",
             "Panels",
-            "SpriteSheets",
-            "object"
+            "Animations",
+            "Objects"
     };
 
     public TextureService(MyAssetProcessor assetProcessor) {
