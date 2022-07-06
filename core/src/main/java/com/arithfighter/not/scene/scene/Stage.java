@@ -9,7 +9,6 @@ import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
@@ -26,11 +25,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
     private final RemainCardManager remainCardManager;
-    private final BambooForest bambooForest;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
-        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
@@ -47,9 +44,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         timer = new Timer();
         timer.setTime(1.5f);
-
-        bambooForest = new BambooForest(object[6]);
-        bambooForest.setPoint(new Point(80,100));
     }
 
     public RemainCardManager getRemainCardManager() {
@@ -105,8 +99,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         update();
 
         SpriteBatch batch = getBatch();
-
-        bambooForest.draw(batch);
 
         game.setBatch(batch);
         game.draw(gameVariation, boxQuantity);
