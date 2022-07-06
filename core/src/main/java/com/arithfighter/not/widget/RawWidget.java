@@ -37,6 +37,10 @@ public class RawWidget {
         rectangle.setWidth(width);
     }
 
+    public void setHeight(float height) {
+        rectangle.setHeight(height);
+    }
+
     private void configSize(float width, float height, float scale){
         rectangle.setWidth(scale*width);
         rectangle.setHeight(scale*height);

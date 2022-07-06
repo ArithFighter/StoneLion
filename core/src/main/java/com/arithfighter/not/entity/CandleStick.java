@@ -2,6 +2,7 @@ package com.arithfighter.not.entity;
 
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.widget.FlexibleWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,10 @@ public class CandleStick {
         candle = new Candle(textures, 6);
 
         handStick = new SpriteWidget(textures[2], 7);
+    }
+
+    public void setCandleHeight(float height){
+        candle.setCandleHeight(height);
     }
 
     public void setPoint(Point point) {
@@ -36,7 +41,7 @@ public class CandleStick {
 }
 
 class Candle{
-    private final VisibleWidget candle;
+    private final FlexibleWidget candle;
     private final VisibleWidget fire;
     private final float scale;
     private Point point;
@@ -50,6 +55,10 @@ class Candle{
 
     public void setPoint(Point point) {
         this.point = point;
+    }
+
+    public void setCandleHeight(float height){
+        candle.updateHeight(height);
     }
 
     public void draw(SpriteBatch batch) {
