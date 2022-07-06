@@ -9,6 +9,7 @@ import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
@@ -25,9 +26,11 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
     private final RemainCardManager remainCardManager;
+    private final CandleStick candleStick;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Texture[] gui = textureService.getTextures(textureService.getKeys()[0]);
+        Texture[] object = textureService.getTextures(textureService.getKeys()[4]);
 
         remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
 
@@ -44,6 +47,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         timer = new Timer();
         timer.setTime(1.5f);
+
+        Texture[] candleT = {object[2],object[3], object[4]};
+        candleStick = new CandleStick(candleT);
+        candleStick.setPoint(new Point(100,120));
     }
 
     public RemainCardManager getRemainCardManager() {
@@ -109,6 +116,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseButton.getButton().draw(batch, "Pause");
 
         remainCardManager.draw(batch, 100,100);
+
+        candleStick.draw(batch);
     }
 
     public void touchDown() {

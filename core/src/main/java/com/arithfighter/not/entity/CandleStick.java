@@ -10,16 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CandleStick {
     private final VisibleWidget candle;
-    private final VisibleWidget handStick;
     private final VisibleWidget fire;
+    private final VisibleWidget handStick;
     private Point point;
 
     public CandleStick(Texture[] textures){
         candle = new SpriteWidget(textures[0], 3);
 
-        handStick = new SpriteWidget(textures[1], 3);
+        fire = new SpriteWidget(textures[1], 3);
 
-        fire = new SpriteWidget(textures[2], 3);
+        handStick = new SpriteWidget(textures[2], 3);
     }
 
     public void setPoint(Point point) {
