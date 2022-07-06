@@ -115,8 +115,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         } else
             pauseButton.getButton().draw(batch, "Pause");
 
-        remainCardManager.draw(batch, 100,100);
+        //remainCardManager.draw(batch, 100,100);
 
+        float candleH = remainCardManager.getRemainCardRecorder().getRecord()*4;
+        candleStick.setCandleHeight(candleH);
         candleStick.draw(batch);
     }
 
