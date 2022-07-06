@@ -9,18 +9,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CandleStick {
-    private final VisibleWidget candle;
-    private final VisibleWidget fire;
+    private final Candle candle;
     private final VisibleWidget handStick;
     private Point point;
-    private float scale = 7;
 
     public CandleStick(Texture[] textures){
-        candle = new SpriteWidget(textures[0], scale);
+        candle = new Candle(textures, 6);
 
-        fire = new SpriteWidget(textures[1], scale);
-
-        handStick = new SpriteWidget(textures[2], scale);
+        handStick = new SpriteWidget(textures[2], 7);
     }
 
     public void setPoint(Point point) {
@@ -31,29 +27,22 @@ public class CandleStick {
         Sprite stickSprite = handStick.getSprite();
         Rectangle stickR = new Rectangle(stickSprite.getWidth(),stickSprite.getHeight());
 
-        Sprite candleSprite = candle.getSprite();
-        Rectangle candleR = new Rectangle(candleSprite.getWidth(), candleSprite.getHeight());
-
-        Sprite fireSprite = fire.getSprite();
-        Rectangle fireR = new Rectangle(fireSprite.getWidth(), fireSprite.getHeight());
-
         handStick.setPosition(point.getX(), point.getY());
-        candle.setPosition(point.getX() + (stickR.getWidth()- candleR.getWidth())/2, point.getY()+ stickR.getHeight()-scale*5);
-        fire.setPosition(point.getX()+ (stickR.getWidth()- fireR.getWidth())/2, point.getY()+ stickR.getHeight()+ candleR.getHeight()-scale*5);
+        candle.setPoint(new Point(point.getX()+ stickR.getWidth()/2, point.getY()+ stickR.getHeight()));
 
         handStick.draw(batch);
         candle.draw(batch);
-        fire.draw(batch);
     }
 }
 
 class Candle{
     private final VisibleWidget candle;
     private final VisibleWidget fire;
-    private float scale = 7;
+    private final float scale;
     private Point point;
 
-    public Candle(Texture[] textures){
+    public Candle(Texture[] textures, float scale){
+        this.scale = scale;
         candle = new SpriteWidget(textures[0], scale);
 
         fire = new SpriteWidget(textures[1], scale);
@@ -66,11 +55,12 @@ class Candle{
     public void draw(SpriteBatch batch) {
         Sprite candleSprite = candle.getSprite();
         Rectangle candleR = new Rectangle(candleSprite.getWidth(), candleSprite.getHeight());
-
         Sprite fireSprite = fire.getSprite();
         Rectangle fireR = new Rectangle(fireSprite.getWidth(), fireSprite.getHeight());
-        candle.setPosition(point.getX() - candleR.getWidth()/2, point.getY()-scale*5);
-        fire.setPosition(point.getX()- fireR.getWidth()/2, point.getY()+ candleR.getHeight()-scale*5);
+
+        float fix = 10;
+        candle.setPosition(point.getX() - candleR.getWidth()/2+fix, point.getY()-scale*7);
+        fire.setPosition(point.getX()- fireR.getWidth()/2+fix, point.getY()+ candleR.getHeight()-scale*7);
 
         candle.draw(batch);
         fire.draw(batch);
