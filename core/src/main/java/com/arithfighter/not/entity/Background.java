@@ -15,10 +15,7 @@ public class Background {
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(2,3);
 
-        forest.setPosition(
-                layoutSetter.getGrid().getWidth()-forest.getWidget().getWidth()/2,
-                layoutSetter.getGrid().getHeight()
-        );
+        forest.setPosition(0, 0);
     }
 
     public void draw(SpriteBatch batch){
