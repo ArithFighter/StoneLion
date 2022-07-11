@@ -8,6 +8,7 @@ import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.game.Game;
 import com.arithfighter.not.entity.game.GameVariation;
 import com.arithfighter.not.entity.game.RemainCardManager;
+import com.arithfighter.not.entity.pause.PauseMenu;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.Point;
