@@ -83,7 +83,7 @@ public class Game {
 
         cardAnimate = new CardAnimate(cas.getVisualEffects());
         for (SpecialEffect ve : cardAnimate.getVisualEffects())
-            ve.setScale(16);
+            ve.setScale(18);
     }
 
     public void setBatch(SpriteBatch batch) {

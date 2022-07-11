@@ -15,7 +15,7 @@ public class Player {
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(9,2);
 
-        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,-30));
+        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,hand.getCards()[0].getShape().getHeight()*-1/3));
     }
 
     public Hand getHand() {
@@ -57,7 +57,7 @@ public class Player {
     }
 
     private void moveCardUpward(NumberCard card){
-        int movingDistance = 30;
+        float movingDistance = card.getShape().getHeight()/3;
         float speed = 3;
 
         if (card.getPoint().getY() < card.getInitPoint().getY() + movingDistance)
