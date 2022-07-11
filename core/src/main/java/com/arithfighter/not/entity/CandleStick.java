@@ -13,11 +13,13 @@ public class CandleStick {
     private final Candle candle;
     private final VisibleWidget handStick;
     private Point point;
+    private final  int candleScale = 6;
+    private final int stickScale = 7;
 
     public CandleStick(Texture[] textures){
-        candle = new Candle(textures, 6);
+        candle = new Candle(textures, candleScale);
 
-        handStick = new SpriteWidget(textures[2], 7);
+        handStick = new SpriteWidget(textures[2], stickScale);
     }
 
     public void setCandleHeight(float height){
@@ -33,7 +35,10 @@ public class CandleStick {
         Rectangle stickR = new Rectangle(stickSprite.getWidth(),stickSprite.getHeight());
 
         handStick.setPosition(point.getX(), point.getY());
-        candle.setPoint(new Point(point.getX()+ stickR.getWidth()/2, point.getY()+ stickR.getHeight()));
+        candle.setPoint(new Point(
+                point.getX()+ stickR.getWidth()/2,
+                point.getY()+ stickR.getHeight()-candleScale*stickScale
+        ));
 
         handStick.draw(batch);
         candle.draw(batch);
@@ -43,14 +48,18 @@ public class CandleStick {
 class Candle{
     private final FlexibleWidget candle;
     private final VisibleWidget fire;
-    private final float scale;
+    private final VisibleWidget head;
+    private final VisibleWidget bottom;
     private Point point;
 
     public Candle(Texture[] textures, float scale){
-        this.scale = scale;
         candle = new SpriteWidget(textures[0], scale);
 
         fire = new SpriteWidget(textures[1], scale);
+
+        head = new SpriteWidget(textures[3], scale);
+
+        bottom = new SpriteWidget(textures[4], scale);
     }
 
     public void setPoint(Point point) {
@@ -61,17 +70,40 @@ class Candle{
         candle.updateHeight(height);
     }
 
-    public void draw(SpriteBatch batch) {
-        Sprite candleSprite = candle.getSprite();
-        Rectangle candleR = new Rectangle(candleSprite.getWidth(), candleSprite.getHeight());
-        Sprite fireSprite = fire.getSprite();
-        Rectangle fireR = new Rectangle(fireSprite.getWidth(), fireSprite.getHeight());
-
+    private void configPosition(){
+        Sprite candleS = candle.getSprite();
         float fix = 10;
-        candle.setPosition(point.getX() - candleR.getWidth()/2+fix, point.getY()-scale*7);
-        fire.setPosition(point.getX()- fireR.getWidth()/2+fix, point.getY()+ candleR.getHeight()-scale*7);
+
+        candle.setPosition(
+                point.getX() - candleS.getWidth()/2+fix,
+                point.getY()
+        );
+        Sprite headS = head.getSprite();
+
+        head.setPosition(
+                point.getX() - headS.getWidth()/2+fix,
+                point.getY()+ candle.getWidget().getHeight()- headS.getHeight()/2
+        );
+        Sprite bottomS = bottom.getSprite();
+
+        bottom.setPosition(
+                point.getX()- bottomS.getWidth()/2+fix,
+                point.getY()
+        );
+        Sprite fireS = fire.getSprite();
+
+        fire.setPosition(
+                point.getX()- fireS.getWidth()/2+fix,
+                point.getY()+ candleS.getHeight()+ headS.getHeight()/2
+        );
+    }
+
+    public void draw(SpriteBatch batch) {
+        configPosition();
 
         candle.draw(batch);
+        head.draw(batch);
+        bottom.draw(batch);
         fire.draw(batch);
     }
 }

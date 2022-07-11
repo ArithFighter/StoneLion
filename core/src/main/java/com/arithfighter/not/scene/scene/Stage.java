@@ -49,7 +49,13 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer = new Timer();
         timer.setTime(1.5f);
 
-        Texture[] candleT = {tg.getObjects()[2],tg.getObjects()[3], tg.getObjects()[4]};
+        Texture[] candleT = {
+                tg.getObjects()[2],
+                tg.getObjects()[3],
+                tg.getObjects()[4],
+                tg.getObjects()[7],
+                tg.getObjects()[8]
+        };
         candleStick = new CandleStick(candleT);
         candleStick.setPoint(new Point(50,50));
 
