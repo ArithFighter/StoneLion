@@ -68,8 +68,6 @@ public class NumberBox{
 
         else if (number <= blueNum) font.setColor(Color.BLUE);
 
-        else if (number < yellowNum) font.setColor(Color.YELLOW);
+        else if (number < yellowNum) font.setColor(Color.GREEN);
     }
-
-
 }
