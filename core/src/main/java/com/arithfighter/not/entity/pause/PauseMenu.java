@@ -7,14 +7,12 @@ import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.*;
-import com.arithfighter.not.widget.button.Button;
-import com.arithfighter.not.widget.button.SceneControlButton;
 import com.arithfighter.not.widget.dialog.OptionDialog;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
-    private final ButtonEntity buttons;
+    private final MenuButtonEntity buttons;
     private final OptionDialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
@@ -34,9 +32,10 @@ public class PauseMenu {
 
         background.setPosition(menuPoint.getX(), menuPoint.getY());
 
-        buttons = new ButtonEntity(textures[1], font);
+        buttons = new MenuButtonEntity(textures[1], font);
         buttons.getButtons().setPoint(menuPoint);
-        buttons.getButtons().setLayout(background.getWidget().getWidth(), background.getWidget().getHeight());
+        RawWidget widget = background.getWidget();
+        buttons.getButtons().setVerticalCenterLayout(widget.getWidth(), widget.getHeight());
 
         dialog = new OptionDialog(textures[2], textures[1]);
         dialog.setFont(font);
@@ -111,55 +110,3 @@ public class PauseMenu {
     }
 }
 
-class ButtonEntity {
-    private final SceneControlButtonProducer buttons;
-
-    public ButtonEntity(Texture texture, Font font) {
-        buttons = new SceneControlButtonProducer(3);
-        buttons.setButtons(texture, font);
-    }
-
-    public SceneControlButtonProducer getButtons() {
-        return buttons;
-    }
-
-    public void init() {
-        for (SceneControlButton button : buttons.getSceneControlButtons())
-            button.init();
-    }
-
-    public void offButtons() {
-        for (SceneControlButton button : buttons.getSceneControlButtons())
-            button.getButton().off();
-    }
-
-    public void onButton(float x, float y) {
-        for (SceneControlButton button : buttons.getSceneControlButtons())
-            button.getButton().on(x, y);
-    }
-
-    public void update() {
-        for (SceneControlButton button : buttons.getSceneControlButtons())
-            button.update();
-    }
-
-    public SceneControlButton getResume() {
-        return buttons.getSceneControlButtons()[0];
-    }
-
-    public SceneControlButton getOption() {
-        return buttons.getSceneControlButtons()[1];
-    }
-
-    public SceneControlButton getQuit() {
-        return buttons.getSceneControlButtons()[2];
-    }
-
-    public void playSound(SoundManager soundManager) {
-        for (int i = 0; i < buttons.getSceneControlButtons().length; i++) {
-            Button b = buttons.getSceneControlButtons()[i].getButton();
-            if (b.isOn())
-                soundManager.playAcceptSound();
-        }
-    }
-}

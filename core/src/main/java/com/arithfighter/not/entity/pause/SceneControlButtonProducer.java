@@ -28,7 +28,7 @@ class SceneControlButtonProducer {
         this.point = point;
     }
 
-    public void setLayout(float width, float height){
+    public void setVerticalCenterLayout(float width, float height){
         LayoutSetter layoutSetter = new LayoutSetter(new Rectangle(width, height));
         layoutSetter.setGrid(2, buttons.length);
         Rectangle grid = layoutSetter.getGrid();
