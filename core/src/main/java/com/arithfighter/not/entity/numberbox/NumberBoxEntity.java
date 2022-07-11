@@ -22,7 +22,7 @@ public class NumberBoxEntity {
     private final MarkerAnimation markerAnimation;
 
     public NumberBoxEntity(Texture[] textures, Font font) {
-        NumberBoxPlacer placer = new NumberBoxPlacer(250,220, 30);
+        NumberBoxPlacer placer = new NumberBoxPlacer(450,210, 30);
 
         numberBoxService = new NumberBoxService(textures[0], font);
         numberBoxService.setPosition(placer);

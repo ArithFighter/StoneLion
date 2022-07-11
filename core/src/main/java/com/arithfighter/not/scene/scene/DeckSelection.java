@@ -13,7 +13,6 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.widget.button.PanelButton;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 
 public class DeckSelection extends SceneComponent implements SceneEvent, MouseEvent {
     private final PanelButton snakeButton;

@@ -44,8 +44,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         Texture[] pauseGui = {tg.getGUIs()[1], tg.getGUIs()[6], tg.getGUIs()[9]};
         pauseMenu = new PauseMenu(pauseGui, soundManager, fontService.getFont20());
 
-        pauseButton = new SceneControlButton(tg.getGUIs()[6], 1.8f);
-        pauseButton.getButton().setPosition(1000, 600);
+        pauseButton = new SceneControlButton(tg.getGUIs()[6], 1.5f);
+        pauseButton.getButton().setPosition(1100, 620);
         pauseButton.getButton().setFont(fontService.getFont22());
 
         timer = new Timer();

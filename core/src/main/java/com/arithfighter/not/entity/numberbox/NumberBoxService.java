@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberBoxService {
     private final NumberBox[] numberBoxes;
-    private final float scale = 5.5f;
+    private final float scale = 6.5f;
     private final static int quantity = 9;
 
     public NumberBoxService(Texture texture, Font font) {
