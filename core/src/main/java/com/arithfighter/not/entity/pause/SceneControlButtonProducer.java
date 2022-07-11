@@ -43,20 +43,8 @@ class SceneControlButtonProducer {
         }
     }
 
-    public SceneControlButton[] getButtons() {
+    public SceneControlButton[] getSceneControlButtons() {
         return buttons;
-    }
-
-    public SceneControlButton getResume() {
-        return buttons[0];
-    }
-
-    public SceneControlButton getOption() {
-        return buttons[1];
-    }
-
-    public SceneControlButton getQuit() {
-        return buttons[2];
     }
 
     public void draw(SpriteBatch batch, String[] texts) {

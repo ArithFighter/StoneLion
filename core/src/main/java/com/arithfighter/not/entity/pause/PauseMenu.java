@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
-    private final SceneControlButtonProducer buttons;
+    private final ButtonEntity buttons;
     private final OptionDialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
@@ -26,18 +26,17 @@ public class PauseMenu {
         textProvider = new TextProvider();
 
         LayoutSetter layoutSetter = new LayoutSetter();
-        layoutSetter.setGrid(2,7);
+        layoutSetter.setGrid(2, 7);
         Rectangle grid = layoutSetter.getGrid();
 
         background = new SpriteWidget(textures[0], 5f);
-        Point menuPoint = new Point(grid.getWidth()-background.getWidget().getWidth()/2, grid.getHeight());
+        Point menuPoint = new Point(grid.getWidth() - background.getWidget().getWidth() / 2, grid.getHeight());
 
         background.setPosition(menuPoint.getX(), menuPoint.getY());
 
-        buttons = new SceneControlButtonProducer(3);
-        buttons.setButtons(textures[1], font);
-        buttons.setPoint(menuPoint);
-        buttons.setLayout(background.getWidget().getWidth(), background.getWidget().getHeight());
+        buttons = new ButtonEntity(textures[1], font);
+        buttons.getButtons().setPoint(menuPoint);
+        buttons.getButtons().setLayout(background.getWidget().getWidth(), background.getWidget().getHeight());
 
         dialog = new OptionDialog(textures[2], textures[1]);
         dialog.setFont(font);
@@ -49,9 +48,9 @@ public class PauseMenu {
     public void draw(SpriteBatch batch) {
         background.draw(batch);
 
-        buttons.draw(batch, textProvider.getPauseMenuTexts());
+        buttons.getButtons().draw(batch, textProvider.getPauseMenuTexts());
 
-        if (buttons.getQuit().isStart()){
+        if (buttons.getQuit().isStart()) {
             dialog.draw(batch);
         }
     }
@@ -65,14 +64,12 @@ public class PauseMenu {
                 dialog.init();
             }
         } else {
-            for (SceneControlButton button : buttons.getButtons())
-                button.update();
+            buttons.update();
         }
     }
 
     public void init() {
-        for (SceneControlButton button : buttons.getButtons())
-            button.init();
+        buttons.init();
         dialog.init();
     }
 
@@ -89,43 +86,78 @@ public class PauseMenu {
     }
 
     public void touchDown(float x, float y) {
-        if (isQuit())
+        if (buttons.getQuit().isStart())
             dialog.activate(x, y);
         else {
-            for (SceneControlButton button : buttons.getButtons())
-                button.getButton().on(x, y);
+            buttons.onButton(x, y);
         }
     }
 
     public void touchDragged() {
-        if (isQuit())
+        if (buttons.getQuit().isStart())
             dialog.deactivate();
         else {
-            deactivateButtons();
+            buttons.offButtons();
         }
     }
 
     public void touchUp() {
-        if (isQuit())
+        if (buttons.getQuit().isStart())
             dialog.deactivate();
         else {
-            playSound();
-            deactivateButtons();
+            buttons.playSound(soundManager);
+            buttons.offButtons();
         }
     }
+}
 
-    private boolean isQuit() {
-        return buttons.getQuit().isStart();
+class ButtonEntity {
+    private final SceneControlButtonProducer buttons;
+
+    public ButtonEntity(Texture texture, Font font) {
+        buttons = new SceneControlButtonProducer(3);
+        buttons.setButtons(texture, font);
     }
 
-    private void deactivateButtons() {
-        for (SceneControlButton button : buttons.getButtons())
+    public SceneControlButtonProducer getButtons() {
+        return buttons;
+    }
+
+    public void init() {
+        for (SceneControlButton button : buttons.getSceneControlButtons())
+            button.init();
+    }
+
+    public void offButtons() {
+        for (SceneControlButton button : buttons.getSceneControlButtons())
             button.getButton().off();
     }
 
-    private void playSound() {
-        for (int i = 0; i < buttons.getButtons().length; i++) {
-            Button b = buttons.getButtons()[i].getButton();
+    public void onButton(float x, float y) {
+        for (SceneControlButton button : buttons.getSceneControlButtons())
+            button.getButton().on(x, y);
+    }
+
+    public void update() {
+        for (SceneControlButton button : buttons.getSceneControlButtons())
+            button.update();
+    }
+
+    public SceneControlButton getResume() {
+        return buttons.getSceneControlButtons()[0];
+    }
+
+    public SceneControlButton getOption() {
+        return buttons.getSceneControlButtons()[1];
+    }
+
+    public SceneControlButton getQuit() {
+        return buttons.getSceneControlButtons()[2];
+    }
+
+    public void playSound(SoundManager soundManager) {
+        for (int i = 0; i < buttons.getSceneControlButtons().length; i++) {
+            Button b = buttons.getSceneControlButtons()[i].getButton();
             if (b.isOn())
                 soundManager.playAcceptSound();
         }
