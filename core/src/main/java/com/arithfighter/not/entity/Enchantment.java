@@ -13,7 +13,7 @@ public class Enchantment {
     private final VisibleWidget chains;
 
     public Enchantment(Texture[] textures){
-        int scale = 8;
+        float scale = 8f;
         pillarLeft = new SpriteWidget(textures[0], scale);
 
         pillarRight = new SpriteWidget(textures[0], scale);
@@ -21,12 +21,12 @@ public class Enchantment {
         chains = new SpriteWidget(textures[1], scale);
 
         LayoutSetter layoutSetter = new LayoutSetter();
-        layoutSetter.setGrid(7,2);
+        layoutSetter.setGrid(11,2);
 
         Rectangle grid = layoutSetter.getGrid();
 
         pillarLeft.setPosition(grid.getWidth()*2, 0);
-        pillarRight.setPosition(grid.getWidth()*5, 0);
+        pillarRight.setPosition(grid.getWidth()*8, 0);
         chains.setPosition(grid.getWidth()*2, 0);
     }
 

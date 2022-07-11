@@ -76,6 +76,7 @@ public class FileLibrary {
             "object/light.png",
 
             "object/pillar.png",
+            "object/chains.png",
             "object/sight.png"
     };
 

@@ -29,6 +29,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final RemainCardManager remainCardManager;
     private final CandleStick candleStick;
     private final Background background;
+    private final Enchantment enchantment;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         TextureGetter tg = new TextureGetter(textureService);
@@ -60,6 +61,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         candleStick.setPoint(new Point(50,50));
 
         background = new Background(tg.getObjects()[6]);
+
+        Texture[] enchantmentT = {tg.getObjects()[10],tg.getObjects()[11]};
+        enchantment = new Enchantment(enchantmentT);
     }
 
     public RemainCardManager getRemainCardManager() {
@@ -117,6 +121,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         SpriteBatch batch = getBatch();
 
         background.draw(batch);
+
+        enchantment.draw(batch);
 
         game.setBatch(batch);
         game.draw(gameVariation, boxQuantity);
