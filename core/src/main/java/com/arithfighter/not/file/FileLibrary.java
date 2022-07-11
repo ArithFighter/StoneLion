@@ -71,6 +71,13 @@ public class FileLibrary {
 
             "object/ghost-fire.png",
             "object/bamboo-forest.png",
+            "object/candle-head.png",
+            "object/candle-bottom.png",
+            "object/candle-fire.png",
+
+            "object/light.png",
+            "object/pillar.png",
+            "object/sight.png"
     };
 
     public String[] getGuiFiles(){
