@@ -2,6 +2,7 @@ package com.arithfighter.not.widget.button;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.DetectableFontWidget;
+import com.arithfighter.not.widget.RawWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,10 @@ public class Button{
 
     public void setPosition(float x, float y){
         button.setPosition(x, y);
+    }
+
+    public RawWidget getWidget(){
+        return button.getWidget();
     }
 
     public void draw(SpriteBatch batch, String content){

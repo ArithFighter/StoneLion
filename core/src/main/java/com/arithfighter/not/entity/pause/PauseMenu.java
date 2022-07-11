@@ -2,6 +2,9 @@ package com.arithfighter.not.entity.pause;
 
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
+import com.arithfighter.not.pojo.LayoutSetter;
+import com.arithfighter.not.pojo.Point;
+import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.pojo.TextProvider;
 import com.arithfighter.not.widget.*;
 import com.arithfighter.not.widget.button.Button;
@@ -22,19 +25,24 @@ public class PauseMenu {
 
         textProvider = new TextProvider();
 
+        LayoutSetter layoutSetter = new LayoutSetter();
+        layoutSetter.setGrid(2,7);
+        Rectangle grid = layoutSetter.getGrid();
+
+        background = new SpriteWidget(textures[0], 5f);
+        Point menuPoint = new Point(grid.getWidth()-background.getWidget().getWidth()/2, grid.getHeight());
+
+        background.setPosition(menuPoint.getX(), menuPoint.getY());
+
         buttons = new ButtonProducer(textures[1], font);
+        buttons.setPoint(menuPoint);
+        buttons.setLayout(background.getWidget().getWidth(), background.getWidget().getHeight());
 
         dialog = new OptionDialog(textures[2], textures[1]);
         dialog.setFont(font);
         dialog.setButtonFont(font);
         dialog.setOriginString(textProvider.getPauseMenuTexts()[3]);
 
-        int x = 500;
-        int y = 300;
-        int margin = 100;
-
-        background = new SpriteWidget(textures[0], 5f);
-        background.setPosition(x, y - margin);
     }
 
     public void draw(SpriteBatch batch) {

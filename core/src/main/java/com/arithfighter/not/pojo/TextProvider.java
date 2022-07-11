@@ -23,9 +23,9 @@ public class TextProvider {
     };
 
     private final String[] pauseMenuTexts = {
-            "Quit",
-            "Option",
             "Resume",
+            "Option",
+            "Quit",
             "the game progress will be lose. Are you sure?"
     };
 
