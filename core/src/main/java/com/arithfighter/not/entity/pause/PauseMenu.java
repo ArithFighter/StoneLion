@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PauseMenu {
-    private final ButtonProducer buttons;
+    private final SceneControlButtonProducer buttons;
     private final OptionDialog dialog;
     private final VisibleWidget background;
     private final SoundManager soundManager;
@@ -34,7 +34,8 @@ public class PauseMenu {
 
         background.setPosition(menuPoint.getX(), menuPoint.getY());
 
-        buttons = new ButtonProducer(textures[1], font);
+        buttons = new SceneControlButtonProducer(3);
+        buttons.setButtons(textures[1], font);
         buttons.setPoint(menuPoint);
         buttons.setLayout(background.getWidget().getWidth(), background.getWidget().getHeight());
 
