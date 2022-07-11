@@ -17,10 +17,10 @@ public class SumBoxEntity {
         sumBox = new SumBox(texture, 2);
 
         LayoutSetter layoutSetter = new LayoutSetter();
-        layoutSetter.setGrid(7,7);
+        layoutSetter.setGrid(9,9);
         Rectangle grid = layoutSetter.getGrid();
 
-        point = new Point(grid.getWidth()*4, grid.getHeight()*4);
+        point = new Point(grid.getWidth()*7, grid.getHeight()*6);
         sumBox.setPosition(point.getX(), point.getY());
         sumBox.setFont(font);
 

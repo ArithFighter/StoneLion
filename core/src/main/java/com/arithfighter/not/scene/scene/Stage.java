@@ -59,7 +59,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 tg.getObjects()[8]
         };
         candleStick = new CandleStick(candleT);
-        candleStick.setPoint(new Point(50,50));
+        candleStick.setPoint(new Point(100,0));
 
         background = new Background(tg.getObjects()[6]);
 

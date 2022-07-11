@@ -15,7 +15,7 @@ public class Player {
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(9,2);
 
-        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,-50));
+        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,-30));
     }
 
     public Hand getHand() {
