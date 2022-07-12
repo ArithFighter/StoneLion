@@ -1,9 +1,9 @@
-package com.arithfighter.not;
+package com.arithfighter.not.scene;
 
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.SceneEvent;
 
-class SceneDrawer {
+public class SceneDrawer {
     private final SceneEvent[] sceneEvents;
 
     public SceneDrawer(SceneEvent[] sceneEvents) {

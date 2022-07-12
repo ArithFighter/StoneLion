@@ -1,10 +1,10 @@
-package com.arithfighter.not;
+package com.arithfighter.not.scene;
 
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.builder.SceneCollection;
 
-class SceneInitializer {
+public class SceneInitializer {
     private final SceneCollection sceneCollection;
 
     public SceneInitializer(SceneCollection sceneCollection) {

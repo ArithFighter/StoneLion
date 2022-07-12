@@ -11,6 +11,8 @@ import com.arithfighter.not.save.GameSave;
 import com.arithfighter.not.save.OptionSave;
 import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
+import com.arithfighter.not.scene.SceneDrawer;
+import com.arithfighter.not.scene.SceneInitializer;
 import com.arithfighter.not.scene.builder.SceneBuilder;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
