@@ -17,12 +17,12 @@ public class MyAssetProcessor {
     public void load(){
         MyAssetLoader loader = new MyAssetLoader(assetManager);
 
-        for (String[] s: assetNameLibrary.getTextureNameCollection())
+        for (String[] s: assetNameLibrary.getTexturePathCollection())
             loader.loadTextures(s);
 
-        loader.loadMusic(assetNameLibrary.getMusicNames());
+        loader.loadMusic(assetNameLibrary.getMusicPath());
 
-        loader.loadSound(assetNameLibrary.getSoundNames());
+        loader.loadSound(assetNameLibrary.getSoundPath());
 
         assetManager.finishLoading();
     }

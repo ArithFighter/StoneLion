@@ -20,7 +20,7 @@ public class TextureService {
     public TextureService(AssetAccessor assetAccessor) {
         textureMap = new HashMap<>();
         AssetNameLibrary f = new AssetNameLibrary();
-        String[][] ts = f.getTextureNameCollection();
+        String[][] ts = f.getTexturePathCollection();
 
         for (int i = 0;i< keys.length;i++)
             textureMap.put(keys[i], assetAccessor.getTextures(ts[i]));

@@ -1,7 +1,44 @@
 package com.arithfighter.not.file;
 
 public class AssetNameLibrary {
-    private final String[] guiFiles = {
+    private final String[][] texturePathCollection;
+
+    public AssetNameLibrary(){
+        TexturePathGettable[] tpgs = new TexturePathGettable[]{
+                new GuiPathName(),
+                new CardPathName(),
+                new PanelPathName(),
+                new AnimationSheetPathName(),
+                new ObjectPathName()
+        };
+
+        texturePathCollection = new String[tpgs.length][];
+
+        for (int i = 0; i< tpgs.length; i++)
+            texturePathCollection[i] = tpgs[i].getPaths();
+    }
+
+    public String[] getMusicPath() {
+        MusicPathName musicPathName = new MusicPathName();
+        return musicPathName.getMusicPaths();
+    }
+
+    public String[] getSoundPath() {
+        SoundPathName soundPathName = new SoundPathName();
+        return soundPathName.getSoundPaths();
+    }
+
+    public String[][] getTexturePathCollection() {
+        return texturePathCollection;
+    }
+}
+
+interface TexturePathGettable{
+    String[] getPaths();
+}
+
+class GuiPathName implements TexturePathGettable{
+    private final String[] paths = {
             "gui/Card_template.png",
             "gui/BoardArea.png",
             "gui/sum-Display-block.png",
@@ -17,7 +54,13 @@ public class AssetNameLibrary {
             "gui/wide-dialog.png"
     };
 
-    private final String[] cardFiles = {
+    public String[] getPaths() {
+        return paths;
+    }
+}
+
+class CardPathName implements TexturePathGettable{
+    private final String[] paths = {
             "cards/Number-re0.png",
             "cards/Number-1.png",
             "cards/Number-2.png",
@@ -39,30 +82,35 @@ public class AssetNameLibrary {
             "cards/Number-max.png",
     };
 
-    private final String[] panelFiles = {
+    public String[] getPaths() {
+        return paths;
+    }
+}
+
+class PanelPathName implements TexturePathGettable{
+    private final String[] paths = {
             "panel/snake.png",
             "panel/crane.png",
     };
 
-    private final String[] musicFiles = {
-            "music/character-select.ogg",
-            "music/theme.ogg",
-            "music/game-complete.ogg"
-    };
+    public String[] getPaths() {
+        return paths;
+    }
+}
 
-    private final String[] soundFiles = {
-            "sound/accept.ogg",
-            "sound/score.ogg",
-            "sound/denied.ogg",
-            "sound/select.ogg"
-    };
-
-    private final String[] sheetFiles = {
+class AnimationSheetPathName implements TexturePathGettable{
+    private final String[] paths = {
             "animation/card-fade-in.png",
             "animation/card-fade-out.png"
     };
 
-    private final String[] objectFiles = {
+    public String[] getPaths() {
+        return paths;
+    }
+}
+
+class ObjectPathName implements TexturePathGettable {
+    private final String[] paths = {
             "object/stone-lion.png",
             "object/bell.png",
             "object/red-candle.png",
@@ -80,23 +128,32 @@ public class AssetNameLibrary {
             "object/sight.png"
     };
 
-    private final String[][] textureNameCollection = new String[][]{
-            guiFiles,
-            cardFiles,
-            panelFiles,
-            sheetFiles,
-            objectFiles
+    public String[] getPaths() {
+        return paths;
+    }
+}
+
+class MusicPathName{
+    private final String[] musicPaths = {
+            "music/character-select.ogg",
+            "music/theme.ogg",
+            "music/game-complete.ogg"
     };
 
-    public String[] getMusicNames() {
-        return musicFiles;
+    public String[] getMusicPaths() {
+        return musicPaths;
     }
+}
 
-    public String[] getSoundNames() {
-        return soundFiles;
-    }
+class SoundPathName{
+    private final String[] soundPaths = {
+            "sound/accept.ogg",
+            "sound/score.ogg",
+            "sound/denied.ogg",
+            "sound/select.ogg"
+    };
 
-    public String[][] getTextureNameCollection() {
-        return textureNameCollection;
+    public String[] getSoundPaths() {
+        return soundPaths;
     }
 }
