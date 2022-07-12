@@ -1,8 +1,8 @@
 package com.arithfighter.not;
 
-import com.arithfighter.not.audio.AudioHandler;
-import com.arithfighter.not.audio.AudioService;
-import com.arithfighter.not.audio.MusicController;
+import com.arithfighter.not.file.audio.AudioHandler;
+import com.arithfighter.not.file.audio.AudioService;
+import com.arithfighter.not.file.audio.MusicController;
 import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.AssetAccessor;
 import com.arithfighter.not.file.MyAssetProcessor;
@@ -16,7 +16,7 @@ import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
 import com.arithfighter.not.scene.controller.SceneControllerCollection;
 import com.arithfighter.not.scene.controller.SceneControllerService;
-import com.arithfighter.not.texture.TextureService;
+import com.arithfighter.not.file.texture.TextureService;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

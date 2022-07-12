@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity.pause;
 
-import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.file.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.pojo.Point;

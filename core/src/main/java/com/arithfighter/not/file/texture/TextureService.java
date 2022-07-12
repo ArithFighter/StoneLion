@@ -1,4 +1,4 @@
-package com.arithfighter.not.texture;
+package com.arithfighter.not.file.texture;
 
 import com.arithfighter.not.file.AssetAccessor;
 import com.arithfighter.not.file.AssetNameLibrary;

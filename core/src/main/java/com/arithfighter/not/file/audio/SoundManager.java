@@ -1,4 +1,4 @@
-package com.arithfighter.not.audio;
+package com.arithfighter.not.file.audio;
 
 import com.badlogic.gdx.audio.Sound;
 

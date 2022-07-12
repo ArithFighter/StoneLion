@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene.builder;
 
-import com.arithfighter.not.texture.TextureService;
-import com.arithfighter.not.audio.SoundManager;
+import com.arithfighter.not.file.texture.TextureService;
+import com.arithfighter.not.file.audio.SoundManager;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.scene.scene.*;
 
