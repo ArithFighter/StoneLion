@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene.scene;
 
-import com.arithfighter.not.TextureGetter;
-import com.arithfighter.not.TextureService;
+import com.arithfighter.not.texture.TextureGetter;
+import com.arithfighter.not.texture.TextureService;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.LayoutSetter;
@@ -10,7 +10,6 @@ import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 
 public class GameOver extends SceneComponent implements SceneEvent, MouseEvent {
     private final Font font;

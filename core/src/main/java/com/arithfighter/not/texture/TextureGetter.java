@@ -1,4 +1,4 @@
-package com.arithfighter.not;
+package com.arithfighter.not.texture;
 
 import com.badlogic.gdx.graphics.Texture;
 

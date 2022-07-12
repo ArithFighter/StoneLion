@@ -1,7 +1,7 @@
 package com.arithfighter.not.scene.scene;
 
-import com.arithfighter.not.TextureGetter;
-import com.arithfighter.not.TextureService;
+import com.arithfighter.not.texture.TextureGetter;
+import com.arithfighter.not.texture.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;

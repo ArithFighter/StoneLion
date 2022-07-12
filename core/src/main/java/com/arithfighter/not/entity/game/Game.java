@@ -1,7 +1,7 @@
 package com.arithfighter.not.entity.game;
 
-import com.arithfighter.not.TextureGetter;
-import com.arithfighter.not.TextureService;
+import com.arithfighter.not.texture.TextureGetter;
+import com.arithfighter.not.texture.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.audio.SoundManager;

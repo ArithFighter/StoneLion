@@ -16,6 +16,7 @@ import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
 import com.arithfighter.not.scene.controller.SceneControllerCollection;
 import com.arithfighter.not.scene.controller.SceneControllerService;
+import com.arithfighter.not.texture.TextureService;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

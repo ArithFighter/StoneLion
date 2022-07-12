@@ -1,8 +1,8 @@
 package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.TextureGetter;
-import com.arithfighter.not.TextureService;
+import com.arithfighter.not.texture.TextureGetter;
+import com.arithfighter.not.texture.TextureService;
 import com.arithfighter.not.audio.SoundManager;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
@@ -11,7 +11,6 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
-import com.badlogic.gdx.graphics.Texture;
 
 public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {
     private final SceneControlButton leaveButton;
