@@ -61,13 +61,13 @@ public class NumberBox{
 
     private void changeNumColor(int number) {
         int purpleNum = 15;
-        int blueNum = 21;
+        int blueNum = 24;
         int yellowNum = 99;
 
         if (number < purpleNum) font.setColor(Color.PURPLE);
 
         else if (number <= blueNum) font.setColor(Color.BLUE);
 
-        else if (number < yellowNum) font.setColor(Color.GREEN);
+        else if (number < yellowNum) font.setColor(Color.RED);
     }
 }

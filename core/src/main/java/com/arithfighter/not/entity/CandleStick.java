@@ -78,20 +78,20 @@ class Candle{
                 point.getX() - candleS.getWidth()/2+fix,
                 point.getY()
         );
-        Sprite headS = head.getSprite();
 
+        Sprite headS = head.getSprite();
         head.setPosition(
                 point.getX() - headS.getWidth()/2+fix,
                 point.getY()+ candle.getWidget().getHeight()- headS.getHeight()/2
         );
-        Sprite bottomS = bottom.getSprite();
 
+        Sprite bottomS = bottom.getSprite();
         bottom.setPosition(
                 point.getX()- bottomS.getWidth()/2+fix,
                 point.getY()
         );
-        Sprite fireS = fire.getSprite();
 
+        Sprite fireS = fire.getSprite();
         fire.setPosition(
                 point.getX()- fireS.getWidth()/2+fix,
                 point.getY()+ candleS.getHeight()+ headS.getHeight()/2
