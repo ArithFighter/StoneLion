@@ -1,6 +1,7 @@
 package com.arithfighter.not;
 
 import com.arithfighter.not.audio.AudioHandler;
+import com.arithfighter.not.audio.AudioService;
 import com.arithfighter.not.audio.MusicController;
 import com.arithfighter.not.entity.GameDataDisplacer;
 import com.arithfighter.not.file.AssetAccessor;
@@ -49,11 +50,13 @@ public class Main extends ApplicationAdapter {
 
         fontService = new FontService();
 
-        audioHandler = new AudioHandler(assetProcessor.getSounds(), assetProcessor.getMusics());
-
         AssetAccessor assetAccessor = new AssetAccessor(assetProcessor.getAssetManager());
 
+        AudioService audioService = new AudioService(assetAccessor);
+
         TextureService textureService = new TextureService(assetAccessor);
+
+        audioHandler = new AudioHandler(audioService.getSounds(), audioService.getMusic());
 
         sceneCollection = new SceneCollection(textureService, audioHandler.getSoundManager(), fontService);
 
