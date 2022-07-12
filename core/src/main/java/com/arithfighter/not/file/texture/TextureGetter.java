@@ -8,21 +8,21 @@ import java.util.Map;
 
 public class TextureGetter {
     private final TextureService textureService;
-    private final Map<String, Texture> guiMap;
+    private final TextureMapProducer guiMapProducer;
 
     public TextureGetter(TextureService textureService) {
         this.textureService = textureService;
 
         AssetNameLibrary assetNameLibrary = new AssetNameLibrary();
-        guiMap = new HashMap<>();
-        Texture[] guiTextures = textureService.getTextureMap().get(textureService.getKeys()[0]);
 
-        for (int i = 0;i<guiTextures.length;i++)
-            guiMap.put(assetNameLibrary.getTexturePathCollection()[0][i], guiTextures[i]);
+        guiMapProducer = new TextureMapProducer(
+                assetNameLibrary.getTexturePathCollection()[0],
+                textureService.getTextureMap().get(textureService.getKeys()[0])
+        );
     }
 
     public Map<String, Texture> getGuiMap() {
-        return guiMap;
+        return guiMapProducer.getTextureMap();
     }
 
     public Texture[] getGUIs(){
@@ -43,5 +43,20 @@ public class TextureGetter {
 
     public Texture[] getObjects(){
         return textureService.getTextureMap().get(textureService.getKeys()[4]);
+    }
+}
+
+class TextureMapProducer{
+    private final Map<String, Texture> textureMap;
+
+    public TextureMapProducer(String[] paths, Texture[] textures){
+        textureMap = new HashMap<>();
+
+        for (int i = 0;i<textures.length;i++)
+            textureMap.put(paths[i], textures[i]);
+    }
+
+    public Map<String, Texture> getTextureMap() {
+        return textureMap;
     }
 }
