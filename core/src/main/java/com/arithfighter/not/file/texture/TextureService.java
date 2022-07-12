@@ -30,7 +30,7 @@ public class TextureService {
         return keys;
     }
 
-    public Texture[] getTextures(String key) {
-        return textureMap.get(key);
+    public Map<String, Texture[]> getTextureMap() {
+        return textureMap;
     }
 }
