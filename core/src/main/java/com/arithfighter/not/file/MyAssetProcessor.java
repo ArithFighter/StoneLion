@@ -7,25 +7,23 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class MyAssetProcessor {
     private final AssetManager assetManager;
-    private final FileLibrary fileLibrary;
-    private final AssetAccessor accessor;
+    private final AssetNameLibrary assetNameLibrary;
 
     public MyAssetProcessor(){
         assetManager = new AssetManager();
-        fileLibrary = new FileLibrary();
-        accessor = new AssetAccessor(assetManager);
+        assetNameLibrary = new AssetNameLibrary();
     }
 
     public void load(){
-        loadTextures(fileLibrary.getGuiFiles());
+        loadTextures(assetNameLibrary.getGuiFiles());
 
-        loadTextures(fileLibrary.getCardFiles());
+        loadTextures(assetNameLibrary.getCardFiles());
 
-        loadTextures(fileLibrary.getPanelFiles());
+        loadTextures(assetNameLibrary.getPanelFiles());
 
-        loadTextures(fileLibrary.getSheetFiles());
+        loadTextures(assetNameLibrary.getSheetFiles());
 
-        loadTextures(fileLibrary.getObjectFiles());
+        loadTextures(assetNameLibrary.getObjectFiles());
 
         loadMusic();
 
@@ -44,25 +42,17 @@ public class MyAssetProcessor {
     }
 
     private void loadMusic(){
-        for(String file : fileLibrary.getMusicFiles())
+        for(String file : assetNameLibrary.getMusicFiles())
             assetManager.load(file, Music.class);
     }
 
     private void loadSound(){
-        for(String file: fileLibrary.getSoundFiles())
+        for(String file: assetNameLibrary.getSoundFiles())
             assetManager.load(file, Sound.class);
     }
 
     public void update(int millis){
         assetManager.update(millis);
-    }
-
-    public Music[] getMusics(){
-        return accessor.getMusics(fileLibrary.getMusicFiles());
-    }
-
-    public Sound[] getSounds(){
-        return accessor.getSounds(fileLibrary.getSoundFiles());
     }
 
     public void dispose(){

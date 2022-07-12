@@ -1,6 +1,6 @@
 package com.arithfighter.not.file;
 
-public class FileLibrary {
+public class AssetNameLibrary {
     private final String[] guiFiles = {
             "gui/Card_template.png",
             "gui/BoardArea.png",
