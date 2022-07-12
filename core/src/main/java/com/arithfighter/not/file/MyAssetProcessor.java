@@ -8,30 +8,21 @@ import com.badlogic.gdx.graphics.Texture;
 public class MyAssetProcessor {
     private final AssetManager assetManager;
     private final AssetNameLibrary assetNameLibrary;
-    private final String[][] textureCollection;
 
     public MyAssetProcessor(){
         assetManager = new AssetManager();
         assetNameLibrary = new AssetNameLibrary();
-
-        textureCollection = new String[][]{
-                assetNameLibrary.getGuiFiles(),
-                assetNameLibrary.getCardFiles(),
-                assetNameLibrary.getPanelFiles(),
-                assetNameLibrary.getSheetFiles(),
-                assetNameLibrary.getObjectFiles()
-        };
     }
 
     public void load(){
         MyAssetLoader loader = new MyAssetLoader(assetManager);
 
-        for (String[] s:textureCollection)
+        for (String[] s: assetNameLibrary.getTextureNameCollection())
             loader.loadTextures(s);
 
-        loader.loadMusic(assetNameLibrary.getMusicFiles());
+        loader.loadMusic(assetNameLibrary.getMusicNames());
 
-        loader.loadSound(assetNameLibrary.getSoundFiles());
+        loader.loadSound(assetNameLibrary.getSoundNames());
 
         assetManager.finishLoading();
     }

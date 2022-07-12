@@ -80,31 +80,23 @@ public class AssetNameLibrary {
             "object/sight.png"
     };
 
-    public String[] getGuiFiles(){
-        return guiFiles;
-    }
+    private final String[][] textureNameCollection = new String[][]{
+            guiFiles,
+            cardFiles,
+            panelFiles,
+            sheetFiles,
+            objectFiles
+    };
 
-    public String[] getCardFiles(){
-        return cardFiles;
-    }
-
-    public String[] getPanelFiles(){
-        return panelFiles;
-    }
-
-    public String[] getMusicFiles() {
+    public String[] getMusicNames() {
         return musicFiles;
     }
 
-    public String[] getSoundFiles() {
+    public String[] getSoundNames() {
         return soundFiles;
     }
 
-    public String[] getSheetFiles() {
-        return sheetFiles;
-    }
-
-    public String[] getObjectFiles() {
-        return objectFiles;
+    public String[][] getTextureNameCollection() {
+        return textureNameCollection;
     }
 }

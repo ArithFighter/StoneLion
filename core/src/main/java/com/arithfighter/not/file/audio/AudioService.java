@@ -12,8 +12,8 @@ public class AudioService {
     public AudioService(AssetAccessor assetAccessor){
         AssetNameLibrary f = new AssetNameLibrary();
 
-        sounds = assetAccessor.getSounds(f.getSoundFiles());
-        music = assetAccessor.getMusics(f.getMusicFiles());
+        sounds = assetAccessor.getSounds(f.getSoundNames());
+        music = assetAccessor.getMusics(f.getMusicNames());
     }
 
     public Sound[] getSounds() {

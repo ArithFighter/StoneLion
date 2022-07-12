@@ -13,20 +13,17 @@ public class TextureService {
             "GUIs",
             "Cards",
             "Panels",
-            "Animations",
+            "AnimationSheets",
             "Objects"
     };
 
     public TextureService(AssetAccessor assetAccessor) {
         textureMap = new HashMap<>();
-
         AssetNameLibrary f = new AssetNameLibrary();
+        String[][] ts = f.getTextureNameCollection();
 
-        textureMap.put(keys[0], assetAccessor.getTextures(f.getGuiFiles()));
-        textureMap.put(keys[1], assetAccessor.getTextures(f.getCardFiles()));
-        textureMap.put(keys[2], assetAccessor.getTextures(f.getPanelFiles()));
-        textureMap.put(keys[3], assetAccessor.getTextures(f.getSheetFiles()));
-        textureMap.put(keys[4], assetAccessor.getTextures(f.getObjectFiles()));
+        for (int i = 0;i< keys.length;i++)
+            textureMap.put(keys[i], assetAccessor.getTextures(ts[i]));
     }
 
     public String[] getKeys() {
