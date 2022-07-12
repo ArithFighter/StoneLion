@@ -6,17 +6,17 @@ import com.arithfighter.not.animate.se.SpecialEffectService;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CardAnimationService {
-    private final SpecialAnimatable[] visualEffects;
+    private final SpecialAnimatable[] specialEffects;
 
     public CardAnimationService(Texture[] spriteSheets){
-        visualEffects = new SpecialAnimatable[]{
+        specialEffects = new SpecialAnimatable[]{
                 new CardReset(spriteSheets[0]),
                 new CardFadeOut(spriteSheets[1])
         };
     }
 
-    public SpecialAnimatable[] getVisualEffects() {
-        return visualEffects;
+    public SpecialAnimatable[] getSpecialEffects() {
+        return specialEffects;
     }
 }
 

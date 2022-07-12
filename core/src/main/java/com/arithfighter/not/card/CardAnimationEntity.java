@@ -4,17 +4,17 @@ import com.arithfighter.not.animate.se.SpecialAnimatable;
 import com.arithfighter.not.animate.se.SpecialEffect;
 
 public class CardAnimationEntity {
-    private final SpecialAnimatable[] visualEffects;
+    private final SpecialAnimatable[] specialEffects;
 
-    public CardAnimationEntity(SpecialAnimatable[] visualEffects) {
-        this.visualEffects = visualEffects;
+    public CardAnimationEntity(SpecialAnimatable[] specialEffects) {
+        this.specialEffects = specialEffects;
     }
 
-    public SpecialEffect[] getVisualEffects() {
-        SpecialEffect[] ves = new SpecialEffect[visualEffects.length];
+    public SpecialEffect[] getSpecialEffects() {
+        SpecialEffect[] ves = new SpecialEffect[specialEffects.length];
 
         for (int i = 0; i< ves.length;i++)
-            ves[i] = visualEffects[i].getSpecialEffect();
+            ves[i] = specialEffects[i].getSpecialEffect();
 
         return ves;
     }
@@ -23,26 +23,26 @@ public class CardAnimationEntity {
         boolean condition = false;
         int x = 0;
 
-        for (SpecialAnimatable sa: visualEffects){
+        for (SpecialAnimatable sa: specialEffects){
             if (!sa.getSpecialEffect().isStart())
                 x++;
         }
-        if (x == visualEffects.length)
+        if (x == specialEffects.length)
             condition = true;
 
         return condition;
     }
 
     public void init(){
-        for (SpecialAnimatable sa: visualEffects)
+        for (SpecialAnimatable sa: specialEffects)
             sa.getSpecialEffect().init();
     }
 
     public SpecialEffect getCardReset(){
-        return visualEffects[0].getSpecialEffect();
+        return specialEffects[0].getSpecialEffect();
     }
 
     public SpecialEffect getCardFadeOut(){
-        return visualEffects[1].getSpecialEffect();
+        return specialEffects[1].getSpecialEffect();
     }
 }

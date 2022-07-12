@@ -86,8 +86,8 @@ public class Game {
     private void createCardAnimate(Texture[] spriteSheets) {
         CardAnimationService cas = new CardAnimationService(spriteSheets);
 
-        cardAnimate = new CardAnimationEntity(cas.getVisualEffects());
-        for (SpecialEffect ve : cardAnimate.getVisualEffects())
+        cardAnimate = new CardAnimationEntity(cas.getSpecialEffects());
+        for (SpecialEffect ve : cardAnimate.getSpecialEffects())
             ve.setScale(18);
     }
 
