@@ -34,12 +34,12 @@ public class Main extends ApplicationAdapter {
     private MyAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private EventAccessor eventAccessor;
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
     private FontService fontService;
     private SceneCollection sceneCollection;
+    private SceneDrawer sceneDrawer;
 
     @Override
     public void create() {
@@ -53,6 +53,16 @@ public class Main extends ApplicationAdapter {
 
         fontService = new FontService();
 
+        initAudioHandlerAndScene();
+
+        initSceneDrawerAndMouseAdapter();
+
+        Gdx.input.setInputProcessor(mouseAdapter);
+
+        loadGameSaveAndInitSceneController();
+    }
+
+    private void initAudioHandlerAndScene(){
         AssetAccessor assetAccessor = new AssetAccessor(assetProcessor.getAssetManager());
 
         AudioService audioService = new AudioService(assetAccessor);
@@ -65,11 +75,18 @@ public class Main extends ApplicationAdapter {
 
         SceneInitializer sceneInitializer = new SceneInitializer(sceneCollection);
         sceneInitializer.run();
+    }
 
-        eventAccessor = new EventAccessor();
+    private void initSceneDrawerAndMouseAdapter(){
+        EventAccessor eventAccessor = new EventAccessor();
         eventAccessor.setBatch(batch);
         eventAccessor.setCursorPos(cursorPos);
 
+        sceneDrawer = new SceneDrawer(eventAccessor.getSceneEvents());
+        mouseAdapter = new MouseAdapter(eventAccessor.getMouseEvents());
+    }
+
+    private void loadGameSaveAndInitSceneController(){
         GameSave gameSave = new GameSave();
         OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
         optionSave.loadSave();
@@ -78,10 +95,6 @@ public class Main extends ApplicationAdapter {
         SceneControllerService scs = new SceneControllerService(scc);
 
         sceneController = new SceneController(scs, DECK_SELECTION);
-
-        mouseAdapter = new MouseAdapter(eventAccessor.getMouseEvents());
-
-        Gdx.input.setInputProcessor(mouseAdapter);
     }
 
     @Override
@@ -128,7 +141,6 @@ public class Main extends ApplicationAdapter {
     private void drawGame(GameScene gameScene) {
         batch.begin();
 
-        SceneDrawer sceneDrawer = new SceneDrawer(eventAccessor.getSceneEvents());
         sceneDrawer.draw(gameScene);
 
         GameDataDisplacer gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
