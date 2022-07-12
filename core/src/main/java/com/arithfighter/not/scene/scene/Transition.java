@@ -31,7 +31,7 @@ public class Transition extends SceneComponent implements SceneEvent{
         layout.setGrid(2, 2);
         grid = layout.getGrid();
 
-        background = new Background(tg.getGuiMap().get("gui/Button1.png"));
+        background = new Background(tg.getObjectMap().get("object/bamboo-forest.png"));
     }
 
     public boolean isGameStart() {

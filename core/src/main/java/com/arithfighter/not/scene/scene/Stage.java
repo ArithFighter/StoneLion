@@ -65,7 +65,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         candleStick = new CandleStick(candleT);
         candleStick.setPoint(new Point(100,0));
 
-        background = new Background(tg.getGuiMap().get("gui/Button1.png"));
+        background = new Background(tg.getObjectMap().get("object/bamboo-forest.png"));
 
         Texture[] enchantmentT = {
                 tg.getObjectMap().get("object/pillar.png"),

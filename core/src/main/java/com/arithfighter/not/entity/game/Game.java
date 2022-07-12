@@ -33,10 +33,15 @@ public class Game {
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
         TextureGetter tg = new TextureGetter(textureService);
 
-        createCardAnimate(tg.getAnimations());
+        Texture[] animationSheets = {
+                tg.getAnimationMap().get("animation/card-fade-in.png"),
+                tg.getAnimationMap().get("animation/card-fade-out.png")
+        };
+        createCardAnimate(animationSheets);
 
         Texture[] numberTextures = {
-                tg.getObjects()[1], tg.getGUIs()[7]
+                tg.getObjectMap().get("object/bell.png"),
+                tg.getGuiMap().get("gui/Golden_Square.png")
         };
         numberBoxEntity = new NumberBoxEntity(numberTextures, font) {
             @Override
@@ -45,11 +50,11 @@ public class Game {
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(tg.getObjects()[5], font);
+        sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/ghost-fire.png"), font);
 
-        stoneLion = new StoneLionEntity(tg.getObjects()[0], cardAnimate);
+        stoneLion = new StoneLionEntity(tg.getObjectMap().get("object/stone-lion.png"), cardAnimate);
 
-        variationController = new VariationController(tg.getGUIs()[5], font, sumBoxEntity) {
+        variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumBoxEntity) {
             @Override
             public void doWhenViolatingTaboos() {
                 init();
@@ -57,7 +62,7 @@ public class Game {
         };
         variationController.setNumberBoxEntity(numberBoxEntity);
 
-        playerService = new PlayerService(tg.getCards());
+        playerService = new PlayerService(textureService.getTextureMap().get(textureService.getKeys()[1]));
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
     }
 
