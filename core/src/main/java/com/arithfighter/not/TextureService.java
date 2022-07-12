@@ -1,6 +1,7 @@
 package com.arithfighter.not;
 
-import com.arithfighter.not.file.MyAssetProcessor;
+import com.arithfighter.not.file.AssetAccessor;
+import com.arithfighter.not.file.FileLibrary;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.HashMap;
@@ -16,14 +17,16 @@ public class TextureService {
             "Objects"
     };
 
-    public TextureService(MyAssetProcessor assetProcessor) {
+    public TextureService(AssetAccessor assetAccessor) {
         textureMap = new HashMap<>();
 
-        textureMap.put(keys[0], assetProcessor.getGUIs());
-        textureMap.put(keys[1], assetProcessor.getCards());
-        textureMap.put(keys[2], assetProcessor.getPanels());
-        textureMap.put(keys[3], assetProcessor.getSpriteSheet());
-        textureMap.put(keys[4], assetProcessor.getObject());
+        FileLibrary f = new FileLibrary();
+
+        textureMap.put(keys[0], assetAccessor.getTextures(f.getGuiFiles()));
+        textureMap.put(keys[1], assetAccessor.getTextures(f.getCardFiles()));
+        textureMap.put(keys[2], assetAccessor.getTextures(f.getPanelFiles()));
+        textureMap.put(keys[3], assetAccessor.getTextures(f.getSheetFiles()));
+        textureMap.put(keys[4], assetAccessor.getTextures(f.getObjectFiles()));
     }
 
     public String[] getKeys() {

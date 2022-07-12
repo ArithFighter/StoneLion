@@ -57,32 +57,12 @@ public class MyAssetProcessor {
         assetManager.update(millis);
     }
 
-    public Texture[] getGUIs() {
-        return accessor.getTextures(fileLibrary.getGuiFiles());
-    }
-
-    public Texture[] getCards(){
-        return accessor.getTextures(fileLibrary.getCardFiles());
-    }
-
-    public Texture[] getPanels(){
-        return accessor.getTextures(fileLibrary.getPanelFiles());
-    }
-
     public Music[] getMusics(){
         return accessor.getMusics(fileLibrary.getMusicFiles());
     }
 
     public Sound[] getSounds(){
         return accessor.getSounds(fileLibrary.getSoundFiles());
-    }
-
-    public Texture[] getSpriteSheet(){
-        return accessor.getTextures(fileLibrary.getSheetFiles());
-    }
-
-    public Texture[] getObject(){
-        return accessor.getTextures(fileLibrary.getObjectFiles());
     }
 
     public void dispose(){
