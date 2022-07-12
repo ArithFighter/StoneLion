@@ -122,11 +122,15 @@ public class Main extends ApplicationAdapter {
 
         setVolume();
 
+        playMusic(gameScene);
+
+        drawGame(gameScene);
+    }
+
+    private void playMusic(GameScene gameScene){
         MusicController musicController = new MusicController(audioHandler);
         musicController.setGameScene(gameScene);
         musicController.playBackgroundMusic();
-
-        drawGame(gameScene);
     }
 
     private void setVolume() {
