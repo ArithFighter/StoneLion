@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TextureGetter {
-    private final TextureService textureService;
     private final TextureMapProducer[] textureMapProducers;
 
     public TextureGetter(TextureService textureService) {
-        this.textureService = textureService;
-
         AssetNameLibrary assetNameLibrary = new AssetNameLibrary();
 
         textureMapProducers = new TextureMapProducer[textureService.getKeys().length];
@@ -42,26 +39,6 @@ public class TextureGetter {
 
     public Map<String, Texture> getObjectMap(){
         return textureMapProducers[4].getTextureMap();
-    }
-
-    public Texture[] getGUIs(){
-        return textureService.getTextureMap().get(textureService.getKeys()[0]);
-    }
-
-    public Texture[] getCards(){
-        return textureService.getTextureMap().get(textureService.getKeys()[1]);
-    }
-
-    public Texture[] getPanels(){
-        return textureService.getTextureMap().get(textureService.getKeys()[2]);
-    }
-
-    public Texture[] getAnimations(){
-        return textureService.getTextureMap().get(textureService.getKeys()[3]);
-    }
-
-    public Texture[] getObjects(){
-        return textureService.getTextureMap().get(textureService.getKeys()[4]);
     }
 }
 

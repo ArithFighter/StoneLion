@@ -24,9 +24,9 @@ public class ControlBar {
         grids = new VisibleWidget[valueHolder.getMaxValue()];
 
         for (int i = 0; i < grids.length; i++)
-            grids[i] = new SpriteWidget(textures[5], 0.5f);
+            grids[i] = new SpriteWidget(textures[0], 0.5f);
 
-        arrows = new ArrowButtons(textures[8], 0.8f);
+        arrows = new ArrowButtons(textures[1], 0.8f);
     }
 
     public void setFont(Font font) {

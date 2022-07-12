@@ -31,10 +31,10 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         layout.setGrid(7,4);
         grid = layout.getGrid();
 
-        snakeButton = new PanelButton(tg.getPanels()[0], 6f);
+        snakeButton = new PanelButton(tg.getPanelMap().get("panel/snake.png"), 6f);
         snakeButton.setPosition(grid.getWidth()*2, grid.getHeight()*2);
 
-        craneButton = new PanelButton(tg.getPanels()[1], 4f);
+        craneButton = new PanelButton(tg.getPanelMap().get("panel/crane.png"), 4f);
         craneButton.setPosition(grid.getWidth()*3.5f,grid.getHeight()*2);
 
         Font f = fontService.getFont22();

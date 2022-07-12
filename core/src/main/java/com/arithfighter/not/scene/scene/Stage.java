@@ -41,10 +41,14 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         game.setCharacter(CharacterList.SNAKE);
         game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
 
-        Texture[] pauseGui = {tg.getGUIs()[1], tg.getGUIs()[6], tg.getGUIs()[9]};
+        Texture[] pauseGui = {
+                tg.getGuiMap().get("gui/BoardArea.png"),
+                tg.getGuiMap().get("gui/Button1.png"),
+                tg.getGuiMap().get("gui/dialog.png")
+        };
         pauseMenu = new PauseMenu(pauseGui, soundManager, fontService.getFont20());
 
-        pauseButton = new SceneControlButton(tg.getGUIs()[6], 1.5f);
+        pauseButton = new SceneControlButton(tg.getGuiMap().get("gui/Button1.png"), 1.5f);
         pauseButton.getButton().setPosition(1100, 620);
         pauseButton.getButton().setFont(fontService.getFont22());
 
@@ -52,18 +56,21 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer.setTime(1.5f);
 
         Texture[] candleT = {
-                tg.getObjects()[2],
-                tg.getObjects()[3],
-                tg.getObjects()[4],
-                tg.getObjects()[7],
-                tg.getObjects()[8]
+                tg.getObjectMap().get("object/red-candle.png"),
+                tg.getObjectMap().get("object/candle-fire.png"),
+                tg.getObjectMap().get("object/Hand-CandleStick.png"),
+                tg.getObjectMap().get("object/candle-head.png"),
+                tg.getObjectMap().get("object/candle-bottom.png")
         };
         candleStick = new CandleStick(candleT);
         candleStick.setPoint(new Point(100,0));
 
-        background = new Background(tg.getObjects()[6]);
+        background = new Background(tg.getGuiMap().get("gui/Button1.png"));
 
-        Texture[] enchantmentT = {tg.getObjects()[10],tg.getObjects()[11]};
+        Texture[] enchantmentT = {
+                tg.getObjectMap().get("object/pillar.png"),
+                tg.getObjectMap().get("object/chains.png")
+        };
         enchantment = new Enchantment(enchantmentT);
     }
 

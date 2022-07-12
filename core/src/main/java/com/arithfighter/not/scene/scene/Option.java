@@ -11,6 +11,7 @@ import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.scene.*;
 import com.arithfighter.not.widget.a1.ControlBar;
 import com.arithfighter.not.widget.button.SceneControlButton;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Option extends SceneComponent implements SceneEvent, MouseEvent, OptionEvent {
     private final SceneControlButton leaveButton;
@@ -28,15 +29,20 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
         layout.setGrid(5,6);
         Rectangle grid = layout.getGrid();
 
-        leaveButton = new SceneControlButton(tg.getGUIs()[6], 1.8f);
+        Texture buttonT = tg.getGuiMap().get("gui/Button1.png");
+        leaveButton = new SceneControlButton(buttonT, 1.8f);
         leaveButton.getButton().setFont(font);
         leaveButton.getButton().setPosition(grid.getWidth()*2, grid.getHeight());
 
-        soundControl = new ControlBar(tg.getGUIs(), 6);
+        Texture[] barT = new Texture[]{
+                tg.getGuiMap().get("gui/white-block.png"),
+                tg.getGuiMap().get("gui/arrow-left.png")
+        };
+        soundControl = new ControlBar(barT, 6);
         soundControl.setFont(font);
         soundControl.setPosition(grid.getWidth()*2, grid.getHeight()*5);
 
-        musicControl = new ControlBar(tg.getGUIs(), 6);
+        musicControl = new ControlBar(barT, 6);
         musicControl.setFont(font);
         musicControl.setPosition(grid.getWidth()*2, grid.getHeight()*4);
     }
