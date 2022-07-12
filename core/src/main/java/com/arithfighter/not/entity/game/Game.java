@@ -5,7 +5,7 @@ import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
 import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.file.audio.SoundManager;
-import com.arithfighter.not.card.CardAnimate;
+import com.arithfighter.not.card.CardAnimationEntity;
 import com.arithfighter.not.card.CardAnimationService;
 import com.arithfighter.not.entity.lion.StoneLionEntity;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
@@ -22,7 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Game {
     private final NumberBoxEntity numberBoxEntity;
     private Player player;
-    private CardAnimate cardAnimate;
+    private CardAnimationEntity cardAnimate;
     private SpriteBatch batch;
     private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
@@ -86,7 +86,7 @@ public class Game {
     private void createCardAnimate(Texture[] spriteSheets) {
         CardAnimationService cas = new CardAnimationService(spriteSheets);
 
-        cardAnimate = new CardAnimate(cas.getVisualEffects());
+        cardAnimate = new CardAnimationEntity(cas.getVisualEffects());
         for (SpecialEffect ve : cardAnimate.getVisualEffects())
             ve.setScale(18);
     }

@@ -3,10 +3,10 @@ package com.arithfighter.not.card;
 import com.arithfighter.not.animate.se.SpecialAnimatable;
 import com.arithfighter.not.animate.se.SpecialEffect;
 
-public class CardAnimate{
+public class CardAnimationEntity {
     private final SpecialAnimatable[] visualEffects;
 
-    public CardAnimate(SpecialAnimatable[] visualEffects) {
+    public CardAnimationEntity(SpecialAnimatable[] visualEffects) {
         this.visualEffects = visualEffects;
     }
 
