@@ -13,7 +13,7 @@ import com.arithfighter.not.scene.GameScene;
 import com.arithfighter.not.scene.OptionEvent;
 import com.arithfighter.not.scene.SceneDrawer;
 import com.arithfighter.not.scene.SceneInitializer;
-import com.arithfighter.not.scene.builder.SceneBuilder;
+import com.arithfighter.not.scene.builder.EventAccessor;
 import com.arithfighter.not.scene.builder.SceneCollection;
 import com.arithfighter.not.scene.controller.SceneController;
 import com.arithfighter.not.scene.controller.SceneControllerCollection;
@@ -34,7 +34,7 @@ public class Main extends ApplicationAdapter {
     private MyAssetProcessor assetProcessor;
     private CursorPositionAccessor cursorPos;
     private SpriteBatch batch;
-    private SceneBuilder sceneBuilder;
+    private EventAccessor eventAccessor;
     private AudioHandler audioHandler;
     private MouseAdapter mouseAdapter;
     private SceneController sceneController;
@@ -66,9 +66,9 @@ public class Main extends ApplicationAdapter {
         SceneInitializer sceneInitializer = new SceneInitializer(sceneCollection);
         sceneInitializer.run();
 
-        sceneBuilder = new SceneBuilder();
-        sceneBuilder.setBatch(batch);
-        sceneBuilder.setCursorPos(cursorPos);
+        eventAccessor = new EventAccessor();
+        eventAccessor.setBatch(batch);
+        eventAccessor.setCursorPos(cursorPos);
 
         GameSave gameSave = new GameSave();
         OptionSave optionSave = new OptionSave(gameSave, sceneCollection.getOption());
@@ -79,7 +79,7 @@ public class Main extends ApplicationAdapter {
 
         sceneController = new SceneController(scs, DECK_SELECTION);
 
-        mouseAdapter = new MouseAdapter(sceneBuilder.getMouseEvents());
+        mouseAdapter = new MouseAdapter(eventAccessor.getMouseEvents());
 
         Gdx.input.setInputProcessor(mouseAdapter);
     }
@@ -128,7 +128,7 @@ public class Main extends ApplicationAdapter {
     private void drawGame(GameScene gameScene) {
         batch.begin();
 
-        SceneDrawer sceneDrawer = new SceneDrawer(sceneBuilder.getSceneEvents());
+        SceneDrawer sceneDrawer = new SceneDrawer(eventAccessor.getSceneEvents());
         sceneDrawer.draw(gameScene);
 
         GameDataDisplacer gameDataDisplacer = new GameDataDisplacer(fontService.getFont16());
