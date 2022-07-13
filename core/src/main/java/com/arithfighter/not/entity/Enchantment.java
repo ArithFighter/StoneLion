@@ -22,13 +22,13 @@ public class Enchantment {
         ropes = new Ropes(textures[2], scale);
 
         LayoutSetter layoutSetter = new LayoutSetter();
-        layoutSetter.setGrid(11,2);
+        layoutSetter.setGrid(11,6);
 
         Rectangle grid = layoutSetter.getGrid();
 
         pillarLeft.setPosition(grid.getWidth()*1, 0);
         pillarRight.setPosition(grid.getWidth()*8, 0);
-        ropes.setPoint(new Point(grid.getWidth()*2, 0));
+        ropes.setPoint(new Point(grid.getWidth()*2, grid.getHeight()*2));
     }
 
     public void draw(SpriteBatch batch){
@@ -39,17 +39,23 @@ public class Enchantment {
 }
 
 class Ropes{
-    private final VisibleWidget rope;
+    private final VisibleWidget[] ropes;
 
     public Ropes(Texture texture, float scale) {
-        rope = new SpriteWidget(texture, scale);
+        ropes = new VisibleWidget[3];
+
+        for (int i = 0;i< ropes.length;i++){
+            ropes[i] = new SpriteWidget(texture, scale);
+        }
     }
 
     public void setPoint(Point point){
-        rope.setPosition(point.getX(), point.getY());
+        for (int i = 0;i< ropes.length;i++)
+            ropes[i].setPosition(point.getX(), point.getY()+i*200);
     }
 
     public void draw(SpriteBatch batch){
-        rope.draw(batch);
+        for (VisibleWidget v:ropes)
+            v.draw(batch);
     }
 }
