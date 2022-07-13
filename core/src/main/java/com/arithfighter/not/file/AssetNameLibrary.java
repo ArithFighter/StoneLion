@@ -123,9 +123,10 @@ class ObjectPathName implements TexturePathGettable {
             "object/candle-bottom.png",
             "object/light.png",
 
-            "object/pillar.png",
-            "object/chains.png",
-            "object/sight.png"
+            "object/sight.png",
+            "object/single-rope.png",
+            "object/pillar-left.png",
+            "object/pillar-right.png"
     };
 
     public String[] getPaths() {
