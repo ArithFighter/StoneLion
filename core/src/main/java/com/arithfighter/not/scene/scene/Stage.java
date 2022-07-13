@@ -68,8 +68,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         background = new Background(tg.getObjectMap().get("object/bamboo-forest.png"));
 
         Texture[] enchantmentT = {
-                tg.getObjectMap().get("object/pillar.png"),
-                tg.getObjectMap().get("object/chains.png")
+                tg.getObjectMap().get("object/pillar-left.png"),
+                tg.getObjectMap().get("object/pillar-right.png"),
+                tg.getObjectMap().get("object/single-rope.png")
         };
         enchantment = new Enchantment(enchantmentT);
     }
