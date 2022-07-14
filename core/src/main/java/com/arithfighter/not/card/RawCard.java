@@ -22,11 +22,6 @@ public class RawCard {
         );
     }
 
-    public void setSprite(){
-        sprite.setPosition(point.getX(), point.getY());
-        sprite.setSize(rectangle.getWidth(), rectangle.getHeight());
-    }
-
     public Point getInitPoint(){
         return initPoint;
     }

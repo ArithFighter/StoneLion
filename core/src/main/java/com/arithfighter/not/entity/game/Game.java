@@ -89,7 +89,7 @@ public class Game {
         };
         candleStick.setPoint(new Point(100,0));
 
-        cardHighlight = new SpriteWidget(tg.getGuiMap().get("gui/card-outLine.png"), 2f);
+        cardHighlight = new SpriteWidget(tg.getGuiMap().get("gui/card-outLine.png"), 2.4f);
     }
 
     public CandleStick getCandleStick() {
@@ -158,7 +158,7 @@ public class Game {
 
         if (isReadyToPlayCard) {
             Point point = player.getActiveCard().getPoint();
-            cardHighlight.setPosition(point.getX(), point.getY());
+            cardHighlight.setPosition(point.getX()-7, point.getY()-7);
             cardHighlight.draw(batch);
         }
 
@@ -184,6 +184,7 @@ public class Game {
     public void touchDragged(int mouseX, int mouseY) {
         if (player.isCardActive()){
             isCardDragging = true;
+            player.getActiveCard().setSize(1.2f);
             player.updateWhenDrag(mouseX, mouseY);
             isReadyToPlayCard = candleStick.isOnCandle(mouseX, mouseY);
         }

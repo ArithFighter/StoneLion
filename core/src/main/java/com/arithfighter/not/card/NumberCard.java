@@ -24,7 +24,7 @@ public class NumberCard{
         return number;
     }
 
-    public Rectangle getShape() {
+    public Rectangle getRectangle() {
         return rectangle;
     }
 
@@ -36,14 +36,14 @@ public class NumberCard{
         return card.getInitPoint();
     }
 
-    public void setSize(float scale){
-        card.getSprite().setSize(rectangle.getWidth()*scale, rectangle.getHeight()*scale);
+    public void setSize(float size){
+        card.getSprite().setSize(rectangle.getWidth()* size, rectangle.getHeight()* size);
     }
 
     public void draw(SpriteBatch batch) {
         setPointWhenOutOfScreen();
 
-        card.setSprite();
+        card.getSprite().setPosition(getPoint().getX(), getPoint().getY());
 
         card.getSprite().draw(batch);
     }
