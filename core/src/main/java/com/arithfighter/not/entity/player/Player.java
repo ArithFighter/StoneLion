@@ -38,8 +38,10 @@ public class Player {
     public final void updateWhenDrag(int mouseX, int mouseY) {
         for (NumberCard card : hand.getCards()){
             if (card.isActive())
-                card.getPoint().set(mouseX - card.getShape().getWidth() / 2,
-                            mouseY - card.getShape().getHeight() / 2);
+                card.getPoint().set(
+                        mouseX - card.getShape().getWidth() / 2,
+                            mouseY - card.getShape().getHeight() / 2
+                );
         }
     }
 

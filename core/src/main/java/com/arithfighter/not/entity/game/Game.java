@@ -16,6 +16,8 @@ import com.arithfighter.not.entity.sumbox.SumBoxEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 
+import com.arithfighter.not.widget.SpriteWidget;
+import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -29,6 +31,8 @@ public class Game {
     private final VariationController variationController;
     private final PlayerService playerService;
     private final CandleStick candleStick;
+    private final VisibleWidget cardHighlight;
+    private boolean isReadyToPlayCard = false;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
         TextureGetter tg = new TextureGetter(textureService);
@@ -84,6 +88,8 @@ public class Game {
             }
         };
         candleStick.setPoint(new Point(100,0));
+
+        cardHighlight = new SpriteWidget(tg.getGuiMap().get("gui/card-outLine.png"), 2f);
     }
 
     public CandleStick getCandleStick() {
@@ -150,6 +156,12 @@ public class Game {
 
         player.draw(batch);
 
+        if (isReadyToPlayCard) {
+            Point point = player.getActiveCard().getPoint();
+            cardHighlight.setPosition(point.getX(), point.getY());
+            cardHighlight.draw(batch);
+        }
+
         drawCardAnimate();
     }
 
@@ -170,16 +182,18 @@ public class Game {
     }
 
     public void touchDragged(int mouseX, int mouseY) {
-        if (player.isCardActive())
+        if (player.isCardActive()){
             isCardDragging = true;
-
-        player.updateWhenDrag(mouseX, mouseY);
+            player.updateWhenDrag(mouseX, mouseY);
+            isReadyToPlayCard = candleStick.isOnCandle(mouseX, mouseY);
+        }
     }
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
             candleStick.playCardOnCandle(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
+            isReadyToPlayCard = false;
         }
         sumBoxEntity.touchUp();
     }

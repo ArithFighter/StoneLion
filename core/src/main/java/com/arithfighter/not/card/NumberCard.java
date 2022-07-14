@@ -36,13 +36,14 @@ public class NumberCard{
         return card.getInitPoint();
     }
 
+    public void setSize(float scale){
+        card.getSprite().setSize(rectangle.getWidth()*scale, rectangle.getHeight()*scale);
+    }
+
     public void draw(SpriteBatch batch) {
         setPointWhenOutOfScreen();
 
         card.setSprite();
-
-        if (isCardActive)
-            card.getSprite().setSize(rectangle.getWidth()*1.2f, rectangle.getHeight()*1.2f);
 
         card.getSprite().draw(batch);
     }

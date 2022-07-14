@@ -57,7 +57,7 @@ public class CandleStick extends DetectCardArea{
     }
 
     public boolean isOnCandle(int mouseX, int mouseY) {
-        Rectangle detectArea = new Rectangle(500,400);
+        Rectangle detectArea = new Rectangle(300,300);
         return mouseX > point.getX()
                 && mouseX < point.getX() + detectArea.getWidth()
                 && mouseY > candlePoint.getY()

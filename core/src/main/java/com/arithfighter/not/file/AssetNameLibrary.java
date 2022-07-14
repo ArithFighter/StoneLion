@@ -52,7 +52,8 @@ class GuiPathName implements TexturePathGettable{
             "gui/dialog.png",
 
             "gui/wide-dialog.png",
-            "gui/w16h9-block.png"
+            "gui/w16h9-block.png",
+            "gui/card-outLine.png"
     };
 
     public String[] getPaths() {
