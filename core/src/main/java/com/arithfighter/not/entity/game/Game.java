@@ -52,7 +52,8 @@ public class Game {
         };
         sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/ghost-fire.png"), font);
 
-        stoneLion = new StoneLionEntity(tg.getObjectMap().get("object/stone-lion.png"), cardAnimate);
+        stoneLion = new StoneLionEntity(tg.getObjectMap().get("object/stone-lion.png"));
+        stoneLion.setCardAnimate(cardAnimate);
 
         variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumBoxEntity) {
             @Override
