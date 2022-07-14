@@ -8,7 +8,6 @@ import com.arithfighter.not.animate.se.SpecialEffect;
 import com.arithfighter.not.file.audio.SoundManager;
 import com.arithfighter.not.card.CardAnimationEntity;
 import com.arithfighter.not.card.CardAnimationService;
-import com.arithfighter.not.entity.lion.StoneLionEntity;
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
