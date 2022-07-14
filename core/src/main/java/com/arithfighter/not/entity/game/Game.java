@@ -54,7 +54,7 @@ public class Game {
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/ghost-fire.png"), font);
+        sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/stone-lion.png"), font);
 
         variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumBoxEntity) {
             @Override

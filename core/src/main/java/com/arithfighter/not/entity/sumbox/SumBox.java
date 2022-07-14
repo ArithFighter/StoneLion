@@ -37,9 +37,9 @@ public class SumBox {
         String sum = String.valueOf(number);
 
         float textX = widget.getCenterX(sum);
-        float textY = widget.getCenterY();
+        float textY = widget.getCenterY()-widget.getWidget().getHeight()/4;
 
-        font.setColor(Color.WHITE);
+        font.setColor(Color.BLACK);
         font.draw(batch, sum, textX, textY);
     }
 
@@ -55,7 +55,7 @@ public class SumBox {
         if (isCapacityWarning())
             widget.getSprite().setColor(Color.RED);
         else
-            widget.getSprite().setColor(Color.TEAL);
+            widget.getSprite().setColor(Color.WHITE);
     }
 
     public boolean isCapacityWarning() {

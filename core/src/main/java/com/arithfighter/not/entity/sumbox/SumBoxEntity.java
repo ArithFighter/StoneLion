@@ -14,13 +14,13 @@ public class SumBoxEntity {
     private boolean isReadyToResetSum = false;
 
     public SumBoxEntity(Texture texture, Font font) {
-        sumBox = new SumBox(texture, 2);
+        sumBox = new SumBox(texture, 3);
 
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(9,9);
         Rectangle grid = layoutSetter.getGrid();
 
-        point = new Point(grid.getWidth()*7, grid.getHeight()*6);
+        point = new Point(grid.getWidth()*7, grid.getHeight()*4);
         sumBox.setPosition(point.getX(), point.getY());
         sumBox.setFont(font);
 
