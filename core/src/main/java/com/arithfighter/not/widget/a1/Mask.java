@@ -24,6 +24,11 @@ public class Mask {
         return new Rectangle(raw.getWidth(), raw.getHeight());
     }
 
+    public void draw(SpriteBatch batch, float alpha){
+        widget.getSprite().setColor(1,1,1,alpha);
+        widget.draw(batch);
+    }
+
     public void draw(SpriteBatch batch){
         widget.getSprite().setColor(Color.BLACK);
         widget.draw(batch);
