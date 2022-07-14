@@ -1,5 +1,6 @@
 package com.arithfighter.not.entity.game;
 
+import com.arithfighter.not.entity.CandleStick;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.animate.AnimationPos;
@@ -29,6 +30,7 @@ public class Game {
     private final StoneLionEntity stoneLion;
     private final VariationController variationController;
     private final PlayerService playerService;
+    private final CandleStick candleStick;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
         TextureGetter tg = new TextureGetter(textureService);
@@ -65,6 +67,20 @@ public class Game {
 
         playerService = new PlayerService(textureService.getTextureMap().get(textureService.getKeys()[1]));
         playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
+
+        Texture[] candleT = {
+                tg.getObjectMap().get("object/red-candle.png"),
+                tg.getObjectMap().get("object/candle-fire.png"),
+                tg.getObjectMap().get("object/Hand-CandleStick.png"),
+                tg.getObjectMap().get("object/candle-head.png"),
+                tg.getObjectMap().get("object/candle-bottom.png")
+        };
+        candleStick = new CandleStick(candleT);
+        candleStick.setPoint(new Point(100,0));
+    }
+
+    public CandleStick getCandleStick() {
+        return candleStick;
     }
 
     public PlayerService getPlayerService() {
@@ -129,6 +145,8 @@ public class Game {
 
         variationController.setSum(sumBoxEntity.getSumBoxModel().getSum());
         variationController.changeGameVariation(gameVariation, batch);
+
+        candleStick.draw(batch);
 
         player.draw(batch);
 

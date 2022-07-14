@@ -11,7 +11,6 @@ import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.pause.PauseMenu;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
-import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
@@ -28,7 +27,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int boxQuantity = 6;
     private final RemainCardManager remainCardManager;
-    private final CandleStick candleStick;
     private final Background background;
     private final Enchantment enchantment;
 
@@ -54,16 +52,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         timer = new Timer();
         timer.setTime(1.5f);
-
-        Texture[] candleT = {
-                tg.getObjectMap().get("object/red-candle.png"),
-                tg.getObjectMap().get("object/candle-fire.png"),
-                tg.getObjectMap().get("object/Hand-CandleStick.png"),
-                tg.getObjectMap().get("object/candle-head.png"),
-                tg.getObjectMap().get("object/candle-bottom.png")
-        };
-        candleStick = new CandleStick(candleT);
-        candleStick.setPoint(new Point(100,0));
 
         background = new Background(tg.getObjectMap().get("object/bamboo-forest.png"));
 
@@ -144,8 +132,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         //remainCardManager.draw(batch, 100,100);
 
         float candleH = remainCardManager.getRemainCardRecorder().getRecord()*4;
-        candleStick.setCandleHeight(candleH);
-        candleStick.draw(batch);
+        game.getCandleStick().setCandleHeight(candleH);
     }
 
     public void touchDown() {
