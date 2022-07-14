@@ -9,17 +9,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CandleStick {
+public class CandleStick extends DetectCardArea{
     private final Candle candle;
     private final VisibleWidget handStick;
     private Point point;
     private final  int candleScale = 6;
     private final int stickScale = 7;
+    private final Point candlePoint;
 
     public CandleStick(Texture[] textures){
         candle = new Candle(textures, candleScale);
 
         handStick = new SpriteWidget(textures[2], stickScale);
+
+        candlePoint = new Point();
     }
 
     public void setCandleHeight(float height){
@@ -35,13 +38,30 @@ public class CandleStick {
         Rectangle stickR = new Rectangle(stickSprite.getWidth(),stickSprite.getHeight());
 
         handStick.setPosition(point.getX(), point.getY());
-        candle.setPoint(new Point(
+
+        candlePoint.set(
                 point.getX()+ stickR.getWidth()/2,
                 point.getY()+ stickR.getHeight()-candleScale*stickScale
-        ));
+        );
+        candle.setPoint(candlePoint);
 
         handStick.draw(batch);
         candle.draw(batch);
+    }
+
+    public final void playCardOnCandle(int mouseX, int mouseY) {
+        if (isOnCandle(mouseX, mouseY))
+            checkCardPlayed();
+
+        initCardPosition();
+    }
+
+    public boolean isOnCandle(int mouseX, int mouseY) {
+        Rectangle detectArea = new Rectangle(500,400);
+        return mouseX > candlePoint.getX()
+                && mouseX < candlePoint.getX() + detectArea.getWidth()
+                && mouseY > candlePoint.getY()
+                && mouseY < candlePoint.getY()+candle.getCandleHeight() + detectArea.getHeight();
     }
 }
 
@@ -60,6 +80,10 @@ class Candle{
         head = new SpriteWidget(textures[3], scale);
 
         bottom = new SpriteWidget(textures[4], scale);
+    }
+
+    public float getCandleHeight(){
+        return candle.getWidget().getHeight();
     }
 
     public void setPoint(Point point) {

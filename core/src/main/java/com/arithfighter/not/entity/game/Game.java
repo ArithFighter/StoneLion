@@ -27,7 +27,6 @@ public class Game {
     private SpriteBatch batch;
     private boolean isCardDragging = false;
     private final SumBoxEntity sumBoxEntity;
-    private final StoneLionEntity stoneLion;
     private final VariationController variationController;
     private final PlayerService playerService;
     private final CandleStick candleStick;
@@ -54,9 +53,6 @@ public class Game {
         };
         sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/ghost-fire.png"), font);
 
-        stoneLion = new StoneLionEntity(tg.getObjectMap().get("object/stone-lion.png"));
-        stoneLion.setCardAnimate(cardAnimate);
-
         variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumBoxEntity) {
             @Override
             public void doWhenViolatingTaboos() {
@@ -75,7 +71,19 @@ public class Game {
                 tg.getObjectMap().get("object/candle-head.png"),
                 tg.getObjectMap().get("object/candle-bottom.png")
         };
-        candleStick = new CandleStick(candleT);
+        candleStick = new CandleStick(candleT){
+            @Override
+            public void initCardPosition() {
+                cardAnimate.getCardReset().setStart();
+                player.initHand();
+            }
+
+            @Override
+            public void checkCardPlayed() {
+                cardAnimate.getCardFadeOut().setStart();
+                player.playCard();
+            }
+        };
         candleStick.setPoint(new Point(100,0));
     }
 
@@ -96,8 +104,6 @@ public class Game {
         }
 
         this.player = playerService.getPlayers()[index];
-
-        stoneLion.setPlayer(player);
     }
 
     private void createCardAnimate(Texture[] spriteSheets) {
@@ -138,11 +144,6 @@ public class Game {
 
         numberBoxEntity.setBoxQuantity(boxQuantity);
 
-        if (sumBoxEntity.isCapacityWarning())
-            stoneLion.getStoneLion().drawWarning(batch);
-        else
-            stoneLion.getStoneLion().drawDefault(batch);
-
         variationController.setSum(sumBoxEntity.getSumBoxModel().getSum());
         variationController.changeGameVariation(gameVariation, batch);
 
@@ -178,7 +179,7 @@ public class Game {
 
     public void touchUp(int mouseX, int mouseY) {
         if (isCardDragging) {
-            stoneLion.getStoneLion().playCardToLion(mouseX, mouseY);
+            candleStick.playCardOnCandle(mouseX, mouseY);
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
         }
         sumBoxEntity.touchUp();
