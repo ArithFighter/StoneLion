@@ -15,6 +15,7 @@ import com.arithfighter.not.pojo.Recorder;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
 import com.arithfighter.not.time.Timer;
+import com.arithfighter.not.widget.a1.Mask;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,6 +30,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final RemainCardManager remainCardManager;
     private final Background background;
     private final Enchantment enchantment;
+    private final Mask backgroundMask;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         TextureGetter tg = new TextureGetter(textureService);
@@ -61,6 +63,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 tg.getObjectMap().get("object/single-rope.png")
         };
         enchantment = new Enchantment(enchantmentT);
+
+        backgroundMask = new Mask(tg.getGuiMap().get("gui/w16h9-block.png"), 80);
+        backgroundMask.setPosition(0,0);
     }
 
     public RemainCardManager getRemainCardManager() {
@@ -120,6 +125,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         background.draw(batch);
 
         enchantment.draw(batch);
+
+        backgroundMask.draw(batch, 0.7f);
 
         game.setBatch(batch);
         game.draw(gameVariation, boxQuantity);

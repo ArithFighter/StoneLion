@@ -25,7 +25,7 @@ public class Mask {
     }
 
     public void draw(SpriteBatch batch, float alpha){
-        widget.getSprite().setColor(1,1,1,alpha);
+        widget.getSprite().setColor(0,0,0,alpha);
         widget.draw(batch);
     }
 
