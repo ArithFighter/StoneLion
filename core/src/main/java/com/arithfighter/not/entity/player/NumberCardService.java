@@ -38,10 +38,6 @@ public class NumberCardService {
         return cards[getActiveCardIndex()];
     }
 
-    public int getCardNumber() {
-        return cards[getActiveCardIndex()].getNumber();
-    }
-
     public boolean isResettingCard() {
         return getActiveCardIndex() == cards.length-1;
     }
@@ -83,58 +79,5 @@ class CardTexturesExtractor {
             }
 
         return cardSet;
-    }
-}
-
-class CharacterCardTexturePath {
-    private final String[] snakeCardSet = {
-            "cards/Number-2.png",
-            "cards/Number-3.png",
-            "cards/Number-9.png",
-            "cards/Number-re0.png"
-    };
-    private final String[] craneCardSet = {
-            "cards/Number-neg1.png",
-            "cards/Number-3.png",
-            "cards/Number-8.png",
-            "cards/Number-re0.png"
-    };
-    private final String[] dogCardSet = {
-            "cards/Number-2.png",
-            "cards/Number-3.png",
-            "cards/Number-5.png",
-            "cards/Number-re12.png"
-    };
-    private final String[] catCardSet = {
-            "cards/Number-neg1.png",
-            "cards/Number-2.png",
-            "cards/Number-7.png",
-            "cards/Number-re15.png"
-    };
-    private final String[] fishCardSet = {
-            "cards/Number-neg7.png",
-            "cards/Number-neg3.png",
-            "cards/Number-neg1.png",
-            "cards/Number-max.png"
-    };
-
-    public String[] getSnakeCardSet() {
-        return snakeCardSet;
-    }
-
-    public String[] getCraneCardSet() {
-        return craneCardSet;
-    }
-
-    public String[] getDogCardSet() {
-        return dogCardSet;
-    }
-
-    public String[] getCatCardSet() {
-        return catCardSet;
-    }
-
-    public String[] getFishCardSet() {
-        return fishCardSet;
     }
 }

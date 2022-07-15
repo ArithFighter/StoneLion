@@ -21,8 +21,8 @@ public class Player {
         ));
     }
 
-    public NumberCardService getHand() {
-        return numberCardService;
+    public int getActiveCardNumber(){
+        return numberCardService.getActiveCard().getNumber();
     }
 
     public boolean isCardActive(){

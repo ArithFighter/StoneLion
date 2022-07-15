@@ -22,13 +22,13 @@ public class PlayerService {
 
                 @Override
                 public void checkNumberCardPlayed() {
-                    sumBoxModel.update(getHand().getCardNumber());
+                    sumBoxModel.update(getActiveCardNumber());
                 }
 
                 @Override
                 public void doWhenResettingCardPlay() {
                     sumBoxModel.init();
-                    sumBoxModel.update(getHand().getCardNumber());
+                    sumBoxModel.update(getActiveCardNumber());
                 }
             };
         }
