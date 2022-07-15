@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CandleStick extends DetectCardArea{
     private final Candle candle;
     private final VisibleWidget handStick;
+    private final VisibleWidget candleLight;
     private Point point;
     private final  int candleScale = 6;
     private final int stickScale = 7;
@@ -23,9 +24,12 @@ public class CandleStick extends DetectCardArea{
         handStick = new SpriteWidget(textures[2], stickScale);
 
         candlePoint = new Point();
+
+        candleLight = new SpriteWidget(textures[5], 8);
+        candleLight.getSprite().setColor(1,1,1,0.5f);
     }
 
-    public Point getCandleTopPoint(){
+    private Point getCandleTopPoint(){
         return new Point(candlePoint.getX(), candlePoint.getY()+candle.getCandleHeight());
     }
 
@@ -51,6 +55,12 @@ public class CandleStick extends DetectCardArea{
 
         handStick.draw(batch);
         candle.draw(batch);
+
+        candleLight.setPosition(
+                getCandleTopPoint().getX()-candleLight.getWidget().getWidth()/2,
+                getCandleTopPoint().getY()
+        );
+        candleLight.draw(batch);
     }
 
     public final void playCardOnCandle(int mouseX, int mouseY) {
