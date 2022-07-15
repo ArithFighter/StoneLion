@@ -7,36 +7,36 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player {
-    private final Hand hand;
+    private final NumberCardService numberCardService;
 
     public Player(Texture[] cards, CharacterList character) {
-        hand = new Hand(cards, character);
+        numberCardService = new NumberCardService(cards, character);
 
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(9,2);
 
-        hand.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5,hand.getCards()[0].getRectangle().getHeight()*-1/3));
+        numberCardService.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5, numberCardService.getCards()[0].getRectangle().getHeight()*-1/3));
     }
 
-    public Hand getHand() {
-        return hand;
+    public NumberCardService getHand() {
+        return numberCardService;
     }
 
     public boolean isCardActive(){
-        return hand.isCardActive();
+        return numberCardService.isCardActive();
     }
 
     public NumberCard getActiveCard() {
-        return hand.getActiveCard();
+        return numberCardService.getActiveCard();
     }
 
     public final void activateCard(int mouseX, int mouseY) {
-        for (NumberCard card : hand.getCards())
+        for (NumberCard card : numberCardService.getCards())
             card.activateCard(mouseX, mouseY);
     }
 
     public final void updateWhenDrag(int mouseX, int mouseY) {
-        for (NumberCard card : hand.getCards()){
+        for (NumberCard card : numberCardService.getCards()){
             if (card.isActive())
                 card.getPoint().set(
                         mouseX - card.getRectangle().getWidth() / 2,
@@ -46,11 +46,11 @@ public class Player {
     }
 
     public final void draw(SpriteBatch batch) {
-        hand.draw(batch);
+        numberCardService.draw(batch);
     }
 
     public void playOnCardAnimation(int mouseX, int mouseY) {
-        for (NumberCard card : hand.getCards()) {
+        for (NumberCard card : numberCardService.getCards()) {
             if (card.isOnCard(mouseX, mouseY)) {
                 moveCardUpward(card);
             } else
@@ -67,15 +67,15 @@ public class Player {
     }
 
     public final void initHand() {
-        for (NumberCard card : hand.getCards())
+        for (NumberCard card : numberCardService.getCards())
             card.initCard();
     }
 
     public final void playCard() {
-        if (hand.isCardActive()) {
+        if (numberCardService.isCardActive()) {
             doWhenAnyCardPlayed();
 
-            if (hand.isResettingCard())
+            if (numberCardService.isResettingCard())
                 doWhenResettingCardPlay();
             else
                 checkNumberCardPlayed();

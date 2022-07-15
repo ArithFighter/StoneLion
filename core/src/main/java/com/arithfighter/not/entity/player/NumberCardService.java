@@ -5,21 +5,23 @@ import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Hand {
+public class NumberCardService {
     private final NumberCard[] cards;
     private final float padding;
 
-    public Hand(Texture[] textures, CharacterList character) {
+    public NumberCardService(Texture[] textures, CharacterList character) {
         cards = new NumberCard[character.getTextureMap().length];
 
         CardTexturesExtractor texturesExtractor = new CardTexturesExtractor(textures);
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
 
-        int cardScale = 2;
-        padding = textures[0].getWidth()* cardScale + 18;
+        int scale = 2;
+        padding = textures[0].getWidth()* scale + 18;
 
-        for (int i = 0; i < cards.length; i++)
-            cards[i] = new NumberCard(cardSet[i], character.getNumberSet()[i], cardScale);
+        for (int i = 0; i < cards.length; i++){
+            cards[i] = new NumberCard(cardSet[i], scale);
+            cards[i].setNumber(character.getNumberSet()[i]);
+        }
     }
 
     public void setInitPoint(Point point){

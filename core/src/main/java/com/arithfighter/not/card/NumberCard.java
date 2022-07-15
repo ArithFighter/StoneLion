@@ -7,16 +7,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class NumberCard{
-    private final int number;
+    private int number;
     private boolean isCardActive = false;
     private final Rectangle rectangle;
     private final RawCard card;
 
-    public NumberCard(Texture texture, int number, int scale) {
+    public NumberCard(Texture texture, float scale) {
         card = new RawCard(texture, scale);
 
         rectangle = card.getShape();
+    }
 
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -51,8 +53,10 @@ public class NumberCard{
     private void setPointWhenOutOfScreen(){
         ScreenBorderInspector sbi = new ScreenBorderInspector(rectangle.getWidth(), rectangle.getHeight());
 
-        getPoint().set(sbi.updateWhenExceedX(getPoint().getX()),
-                sbi.updateWhenExceedY(getPoint().getY()));
+        getPoint().set(
+                sbi.updateWhenExceedX(getPoint().getX()),
+                sbi.updateWhenExceedY(getPoint().getY())
+        );
     }
 
     public void initCard() {
