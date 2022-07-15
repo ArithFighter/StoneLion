@@ -15,7 +15,10 @@ public class Player {
         LayoutSetter layoutSetter = new LayoutSetter();
         layoutSetter.setGrid(9,2);
 
-        numberCardService.setInitPoint(new Point(layoutSetter.getGrid().getWidth()*5, numberCardService.getCards()[0].getRectangle().getHeight()*-1/3));
+        numberCardService.setInitPoint(new Point(
+                layoutSetter.getGrid().getWidth()*5,
+                numberCardService.getCards()[0].getRectangle().getHeight()*-1/3
+        ));
     }
 
     public NumberCardService getHand() {
