@@ -25,6 +25,10 @@ public class CandleStick extends DetectCardArea{
         candlePoint = new Point();
     }
 
+    public Point getCandleTopPoint(){
+        return new Point(candlePoint.getX(), candlePoint.getY()+candle.getCandleHeight());
+    }
+
     public void setCandleHeight(float height){
         candle.setCandleHeight(height);
     }

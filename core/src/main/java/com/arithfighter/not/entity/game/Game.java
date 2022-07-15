@@ -32,6 +32,7 @@ public class Game {
     private final PlayerService playerService;
     private final CandleStick candleStick;
     private final VisibleWidget cardHighlight;
+    private final VisibleWidget candleLight;
     private boolean isReadyToPlayCard = false;
 
     public Game(TextureService textureService, SoundManager soundManager, Font font) {
@@ -90,6 +91,9 @@ public class Game {
         candleStick.setPoint(new Point(100,0));
 
         cardHighlight = new SpriteWidget(tg.getGuiMap().get("gui/card-outLine.png"), 2.4f);
+
+        candleLight = new SpriteWidget(tg.getObjectMap().get("object/light.png"), 8);
+        candleLight.getSprite().setColor(1,1,1,0.5f);
     }
 
     public CandleStick getCandleStick() {
@@ -153,6 +157,12 @@ public class Game {
         variationController.changeGameVariation(gameVariation, batch);
 
         candleStick.draw(batch);
+
+        candleLight.setPosition(
+                candleStick.getCandleTopPoint().getX()-candleLight.getWidget().getWidth()/2,
+                candleStick.getCandleTopPoint().getY()
+        );
+        candleLight.draw(batch);
 
         player.draw(batch);
 
