@@ -9,14 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Pentagram {
     private final VisibleWidget pentagram;
-    private final VisibleWidget mark;
+    private final PlaceMark mark;
     private Point point;
 
     public Pentagram(Texture[] textures, float scale){
         pentagram = new SpriteWidget(textures[0], scale);
 
-        mark = new SpriteWidget(textures[1], 1.5f);
-        mark.getSprite().setColor(Color.BLUE);
+        mark = new PlaceMark(textures[1], 1.5f);
     }
 
     public void setPoint(Point point) {
@@ -27,6 +26,25 @@ public class Pentagram {
         pentagram.setPosition(point.getX()-pentagram.getWidget().getWidth()/2, point.getY());
         pentagram.draw(batch);
 
+        mark.setPoint(new Point(point.getX(), point.getY()));
+        mark.draw(batch);
+    }
+}
+
+class PlaceMark{
+    private final VisibleWidget mark;
+    private Point point;
+
+    public PlaceMark(Texture texture, float scale){
+        mark = new SpriteWidget(texture, scale);
+        mark.getSprite().setColor(Color.BLUE);
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public void draw(SpriteBatch batch){
         mark.setPosition(point.getX(), point.getY());
         mark.draw(batch);
     }
