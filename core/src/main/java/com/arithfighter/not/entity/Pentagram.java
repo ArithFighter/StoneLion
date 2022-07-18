@@ -16,6 +16,7 @@ public class Pentagram {
         pentagram = new SpriteWidget(textures[0], scale);
 
         mark = new PlaceMark(textures[1], 1.5f);
+        mark.setLevel(EnchantmentLevel.LOW);
     }
 
     public void setPoint(Point point) {
@@ -31,13 +32,46 @@ public class Pentagram {
     }
 }
 
+enum EnchantmentLevel{
+    NONE(Color.GRAY, 0,0),
+    LOW(Color.SKY,1,3),
+    MID(Color.BLUE, 4,6),
+    HIGH(Color.PURPLE,7,9);
+
+    private final Color color;
+    private final int minBell;
+    private final int maxBell;
+
+    EnchantmentLevel(Color color, int minBell, int maxBell) {
+        this.color = color;
+        this.minBell = minBell;
+        this.maxBell = maxBell;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getMinBell() {
+        return minBell;
+    }
+
+    public int getMaxBell() {
+        return maxBell;
+    }
+}
+
 class PlaceMark{
     private final VisibleWidget mark;
+    private EnchantmentLevel level;
     private Point point;
 
     public PlaceMark(Texture texture, float scale){
         mark = new SpriteWidget(texture, scale);
-        mark.getSprite().setColor(Color.BLUE);
+    }
+
+    public void setLevel(EnchantmentLevel level) {
+        this.level = level;
     }
 
     public void setPoint(Point point) {
@@ -45,6 +79,7 @@ class PlaceMark{
     }
 
     public void draw(SpriteBatch batch){
+        mark.getSprite().setColor(level.getColor());
         mark.setPosition(point.getX(), point.getY());
         mark.draw(batch);
     }
