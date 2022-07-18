@@ -1,9 +1,12 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.entity.Pentagram;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
+import com.arithfighter.not.font.Font;
 import com.arithfighter.not.font.FontService;
 import com.arithfighter.not.pojo.LayoutSetter;
+import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.scene.MouseEvent;
 import com.arithfighter.not.scene.SceneEvent;
@@ -13,9 +16,11 @@ import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 
 public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseEvent {
-    private final VisibleWidget pentagram;
+    private final Pentagram pentagram;
     private final VisibleWidget background;
     private final SceneControlButton startButton;
+    private final Font mapName;
+    private final Rectangle grid;
 
     public EnchantmentMap(TextureService textureService, FontService fontService){
         TextureGetter tg = new TextureGetter(textureService);
@@ -26,17 +31,18 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
         LayoutSetter ls = new LayoutSetter();
         ls.setGrid(4,5);
-        Rectangle grid = ls.getGrid();
+
+        grid = ls.getGrid();
 
         startButton = new SceneControlButton(tg.getGuiMap().get("gui/Button1.png"), 1.8f);
         startButton.getButton().setFont(fontService.getFont22());
         startButton.getButton().setPosition(grid.getWidth()*3, grid.getHeight());
 
-        pentagram = new SpriteWidget(tg.getObjectMap().get("object/pentagram.png"), 8);
-        pentagram.setPosition(
-                grid.getWidth()*2-pentagram.getWidget().getWidth()/2,
-                grid.getHeight()*1
-                );
+        pentagram = new Pentagram(tg.getObjectMap().get("object/pentagram.png"), 8);
+        pentagram.setPoint(new Point(grid.getWidth()*2, grid.getHeight()*1));
+
+        mapName = fontService.getFont32();
+        mapName.setColor(Color.BLACK);
     }
 
     public boolean isStart(){
@@ -71,5 +77,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         startButton.getButton().draw(getBatch(), "Start");
 
         pentagram.draw(getBatch());
+
+        mapName.draw(getBatch(), "Enchantment map", 0, grid.getHeight()*5- mapName.getSize());
     }
 }
