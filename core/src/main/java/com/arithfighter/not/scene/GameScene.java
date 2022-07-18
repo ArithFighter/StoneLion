@@ -2,6 +2,7 @@ package com.arithfighter.not.scene;
 
 public enum GameScene {
     DECK_SELECTION,
+    ENCHANTMENT_MAP,
     TRANSITION,
     STAGE,
     GAME_OVER,

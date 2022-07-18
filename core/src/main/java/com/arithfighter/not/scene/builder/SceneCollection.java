@@ -11,6 +11,7 @@ public class SceneCollection {
     private final Option option;
     private final DeckSelection deckSelection;
     private final GameOver gameOver;
+    private final EnchantmentMap enchantmentMap;
 
     public SceneCollection(TextureService textureService, SoundManager soundManager, FontService fontService) {
         stage = new Stage(textureService, soundManager, fontService);
@@ -22,6 +23,8 @@ public class SceneCollection {
         deckSelection = new DeckSelection(textureService, fontService);
 
         gameOver = new GameOver(textureService, fontService);
+
+        enchantmentMap = new EnchantmentMap(textureService, fontService);
     }
 
     public Stage getStage() {
@@ -42,5 +45,9 @@ public class SceneCollection {
 
     public GameOver getGameOver() {
         return gameOver;
+    }
+
+    public EnchantmentMap getEnchantmentMap() {
+        return enchantmentMap;
     }
 }
