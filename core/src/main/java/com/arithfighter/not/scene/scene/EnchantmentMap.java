@@ -14,6 +14,7 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
 import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 
 public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseEvent {
     private final Pentagram pentagram;
@@ -38,7 +39,11 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         startButton.getButton().setFont(fontService.getFont22());
         startButton.getButton().setPosition(grid.getWidth()*3, grid.getHeight());
 
-        pentagram = new Pentagram(tg.getObjectMap().get("object/pentagram.png"), 8);
+        Texture[] textures = new Texture[]{
+                tg.getObjectMap().get("object/pentagram.png"),
+                tg.getGuiMap().get("gui/white-block.png")
+        };
+        pentagram = new Pentagram(textures, 8);
         pentagram.setPoint(new Point(grid.getWidth()*2, grid.getHeight()*1));
 
         mapName = fontService.getFont32();
