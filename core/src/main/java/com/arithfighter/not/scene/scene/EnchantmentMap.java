@@ -39,6 +39,10 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
                 );
     }
 
+    public boolean isStart(){
+        return startButton.isStart();
+    }
+
     @Override
     public void touchDown() {
         startButton.getButton().on(getCursorPos().getX(), getCursorPos().getY());
@@ -63,6 +67,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
     public void render() {
         background.draw(getBatch());
 
+        startButton.update();
         startButton.getButton().draw(getBatch(), "Start");
 
         pentagram.draw(getBatch());
