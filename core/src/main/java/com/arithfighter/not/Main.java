@@ -94,7 +94,7 @@ public class Main extends ApplicationAdapter {
         SceneControllerCollection scc = new SceneControllerCollection(sceneCollection, optionSave);
         SceneControllerService scs = new SceneControllerService(scc);
 
-        sceneController = new SceneController(scs, DECK_SELECTION);
+        sceneController = new SceneController(scs, ENCHANTMENT_MAP);
     }
 
     @Override
