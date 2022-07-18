@@ -23,7 +23,7 @@ public class Pentagram {
                 pentagram.getWidget().getWidth(),
                 pentagram.getWidget().getHeight()
                 ));
-        layoutSetter.setGrid(7,6);
+        layoutSetter.setGrid(7,7);
         mark.setGrid(layoutSetter.getGrid());
     }
 
@@ -101,10 +101,18 @@ class PlaceMarkCollection{
             if (i == 0)
             placeMarks[i].setPoint(new Point(
                     initPoint.getX()+ grid.getWidth()*3,
-                    initPoint.getY()+ grid.getHeight()*4)
+                    initPoint.getY()+ grid.getHeight()*5)
             );
+            else if (i<=3)
+                placeMarks[i].setPoint(new Point(
+                        initPoint.getX()+ grid.getWidth()*2*(i-0.5f),
+                        initPoint.getY()+ grid.getHeight()*3
+                ));
             else
-                placeMarks[i].setPoint(initPoint);
+                placeMarks[i].setPoint(new Point(
+                        initPoint.getX()+ grid.getWidth()*2*(i-3),
+                        initPoint.getY()+ grid.getHeight()*1
+                ));
         }
 
         for (PlaceMark placeMark : placeMarks) {
