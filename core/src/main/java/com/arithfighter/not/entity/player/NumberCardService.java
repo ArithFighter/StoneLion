@@ -16,7 +16,7 @@ public class NumberCardService {
         Texture[] cardSet = texturesExtractor.getCardTextures(character);
 
         int scale = 2;
-        padding = textures[0].getWidth()* scale + 18;
+        padding = textures[0].getWidth()* scale + 20;
 
         for (int i = 0; i < cards.length; i++){
             cards[i] = new NumberCard(cardSet[i], scale);
