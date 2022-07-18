@@ -14,7 +14,7 @@ public class Pentagram {
     private final PlaceMarkCollection mark;
     private Point point;
 
-    public Pentagram(Texture[] textures, float scale){
+    public Pentagram(Texture[] textures, float scale) {
         pentagram = new SpriteWidget(textures[0], scale);
 
         mark = new PlaceMarkCollection(textures[1], 1.5f);
@@ -22,18 +22,18 @@ public class Pentagram {
         LayoutSetter layoutSetter = new LayoutSetter(new Rectangle(
                 pentagram.getWidget().getWidth(),
                 pentagram.getWidget().getHeight()
-                ));
-        layoutSetter.setGrid(7,7);
+        ));
+        layoutSetter.setGrid(7, 7);
         mark.setGrid(layoutSetter.getGrid());
     }
 
     public void setPoint(Point point) {
-        this.point = new Point(point.getX()-pentagram.getWidget().getWidth()/2, point.getY());
+        this.point = new Point(point.getX() - pentagram.getWidget().getWidth() / 2, point.getY());
 
         mark.setInitPoint(this.point);
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         pentagram.setPosition(point.getX(), point.getY());
         pentagram.draw(batch);
 
@@ -41,11 +41,11 @@ public class Pentagram {
     }
 }
 
-enum EnchantmentLevel{
-    NONE(Color.GRAY, 0,0),
-    LOW(Color.GREEN,1,3),
-    MID(Color.BLUE, 4,6),
-    HIGH(Color.PURPLE,7,9);
+enum EnchantmentLevel {
+    NONE(Color.GRAY, 0, 0),
+    LOW(Color.GREEN, 1, 3),
+    MID(Color.BLUE, 4, 6),
+    HIGH(Color.PURPLE, 7, 9);
 
     private final Color color;
     private final int minBell;
@@ -70,18 +70,21 @@ enum EnchantmentLevel{
     }
 }
 
-class PlaceMarkCollection{
+class PlaceMarkCollection {
     private final PlaceMark[] placeMarks;
     private Point initPoint;
     private Rectangle grid;
+    private PlaceMarkPlacer placeMarkPlacer;
 
-    public PlaceMarkCollection(Texture texture, float scale){
+    public PlaceMarkCollection(Texture texture, float scale) {
         placeMarks = new PlaceMark[6];
 
-        for (int i =0;i< placeMarks.length;i++){
+        for (int i = 0; i < placeMarks.length; i++) {
             placeMarks[i] = new PlaceMark(texture, scale);
             placeMarks[i].setLevel(EnchantmentLevel.MID);
         }
+
+        placeMarkPlacer = new PlaceMarkPlacer();
     }
 
     public PlaceMark[] getPlaceMarks() {
@@ -92,27 +95,15 @@ class PlaceMarkCollection{
         this.grid = grid;
     }
 
-    public void setInitPoint(Point point){
+    public void setInitPoint(Point point) {
         initPoint = point;
     }
 
-    public void draw(SpriteBatch batch){
-        for (int i =0;i< placeMarks.length;i++){
-            if (i == 0)
-            placeMarks[i].setPoint(new Point(
-                    initPoint.getX()+ grid.getWidth()*3,
-                    initPoint.getY()+ grid.getHeight()*5)
-            );
-            else if (i<=3)
-                placeMarks[i].setPoint(new Point(
-                        initPoint.getX()+ grid.getWidth()*2*(i-0.5f),
-                        initPoint.getY()+ grid.getHeight()*3
-                ));
-            else
-                placeMarks[i].setPoint(new Point(
-                        initPoint.getX()+ grid.getWidth()*2*(i-3),
-                        initPoint.getY()+ grid.getHeight()*1
-                ));
+    public void draw(SpriteBatch batch) {
+        for (int i = 0; i < placeMarks.length; i++) {
+            placeMarkPlacer.setInitPoint(initPoint);
+            placeMarkPlacer.setGrid(grid);
+            placeMarks[i].setPoint(placeMarkPlacer.getPoint(i));
         }
 
         for (PlaceMark placeMark : placeMarks) {
@@ -122,12 +113,47 @@ class PlaceMarkCollection{
     }
 }
 
-class PlaceMark{
+class PlaceMarkPlacer {
+    private Point initPoint;
+    private Rectangle grid;
+
+    public void setInitPoint(Point initPoint) {
+        this.initPoint = initPoint;
+    }
+
+    public void setGrid(Rectangle grid) {
+        this.grid = grid;
+    }
+
+    public Point getPoint(int i) {
+        Point point = new Point();
+
+        if (i == 0)
+            point.set(
+                    initPoint.getX() + grid.getWidth() * 3,
+                    initPoint.getY() + grid.getHeight() * 5
+            );
+        else if (i <= 3)
+            point.set(
+                    initPoint.getX() + grid.getWidth() * 2 * (i - 0.5f),
+                    initPoint.getY() + grid.getHeight() * 3
+            );
+        else
+            point.set(
+                    initPoint.getX() + grid.getWidth() * 2 * (i - 3),
+                    initPoint.getY() + grid.getHeight() * 1
+            );
+
+        return point;
+    }
+}
+
+class PlaceMark {
     private final VisibleWidget mark;
     private EnchantmentLevel level;
     private Point point;
 
-    public PlaceMark(Texture texture, float scale){
+    public PlaceMark(Texture texture, float scale) {
         mark = new SpriteWidget(texture, scale);
     }
 
@@ -143,7 +169,7 @@ class PlaceMark{
         this.point = point;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         mark.getSprite().setColor(level.getColor());
         mark.setPosition(point.getX(), point.getY());
         mark.draw(batch);
