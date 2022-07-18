@@ -34,7 +34,7 @@ public class Pentagram {
 
 enum EnchantmentLevel{
     NONE(Color.GRAY, 0,0),
-    LOW(Color.SKY,1,3),
+    LOW(Color.GREEN,1,3),
     MID(Color.BLUE, 4,6),
     HIGH(Color.PURPLE,7,9);
 
@@ -61,6 +61,31 @@ enum EnchantmentLevel{
     }
 }
 
+class PlaceMarkCollection{
+    private final PlaceMark[] placeMarks;
+    private Point initPoint;
+
+    public PlaceMarkCollection(Texture texture, float scale){
+        placeMarks = new PlaceMark[6];
+
+        for (int i =0;i< placeMarks.length;i++){
+            placeMarks[i] = new PlaceMark(texture, scale);
+        }
+    }
+
+    public void setInitPoint(Point point){
+        initPoint = point;
+    }
+
+    public void draw(SpriteBatch batch){
+        for (int i =0;i< placeMarks.length;i++){
+            if (i == 0)
+                placeMarks[i].setPoint(initPoint);
+            placeMarks[i].draw(batch);
+        }
+    }
+}
+
 class PlaceMark{
     private final VisibleWidget mark;
     private EnchantmentLevel level;
@@ -72,6 +97,10 @@ class PlaceMark{
 
     public void setLevel(EnchantmentLevel level) {
         this.level = level;
+    }
+
+    public EnchantmentLevel getLevel() {
+        return level;
     }
 
     public void setPoint(Point point) {
