@@ -7,6 +7,7 @@ public class SceneControllerService {
     public SceneControllerService(SceneControllerCollection scc) {
         sceneFactories = new SceneFactory[]{
                 scc.getDeckSelectionController(),
+                scc.getEnchantmentMapController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
                 scc.getGameOverController(),
@@ -15,6 +16,7 @@ public class SceneControllerService {
 
         sceneManageable = new SceneControllable[]{
                 scc.getDeckSelectionController(),
+                scc.getEnchantmentMapController(),
                 scc.getTransitionController(),
                 scc.getStageController(),
                 scc.getGameOverController(),

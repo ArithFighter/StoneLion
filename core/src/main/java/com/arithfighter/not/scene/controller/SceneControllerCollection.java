@@ -12,6 +12,7 @@ public class SceneControllerCollection {
     private final OptionController optionController;
     private final DeckSelectionController deckSelectionController;
     private final GameOverController gameOverController;
+    private final EnchantmentMapController enchantmentMapController;
 
     public SceneControllerCollection(SceneCollection sceneCollection, OptionSave optionSave) {
         StageDeployer stageDeployer = new StageDeployer();
@@ -29,6 +30,8 @@ public class SceneControllerCollection {
         deckSelectionController.setStageDeployer(stageDeployer);
 
         gameOverController = new GameOverController(sceneCollection);
+
+        enchantmentMapController = new EnchantmentMapController(sceneCollection);
     }
 
     public TransitionController getTransitionController() {
@@ -49,6 +52,10 @@ public class SceneControllerCollection {
 
     public GameOverController getGameOverController() {
         return gameOverController;
+    }
+
+    public EnchantmentMapController getEnchantmentMapController() {
+        return enchantmentMapController;
     }
 }
 
@@ -80,6 +87,23 @@ class DeckSelectionController extends SceneAccessor implements SceneControllable
             stageDeployer.init();
             deckSelection.init();
         }
+    }
+}
+
+class EnchantmentMapController extends SceneAccessor implements SceneControllable{
+
+    public EnchantmentMapController(SceneCollection sceneCollection) {
+        super(sceneCollection);
+    }
+
+    @Override
+    public void initScene() {
+        setGameScene(GameScene.ENCHANTMENT_MAP);
+    }
+
+    @Override
+    public void run() {
+
     }
 }
 

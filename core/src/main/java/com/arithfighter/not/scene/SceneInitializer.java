@@ -1,7 +1,5 @@
 package com.arithfighter.not.scene;
 
-import com.arithfighter.not.scene.GameScene;
-import com.arithfighter.not.scene.SceneModel;
 import com.arithfighter.not.scene.builder.SceneCollection;
 
 public class SceneInitializer {
@@ -14,6 +12,10 @@ public class SceneInitializer {
     public void run() {
         GameScene.DECK_SELECTION.setSceneModel(
                 new SceneModel(sceneCollection.getDeckSelection(), sceneCollection.getDeckSelection()));
+
+        GameScene.ENCHANTMENT_MAP.setSceneModel(
+                new SceneModel(sceneCollection.getEnchantmentMap(), sceneCollection.getEnchantmentMap())
+        );
 
         GameScene.TRANSITION.setSceneModel(
                 new SceneModel(sceneCollection.getTransition()));
