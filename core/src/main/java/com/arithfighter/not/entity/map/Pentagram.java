@@ -3,10 +3,8 @@ package com.arithfighter.not.entity.map;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
-import com.arithfighter.not.widget.DetectableWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -68,4 +66,3 @@ public class Pentagram {
         return mark.getPlaceMarks()[mark.getSelectedIndex()];
     }
 }
-
