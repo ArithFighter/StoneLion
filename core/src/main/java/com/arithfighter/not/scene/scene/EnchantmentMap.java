@@ -61,16 +61,20 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         CursorPositionAccessor c = getCursorPos();
 
         startButton.getButton().onWhenIsOnButton(c.getX(), c.getY());
+
+        pentagram.on(c.getX(),c.getY());
     }
 
     @Override
     public void touchDragged() {
         startButton.getButton().off();
+        pentagram.off();
     }
 
     @Override
     public void touchUp() {
         startButton.getButton().off();
+        pentagram.off();
     }
 
     @Override

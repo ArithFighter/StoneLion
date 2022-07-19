@@ -56,7 +56,7 @@ public class Pentagram {
         mark.draw(batch);
 
         try {
-            PlaceMark p = mark.getPlaceMarkThatIsOn();
+            PlaceMark p = mark.getPlaceMarks()[mark.getSelectedIndex()];
             Point markP = p.getPoint();
             highLight.setPosition(markP.getX()-5, markP.getY()-5);
         }catch (NullPointerException e){
@@ -99,6 +99,7 @@ class PlaceMarkCollection {
     private Point initPoint;
     private Rectangle grid;
     private final PlaceMarkPlacer placeMarkPlacer;
+    private int selectedIndex = 0;
 
     public PlaceMarkCollection(Texture texture, float scale) {
         placeMarks = new PlaceMark[6];
@@ -136,13 +137,12 @@ class PlaceMarkCollection {
         }
     }
 
-    public PlaceMark getPlaceMarkThatIsOn(){
-        int index = 0;
+    public int getSelectedIndex(){
         for (int i = 0;i< placeMarks.length;i++){
             if (placeMarks[i].isOn())
-                index = i;
+                selectedIndex = i;
         }
-        return placeMarks[index];
+        return selectedIndex;
     }
 
     public boolean isOn(){
