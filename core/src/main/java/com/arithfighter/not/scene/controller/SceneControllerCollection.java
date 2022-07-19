@@ -114,10 +114,11 @@ class TransitionController extends SceneAccessor implements SceneControllable {
     public void run() {
         Transition transition = getSceneCollection().getTransition();
         Stage stage = getSceneCollection().getStage();
+        EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
 
         if (transition.isGameStart()) {
-            stage.setGameVariation(GameVariation.FOG);
-            stage.setBoxQuantity(6);
+            stage.setGameVariation(GameVariation.STANDARD);
+            stage.setBoxQuantity(enchantmentMap.getBellQuantity());
 
             transition.init();
             setGameScene(GameScene.STAGE);

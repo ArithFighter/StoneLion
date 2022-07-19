@@ -39,10 +39,6 @@ public class SumDisplacerEntity {
         return sumDisplacerModel;
     }
 
-    public boolean isCapacityWarning() {
-        return sumDisplacer.isCapacityWarning();
-    }
-
     public boolean isCapacityFull() {
         return sumDisplacerModel.isCapacityFull();
     }

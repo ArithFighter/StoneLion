@@ -2,7 +2,7 @@ package com.arithfighter.not.entity.map;
 
 import com.badlogic.gdx.graphics.Color;
 
-enum EnchantmentLevel {
+public enum EnchantmentLevel {
     NONE(Color.GRAY, 0, 0),
     LOW(Color.GREEN, 1, 3),
     MID(Color.BLUE, 4, 6),

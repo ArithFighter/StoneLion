@@ -6,7 +6,7 @@ import com.arithfighter.not.widget.SpriteWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-class PlaceMark {
+public class PlaceMark {
     private final DetectableWidget mark;
     private EnchantmentLevel level;
     private Point point;

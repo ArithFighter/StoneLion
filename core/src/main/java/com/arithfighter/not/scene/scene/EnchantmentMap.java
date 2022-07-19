@@ -52,6 +52,10 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         mapName.setColor(Color.BLACK);
     }
 
+    public int getBellQuantity(){
+        return pentagram.getSelectedPlaceMark().getLevel().getMinBell();
+    }
+
     public boolean isStart(){
         return startButton.isStart();
     }
