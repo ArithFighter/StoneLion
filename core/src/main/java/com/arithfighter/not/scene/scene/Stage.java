@@ -26,7 +26,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final PauseMenu pauseMenu;
     private final Timer timer;
     private GameVariation gameVariation = GameVariation.STANDARD;
-    private int boxQuantity = 6;
+    private int bellQuantity = 6;
     private final RemainCardManager remainCardManager;
     private final Background background;
     private final EnchantmentPillar enchantmentPillar;
@@ -35,7 +35,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         TextureGetter tg = new TextureGetter(textureService);
 
-        remainCardManager = new RemainCardManager(new Recorder(50), fontService.getFont32());
+        remainCardManager = new RemainCardManager(new Recorder(15), fontService.getFont32());
 
         game = new Game(textureService, soundManager, fontService.getFont32());
         game.setCharacter(CharacterList.SNAKE);
@@ -76,8 +76,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         this.gameVariation = gameVariation;
     }
 
-    public void setBoxQuantity(int boxQuantity) {
-        this.boxQuantity = boxQuantity;
+    public void setBellQuantity(int bellQuantity) {
+        this.bellQuantity = bellQuantity;
     }
 
     public void setDeck(CharacterList characterList){
@@ -129,7 +129,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         backgroundMask.draw(batch, 0.7f);
 
         game.setBatch(batch);
-        game.draw(gameVariation, boxQuantity);
+        game.draw(gameVariation, bellQuantity);
 
         if (pauseButton.isStart()) {
             pauseMenu.draw(batch);

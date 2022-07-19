@@ -120,9 +120,9 @@ class TransitionController extends SceneAccessor implements SceneControllable {
         EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
 
         if (transition.isGameStart()) {
+            stage.init();
+            stage.setBellQuantity(enchantmentMap.getBellQuantity());
             stage.setGameVariation(GameVariation.STANDARD);
-            stage.setBoxQuantity(enchantmentMap.getBellQuantity());
-
             transition.init();
             setGameScene(GameScene.STAGE);
         }
@@ -150,15 +150,12 @@ class StageController extends SceneAccessor implements SceneControllable {
         }
         if (stage.isChangeScene()) {
             setGameScene(GameScene.ENCHANTMENT_MAP);
-            stage.init();
         }
         if (stage.getPauseMenu().isReturnToMainMenu()) {
             setGameScene(GameScene.DECK_SELECTION);
-            stage.init();
         }
         if (stage.getRemainCardManager().isNoRemainCard()){
             setGameScene(GameScene.GAME_OVER);
-            stage.init();
         }
     }
 }
