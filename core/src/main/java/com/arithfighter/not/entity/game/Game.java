@@ -12,7 +12,7 @@ import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.player.PlayerService;
-import com.arithfighter.not.entity.sumbox.SumDisplacerEntity;
+import com.arithfighter.not.entity.sum.SumDisplacerEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 
@@ -47,14 +47,16 @@ public class Game {
                 tg.getObjectMap().get("object/bell.png"),
                 tg.getGuiMap().get("gui/Golden_Square.png")
         };
+
+        sumDisplacerEntity = new SumDisplacerEntity(tg.getObjectMap().get("object/stone-lion.png"), font);
+
         numberBoxEntity = new NumberBoxEntity(numberTextures, font) {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
-                variationController.revealSumMask();
+                sumDisplacerEntity.getSumDisplacer().setAble();
             }
         };
-        sumDisplacerEntity = new SumDisplacerEntity(tg.getObjectMap().get("object/stone-lion.png"), font);
 
         variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumDisplacerEntity) {
             @Override

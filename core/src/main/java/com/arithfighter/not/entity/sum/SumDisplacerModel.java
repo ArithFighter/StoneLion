@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity.sumbox;
+package com.arithfighter.not.entity.sum;
 
 import com.arithfighter.not.pojo.CapacityManager;
 import com.arithfighter.not.pojo.Recorder;

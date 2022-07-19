@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity.sumbox;
+package com.arithfighter.not.entity.sum;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.LayoutSetter;
@@ -25,6 +25,10 @@ public class SumDisplacerEntity {
         sumDisplacer.setFont(font);
 
         sumDisplacerModel = new SumDisplacerModel();
+    }
+
+    public SumDisplacer getSumDisplacer() {
+        return sumDisplacer;
     }
 
     public Point getPoint() {

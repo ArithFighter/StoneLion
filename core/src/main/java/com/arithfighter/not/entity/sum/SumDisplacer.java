@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity.sumbox;
+package com.arithfighter.not.entity.sum;
 
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.widget.FontWidget;
@@ -22,6 +22,16 @@ public class SumDisplacer {
 
     public void setPosition(float x, float y) {
         widget.setPosition(x, y);
+    }
+
+    public void setDisable(){
+        widget.getSprite().setColor(Color.BLUE);
+        font.setColor(Color.BLUE);
+    }
+
+    public void setAble(){
+        widget.getSprite().setColor(Color.WHITE);
+        font.setColor(Color.BLACK);
     }
 
     public void draw(int number, SpriteBatch batch) {

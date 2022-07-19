@@ -116,7 +116,7 @@ class TransitionController extends SceneAccessor implements SceneControllable {
         Stage stage = getSceneCollection().getStage();
 
         if (transition.isGameStart()) {
-            stage.setGameVariation(GameVariation.STANDARD);
+            stage.setGameVariation(GameVariation.FOG);
             stage.setBoxQuantity(6);
 
             transition.init();

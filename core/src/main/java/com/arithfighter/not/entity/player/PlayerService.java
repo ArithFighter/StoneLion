@@ -1,6 +1,6 @@
 package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.entity.sumbox.SumDisplacerModel;
+import com.arithfighter.not.entity.sum.SumDisplacerModel;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 

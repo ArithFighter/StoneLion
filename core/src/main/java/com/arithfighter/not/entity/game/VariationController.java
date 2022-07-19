@@ -1,7 +1,7 @@
 package com.arithfighter.not.entity.game;
 
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
-import com.arithfighter.not.entity.sumbox.SumDisplacerEntity;
+import com.arithfighter.not.entity.sum.SumDisplacerEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class VariationController {
     private final VariationService variationService;
+    private final SumDisplacerEntity sumDisplacerEntity;
     private NumberBoxEntity numberBoxEntity;
     private int sum;
 
     public VariationController(Texture texture, Font font, SumDisplacerEntity sumDisplacerEntity) {
-        variationService = new VariationService(texture, font);
+        variationService = new VariationService(font);
 
-        Point point = sumDisplacerEntity.getPoint();
-        variationService.getSumMask().getSumMask().setPosition(point.getX(), point.getY());
+        this.sumDisplacerEntity = sumDisplacerEntity;
 
         variationService.getTabooNumber().setPoint(new Point(300, 700));
 
@@ -35,16 +35,10 @@ class VariationController {
         this.numberBoxEntity = numberBoxEntity;
     }
 
-    public void revealSumMask() {
-        SumMask sumMask = variationService.getSumMask();
-        sumMask.init();
-        sumMask.setReveal();
-    }
-
     public void changeGameVariation(GameVariation gameVariation, SpriteBatch batch) {
         switch (gameVariation) {
             case FOG:
-                variationService.getSumMask().update(batch);
+                sumDisplacerEntity.getSumDisplacer().setDisable();
                 break;
             case TABOO:
                 updateTabooNumber();
