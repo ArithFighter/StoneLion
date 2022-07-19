@@ -13,7 +13,7 @@ class VariationController {
     private NumberBoxEntity numberBoxEntity;
     private int sum;
 
-    public VariationController(Texture texture, Font font, SumDisplacerEntity sumDisplacerEntity) {
+    public VariationController(Font font, SumDisplacerEntity sumDisplacerEntity) {
         variationService = new VariationService(font);
 
         this.sumDisplacerEntity = sumDisplacerEntity;

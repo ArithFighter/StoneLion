@@ -11,6 +11,7 @@ public class SumDisplacer {
     private Font font;
     private final FontWidget widget;
     private int capacity;
+    private boolean isDisable = false;
 
     public SumDisplacer(Texture texture, float scale) {
         widget = new SpriteWidget(texture, scale);
@@ -25,22 +26,17 @@ public class SumDisplacer {
     }
 
     public void setDisable(){
-        widget.getSprite().setColor(Color.BLUE);
-        font.setColor(Color.BLUE);
-    }
-
-    public void setAble(){
-        widget.getSprite().setColor(Color.WHITE);
-        font.setColor(Color.BLACK);
+        isDisable = true;
     }
 
     public void draw(int number, SpriteBatch batch) {
         widget.setFontSize(font.getSize());
         widget.draw(batch);
 
+        if (!isDisable){
+            drawText(number, batch);
+        }
         changeColor();
-
-        drawText(number, batch);
     }
 
     private void drawText(int number, SpriteBatch batch) {
@@ -59,6 +55,7 @@ public class SumDisplacer {
 
     public void init(){
         capacity = 0;
+        isDisable = false;
     }
 
     private void changeColor() {

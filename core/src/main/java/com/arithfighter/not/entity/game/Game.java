@@ -54,11 +54,10 @@ public class Game {
             @Override
             public void doWhenSumAndNumMatched() {
                 soundManager.playScoreSound();
-                sumDisplacerEntity.getSumDisplacer().setAble();
             }
         };
 
-        variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumDisplacerEntity) {
+        variationController = new VariationController(font, sumDisplacerEntity) {
             @Override
             public void doWhenViolatingTaboos() {
                 init();
