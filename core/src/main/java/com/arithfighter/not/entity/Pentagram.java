@@ -56,12 +56,16 @@ public class Pentagram {
         mark.draw(batch);
 
         try {
-            PlaceMark p = mark.getPlaceMarks()[mark.getSelectedIndex()];
-            Point markP = p.getPoint();
+            Point markP = getSelectedPlaceMark().getPoint();
+
             highLight.setPosition(markP.getX()-5, markP.getY()-5);
-        }catch (NullPointerException e){
-        }
+        }catch (NullPointerException ignored){}
+
         highLight.draw(batch);
+    }
+
+    public PlaceMark getSelectedPlaceMark(){
+        return mark.getPlaceMarks()[mark.getSelectedIndex()];
     }
 }
 
@@ -140,7 +144,8 @@ class PlaceMarkCollection {
     public int getSelectedIndex(){
         for (int i = 0;i< placeMarks.length;i++){
             if (placeMarks[i].isOn())
-                selectedIndex = i;
+                if (placeMarks[i].getLevel()!=EnchantmentLevel.NONE)
+                    selectedIndex = i;
         }
         return selectedIndex;
     }
