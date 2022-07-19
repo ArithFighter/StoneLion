@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.Pentagram;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
@@ -41,7 +42,8 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
         Texture[] textures = new Texture[]{
                 tg.getObjectMap().get("object/pentagram.png"),
-                tg.getGuiMap().get("gui/white-block.png")
+                tg.getGuiMap().get("gui/white-block.png"),
+                tg.getGuiMap().get("gui/Golden_Square.png")
         };
         pentagram = new Pentagram(textures, 8);
         pentagram.setPoint(new Point(grid.getWidth()*2, grid.getHeight()*1));
@@ -56,7 +58,9 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     @Override
     public void touchDown() {
-        startButton.getButton().onWhenIsOnButton(getCursorPos().getX(), getCursorPos().getY());
+        CursorPositionAccessor c = getCursorPos();
+
+        startButton.getButton().onWhenIsOnButton(c.getX(), c.getY());
     }
 
     @Override

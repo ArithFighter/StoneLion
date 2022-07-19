@@ -6,13 +6,13 @@ import com.arithfighter.not.pojo.Rectangle;
 import com.arithfighter.not.widget.DetectableWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
-import com.arithfighter.not.widget.button.PanelButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Pentagram {
     private final VisibleWidget pentagram;
+    private final VisibleWidget highLight;
     private final PlaceMarkCollection mark;
     private Point point;
 
@@ -27,6 +27,8 @@ public class Pentagram {
         ));
         layoutSetter.setGrid(7, 7);
         mark.setGrid(layoutSetter.getGrid());
+
+        highLight = new SpriteWidget(textures[2], 0.8f);
     }
 
     public void setPoint(Point point) {
@@ -35,11 +37,31 @@ public class Pentagram {
         mark.setInitPoint(this.point);
     }
 
+    public boolean isOn(){
+        return mark.isOn();
+    }
+
+    public void on(float x, float y){
+        mark.on(x,y);
+    }
+
+    public void off(){
+        mark.off();
+    }
+
     public void draw(SpriteBatch batch) {
         pentagram.setPosition(point.getX(), point.getY());
         pentagram.draw(batch);
 
         mark.draw(batch);
+
+        try {
+            PlaceMark p = mark.getPlaceMarkThatIsOn();
+            Point markP = p.getPoint();
+            highLight.setPosition(markP.getX()-5, markP.getY()-5);
+        }catch (NullPointerException e){
+        }
+        highLight.draw(batch);
     }
 }
 
@@ -113,6 +135,36 @@ class PlaceMarkCollection {
                 placeMark.draw(batch);
         }
     }
+
+    public PlaceMark getPlaceMarkThatIsOn(){
+        int index = 0;
+        for (int i = 0;i< placeMarks.length;i++){
+            if (placeMarks[i].isOn())
+                index = i;
+        }
+        return placeMarks[index];
+    }
+
+    public boolean isOn(){
+        boolean b = false;
+        for (PlaceMark p:placeMarks){
+            if (p.isOn()) {
+                b = true;
+                break;
+            }
+        }
+        return b;
+    }
+
+    public void on(float x, float y){
+        for (PlaceMark p:placeMarks)
+            p.on(x,y);
+    }
+
+    public void off(){
+        for (PlaceMark p:placeMarks)
+            p.off();
+    }
 }
 
 class PlaceMarkPlacer {
@@ -170,6 +222,10 @@ class PlaceMark {
 
     public void setPoint(Point point) {
         this.point = point;
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public void draw(SpriteBatch batch) {
