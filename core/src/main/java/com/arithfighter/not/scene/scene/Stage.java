@@ -28,18 +28,22 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int bellQuantity = 6;
     private final RemainCardManager remainCardManager;
-    private final Background background;
-    private final EnchantmentPillar enchantmentPillar;
-    private final Mask backgroundMask;
+    private Background background;
+    private EnchantmentPillar enchantmentPillar;
+    private Mask backgroundMask;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        TextureGetter tg = new TextureGetter(textureService);
-
-        remainCardManager = new RemainCardManager(new Recorder(15), fontService.getFont32());
+        Recorder remainCardRecorder = new Recorder(15);
+        remainCardManager = new RemainCardManager(remainCardRecorder, fontService.getFont32());
 
         game = new Game(textureService, soundManager, fontService.getFont32());
         game.setCharacter(CharacterList.SNAKE);
         game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
+
+        timer = new Timer();
+        timer.setTime(1.5f);
+
+        TextureGetter tg = new TextureGetter(textureService);
 
         Texture[] pauseGui = {
                 tg.getGuiMap().get("gui/BoardArea.png"),
@@ -52,9 +56,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         pauseButton.getButton().setPosition(1100, 620);
         pauseButton.getButton().setFont(fontService.getFont22());
 
-        timer = new Timer();
-        timer.setTime(1.5f);
+        createBackGround(tg);
+    }
 
+    public void createBackGround(TextureGetter tg){
         background = new Background(tg.getObjectMap().get("object/bamboo-forest.png"));
 
         Texture[] enchantmentT = {
