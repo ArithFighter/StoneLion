@@ -7,22 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class RemainCardManager {
     private final Font remainCardFont;
-    private Recorder remainCardRecorder;
-
-    public RemainCardManager(Font font){
-        remainCardFont = font;
-        remainCardFont.setColor(Color.WHITE);
-    }
+    private final Recorder remainCardRecorder;
 
     public RemainCardManager(Recorder recorder, Font font) {
         remainCardFont = font;
         remainCardFont.setColor(Color.WHITE);
 
         remainCardRecorder = recorder;
-    }
-
-    public void setRemainCardRecorder(Recorder remainCardRecorder) {
-        this.remainCardRecorder = remainCardRecorder;
     }
 
     public Recorder getRemainCardRecorder() {
