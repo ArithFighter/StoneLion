@@ -144,7 +144,7 @@ class StageController extends SceneAccessor implements SceneControllable {
             getSceneCollection().getOption().setSceneTemp(GameScene.STAGE);
             stage.getPauseMenu().init();
         }
-        if (stage.isComplete()) {
+        if (stage.isChangeScene()) {
             setGameScene(GameScene.TRANSITION);
             stage.init();
         }

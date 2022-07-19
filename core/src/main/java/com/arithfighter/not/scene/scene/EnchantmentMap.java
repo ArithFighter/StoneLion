@@ -91,6 +91,6 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
         pentagram.draw(getBatch());
 
-        mapName.draw(getBatch(), "EnchantmentPillar map", 0, grid.getHeight()*5- mapName.getSize());
+        mapName.draw(getBatch(), "Enchantment map", 0, grid.getHeight()*5- mapName.getSize());
     }
 }

@@ -95,7 +95,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         timer.init();
     }
 
-    public boolean isComplete(){
+    public boolean isChangeScene(){
         return timer.isTimesOut();
     }
 
@@ -150,8 +150,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         if (pauseButton.isStart())
             pauseMenu.touchDown(x, y);
         else {
-            pauseButton.getButton().onWhenIsOnButton(x, y);
-            game.touchDown(x, y);
+            if (!game.isAllNumZero()){
+                pauseButton.getButton().onWhenIsOnButton(x, y);
+                game.touchDown(x, y);
+            }
         }
     }
 
@@ -159,8 +161,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         if (pauseButton.isStart())
             pauseMenu.touchDragged();
         else {
-            pauseButton.getButton().off();
-            game.touchDragged(getCursorPos().getX(), getCursorPos().getY());
+            if (!game.isAllNumZero()){
+                pauseButton.getButton().off();
+                game.touchDragged(getCursorPos().getX(), getCursorPos().getY());
+            }
         }
     }
 
@@ -168,8 +172,10 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         if (pauseButton.isStart())
             pauseMenu.touchUp();
         else {
-            pauseButton.getButton().off();
-            game.touchUp(getCursorPos().getX(), getCursorPos().getY());
+            if (!game.isAllNumZero()){
+                pauseButton.getButton().off();
+                game.touchUp(getCursorPos().getX(), getCursorPos().getY());
+            }
         }
     }
 }
