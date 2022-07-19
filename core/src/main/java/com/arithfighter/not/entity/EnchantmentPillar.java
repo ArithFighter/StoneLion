@@ -8,12 +8,12 @@ import com.arithfighter.not.widget.VisibleWidget;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Enchantment {
+public class EnchantmentPillar {
     private final VisibleWidget pillarLeft;
     private final VisibleWidget pillarRight;
     private final Ropes ropes;
 
-    public Enchantment(Texture[] textures){
+    public EnchantmentPillar(Texture[] textures){
         float scale = 8f;
         pillarLeft = new SpriteWidget(textures[0], scale);
 

@@ -29,7 +29,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private int boxQuantity = 6;
     private final RemainCardManager remainCardManager;
     private final Background background;
-    private final Enchantment enchantment;
+    private final EnchantmentPillar enchantmentPillar;
     private final Mask backgroundMask;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
@@ -62,7 +62,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
                 tg.getObjectMap().get("object/pillar-right.png"),
                 tg.getObjectMap().get("object/single-rope.png")
         };
-        enchantment = new Enchantment(enchantmentT);
+        enchantmentPillar = new EnchantmentPillar(enchantmentT);
 
         backgroundMask = new Mask(tg.getGuiMap().get("gui/w16h9-block.png"), 80);
         backgroundMask.setPosition(0,0);
@@ -124,7 +124,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         background.draw(batch);
 
-        enchantment.draw(batch);
+        enchantmentPillar.draw(batch);
 
         backgroundMask.draw(batch, 0.7f);
 
