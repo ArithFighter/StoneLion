@@ -3,11 +3,11 @@ package com.arithfighter.not.entity.sumbox;
 import com.arithfighter.not.pojo.CapacityManager;
 import com.arithfighter.not.pojo.Recorder;
 
-public class SumBoxModel {
+public class SumDisplacerModel {
     private final CapacityManager capacityManager;
     private final Recorder sumAccessor;
 
-    public SumBoxModel(){
+    public SumDisplacerModel(){
         capacityManager = new CapacityManager(7);
         sumAccessor = new Recorder();
     }

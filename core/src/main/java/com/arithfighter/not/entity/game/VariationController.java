@@ -1,7 +1,7 @@
 package com.arithfighter.not.entity.game;
 
 import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
-import com.arithfighter.not.entity.sumbox.SumBoxEntity;
+import com.arithfighter.not.entity.sumbox.SumDisplacerEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,10 +12,10 @@ class VariationController {
     private NumberBoxEntity numberBoxEntity;
     private int sum;
 
-    public VariationController(Texture texture, Font font, SumBoxEntity sumBoxEntity) {
+    public VariationController(Texture texture, Font font, SumDisplacerEntity sumDisplacerEntity) {
         variationService = new VariationService(texture, font);
 
-        Point point = sumBoxEntity.getPoint();
+        Point point = sumDisplacerEntity.getPoint();
         variationService.getSumMask().getSumMask().setPosition(point.getX(), point.getY());
 
         variationService.getTabooNumber().setPoint(new Point(300, 700));

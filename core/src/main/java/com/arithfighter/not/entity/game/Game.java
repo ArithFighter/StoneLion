@@ -12,7 +12,7 @@ import com.arithfighter.not.entity.numberbox.NumberBoxEntity;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.entity.player.Player;
 import com.arithfighter.not.entity.player.PlayerService;
-import com.arithfighter.not.entity.sumbox.SumBoxEntity;
+import com.arithfighter.not.entity.sumbox.SumDisplacerEntity;
 import com.arithfighter.not.font.Font;
 import com.arithfighter.not.pojo.Point;
 
@@ -27,7 +27,7 @@ public class Game {
     private CardAnimationEntity cardAnimate;
     private SpriteBatch batch;
     private boolean isCardDragging = false;
-    private final SumBoxEntity sumBoxEntity;
+    private final SumDisplacerEntity sumDisplacerEntity;
     private final VariationController variationController;
     private final PlayerService playerService;
     private final CandleStick candleStick;
@@ -54,9 +54,9 @@ public class Game {
                 variationController.revealSumMask();
             }
         };
-        sumBoxEntity = new SumBoxEntity(tg.getObjectMap().get("object/stone-lion.png"), font);
+        sumDisplacerEntity = new SumDisplacerEntity(tg.getObjectMap().get("object/stone-lion.png"), font);
 
-        variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumBoxEntity) {
+        variationController = new VariationController(tg.getGuiMap().get("gui/white-block.png"), font, sumDisplacerEntity) {
             @Override
             public void doWhenViolatingTaboos() {
                 init();
@@ -65,7 +65,7 @@ public class Game {
         variationController.setNumberBoxEntity(numberBoxEntity);
 
         playerService = new PlayerService(textureService.getTextureMap().get(textureService.getKeys()[1]));
-        playerService.setSumBoxModel(sumBoxEntity.getSumBoxModel());
+        playerService.setSumBoxModel(sumDisplacerEntity.getSumBoxModel());
 
         Texture[] candleT = {
                 tg.getObjectMap().get("object/red-candle.png"),
@@ -125,14 +125,14 @@ public class Game {
     }
 
     public void init() {
-        sumBoxEntity.init();
+        sumDisplacerEntity.init();
         numberBoxEntity.init();
         cardAnimate.init();
         variationController.init();
     }
 
     public void update(int mouseX, int mouseY) {
-        int sum = sumBoxEntity.getSumBoxModel().getSum();
+        int sum = sumDisplacerEntity.getSumBoxModel().getSum();
         numberBoxEntity.update(sum);
 
         if (cardAnimate.isAllNotStart())
@@ -146,11 +146,11 @@ public class Game {
     public void draw(GameVariation gameVariation, int boxQuantity) {
         numberBoxEntity.draw(batch);
 
-        sumBoxEntity.draw(batch);
+        sumDisplacerEntity.draw(batch);
 
         numberBoxEntity.setBoxQuantity(boxQuantity);
 
-        variationController.setSum(sumBoxEntity.getSumBoxModel().getSum());
+        variationController.setSum(sumDisplacerEntity.getSumBoxModel().getSum());
         variationController.changeGameVariation(gameVariation, batch);
 
         candleStick.draw(batch);
@@ -179,7 +179,7 @@ public class Game {
             player.activateCard(mouseX, mouseY);
             cardAnimate.getCardReset().setLastMousePoint(player.getActiveCard().getInitPoint());
         }
-        sumBoxEntity.touchDown();
+        sumDisplacerEntity.touchDown();
     }
 
     public void touchDragged(int mouseX, int mouseY) {
@@ -197,6 +197,6 @@ public class Game {
             cardAnimate.getCardFadeOut().setLastMousePoint(new Point(mouseX, mouseY));
             isReadyToPlayCard = false;
         }
-        sumBoxEntity.touchUp();
+        sumDisplacerEntity.touchUp();
     }
 }

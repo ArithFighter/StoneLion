@@ -1,12 +1,12 @@
 package com.arithfighter.not.entity.player;
 
-import com.arithfighter.not.entity.sumbox.SumBoxModel;
+import com.arithfighter.not.entity.sumbox.SumDisplacerModel;
 import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Texture;
 
 public class PlayerService {
     private final Player[] players;
-    private SumBoxModel sumBoxModel;
+    private SumDisplacerModel sumDisplacerModel;
     private Recorder remainCardRecorder;
 
     public PlayerService(Texture[] cards) {
@@ -22,13 +22,13 @@ public class PlayerService {
 
                 @Override
                 public void checkNumberCardPlayed() {
-                    sumBoxModel.update(getActiveCardNumber());
+                    sumDisplacerModel.update(getActiveCardNumber());
                 }
 
                 @Override
                 public void doWhenResettingCardPlay() {
-                    sumBoxModel.init();
-                    sumBoxModel.update(getActiveCardNumber());
+                    sumDisplacerModel.init();
+                    sumDisplacerModel.update(getActiveCardNumber());
                 }
             };
         }
@@ -38,8 +38,8 @@ public class PlayerService {
         this.remainCardRecorder = remainCardRecorder;
     }
 
-    public void setSumBoxModel(SumBoxModel sumBoxModel) {
-        this.sumBoxModel = sumBoxModel;
+    public void setSumBoxModel(SumDisplacerModel sumDisplacerModel) {
+        this.sumDisplacerModel = sumDisplacerModel;
     }
 
     public Player[] getPlayers() {

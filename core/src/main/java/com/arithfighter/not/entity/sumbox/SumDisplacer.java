@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SumBox {
+public class SumDisplacer {
     private Font font;
     private final FontWidget widget;
     private int capacity;
 
-    public SumBox(Texture texture, float scale) {
+    public SumDisplacer(Texture texture, float scale) {
         widget = new SpriteWidget(texture, scale);
     }
 
