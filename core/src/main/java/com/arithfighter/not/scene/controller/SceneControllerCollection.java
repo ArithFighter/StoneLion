@@ -98,6 +98,7 @@ class EnchantmentMapController extends SceneAccessor implements SceneControllabl
         EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
         if (enchantmentMap.isStart()){
             setGameScene(GameScene.TRANSITION);
+            enchantmentMap.init();
         }
     }
 }
@@ -148,7 +149,7 @@ class StageController extends SceneAccessor implements SceneControllable {
             stage.getPauseMenu().init();
         }
         if (stage.isChangeScene()) {
-            setGameScene(GameScene.TRANSITION);
+            setGameScene(GameScene.ENCHANTMENT_MAP);
             stage.init();
         }
         if (stage.getPauseMenu().isReturnToMainMenu()) {
