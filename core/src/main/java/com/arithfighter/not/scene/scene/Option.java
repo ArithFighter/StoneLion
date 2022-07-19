@@ -55,7 +55,7 @@ public class Option extends SceneComponent implements SceneEvent, MouseEvent, Op
 
         soundControl.activate(x, y);
         musicControl.activate(x, y);
-        leaveButton.getButton().on(x, y);
+        leaveButton.getButton().onWhenIsOnButton(x, y);
     }
 
     @Override

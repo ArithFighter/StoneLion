@@ -43,8 +43,8 @@ public class ArrowButtons {
     }
 
     public void on(float x, float y) {
-        leftArrow.on(x, y);
-        rightArrow.on(x, y);
+        leftArrow.onWhenIsOnButton(x, y);
+        rightArrow.onWhenIsOnButton(x, y);
     }
 
     public void off() {

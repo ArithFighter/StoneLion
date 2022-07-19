@@ -59,8 +59,8 @@ public class OptionDialog extends Dialog {
     }
 
     public void activate(float x, float y){
-        yesButton.getButton().on(x, y);
-        noButton.getButton().on(x, y);
+        yesButton.getButton().onWhenIsOnButton(x, y);
+        noButton.getButton().onWhenIsOnButton(x, y);
     }
 
     public void deactivate(){

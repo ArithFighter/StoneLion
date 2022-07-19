@@ -50,10 +50,10 @@ public class DeckSelection extends SceneComponent implements SceneEvent, MouseEv
         int x = cpa.getX();
         int y = cpa.getY();
 
-        snakeButton.on(x,y);
-        craneButton.on(x,y);
+        snakeButton.onWhenIsOnButton(x,y);
+        craneButton.onWhenIsOnButton(x,y);
 
-        startButton.getButton().on(x,y);
+        startButton.getButton().onWhenIsOnButton(x,y);
     }
 
     @Override

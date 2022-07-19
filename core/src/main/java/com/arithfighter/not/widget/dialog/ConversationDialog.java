@@ -42,7 +42,7 @@ public class ConversationDialog extends Dialog{
     }
 
     public void activate(float x, float y){
-        skipButton.on(x, y);
+        skipButton.onWhenIsOnButton(x, y);
     }
 
     public void deactivate(){

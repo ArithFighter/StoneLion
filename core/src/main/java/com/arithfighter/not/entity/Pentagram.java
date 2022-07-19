@@ -3,8 +3,10 @@ package com.arithfighter.not.entity;
 import com.arithfighter.not.pojo.LayoutSetter;
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.pojo.Rectangle;
+import com.arithfighter.not.widget.DetectableWidget;
 import com.arithfighter.not.widget.SpriteWidget;
 import com.arithfighter.not.widget.VisibleWidget;
+import com.arithfighter.not.widget.button.PanelButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -74,7 +76,7 @@ class PlaceMarkCollection {
     private final PlaceMark[] placeMarks;
     private Point initPoint;
     private Rectangle grid;
-    private PlaceMarkPlacer placeMarkPlacer;
+    private final PlaceMarkPlacer placeMarkPlacer;
 
     public PlaceMarkCollection(Texture texture, float scale) {
         placeMarks = new PlaceMark[6];
@@ -149,9 +151,10 @@ class PlaceMarkPlacer {
 }
 
 class PlaceMark {
-    private final VisibleWidget mark;
+    private final DetectableWidget mark;
     private EnchantmentLevel level;
     private Point point;
+    private boolean isOn = false;
 
     public PlaceMark(Texture texture, float scale) {
         mark = new SpriteWidget(texture, scale);
@@ -173,5 +176,18 @@ class PlaceMark {
         mark.getSprite().setColor(level.getColor());
         mark.setPosition(point.getX(), point.getY());
         mark.draw(batch);
+    }
+
+    public void on(float x, float y){
+        if (mark.isOnWidget(x,y))
+            isOn = true;
+    }
+
+    public boolean isOn(){
+        return isOn;
+    }
+
+    public void off(){
+        isOn = false;
     }
 }

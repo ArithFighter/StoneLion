@@ -150,7 +150,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         if (pauseButton.isStart())
             pauseMenu.touchDown(x, y);
         else {
-            pauseButton.getButton().on(x, y);
+            pauseButton.getButton().onWhenIsOnButton(x, y);
             game.touchDown(x, y);
         }
     }

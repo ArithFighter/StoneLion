@@ -56,7 +56,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     @Override
     public void touchDown() {
-        startButton.getButton().on(getCursorPos().getX(), getCursorPos().getY());
+        startButton.getButton().onWhenIsOnButton(getCursorPos().getX(), getCursorPos().getY());
     }
 
     @Override

@@ -11,8 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Button{
     private Font font;
     private final DetectableFontWidget button;
-    private enum State{ON, OFF}
-    private State buttonState = State.OFF;
+    private boolean isOn = false;
 
     public Button(Texture texture, float scale){
         button = new SpriteWidget(texture, scale);
@@ -60,20 +59,20 @@ public class Button{
         );
     }
 
-    public boolean isOnButton(float x, float y){
+    private boolean isOnButton(float x, float y){
         return button.isOnWidget(x,y);
     }
 
-    public void on(float x, float y){
-        if (isOnButton(x, y))
-            buttonState = State.ON;
+    public void onWhenIsOnButton(float x, float y){
+        if (isOnButton(x,y))
+            isOn = true;
     }
 
     public boolean isOn(){
-        return buttonState == State.ON;
+        return isOn;
     }
 
     public void off(){
-        buttonState = State.OFF;
+        isOn = false;
     }
 }

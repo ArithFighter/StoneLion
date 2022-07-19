@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PanelButton{
     private final DetectableWidget button;
-    private enum State{ON, OFF}
-    private State buttonState = State.OFF;
+    private boolean isOn = false;
 
     public PanelButton(Texture texture, float scale){
         button = new SpriteWidget(texture, scale);
@@ -44,16 +43,16 @@ public class PanelButton{
         return button.isOnWidget(x,y);
     }
 
-    public void on(float x, float y){
-        if (isOnButton(x, y))
-            buttonState = State.ON;
+    public void onWhenIsOnButton(float x, float y){
+        if (isOnButton(x,y))
+            isOn = true;
     }
 
     public boolean isOn(){
-        return buttonState == State.ON;
+        return isOn;
     }
 
     public void off(){
-        buttonState = State.OFF;
+        isOn = false;
     }
 }

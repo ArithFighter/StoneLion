@@ -30,7 +30,7 @@ class MenuButtonEntity {
 
     public void onButton(float x, float y) {
         for (SceneControlButton button : buttons.getSceneControlButtons())
-            button.getButton().on(x, y);
+            button.getButton().onWhenIsOnButton(x, y);
     }
 
     public void update() {
