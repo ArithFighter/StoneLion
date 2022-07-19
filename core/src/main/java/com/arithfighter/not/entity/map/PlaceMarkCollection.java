@@ -17,7 +17,12 @@ class PlaceMarkCollection {
 
         for (int i = 0; i < placeMarks.length; i++) {
             placeMarks[i] = new PlaceMark(texture, scale);
-            placeMarks[i].setLevel(EnchantmentLevel.MID);
+            if (i<2)
+                placeMarks[i].setLevel(EnchantmentLevel.MID);
+            else if (i<4)
+                placeMarks[i].setLevel(EnchantmentLevel.LOW);
+            else
+                placeMarks[i].setLevel(EnchantmentLevel.HIGH);
         }
 
         placeMarkPlacer = new PlaceMarkPlacer();
