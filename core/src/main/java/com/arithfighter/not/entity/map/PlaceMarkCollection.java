@@ -62,6 +62,10 @@ class PlaceMarkCollection {
         return selectedIndex;
     }
 
+    public void init(){
+        selectedIndex = 0;
+    }
+
     public boolean isOn() {
         boolean b = false;
         for (PlaceMark p : placeMarks) {

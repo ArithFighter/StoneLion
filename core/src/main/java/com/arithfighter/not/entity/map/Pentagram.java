@@ -11,20 +11,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Pentagram {
     private final VisibleWidget pentagram;
     private final VisibleWidget highLight;
-    private final PlaceMarkCollection mark;
+    private final PlaceMarkCollection placeMarks;
     private Point point;
 
     public Pentagram(Texture[] textures, float scale) {
         pentagram = new SpriteWidget(textures[0], scale);
 
-        mark = new PlaceMarkCollection(textures[1], 1.5f);
+        placeMarks = new PlaceMarkCollection(textures[1], 1.5f);
 
         LayoutSetter layoutSetter = new LayoutSetter(new Rectangle(
                 pentagram.getWidget().getWidth(),
                 pentagram.getWidget().getHeight()
         ));
         layoutSetter.setGrid(7, 7);
-        mark.setGrid(layoutSetter.getGrid());
+        placeMarks.setGrid(layoutSetter.getGrid());
 
         highLight = new SpriteWidget(textures[2], 0.8f);
     }
@@ -32,26 +32,26 @@ public class Pentagram {
     public void setPoint(Point point) {
         this.point = new Point(point.getX() - pentagram.getWidget().getWidth() / 2, point.getY());
 
-        mark.setInitPoint(this.point);
+        placeMarks.setInitPoint(this.point);
     }
 
     public boolean isOn(){
-        return mark.isOn();
+        return placeMarks.isOn();
     }
 
     public void on(float x, float y){
-        mark.on(x,y);
+        placeMarks.on(x,y);
     }
 
     public void off(){
-        mark.off();
+        placeMarks.off();
     }
 
     public void draw(SpriteBatch batch) {
         pentagram.setPosition(point.getX(), point.getY());
         pentagram.draw(batch);
 
-        mark.draw(batch);
+        placeMarks.draw(batch);
 
         try {
             Point markP = getSelectedPlaceMark().getPoint();
@@ -62,7 +62,11 @@ public class Pentagram {
         highLight.draw(batch);
     }
 
+    public void init(){
+        placeMarks.init();
+    }
+
     public PlaceMark getSelectedPlaceMark(){
-        return mark.getPlaceMarks()[mark.getSelectedIndex()];
+        return placeMarks.getPlaceMarks()[placeMarks.getSelectedIndex()];
     }
 }

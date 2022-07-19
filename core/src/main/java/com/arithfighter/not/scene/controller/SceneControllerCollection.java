@@ -69,11 +69,14 @@ class DeckSelectionController extends SceneAccessor implements SceneControllable
     public void run() {
         DeckSelection deckSelection = getSceneCollection().getDeckSelection();
         Stage stage = getSceneCollection().getStage();
+        EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
 
         if (deckSelection.isStartGame()) {
             setGameScene(GameScene.ENCHANTMENT_MAP);
+            stage.init();
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
             stage.getRemainCardManager().init();
+            enchantmentMap.init();
             deckSelection.init();
         }
     }
@@ -94,7 +97,6 @@ class EnchantmentMapController extends SceneAccessor implements SceneControllabl
     public void run() {
         EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
         if (enchantmentMap.isStart()){
-            enchantmentMap.init();
             setGameScene(GameScene.TRANSITION);
         }
     }

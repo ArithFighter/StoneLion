@@ -84,6 +84,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
     @Override
     public void init() {
         startButton.init();
+        pentagram.init();
     }
 
     @Override
