@@ -29,6 +29,10 @@ public class Pentagram {
         highLight = new SpriteWidget(textures[2], 0.8f);
     }
 
+    public PlaceMark[] getPlaceMarks(){
+        return placeMarks.getPlaceMarks();
+    }
+
     public void setPoint(Point point) {
         this.point = new Point(point.getX() - pentagram.getWidget().getWidth() / 2, point.getY());
 

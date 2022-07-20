@@ -1,7 +1,9 @@
 package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.entity.map.EnchantmentLevel;
 import com.arithfighter.not.entity.map.Pentagram;
+import com.arithfighter.not.entity.map.PlaceMark;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.font.Font;
@@ -50,6 +52,18 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
         mapName = fontService.getFont32();
         mapName.setColor(Color.BLACK);
+    }
+
+    public void setPlaceMarks(){
+        PlaceMark[] placeMarks = pentagram.getPlaceMarks();
+        for (int i = 0; i < placeMarks.length; i++){
+            if (i<2)
+                placeMarks[i].setLevel(EnchantmentLevel.MID);
+            else if (i<4)
+                placeMarks[i].setLevel(EnchantmentLevel.LOW);
+            else
+                placeMarks[i].setLevel(EnchantmentLevel.HIGH);
+        }
     }
 
     public int getBellQuantity(){
