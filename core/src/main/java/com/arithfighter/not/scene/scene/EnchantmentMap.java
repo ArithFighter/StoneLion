@@ -58,7 +58,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
         for (int i = 0; i < placeMarks.length; i++){
             if (i<2)
-                placeMarks[i].setLevel(EnchantmentLevel.MID);
+                placeMarks[i].setLevel(EnchantmentLevel.NONE);
             else if (i<4)
                 placeMarks[i].setLevel(EnchantmentLevel.LOW);
             else
@@ -71,7 +71,14 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
     }
 
     public boolean isStart(){
-        return startButton.isStart();
+        boolean isStart = false;
+        if (startButton.isStart()){
+            if (getBellQuantity()>0)
+                isStart = true;
+            else
+                startButton.init();
+        }
+        return isStart;
     }
 
     @Override

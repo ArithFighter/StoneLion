@@ -15,9 +15,8 @@ class PlaceMarkCollection {
     public PlaceMarkCollection(Texture texture, float scale) {
         placeMarks = new PlaceMark[6];
 
-        for (int i = 0; i < placeMarks.length; i++) {
+        for (int i = 0; i < placeMarks.length; i++)
             placeMarks[i] = new PlaceMark(texture, scale);
-        }
 
         placeMarkPlacer = new PlaceMarkPlacer();
     }
@@ -50,13 +49,12 @@ class PlaceMarkCollection {
     public int getSelectedIndex() {
         for (int i = 0; i < placeMarks.length; i++) {
             if (placeMarks[i].isOn())
-                if (placeMarks[i].getLevel() != EnchantmentLevel.NONE)
-                    selectedIndex = i;
+                selectedIndex = i;
         }
         return selectedIndex;
     }
 
-    public void init(){
+    public void init() {
         selectedIndex = 0;
     }
 
