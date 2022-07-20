@@ -58,12 +58,16 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
         for (int i = 0; i < placeMarks.length; i++){
             if (i<2)
-                placeMarks[i].setLevel(EnchantmentLevel.NONE);
+                placeMarks[i].setLevel(EnchantmentLevel.MID);
             else if (i<4)
                 placeMarks[i].setLevel(EnchantmentLevel.LOW);
             else
                 placeMarks[i].setLevel(EnchantmentLevel.HIGH);
         }
+    }
+
+    public void setSelectedPlaceMarkToNone(){
+        pentagram.getSelectedPlaceMark().setLevel(EnchantmentLevel.NONE);
     }
 
     public int getBellQuantity(){

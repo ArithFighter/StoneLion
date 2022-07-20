@@ -143,7 +143,7 @@ class StageController extends SceneAccessor implements SceneControllable {
     @Override
     public void run() {
         Stage stage = getSceneCollection().getStage();
-
+        EnchantmentMap enchantmentMap = getSceneCollection().getEnchantmentMap();
 
         if (stage.getPauseMenu().isOpenOption()) {
             setGameScene(GameScene.OPTION);
@@ -151,6 +151,7 @@ class StageController extends SceneAccessor implements SceneControllable {
             stage.getPauseMenu().init();
         }
         if (stage.isChangeScene()) {
+            enchantmentMap.setSelectedPlaceMarkToNone();
             setGameScene(GameScene.ENCHANTMENT_MAP);
         }
         if (stage.getPauseMenu().isReturnToMainMenu()) {
