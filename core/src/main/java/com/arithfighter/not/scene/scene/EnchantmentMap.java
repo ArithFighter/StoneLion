@@ -85,17 +85,17 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
         for (int i = 0; i < placeMarks.length; i++)
             placeMarks[i].setLevel(levelList.get(i));
+
+        placeMarks[2].setLevel(EnchantmentLevel.HIGH);
     }
 
     private EnchantmentLevel[] getRandomEnchantmentLevels(int length){
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
         for (int i = 0; i < enchantmentLevels.length; i++) {
-//            if (i < 1)
-//                enchantmentLevels[i] = EnchantmentLevel.HIGH;
-//            else if (i < 3)
-//                enchantmentLevels[i] = EnchantmentLevel.MID;
-//            else
+            if (i < 4)
+                enchantmentLevels[i] = EnchantmentLevel.MID;
+            else
                 enchantmentLevels[i] = EnchantmentLevel.LOW;
         }
         return enchantmentLevels;
