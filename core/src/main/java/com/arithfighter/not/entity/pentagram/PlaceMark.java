@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity.map;
+package com.arithfighter.not.entity.pentagram;
 
 import com.arithfighter.not.pojo.Point;
 import com.arithfighter.not.widget.DetectableWidget;

@@ -1,9 +1,9 @@
 package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
-import com.arithfighter.not.entity.map.PlaceMarkController;
-import com.arithfighter.not.entity.map.EnchantmentLevel;
-import com.arithfighter.not.entity.map.Pentagram;
+import com.arithfighter.not.entity.pentagram.PlaceMarkController;
+import com.arithfighter.not.entity.pentagram.EnchantmentLevel;
+import com.arithfighter.not.entity.pentagram.Pentagram;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.font.Font;

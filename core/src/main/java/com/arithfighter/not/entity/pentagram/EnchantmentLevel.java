@@ -1,4 +1,4 @@
-package com.arithfighter.not.entity.map;
+package com.arithfighter.not.entity.pentagram;
 
 import com.badlogic.gdx.graphics.Color;
 
