@@ -76,7 +76,7 @@ class DeckSelectionController extends SceneAccessor implements SceneControllable
             stage.init();
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
             stage.getRemainCardManager().init();
-            enchantmentMap.setPlaceMarks();
+            enchantmentMap.getPlaceMarkController().setPlaceMarks();
             enchantmentMap.init();
             deckSelection.init();
         }
@@ -101,7 +101,7 @@ class EnchantmentMapController extends SceneAccessor implements SceneControllabl
             setGameScene(GameScene.TRANSITION);
             enchantmentMap.init();
         }
-        if (enchantmentMap.allPlaceMarksAreLevelNone()) {
+        if (enchantmentMap.getPlaceMarkController().allPlaceMarksAreLevelNone()) {
             setGameScene(GameScene.GAME_OVER);
             enchantmentMap.init();
         }
@@ -156,7 +156,7 @@ class StageController extends SceneAccessor implements SceneControllable {
         }
         if (stage.isChangeScene()) {
             enchantmentMap.setSelectedPlaceMarkToNone();
-            enchantmentMap.bringDownLevelOfNearbyEnchantments();
+            enchantmentMap.getPlaceMarkController().bringDownLevelOfNearbyEnchantments();
             setGameScene(GameScene.ENCHANTMENT_MAP);
         }
         if (stage.getPauseMenu().isReturnToMainMenu()) {

@@ -1,9 +1,9 @@
 package com.arithfighter.not.scene.scene;
 
 import com.arithfighter.not.CursorPositionAccessor;
+import com.arithfighter.not.entity.map.PlaceMarkController;
 import com.arithfighter.not.entity.map.EnchantmentLevel;
 import com.arithfighter.not.entity.map.Pentagram;
-import com.arithfighter.not.entity.map.PlaceMark;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.font.Font;
@@ -19,18 +19,13 @@ import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseEvent {
     private final Pentagram pentagram;
     private final VisibleWidget background;
     private final SceneControlButton startButton;
     private final Font mapName;
     private final Rectangle grid;
-    private final PlaceMark[] placeMarks;
+    private final PlaceMarkController placeMarkController;
 
     public EnchantmentMap(TextureService textureService, FontService fontService){
         TextureGetter tg = new TextureGetter(textureService);
@@ -56,66 +51,18 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         pentagram = new Pentagram(textures, 8);
         pentagram.setPoint(new Point(grid.getWidth()*2, grid.getHeight()*1));
 
-        placeMarks = pentagram.getPlaceMarks();
+        placeMarkController = new PlaceMarkController(pentagram.getPlaceMarks());
 
         mapName = fontService.getFont32();
         mapName.setColor(Color.BLACK);
     }
 
-    public boolean allPlaceMarksAreLevelNone(){
-        int cursor = 0;
-
-        for (PlaceMark placeMark : placeMarks) {
-            if (placeMark.getLevel() == EnchantmentLevel.NONE)
-                cursor++;
-        }
-        return cursor == placeMarks.length;
-    }
-
-    public void setPlaceMarks(){
-        List<EnchantmentLevel> levelList =
-                new PlaceMarkLevelProducer(placeMarks.length).getLevelList();
-
-        for (int i = 0; i < placeMarks.length; i++)
-            placeMarks[i].setLevel(levelList.get(i));
-
-        setCenterOfPentagramToHighLevel();
-    }
-
-    private void setCenterOfPentagramToHighLevel(){
-        int midIndex = placeMarks.length/2-1;
-
-        placeMarks[midIndex].setLevel(EnchantmentLevel.HIGH);
+    public PlaceMarkController getPlaceMarkController() {
+        return placeMarkController;
     }
 
     public void setSelectedPlaceMarkToNone(){
         pentagram.getSelectedPlaceMark().setLevel(EnchantmentLevel.NONE);
-    }
-
-    public void bringDownLevelOfNearbyEnchantments(){
-        PlaceMark[] placeMarks = pentagram.getPlaceMarks();
-
-        int[] indexes = getAssociateEnchantmentIndexes(pentagram.getSelectedIndex());
-        for (int index : indexes) {
-            EnchantmentLevel level = placeMarks[index].getLevel();
-
-            if (level == EnchantmentLevel.HIGH)
-                placeMarks[index].setLevel(EnchantmentLevel.MID);
-            if (level == EnchantmentLevel.MID)
-                placeMarks[index].setLevel(EnchantmentLevel.LOW);
-        }
-    }
-
-    private int[] getAssociateEnchantmentIndexes(int placeMarkIndex){
-        int[][] pentagramAssociateIndexes = new int[][]{
-                new int[]{1,3},
-                new int[]{0,4},
-                new int[]{0,1,3,4,5},
-                new int[]{0,5},
-                new int[]{1,5},
-                new int[]{3,4},
-        };
-        return pentagramAssociateIndexes[placeMarkIndex];
     }
 
     public int getBellQuantity(){
@@ -124,6 +71,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     public boolean isStart(){
         boolean isStart = false;
+
         if (startButton.isStart()){
             if (getBellQuantity()>0)
                 isStart = true;
@@ -161,6 +109,8 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     @Override
     public void render() {
+        placeMarkController.setSelectedPlaceMarkIndex(pentagram.getSelectedIndex());
+
         background.draw(getBatch());
 
         startButton.update();
@@ -169,35 +119,5 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         pentagram.draw(getBatch());
 
         mapName.draw(getBatch(), "Enchantment map", 0, grid.getHeight()*5- mapName.getSize());
-    }
-}
-
-class PlaceMarkLevelProducer{
-    private final int length;
-
-    public PlaceMarkLevelProducer(int length) {
-        this.length = length;
-    }
-
-    public List<EnchantmentLevel> getLevelList(){
-        EnchantmentLevel[] enchantmentLevels = getEnchantmentLevels();
-
-        List<EnchantmentLevel> levelList = new ArrayList<>(Arrays.asList(enchantmentLevels));
-
-        Collections.shuffle(levelList);
-
-        return levelList;
-    }
-
-    private EnchantmentLevel[] getEnchantmentLevels(){
-        EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
-
-        for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < 4)
-                enchantmentLevels[i] = EnchantmentLevel.MID;
-            else
-                enchantmentLevels[i] = EnchantmentLevel.LOW;
-        }
-        return enchantmentLevels;
     }
 }
