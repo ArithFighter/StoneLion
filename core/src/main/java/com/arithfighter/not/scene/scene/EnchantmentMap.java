@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,30 +76,14 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     public void setPlaceMarks(){
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
-        EnchantmentLevel[] enchantmentLevels = getRandomEnchantmentLevels(placeMarks.length);
-        List<EnchantmentLevel> levelList = new ArrayList<>();
-
-        for (int i = 0; i < placeMarks.length; i++)
-            levelList.add(enchantmentLevels[i]);
-
-        Collections.shuffle(levelList);
+        int length = placeMarks.length;
+        List<EnchantmentLevel> levelList = new PlaceMarkLevelProducer(length).getLevelList();
+        int midIndex = length/2-1;
 
         for (int i = 0; i < placeMarks.length; i++)
             placeMarks[i].setLevel(levelList.get(i));
 
-        placeMarks[2].setLevel(EnchantmentLevel.HIGH);
-    }
-
-    private EnchantmentLevel[] getRandomEnchantmentLevels(int length){
-        EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
-
-        for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < 4)
-                enchantmentLevels[i] = EnchantmentLevel.MID;
-            else
-                enchantmentLevels[i] = EnchantmentLevel.LOW;
-        }
-        return enchantmentLevels;
+        placeMarks[midIndex].setLevel(EnchantmentLevel.HIGH);
     }
 
     public void setSelectedPlaceMarkToNone(){
@@ -156,5 +141,37 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         pentagram.draw(getBatch());
 
         mapName.draw(getBatch(), "Enchantment map", 0, grid.getHeight()*5- mapName.getSize());
+    }
+}
+
+class PlaceMarkLevelProducer{
+    private final int length;
+
+    public PlaceMarkLevelProducer(int length) {
+        this.length = length;
+    }
+
+    public List<EnchantmentLevel> getLevelList(){
+        EnchantmentLevel[] enchantmentLevels = getEnchantmentLevels();
+
+        List<EnchantmentLevel> levelList = new ArrayList<>(Arrays.asList(enchantmentLevels));
+
+        Collections.shuffle(levelList);
+
+        return levelList;
+    }
+
+    private EnchantmentLevel[] getEnchantmentLevels(){
+        EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
+
+        for (int i = 0; i < enchantmentLevels.length; i++) {
+            if (i<1)
+                enchantmentLevels[i] = EnchantmentLevel.HIGH;
+            else if (i < 4)
+                enchantmentLevels[i] = EnchantmentLevel.MID;
+            else
+                enchantmentLevels[i] = EnchantmentLevel.LOW;
+        }
+        return enchantmentLevels;
     }
 }
