@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PlaceMark {
     private final DetectableWidget mark;
-    private EnchantmentLevel level;
+    private EnchantmentLevel level = EnchantmentLevel.NONE;
     private Point point;
     private boolean isOn = false;
 

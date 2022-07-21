@@ -19,6 +19,11 @@ import com.arithfighter.not.widget.button.SceneControlButton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseEvent {
     private final Pentagram pentagram;
     private final VisibleWidget background;
@@ -57,21 +62,27 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
     public void setPlaceMarks(){
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
         EnchantmentLevel[] enchantmentLevels = getRandomEnchantmentLevels(placeMarks.length);
+        List<EnchantmentLevel> levelList = new ArrayList<>();
 
         for (int i = 0; i < placeMarks.length; i++)
-            placeMarks[i].setLevel(enchantmentLevels[i]);
+            levelList.add(enchantmentLevels[i]);
+
+        Collections.shuffle(levelList);
+
+        for (int i = 0; i < placeMarks.length; i++)
+            placeMarks[i].setLevel(levelList.get(i));
     }
 
     private EnchantmentLevel[] getRandomEnchantmentLevels(int length){
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
         for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < 2)
-                enchantmentLevels[i] = EnchantmentLevel.MID;
-            else if (i < 4)
-                enchantmentLevels[i] = EnchantmentLevel.LOW;
-            else
+            if (i < 1)
                 enchantmentLevels[i] = EnchantmentLevel.HIGH;
+            else if (i < 3)
+                enchantmentLevels[i] = EnchantmentLevel.MID;
+            else
+                enchantmentLevels[i] = EnchantmentLevel.LOW;
         }
         return enchantmentLevels;
     }
