@@ -56,14 +56,24 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     public void setPlaceMarks(){
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
-        for (int i = 0; i < placeMarks.length; i++){
-            if (i<2)
-                placeMarks[i].setLevel(EnchantmentLevel.MID);
-            else if (i<4)
-                placeMarks[i].setLevel(EnchantmentLevel.LOW);
+        EnchantmentLevel[] enchantmentLevels = getRandomEnchantmentLevels(placeMarks.length);
+
+        for (int i = 0; i < placeMarks.length; i++)
+            placeMarks[i].setLevel(enchantmentLevels[i]);
+    }
+
+    private EnchantmentLevel[] getRandomEnchantmentLevels(int length){
+        EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
+
+        for (int i = 0; i < enchantmentLevels.length; i++) {
+            if (i < 2)
+                enchantmentLevels[i] = EnchantmentLevel.MID;
+            else if (i < 4)
+                enchantmentLevels[i] = EnchantmentLevel.LOW;
             else
-                placeMarks[i].setLevel(EnchantmentLevel.HIGH);
+                enchantmentLevels[i] = EnchantmentLevel.HIGH;
         }
+        return enchantmentLevels;
     }
 
     public void setSelectedPlaceMarkToNone(){
