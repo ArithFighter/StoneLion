@@ -33,7 +33,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private Mask backgroundMask;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
-        Recorder remainCardRecorder = new Recorder(15);
+        Recorder remainCardRecorder = new Recorder(30);
         remainCardManager = new RemainCardManager(remainCardRecorder, fontService.getFont32());
 
         game = new Game(textureService, soundManager, fontService.getFont32());

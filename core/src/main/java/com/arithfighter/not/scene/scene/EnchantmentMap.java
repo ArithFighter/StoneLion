@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,6 +58,21 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         mapName.setColor(Color.BLACK);
     }
 
+    public boolean allPlaceMarksAreLevelNone(){
+        boolean isTrue = false;
+        int cursor = 0;
+        PlaceMark[] placeMarks = pentagram.getPlaceMarks();
+
+        for (PlaceMark placeMark : placeMarks) {
+            if (placeMark.getLevel() == EnchantmentLevel.NONE)
+                cursor++;
+        }
+        if (cursor == placeMarks.length)
+            isTrue = true;
+
+        return isTrue;
+    }
+
     public void setPlaceMarks(){
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
         EnchantmentLevel[] enchantmentLevels = getRandomEnchantmentLevels(placeMarks.length);
@@ -77,11 +91,11 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
         for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < 1)
-                enchantmentLevels[i] = EnchantmentLevel.HIGH;
-            else if (i < 3)
-                enchantmentLevels[i] = EnchantmentLevel.MID;
-            else
+//            if (i < 1)
+//                enchantmentLevels[i] = EnchantmentLevel.HIGH;
+//            else if (i < 3)
+//                enchantmentLevels[i] = EnchantmentLevel.MID;
+//            else
                 enchantmentLevels[i] = EnchantmentLevel.LOW;
         }
         return enchantmentLevels;
