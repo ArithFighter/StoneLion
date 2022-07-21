@@ -77,6 +77,7 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
     public void setPlaceMarks(){
         PlaceMark[] placeMarks = pentagram.getPlaceMarks();
         int length = placeMarks.length;
+
         List<EnchantmentLevel> levelList = new PlaceMarkLevelProducer(length).getLevelList();
         int midIndex = length/2-1;
 
@@ -88,6 +89,29 @@ public class EnchantmentMap extends SceneComponent implements SceneEvent, MouseE
 
     public void setSelectedPlaceMarkToNone(){
         pentagram.getSelectedPlaceMark().setLevel(EnchantmentLevel.NONE);
+    }
+
+    public void bringDownLevelOfNearbyEnchantments(){
+        int[][] pentagramAssociateIndexes = new int[][]{
+                new int[]{1,3},
+                new int[]{0,4},
+                new int[]{0,1,3,4,5},
+                new int[]{0,5},
+                new int[]{1,5},
+                new int[]{3,4},
+        };
+
+        int[] indexes = pentagramAssociateIndexes[pentagram.getSelectedIndex()];
+        PlaceMark[] placeMarks = pentagram.getPlaceMarks();
+
+        for (int index : indexes) {
+            EnchantmentLevel level = placeMarks[index].getLevel();
+
+            if (level == EnchantmentLevel.HIGH)
+                placeMarks[index].setLevel(EnchantmentLevel.MID);
+            if (level == EnchantmentLevel.MID)
+                placeMarks[index].setLevel(EnchantmentLevel.LOW);
+        }
     }
 
     public int getBellQuantity(){
@@ -165,9 +189,9 @@ class PlaceMarkLevelProducer{
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
         for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i<1)
-                enchantmentLevels[i] = EnchantmentLevel.HIGH;
-            else if (i < 4)
+//            if (i<1)
+//                enchantmentLevels[i] = EnchantmentLevel.HIGH;
+            if (i < 4)
                 enchantmentLevels[i] = EnchantmentLevel.MID;
             else
                 enchantmentLevels[i] = EnchantmentLevel.LOW;

@@ -156,6 +156,7 @@ class StageController extends SceneAccessor implements SceneControllable {
         }
         if (stage.isChangeScene()) {
             enchantmentMap.setSelectedPlaceMarkToNone();
+            enchantmentMap.bringDownLevelOfNearbyEnchantments();
             setGameScene(GameScene.ENCHANTMENT_MAP);
         }
         if (stage.getPauseMenu().isReturnToMainMenu()) {

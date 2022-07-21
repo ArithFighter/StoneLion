@@ -73,4 +73,8 @@ public class Pentagram {
     public PlaceMark getSelectedPlaceMark(){
         return placeMarks.getPlaceMarks()[placeMarks.getSelectedIndex()];
     }
+
+    public int getSelectedIndex(){
+        return placeMarks.getSelectedIndex();
+    }
 }
