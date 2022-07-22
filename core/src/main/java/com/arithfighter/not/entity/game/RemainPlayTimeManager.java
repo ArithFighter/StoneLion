@@ -5,31 +5,31 @@ import com.arithfighter.not.pojo.Recorder;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class RemainCardManager {
+public class RemainPlayTimeManager {
     private final Font remainCardFont;
-    private final Recorder remainCardRecorder;
+    private final Recorder remainPlayTimeRecorder;
 
-    public RemainCardManager(Recorder recorder, Font font) {
+    public RemainPlayTimeManager(Recorder recorder, Font font) {
         remainCardFont = font;
         remainCardFont.setColor(Color.WHITE);
 
-        remainCardRecorder = recorder;
+        remainPlayTimeRecorder = recorder;
     }
 
-    public Recorder getRemainCardRecorder() {
-        return remainCardRecorder;
+    public Recorder getRemainPlayTimeRecorder() {
+        return remainPlayTimeRecorder;
     }
 
     public void init() {
-        remainCardRecorder.reset();
+        remainPlayTimeRecorder.reset();
     }
 
     public void draw(SpriteBatch batch, int x, int y) {
         remainCardFont.draw(
-                batch, "Remain cards:" + remainCardRecorder.getRecord(), x, y);
+                batch, "Remain cards:" + remainPlayTimeRecorder.getRecord(), x, y);
     }
 
     public boolean isNoRemainCard() {
-        return remainCardRecorder.getRecord() == 0;
+        return remainPlayTimeRecorder.getRecord() == 0;
     }
 }

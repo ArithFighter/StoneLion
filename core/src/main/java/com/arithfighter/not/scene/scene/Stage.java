@@ -1,5 +1,6 @@
 package com.arithfighter.not.scene.scene;
 
+import com.arithfighter.not.entity.game.RemainPlayTimeManager;
 import com.arithfighter.not.file.texture.TextureGetter;
 import com.arithfighter.not.file.texture.TextureService;
 import com.arithfighter.not.file.audio.SoundManager;
@@ -7,7 +8,6 @@ import com.arithfighter.not.entity.*;
 import com.arithfighter.not.CursorPositionAccessor;
 import com.arithfighter.not.entity.game.Game;
 import com.arithfighter.not.entity.game.GameVariation;
-import com.arithfighter.not.entity.game.RemainCardManager;
 import com.arithfighter.not.entity.pause.PauseMenu;
 import com.arithfighter.not.entity.player.CharacterList;
 import com.arithfighter.not.font.FontService;
@@ -27,18 +27,18 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
     private final Timer timer;
     private GameVariation gameVariation = GameVariation.STANDARD;
     private int bellQuantity = 6;
-    private final RemainCardManager remainCardManager;
+    private final RemainPlayTimeManager remainPlayTimeManager;
     private Background background;
     private EnchantmentPillar enchantmentPillar;
     private Mask backgroundMask;
 
     public Stage(TextureService textureService, SoundManager soundManager, FontService fontService) {
         Recorder remainCardRecorder = new Recorder(30);
-        remainCardManager = new RemainCardManager(remainCardRecorder, fontService.getFont32());
+        remainPlayTimeManager = new RemainPlayTimeManager(remainCardRecorder, fontService.getFont32());
 
         game = new Game(textureService, soundManager, fontService.getFont32());
         game.setCharacter(CharacterList.SNAKE);
-        game.getPlayerService().setRemainCardRecorder(remainCardManager.getRemainCardRecorder());
+        game.getPlayerService().setRemainCardRecorder(remainPlayTimeManager.getRemainPlayTimeRecorder());
 
         timer = new Timer();
         timer.setTime(1.5f);
@@ -73,8 +73,8 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         backgroundMask.setPosition(0,0);
     }
 
-    public RemainCardManager getRemainCardManager() {
-        return remainCardManager;
+    public RemainPlayTimeManager getRemainCardManager() {
+        return remainPlayTimeManager;
     }
 
     public void setGameVariation(GameVariation gameVariation) {
@@ -141,9 +141,9 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
         } else
             pauseButton.getButton().draw(batch, "Pause");
 
-        //remainCardManager.draw(batch, 100,100);
+        //remainPlayTimeManager.draw(batch, 100,100);
 
-        float candleH = remainCardManager.getRemainCardRecorder().getRecord()*4;
+        float candleH = remainPlayTimeManager.getRemainPlayTimeRecorder().getRecord()*4;
         game.getCandleStick().setCandleHeight(candleH);
     }
 
