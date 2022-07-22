@@ -76,7 +76,7 @@ class DeckSelectionController extends SceneAccessor implements SceneControllable
             stage.init();
             stage.setDeck(CharacterList.values()[deckSelection.getDeckIndex()]);
             stage.getRemainCardManager().init();
-            enchantmentMap.getPlaceMarkController().setPlaceMarks();
+            enchantmentMap.getPlaceMarkController().setLevelForPlaceMarks();
             enchantmentMap.init();
             deckSelection.init();
         }
