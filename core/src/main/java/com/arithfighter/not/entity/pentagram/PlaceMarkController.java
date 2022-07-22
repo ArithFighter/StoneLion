@@ -31,16 +31,11 @@ public class PlaceMarkController {
     }
 
     private void bringDownEnchantmentLevel(EnchantmentLevel level, int index){
-        switch (level){
-            case HIGH:
-                placeMarks[index].setLevel(EnchantmentLevel.MID);
-                break;
-            case MID:
-                placeMarks[index].setLevel(EnchantmentLevel.LOW);
-                break;
-            case LOW:
-                placeMarks[index].setLevel(EnchantmentLevel.NONE);
-                break;
+        EnchantmentLevel[] enchantmentLevels = EnchantmentLevel.values();
+
+        for(int i = 0;i<enchantmentLevels.length;i++){
+            if (level == enchantmentLevels[i] && i!=0)
+                placeMarks[index].setLevel(enchantmentLevels[i-1]);
         }
     }
 
