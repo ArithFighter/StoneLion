@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class PlayerService {
     private final Player[] players;
     private SumDisplacerModel sumDisplacerModel;
-    private Recorder remainCardRecorder;
+    private Recorder remainPlayTimeRecorder;
 
     public PlayerService(Texture[] cards) {
         players = new Player[CharacterList.values().length];
@@ -16,8 +16,8 @@ public class PlayerService {
             players[i] = new Player(cards, CharacterList.values()[i]) {
                 @Override
                 public void doWhenAnyCardPlayed() {
-                    if (remainCardRecorder.getRecord()>=0)
-                        remainCardRecorder.update(-1);
+                    if (remainPlayTimeRecorder.getRecord()>=0)
+                        remainPlayTimeRecorder.update(-1);
                 }
 
                 @Override
@@ -34,8 +34,8 @@ public class PlayerService {
         }
     }
 
-    public void setRemainCardRecorder(Recorder remainCardRecorder) {
-        this.remainCardRecorder = remainCardRecorder;
+    public void setRemainPlayTimeRecorder(Recorder remainPlayTimeRecorder) {
+        this.remainPlayTimeRecorder = remainPlayTimeRecorder;
     }
 
     public void setSumBoxModel(SumDisplacerModel sumDisplacerModel) {

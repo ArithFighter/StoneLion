@@ -38,7 +38,7 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
 
         game = new Game(textureService, soundManager, fontService.getFont32());
         game.setCharacter(CharacterList.SNAKE);
-        game.getPlayerService().setRemainCardRecorder(remainPlayTimeManager.getRemainPlayTimeRecorder());
+        game.getPlayerService().setRemainPlayTimeRecorder(remainPlayTimeManager.getRemainPlayTimeRecorder());
 
         timer = new Timer();
         timer.setTime(1.5f);
@@ -140,8 +140,6 @@ public class Stage extends SceneComponent implements SceneEvent, MouseEvent {
             pauseMenu.draw(batch);
         } else
             pauseButton.getButton().draw(batch, "Pause");
-
-        //remainPlayTimeManager.draw(batch, 100,100);
 
         float candleH = remainPlayTimeManager.getRemainPlayTimeRecorder().getRecord()*4;
         game.getCandleStick().setCandleHeight(candleH);
