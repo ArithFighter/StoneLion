@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PlaceMarkController {
     private final PlaceMark[] placeMarks;
-    private EnchantmentAssociateIndexes enchantmentAssociateIndexes;
     private int selectedPlaceMarkIndex;
 
     public PlaceMarkController(PlaceMark[] placeMarks) {
@@ -13,18 +12,17 @@ public class PlaceMarkController {
 
     public void setSelectedPlaceMarkIndex(int selectedPlaceMarkIndex) {
         this.selectedPlaceMarkIndex = selectedPlaceMarkIndex;
-
-        enchantmentAssociateIndexes = new EnchantmentAssociateIndexes();
     }
 
-    public void setLevelOfNearbyEnchantments() {
-        int[] indexes = getAssociateEnchantmentIndexes(selectedPlaceMarkIndex);
+    public void changeLevelOfNearbyEnchantments() {
+        int[] indexes =
+                new EnchantmentAssociateIndexes().getEnchantmentAssociateIndexes()[selectedPlaceMarkIndex];
 
         for (int index : indexes) {
             EnchantmentLevel nearbyLevel = placeMarks[index].getLevel();
 
             if (isNearbyLevelEqualToSelectedLevel(nearbyLevel))
-                bringDownLevelOfEnchantment(nearbyLevel, index);
+                bringDownEnchantmentLevel(nearbyLevel, index);
         }
     }
 
@@ -32,7 +30,7 @@ public class PlaceMarkController {
         return placeMarks[selectedPlaceMarkIndex].getLevel() == nearbyLevel;
     }
 
-    private void bringDownLevelOfEnchantment(EnchantmentLevel level, int index){
+    private void bringDownEnchantmentLevel(EnchantmentLevel level, int index){
         switch (level){
             case HIGH:
                 placeMarks[index].setLevel(EnchantmentLevel.MID);
@@ -44,10 +42,6 @@ public class PlaceMarkController {
                 placeMarks[index].setLevel(EnchantmentLevel.NONE);
                 break;
         }
-    }
-
-    private int[] getAssociateEnchantmentIndexes(int placeMarkIndex) {
-        return enchantmentAssociateIndexes.getEnchantmentAssociateIndexes()[placeMarkIndex];
     }
 
     public boolean allPlaceMarksAreLevelNone() {

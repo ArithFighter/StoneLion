@@ -18,9 +18,7 @@ class PlaceMarkLevelProducer {
     }
 
     public List<EnchantmentLevel> getLevelList() {
-        EnchantmentLevel[] enchantmentLevels = getEnchantmentLevels();
-
-        List<EnchantmentLevel> levelList = new ArrayList<>(Arrays.asList(enchantmentLevels));
+        List<EnchantmentLevel> levelList = new ArrayList<>(Arrays.asList(getEnchantmentLevels()));
 
         Collections.shuffle(levelList);
 
@@ -30,12 +28,20 @@ class PlaceMarkLevelProducer {
     private EnchantmentLevel[] getEnchantmentLevels() {
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
-        for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < midLevelQuantity+1)
-                enchantmentLevels[i] = EnchantmentLevel.MID;
-            else
-                enchantmentLevels[i] = EnchantmentLevel.LOW;
-        }
+        for (int i = 0; i < enchantmentLevels.length; i++)
+            enchantmentLevels[i] = getEnchantmentLevel(i);
+
         return enchantmentLevels;
+    }
+
+    private EnchantmentLevel getEnchantmentLevel(int i){
+        EnchantmentLevel enchantmentLevel;
+
+        if (i < midLevelQuantity-1)
+            enchantmentLevel = EnchantmentLevel.MID;
+        else
+            enchantmentLevel = EnchantmentLevel.LOW;
+
+        return enchantmentLevel;
     }
 }
