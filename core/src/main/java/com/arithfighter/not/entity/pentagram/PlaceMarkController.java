@@ -17,16 +17,32 @@ public class PlaceMarkController {
         enchantmentAssociateIndexes = new EnchantmentAssociateIndexes();
     }
 
-    public void bringDownLevelOfNearbyEnchantments() {
+    public void setLevelOfNearbyEnchantments() {
         int[] indexes = getAssociateEnchantmentIndexes(selectedPlaceMarkIndex);
 
         for (int index : indexes) {
-            EnchantmentLevel level = placeMarks[index].getLevel();
+            EnchantmentLevel nearbyLevel = placeMarks[index].getLevel();
 
-            if (level == EnchantmentLevel.HIGH)
+            if (isNearbyLevelEqualToSelectedLevel(nearbyLevel))
+                bringDownLevelOfEnchantment(nearbyLevel, index);
+        }
+    }
+
+    private boolean isNearbyLevelEqualToSelectedLevel(EnchantmentLevel nearbyLevel){
+        return placeMarks[selectedPlaceMarkIndex].getLevel() == nearbyLevel;
+    }
+
+    private void bringDownLevelOfEnchantment(EnchantmentLevel level, int index){
+        switch (level){
+            case HIGH:
                 placeMarks[index].setLevel(EnchantmentLevel.MID);
-            if (level == EnchantmentLevel.MID)
+                break;
+            case MID:
                 placeMarks[index].setLevel(EnchantmentLevel.LOW);
+                break;
+            case LOW:
+                placeMarks[index].setLevel(EnchantmentLevel.NONE);
+                break;
         }
     }
 
