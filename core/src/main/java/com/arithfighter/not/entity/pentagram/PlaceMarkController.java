@@ -61,8 +61,10 @@ public class PlaceMarkController {
     }
 
     public void setLevelForPlaceMarks() {
-        List<EnchantmentLevel> levelList =
-                new PlaceMarkLevelProducer(placeMarks.length).getLevelList();
+        PlaceMarkLevelProducer placeMarkLevelProducer = new PlaceMarkLevelProducer(placeMarks.length);
+        placeMarkLevelProducer.setMidLevelQuantity(2);
+
+        List<EnchantmentLevel> levelList = placeMarkLevelProducer.getLevelList();
 
         for (int i = 0; i < placeMarks.length; i++)
             placeMarks[i].setLevel(levelList.get(i));

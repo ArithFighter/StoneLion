@@ -7,9 +7,14 @@ import java.util.List;
 
 class PlaceMarkLevelProducer {
     private final int length;
+    private int midLevelQuantity = 0;
 
     public PlaceMarkLevelProducer(int length) {
         this.length = length;
+    }
+
+    public void setMidLevelQuantity(int midLevelQuantity) {
+        this.midLevelQuantity = midLevelQuantity;
     }
 
     public List<EnchantmentLevel> getLevelList() {
@@ -26,7 +31,7 @@ class PlaceMarkLevelProducer {
         EnchantmentLevel[] enchantmentLevels = new EnchantmentLevel[length];
 
         for (int i = 0; i < enchantmentLevels.length; i++) {
-            if (i < 4)
+            if (i < midLevelQuantity+1)
                 enchantmentLevels[i] = EnchantmentLevel.MID;
             else
                 enchantmentLevels[i] = EnchantmentLevel.LOW;
